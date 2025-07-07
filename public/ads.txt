@@ -1,0 +1,18 @@
+# ads.txt file for non-turn.com
+# This file is used to authorize digital advertising sellers
+
+# Google AdSense
+google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+
+# Google Ad Manager
+google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+
+# Other authorized sellers can be added here
+# Format: domain.com, seller-account-id, DIRECT/RESELLER, TAG-ID
+
+# Example for other ad networks:
+# facebook.com, XXXXXXXXXXXXXXXX, RESELLER, c3e20eee3f780d68
+# amazon.com, XXXXXXXXXXXXXXXX, RESELLER, 78b2aa8a3f1a1234
+
+# Last updated: 2024-01-01
+# Contact: n.sawada@non-turn.com for any inquiries about advertising partnerships

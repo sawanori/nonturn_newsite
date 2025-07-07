@@ -1,0 +1,12 @@
+Contact: n.sawada@non-turn.com
+Contact: https://non-turn.com/contact
+Expires: 2025-12-31T23:59:59.000Z
+Encryption: https://non-turn.com/pgp-key.asc
+Acknowledgments: https://non-turn.com/security-acknowledgments
+Policy: https://non-turn.com/security-policy
+Hiring: https://non-turn.com/careers
+Canonical: https://non-turn.com/.well-known/security.txt
+
+# If you find a security vulnerability, please report it responsibly
+# We appreciate your help in keeping our services secure
+# Response time: We aim to respond within 48 hours

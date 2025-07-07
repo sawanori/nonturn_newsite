@@ -1,0 +1,51 @@
+
+# Project Overview: video-production-lp
+
+## 1. Project Type
+- **Framework:** Next.js (React)
+- **Type:** Corporate Website & Landing Page (LP) for a video production company.
+- **Key Features:**
+  - Rich user interface with 3D graphics and animations.
+  - Blog functionality integrated with a headless CMS.
+  - Comprehensive company and service information.
+
+## 2. Core Technologies
+- **Frontend:**
+  - **Framework:** Next.js (^15.3.4)
+  - **UI Library:** React (^19.0.0)
+  - **Styling:** Tailwind CSS (^4)
+  - **Animation:** Framer Motion (^12.18.1)
+  - **3D Graphics:** Three.js (^0.177.0), @react-three/fiber (^9.1.2), @react-three/drei (^10.3.0)
+- **Headless CMS:**
+  - **Service:** microCMS (via `microcms-js-sdk` ^3.2.0)
+- **Language:** TypeScript (^5)
+- **Linting:** ESLint (^9)
+
+## 3. Directory Structure & Key Files
+- **`src/app/`**: Main application directory containing page routes.
+  - **`page.tsx`**: Top page (Landing Page).
+  - **`layout.tsx`**: Root layout for the entire application.
+  - **`about/`**: About Us page.
+  - **`services/`**: Service details page.
+  - **`portfolio/`**: Portfolio/Works page.
+  - **`pricing/`**: Pricing information page.
+  - **`blog/`**: Blog list and detail pages.
+  - **`contact/`**: Contact form page.
+- **`src/components/`**: Reusable React components.
+  - **`3d/`**: Components related to 3D graphics (e.g., `Scene3D.tsx`).
+  - **`layout/`**: Site-wide layout components like `Footer.tsx` and `Navigation.tsx`.
+  - **`ui/`**: General UI elements like buttons and cards.
+- **`src/lib/`**: Utility functions and helper scripts.
+  - **`microcms.ts`**: Client configuration for microCMS SDK.
+  - **`blog-utils.ts`**: Helper functions for blog-related logic.
+- **`public/`**: Static assets like images, fonts, and icons.
+- **`package.json`**: Project metadata and dependency list.
+
+## 4. Scripts
+- **`npm run dev`**: Starts the development server with Turbopack.
+- **`npm run build`**: Builds the application for production.
+- **`npm run start`**: Starts the production server.
+- **`npm run lint`**: Runs the linter to check for code quality issues.
+
+## 5. Inferred Purpose
+The project appears to be a modern, visually-driven website for a video production business. It aims to attract clients by showcasing its portfolio and services using advanced web technologies. The use of a headless CMS for the blog suggests a need for easy content updates without requiring code changes.

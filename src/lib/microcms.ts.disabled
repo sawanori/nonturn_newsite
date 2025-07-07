@@ -1,0 +1,256 @@
+import { createClient } from 'microcms-js-sdk'
+
+// Warn if environment variables are not set but don't throw error
+if (!process.env.MICROCMS_SERVICE_DOMAIN) {
+  console.warn('MICROCMS_SERVICE_DOMAIN is not set. Blog functionality will be disabled.')
+}
+
+if (!process.env.MICROCMS_API_KEY) {
+  console.warn('MICROCMS_API_KEY is not set. Blog functionality will be disabled.')
+}
+
+// microCMS client - create a dummy client if environment variables are not set
+export const client = process.env.MICROCMS_SERVICE_DOMAIN && process.env.MICROCMS_API_KEY
+  ? createClient({
+      serviceDomain: process.env.MICROCMS_SERVICE_DOMAIN,
+      apiKey: process.env.MICROCMS_API_KEY,
+    })
+  : null
+
+// Blog post type definitions
+export interface BlogPost {
+  id: string
+  createdAt: string
+  updatedAt: string
+  publishedAt: string
+  revisedAt: string
+  title: string
+  slug?: string
+  content: string
+  excerpt?: string
+  eyecatch?: {
+    url: string
+    height: number
+    width: number
+  }
+  category?: BlogCategory
+  tags?: BlogTag[]
+  author?: BlogAuthor
+  featured?: boolean
+  metaTitle?: string
+  metaDescription?: string
+  relatedPosts?: BlogPost[]
+}
+
+export interface BlogCategory {
+  id: string
+  createdAt: string
+  updatedAt: string
+  publishedAt: string
+  revisedAt: string
+  name: string
+  slug?: string
+  color?: string
+  description?: string
+}
+
+export interface BlogTag {
+  id: string
+  createdAt: string
+  updatedAt: string
+  publishedAt: string
+  revisedAt: string
+  name: string
+  slug?: string
+  color?: string
+}
+
+export interface BlogAuthor {
+  id: string
+  createdAt: string
+  updatedAt: string
+  publishedAt: string
+  revisedAt: string
+  name: string
+  bio?: string
+  avatar?: {
+    url: string
+    height: number
+    width: number
+  }
+  social?: {
+    twitter?: string
+    github?: string
+    linkedin?: string
+  }
+}
+
+// microCMS response types
+export interface BlogPostResponse {
+  contents: BlogPost[]
+  totalCount: number
+  offset: number
+  limit: number
+}
+
+export interface BlogCategoryResponse {
+  contents: BlogCategory[]
+  totalCount: number
+  offset: number
+  limit: number
+}
+
+export interface BlogTagResponse {
+  contents: BlogTag[]
+  totalCount: number
+  offset: number
+  limit: number
+}
+
+// API functions
+export const getBlogPosts = async (queries?: {
+  limit?: number
+  offset?: number
+  category?: string
+  tag?: string
+  q?: string
+  featured?: boolean
+}): Promise<BlogPostResponse> => {
+  if (!client) {
+    // Return empty response if client is not available
+    return {
+      contents: [],
+      totalCount: 0,
+      offset: 0,
+      limit: queries?.limit || 10,
+    }
+  }
+
+  const searchParams = new URLSearchParams()
+  
+  if (queries?.limit) searchParams.append('limit', queries.limit.toString())
+  if (queries?.offset) searchParams.append('offset', queries.offset.toString())
+  if (queries?.category) searchParams.append('filters', `category[equals]${queries.category}`)
+  if (queries?.tag) searchParams.append('filters', `tags[contains]${queries.tag}`)
+  if (queries?.q) searchParams.append('q', queries.q)
+  if (queries?.featured) searchParams.append('filters', 'featured[equals]true')
+
+  return await client.get({
+    endpoint: 'blogs',
+    queries: Object.fromEntries(searchParams.entries()),
+  })
+}
+
+export const getBlogPost = async (slug: string): Promise<BlogPost> => {
+  if (!client) {
+    throw new Error('Blog functionality is not available')
+  }
+  return await client.get({
+    endpoint: 'blogs',
+    contentId: slug,
+  })
+}
+
+export const getBlogCategories = async (): Promise<BlogCategoryResponse> => {
+  if (!client) {
+    return {
+      contents: [],
+      totalCount: 0,
+      offset: 0,
+      limit: 10,
+    }
+  }
+  return await client.get({
+    endpoint: 'blog-categories',
+  })
+}
+
+export const getBlogTags = async (): Promise<BlogTagResponse> => {
+  if (!client) {
+    return {
+      contents: [],
+      totalCount: 0,
+      offset: 0,
+      limit: 10,
+    }
+  }
+  return await client.get({
+    endpoint: 'blog-tags',
+  })
+}
+
+export const getRelatedPosts = async (postId: string, categoryId: string, limit: number = 3): Promise<BlogPost[]> => {
+  if (!client) {
+    return []
+  }
+  const response = await client.get({
+    endpoint: 'blogs',
+    queries: {
+      filters: `category[equals]${categoryId}[and]id[not_equals]${postId}`,
+      limit,
+      orders: '-publishedAt',
+    },
+  })
+  
+  return response.contents
+}
+
+// SEO and social sharing helpers
+export const generateBlogPostStructuredData = (post: BlogPost, baseUrl: string) => {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt,
+    image: post.eyecatch?.url,
+    datePublished: post.publishedAt,
+    dateModified: post.updatedAt,
+    author: post.author ? {
+      '@type': 'Person',
+      name: post.author.name,
+      image: post.author.avatar?.url,
+    } : undefined,
+    publisher: {
+      '@type': 'Organization',
+      name: 'NonTurn LLC',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${baseUrl}/logo.png`,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${baseUrl}/blog/${post.slug || post.id}`,
+    },
+    articleSection: post.category?.name,
+    keywords: post.tags?.map(tag => tag.name).join(', '),
+  }
+}
+
+export const generateBlogListStructuredData = (posts: BlogPost[], baseUrl: string) => {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: 'NonTurn Blog',
+    description: '映像制作のプロフェッショナルによる技術情報とトレンド',
+    url: `${baseUrl}/blog`,
+    publisher: {
+      '@type': 'Organization',
+      name: 'NonTurn LLC',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${baseUrl}/logo.png`,
+      },
+    },
+    blogPost: posts.map(post => ({
+      '@type': 'BlogPosting',
+      headline: post.title,
+      url: `${baseUrl}/blog/${post.slug || post.id}`,
+      datePublished: post.publishedAt,
+      author: post.author ? {
+        '@type': 'Person',
+        name: post.author.name,
+      } : undefined,
+    })),
+  }
+}

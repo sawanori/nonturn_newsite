@@ -1,0 +1,241 @@
+import { marked } from 'marked'
+import { BlogPost } from './microcms'
+
+// Markdown to HTML conversion with custom renderer
+export const markdownToHtml = (markdown: string): string => {
+  // Configure marked options
+  marked.setOptions({
+    highlight: function(code, lang) {
+      // You can add syntax highlighting here if needed
+      return `<pre><code class="language-${lang}">${code}</code></pre>`
+    },
+    breaks: true,
+    gfm: true,
+  })
+
+  // Custom renderer for enhanced styling
+  const renderer = new marked.Renderer()
+  
+  renderer.heading = (text, level) => {
+    const escapedText = text.toLowerCase().replace(/[^\w]+/g, '-')
+    return `
+      <h${level} id="${escapedText}" class="group relative scroll-mt-20">
+        <a href="#${escapedText}" class="absolute -left-6 top-0 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400 hover:text-blue-300">
+          #
+        </a>
+        ${text}
+      </h${level}>
+    `
+  }
+
+  renderer.blockquote = (quote) => {
+    return `<blockquote class="border-l-4 border-blue-400 pl-6 py-2 my-6 bg-blue-50 dark:bg-blue-900/20 italic">${quote}</blockquote>`
+  }
+
+  renderer.code = (code, language) => {
+    const lang = language || 'text'
+    return `
+      <div class="relative group">
+        <pre class="bg-gray-900 text-gray-100 rounded-lg p-4 overflow-x-auto"><code class="language-${lang}">${code}</code></pre>
+        <button class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded text-xs" onclick="navigator.clipboard.writeText('${code.replace(/'/g, "\\'")}')">
+          Copy
+        </button>
+      </div>
+    `
+  }
+
+  renderer.image = (href, title, text) => {
+    return `
+      <figure class="my-8">
+        <img 
+          src="${href}" 
+          alt="${text}" 
+          title="${title || ''}"
+          class="w-full rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+          loading="lazy"
+        />
+        ${title ? `<figcaption class="text-center text-gray-600 dark:text-gray-400 mt-2 text-sm italic">${title}</figcaption>` : ''}
+      </figure>
+    `
+  }
+
+  renderer.link = (href, title, text) => {
+    const isExternal = href?.startsWith('http') && !href.includes(process.env.NEXT_PUBLIC_BASE_URL || 'localhost')
+    return `
+      <a 
+        href="${href}" 
+        title="${title || ''}"
+        class="text-blue-400 hover:text-blue-300 underline underline-offset-2 transition-colors"
+        ${isExternal ? 'target="_blank" rel="noopener noreferrer"' : ''}
+      >
+        ${text}${isExternal ? ' <span class="inline-block ml-1">↗</span>' : ''}
+      </a>
+    `
+  }
+
+  marked.use({ renderer })
+  
+  return marked(markdown)
+}
+
+// Calculate reading time
+export const calculateReadingTime = (content: string): number => {
+  const wordsPerMinute = 200 // Average reading speed
+  const wordCount = content.split(/\s+/).length
+  const readingTime = Math.ceil(wordCount / wordsPerMinute)
+  return readingTime
+}
+
+// Format date
+export const formatDate = (dateString: string, locale: string = 'ja-JP'): string => {
+  const date = new Date(dateString)
+  return date.toLocaleDateString(locale, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+}
+
+// Format relative date
+export const formatRelativeDate = (dateString: string): string => {
+  const date = new Date(dateString)
+  const now = new Date()
+  const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000)
+
+  if (diffInSeconds < 60) return '今さっき'
+  if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}分前`
+  if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}時間前`
+  if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)}日前`
+  if (diffInSeconds < 2629746) return `${Math.floor(diffInSeconds / 604800)}週間前`
+  if (diffInSeconds < 31556952) return `${Math.floor(diffInSeconds / 2629746)}ヶ月前`
+  
+  return `${Math.floor(diffInSeconds / 31556952)}年前`
+}
+
+// Extract text from HTML
+export const stripHtml = (html: string): string => {
+  return html.replace(/<[^>]*>/g, '')
+}
+
+// Generate excerpt from content
+export const generateExcerpt = (content: string, maxLength: number = 160): string => {
+  const textContent = stripHtml(content)
+  if (textContent.length <= maxLength) return textContent
+  
+  return textContent.slice(0, maxLength).trim() + '...'
+}
+
+// Search posts
+export const searchPosts = (posts: BlogPost[], query: string): BlogPost[] => {
+  const searchQuery = query.toLowerCase()
+  
+  return posts.filter(post => 
+    post.title.toLowerCase().includes(searchQuery) ||
+    post.excerpt.toLowerCase().includes(searchQuery) ||
+    post.content.toLowerCase().includes(searchQuery) ||
+    post.category.name.toLowerCase().includes(searchQuery) ||
+    post.tags.some(tag => tag.name.toLowerCase().includes(searchQuery))
+  )
+}
+
+// Sort posts
+export const sortPosts = (posts: BlogPost[], sortBy: 'date' | 'title' | 'popular' = 'date'): BlogPost[] => {
+  return [...posts].sort((a, b) => {
+    switch (sortBy) {
+      case 'title':
+        return a.title.localeCompare(b.title)
+      case 'popular':
+        // For now, sort by featured then by date
+        if (a.featured && !b.featured) return -1
+        if (!a.featured && b.featured) return 1
+        return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+      case 'date':
+      default:
+        return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    }
+  })
+}
+
+// Group posts by category
+export const groupPostsByCategory = (posts: BlogPost[]): Record<string, BlogPost[]> => {
+  return posts.reduce((acc, post) => {
+    const categoryName = post.category.name
+    if (!acc[categoryName]) {
+      acc[categoryName] = []
+    }
+    acc[categoryName].push(post)
+    return acc
+  }, {} as Record<string, BlogPost[]>)
+}
+
+// Get popular tags
+export const getPopularTags = (posts: BlogPost[], limit: number = 10): Array<{ name: string; count: number; slug: string; color: string }> => {
+  const tagCounts = posts.reduce((acc, post) => {
+    post.tags.forEach(tag => {
+      if (!acc[tag.slug]) {
+        acc[tag.slug] = { 
+          name: tag.name, 
+          count: 0, 
+          slug: tag.slug, 
+          color: tag.color 
+        }
+      }
+      acc[tag.slug].count++
+    })
+    return acc
+  }, {} as Record<string, { name: string; count: number; slug: string; color: string }>)
+
+  return Object.values(tagCounts)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, limit)
+}
+
+// Generate table of contents
+export const generateTableOfContents = (content: string): Array<{ id: string; title: string; level: number }> => {
+  const headingRegex = /^(#{1,6})\s+(.+)$/gm
+  const toc: Array<{ id: string; title: string; level: number }> = []
+  let match
+
+  while ((match = headingRegex.exec(content)) !== null) {
+    const level = match[1].length
+    const title = match[2].trim()
+    const id = title.toLowerCase().replace(/[^\w]+/g, '-')
+    
+    toc.push({ id, title, level })
+  }
+
+  return toc
+}
+
+// Optimize images for different screen sizes
+export const getOptimizedImageUrl = (originalUrl: string, width?: number, height?: number, quality: number = 85): string => {
+  if (!originalUrl) return ''
+  
+  // If it's a microCMS image, we can add query parameters for optimization
+  if (originalUrl.includes('microcms-assets.io')) {
+    const url = new URL(originalUrl)
+    if (width) url.searchParams.set('w', width.toString())
+    if (height) url.searchParams.set('h', height.toString())
+    url.searchParams.set('q', quality.toString())
+    url.searchParams.set('fm', 'webp') // Use WebP format for better compression
+    return url.toString()
+  }
+  
+  return originalUrl
+}
+
+// Generate social sharing URLs
+export const generateSocialShareUrls = (post: BlogPost, baseUrl: string) => {
+  const postUrl = `${baseUrl}/blog/${post.slug}`
+  const encodedUrl = encodeURIComponent(postUrl)
+  const encodedTitle = encodeURIComponent(post.title)
+  const encodedExcerpt = encodeURIComponent(post.excerpt)
+
+  return {
+    twitter: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
+    line: `https://social-plugins.line.me/lineit/share?url=${encodedUrl}&text=${encodedTitle}`,
+    copy: postUrl,
+  }
+}
