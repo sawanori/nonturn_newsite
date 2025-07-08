@@ -12,14 +12,14 @@ export const companyInfo = {
   vision: '共に目指す場所は、企業イメージの向上、事業の宣伝、実際の顧客獲得の実現です',
   values: [
     {
-      title: 'Problem Solving',
+    y  title: 'Problem Solving',
       subtitle: '中小企業の悩み解決',
       description: 'Webでの見せ方に自信がない中小企業の課題を理解し、魅力的なプロモーション素材制作でお客様の不安を解消します。'
     },
     {
       title: 'Custom Solutions',
-      subtitle: 'オーダーメイドソリューション',
-      description: 'お客様の目指すところをしっかりとお聞きし、最適なコミュニケーション手法を選定してカスタムソリューションを開発します。'
+      subtitle: '結果にこだわるプロセスの設計',
+      description: '成果につながるプロセスを構築するために、お客様のゴールを深く理解し、必要に応じてプロの視点から率直な提案も行いながら、最適な手段をカスタム設計します。'
     },
     {
       title: 'Partnership Growth',
