@@ -84,25 +84,21 @@ const nextConfig = {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=()'
           },
-          // Content Security Policy - More secure without unsafe-inline when possible
+          // Content Security Policy - Temporarily relaxed for www.non-turn.com issue
           {
             key: 'Content-Security-Policy',
             value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://tagmanager.google.com https://www.google-analytics.com https://www.google.com https://connect.facebook.net https://maps.googleapis.com https://maps.gstatic.com",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://maps.googleapis.com https://maps.gstatic.com",
-              "font-src 'self' https://fonts.gstatic.com data:",
-              "img-src 'self' data: blob: https: https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com https://maps.googleapis.com https://maps.gstatic.com https://streetviewpixels-pa.googleapis.com",
-              "connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com https://maps.googleapis.com https://maps.gstatic.com",
-              "media-src 'self' blob: data:",
-              "worker-src 'self' blob:",
-              "child-src 'self' blob:",
-              "frame-src 'self' https://www.google.com https://www.googletagmanager.com",
-              "frame-ancestors 'self'",
-              "form-action 'self'",
-              "object-src 'none'",
-              "base-uri 'self'",
-              "upgrade-insecure-requests"
+              "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:",
+              "script-src * 'unsafe-inline' 'unsafe-eval'",
+              "style-src * 'unsafe-inline'",
+              "img-src * data: blob:",
+              "font-src * data:",
+              "connect-src *",
+              "media-src * blob: data:",
+              "worker-src * blob:",
+              "child-src * blob:",
+              "frame-src *",
+              "object-src 'none'"
             ].join('; ')
           },
           // Performance headers
