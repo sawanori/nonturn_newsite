@@ -140,7 +140,17 @@ IPアドレス: ${ip}
       replyTo: sanitizedData.email,
     }
 
-    await sgMail.send(msg)
+    try {
+      const response = await sgMail.send(msg)
+      console.log('SendGrid response:', response[0].statusCode)
+    } catch (sendError: any) {
+      console.error('SendGrid send error:', {
+        code: sendError.code,
+        message: sendError.message,
+        response: sendError.response?.body
+      })
+      throw sendError
+    }
 
     // 自動返信メールの送信
     const autoReplyContent = `
