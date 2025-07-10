@@ -34,7 +34,7 @@ export const companyInfo = {
     access: 'みなとみらい線「みなとみらい駅」より徒歩2分'
   },
   contact: {
-    email: 'n.sawada@non-turn.com',
+    email: 'info@non-turn.com',
     phone: '', // 電話番号は要確認
     socialMedia: {
       instagram: '@nonturn2022',
