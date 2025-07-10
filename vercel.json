@@ -1,7 +1,13 @@
 {
   "redirects": [
     {
-      "source": "https://www.non-turn.com/:path*",
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.non-turn.com"
+        }
+      ],
       "destination": "https://non-turn.com/:path*",
       "permanent": true
     }
