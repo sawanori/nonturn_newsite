@@ -142,29 +142,101 @@ export function Navigation() {
 
      {/* Mobile menu button */}
      <div className="md:hidden">
-      <button
+      <motion.button
        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-       className="text-white hover:text-yellow-400 transition-colors duration-300"
+       className="relative w-12 h-12 flex items-center justify-center group"
+       whileHover={{ scale: 1.05 }}
+       whileTap={{ scale: 0.95 }}
       >
        <span className="sr-only">メニューを開く</span>
-       <div className="w-6 h-6 relative">
-        <motion.span
-         animate={isMobileMenuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
-         className="absolute h-0.5 w-6 bg-current transform transition-all duration-300 origin-center"
-         style={{ top: '6px' }}
-        />
-        <motion.span
-         animate={isMobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
-         className="absolute h-0.5 w-6 bg-current transform transition-all duration-300"
-         style={{ top: '12px' }}
-        />
-        <motion.span
-         animate={isMobileMenuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
-         className="absolute h-0.5 w-6 bg-current transform transition-all duration-300 origin-center"
-         style={{ top: '18px' }}
-        />
+       
+       {/* Glow effect background */}
+       <motion.div 
+         className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-300"
+         animate={{
+           scale: isMobileMenuOpen ? [1, 1.2, 1] : 1,
+         }}
+         transition={{
+           duration: 0.5,
+           repeat: isMobileMenuOpen ? Infinity : 0,
+           repeatType: "reverse"
+         }}
+       />
+       
+       {/* Button container with border */}
+       <div className="relative w-full h-full bg-black/50 backdrop-blur-sm border border-yellow-400/30 rounded-lg group-hover:border-yellow-400/60 transition-all duration-300 overflow-hidden">
+         
+         {/* Animated gradient background */}
+         <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+         
+         {/* Hamburger lines container */}
+         <div className="absolute inset-0 flex items-center justify-center">
+           <div className="relative w-6 h-5">
+             {/* Top line */}
+             <motion.span
+               className="absolute left-0 h-0.5 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full shadow-[0_0_8px_rgba(251,191,36,0.5)]"
+               style={{ width: '24px' }}
+               initial={{ top: '0px' }}
+               animate={{
+                 rotate: isMobileMenuOpen ? 45 : 0,
+                 y: isMobileMenuOpen ? 10 : 0,
+                 width: isMobileMenuOpen ? '28px' : '24px',
+               }}
+               transition={{ duration: 0.3, ease: "easeInOut" }}
+             />
+             
+             {/* Middle line */}
+             <motion.span
+               className="absolute left-0 top-1/2 -translate-y-1/2 h-0.5 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full shadow-[0_0_8px_rgba(251,191,36,0.5)]"
+               initial={{ width: '24px' }}
+               animate={{
+                 opacity: isMobileMenuOpen ? 0 : 1,
+                 width: isMobileMenuOpen ? 0 : '18px',
+                 x: isMobileMenuOpen ? 10 : 0,
+               }}
+               transition={{ duration: 0.3, ease: "easeInOut" }}
+             />
+             
+             {/* Bottom line */}
+             <motion.span
+               className="absolute left-0 bottom-0 h-0.5 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full shadow-[0_0_8px_rgba(251,191,36,0.5)]"
+               style={{ width: '24px' }}
+               animate={{
+                 rotate: isMobileMenuOpen ? -45 : 0,
+                 y: isMobileMenuOpen ? -10 : 0,
+                 width: isMobileMenuOpen ? '28px' : '24px',
+               }}
+               transition={{ duration: 0.3, ease: "easeInOut" }}
+             />
+           </div>
+         </div>
+         
+         {/* Corner accents */}
+         <motion.div 
+           className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-yellow-400/50"
+           animate={{
+             opacity: isMobileMenuOpen ? 0 : [0.5, 1, 0.5],
+           }}
+           transition={{
+             duration: 2,
+             repeat: Infinity,
+             ease: "easeInOut"
+           }}
+         />
+         <motion.div 
+           className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-yellow-400/50"
+           animate={{
+             opacity: isMobileMenuOpen ? 0 : [0.5, 1, 0.5],
+           }}
+           transition={{
+             duration: 2,
+             repeat: Infinity,
+             ease: "easeInOut",
+             delay: 1
+           }}
+         />
        </div>
-      </button>
+      </motion.button>
      </div>
     </div>
    </div>
