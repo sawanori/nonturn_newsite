@@ -2,7 +2,11 @@
 
 import { motion } from 'framer-motion'
 
-const services = ['映像制作', '写真撮影', 'Web制作']
+const services = [
+  { name: '映像制作', href: '/services/movie' },
+  { name: '写真撮影', href: '/services/photo' },
+  { name: 'Web制作', href: '/services/web' }
+]
 const company = ['会社概要', 'プライバシーポリシー', '利用規約']
 const socialLinks = [
  { name: 'Instagram', icon: 'I', color: 'from-pink-500 to-yellow-500', href: 'https://www.instagram.com/nonturn2022', isEnglish: true }
@@ -96,18 +100,18 @@ export function Footer() {
       <ul className="space-y-2 text-gray-400">
        {services.map((service, index) => (
         <motion.li 
-         key={service}
+         key={service.name}
          initial={{ opacity: 0, x: -20 }}
          whileInView={{ opacity: 1, x: 0 }}
          viewport={{ once: true }}
          transition={{ duration: 0.5, delay: index * 0.1 }}
         >
          <motion.a 
-          href="#" 
+          href={service.href} 
           className="hover:text-yellow-400 transition-colors duration-300 relative group"
           whileHover={{ x: 5 }}
          >
-          {service}
+          {service.name}
           <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full"></span>
          </motion.a>
         </motion.li>
