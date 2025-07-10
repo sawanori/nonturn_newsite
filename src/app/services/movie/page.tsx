@@ -46,7 +46,7 @@ export default function MovieServicePage() {
               onClick={() => setIsVideoPlaying(true)}
             >
               <span className="relative z-10 flex items-center justify-center gap-2 sm:gap-3">
-                <span>デモ動画を見る</span>
+                <span>リール動画を見る（準備中）</span>
                 <motion.span
                   animate={{ x: [0, 5, 0] }}
                   transition={{ duration: 1.5, repeat: Infinity }}

@@ -946,9 +946,6 @@ export default function Home() {
          <a href="#" className="hover:text-yellow-400 transition-colors">
           <span>📷 <span className="eng-only">Instagram</span></span>
          </a>
-         <a href="#" className="hover:text-yellow-400 transition-colors">
-          <span>🐦 <span className="eng-only">Twitter</span></span>
-         </a>
         </div>
        </div>
       </div>

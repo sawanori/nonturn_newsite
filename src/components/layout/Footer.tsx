@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 
-const services = ['映像制作', '写真撮影', 'Web制作', 'コンサルティング']
+const services = ['映像制作', '写真撮影', 'Web制作']
 const company = ['会社概要', 'プライバシーポリシー', '利用規約']
 const socialLinks = [
  { name: 'Instagram', icon: 'I', color: 'from-pink-500 to-yellow-500', href: 'https://www.instagram.com/nonturn2022', isEnglish: true }

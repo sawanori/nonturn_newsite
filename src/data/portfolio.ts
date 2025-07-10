@@ -163,246 +163,246 @@ export const portfolioProjects = [
   },
   // Photography Portfolio Projects
   {
-    id: 'corporate-photography-1',
-    title: 'CORPORATE PHOTOGRAPHY',
-    subtitle: '企業撮影プロジェクト 1',
+    id: 'beach-lifestyle-portrait',
+    title: 'BEACH LIFESTYLE',
+    subtitle: 'ビーチライフスタイル撮影',
     category: 'photo',
-    industry: '企業',
+    industry: 'ファッション',
     year: '2024',
-    client: '企業A',
-    description: 'プロフェッショナルな企業写真撮影',
-    detailedDescription: '企業のブランディングに重要な役割を果たすプロフェッショナルフォトグラフィー。',
-    tags: ['CORPORATE', 'PROFESSIONAL', 'BRANDING'],
+    client: 'アパレルブランド',
+    description: '海辺での幻想的なライフスタイルフォトグラフィー',
+    detailedDescription: '白いドレスと海の波が織りなす幻想的な世界観を表現。自然光を活かした柔らかな光と水の反射を組み合わせ、ブランドの持つ優雅さと自由な精神を視覚的に表現しました。',
+    tags: ['LIFESTYLE', 'BEACH', 'ARTISTIC'],
     videoUrl: '',
     thumbnailUrl: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/1-ahUBbGFxLbRSGBp8I5zesVu1UCrEXM.jpg',
     gradient: 'from-blue-400 to-purple-500',
-    technologies: ['Studio Lighting', 'Commercial Photography', 'Retouching'],
+    technologies: ['Natural Light', 'Low Angle', 'Water Reflection'],
     duration: '',
-    deliverables: ['High Resolution Images', 'Web Optimized', 'Print Ready'],
+    deliverables: ['High Resolution Images', 'Campaign Materials', 'Social Media Content'],
     results: {
       brandImage: '向上',
-      marketingImpact: '効果的',
-      clientSatisfaction: '高評価'
+      socialEngagement: '300%増加',
+      campaignReach: '大幅拡大'
     },
     testimonial: {
-      text: 'プロフェッショナルな撮影で、企業イメージが大幅に向上しました。',
-      author: '企業A 担当者様'
+      text: '幻想的で美しい写真により、ブランドの世界観が完璧に表現されました。',
+      author: 'アパレルブランド ディレクター様'
     }
   },
   {
-    id: 'corporate-photography-2',
-    title: 'EVENT PHOTOGRAPHY',
-    subtitle: 'イベント撮影プロジェクト',
+    id: 'katsu-sandwich-food',
+    title: 'GOURMET SANDWICH',
+    subtitle: '牛カツサンド撮影',
     category: 'photo',
-    industry: 'イベント',
+    industry: '飲食',
     year: '2024',
-    client: 'イベント主催者',
-    description: 'イベントの魅力を捉えるプロフェッショナル撮影',
-    detailedDescription: 'イベントの臨場感と参加者の表情を美しく捉えた撮影プロジェクト。',
-    tags: ['EVENT', 'CANDID', 'ATMOSPHERE'],
+    client: 'サンドイッチ専門店',
+    description: '断面の美しさを強調した牛カツサンドの商品撮影',
+    detailedDescription: 'ジューシーな牛カツの断面と層の美しさを完璧に捉えた商品撮影。クリーンな白背景で商品の魅力を最大限に引き出し、見る人の食欲をそそる高品質な商品写真を制作しました。',
+    tags: ['FOOD', 'PRODUCT', 'COMMERCIAL'],
     videoUrl: '',
     thumbnailUrl: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/2-l4gatMsuCh1slTHV3iGYszNGTlDxhx.jpg',
     gradient: 'from-green-400 to-blue-500',
-    technologies: ['Event Photography', 'Natural Light', 'Candid Shots'],
+    technologies: ['Product Photography', 'Top View', 'Clean Background'],
     duration: '',
-    deliverables: ['Event Gallery', 'Highlight Reel', 'Social Media Package'],
+    deliverables: ['Menu Photos', 'E-commerce Images', 'Promotional Materials'],
     results: {
-      engagement: '大幅向上',
-      socialShares: '増加',
-      eventSuccess: '高評価'
+      sales: '25%増加',
+      onlineOrders: '40%増加',
+      brandRecognition: '向上'
     },
     testimonial: {
-      text: 'イベントの魅力を余すことなく撮影していただき、大変満足しています。',
-      author: 'イベント主催者様'
+      text: '商品の美味しさが伝わる素晴らしい写真で、売上が大幅に向上しました。',
+      author: 'サンドイッチ専門店 オーナー様'
     }
   },
   {
-    id: 'corporate-photography-3',
-    title: 'PRODUCT PHOTOGRAPHY',
-    subtitle: '商品撮影プロジェクト',
-    category: 'photo',
-    industry: '商品',
-    year: '2024',
-    client: '製造業B',
-    description: '商品の魅力を最大限に引き出す撮影',
-    detailedDescription: '商品の特徴と品質を効果的に伝えるプロダクトフォトグラフィー。',
-    tags: ['PRODUCT', 'COMMERCIAL', 'DETAIL'],
-    videoUrl: '',
-    thumbnailUrl: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/3-TzPVHUjCuBAdIPAhFs8ZOeADYHWLKc.jpg',
-    gradient: 'from-yellow-400 to-orange-500',
-    technologies: ['Product Photography', 'Macro Lens', 'Studio Setup'],
-    duration: '',
-    deliverables: ['Product Catalog', 'E-commerce Images', 'Marketing Materials'],
-    results: {
-      sales: '向上',
-      conversion: '改善',
-      brandValue: '向上'
-    },
-    testimonial: {
-      text: '商品の魅力が最大限に引き出された素晴らしい写真をいただきました。',
-      author: '製造業B 担当者様'
-    }
-  },
-  {
-    id: 'corporate-photography-4',
-    title: 'ARCHITECTURAL PHOTOGRAPHY',
-    subtitle: '建築撮影プロジェクト',
-    category: 'photo',
-    industry: '建築',
-    year: '2024',
-    client: '建築事務所',
-    description: '建築の美しさを捉えるプロフェッショナル撮影',
-    detailedDescription: '建築物の設計意図と空間の魅力を表現したアーキテクチュラルフォトグラフィー。',
-    tags: ['ARCHITECTURE', 'INTERIOR', 'DESIGN'],
-    videoUrl: '',
-    thumbnailUrl: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/4-XoQ2KJrHwhwWFyCx1xhUsArWI6BuwB.jpg',
-    gradient: 'from-purple-400 to-pink-500',
-    technologies: ['Architectural Photography', 'Wide Angle', 'HDR'],
-    duration: '',
-    deliverables: ['Architectural Portfolio', 'Interior Shots', 'Exterior Views'],
-    results: {
-      portfolioQuality: '向上',
-      clientAttractions: '増加',
-      awardRecognition: '受賞'
-    },
-    testimonial: {
-      text: '建築の美しさを完璧に捉えていただき、ポートフォリオの質が大幅に向上しました。',
-      author: '建築事務所 代表様'
-    }
-  },
-  {
-    id: 'corporate-photography-5',
-    title: 'LIFESTYLE PHOTOGRAPHY',
-    subtitle: 'ライフスタイル撮影',
-    category: 'photo',
-    industry: 'ライフスタイル',
-    year: '2024',
-    client: 'ライフスタイルブランド',
-    description: 'ライフスタイルを美しく表現する撮影',
-    detailedDescription: 'ブランドの世界観とライフスタイルを表現したフォトグラフィー。',
-    tags: ['LIFESTYLE', 'BRAND', 'STORY'],
-    videoUrl: '',
-    thumbnailUrl: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/5-hl4KhogTlAig2r6RUD0SCvrDL22c3i.jpg',
-    gradient: 'from-teal-400 to-cyan-500',
-    technologies: ['Lifestyle Photography', 'Natural Setting', 'Brand Storytelling'],
-    duration: '',
-    deliverables: ['Brand Campaign', 'Social Media Content', 'Website Images'],
-    results: {
-      brandAwareness: '向上',
-      engagement: '大幅増加',
-      salesImpact: 'ポジティブ'
-    },
-    testimonial: {
-      text: 'ブランドの世界観を美しく表現していただき、マーケティング効果も抜群です。',
-      author: 'ライフスタイルブランド 担当者様'
-    }
-  },
-  {
-    id: 'corporate-photography-6',
-    title: 'FOOD PHOTOGRAPHY',
-    subtitle: 'フード撮影プロジェクト',
+    id: 'chef-cooking-documentary',
+    title: 'CHEF AT WORK',
+    subtitle: 'シェフの調理風景',
     category: 'photo',
     industry: '飲食',
     year: '2024',
     client: 'レストラン',
-    description: '料理の美しさを際立たせる撮影',
-    detailedDescription: '料理の美味しさと美しさを効果的に伝えるフードフォトグラフィー。',
-    tags: ['FOOD', 'CULINARY', 'GOURMET'],
+    description: 'プロフェッショナルシェフの調理プロセスを記録',
+    detailedDescription: '熟練シェフの精密な包丁さばきと調理技術を捉えたドキュメンタリー撮影。手元にフォーカスした構図で、職人の技術と料理への情熱を視覚的に表現し、レストランの本格性と品質の高さを訴求しました。',
+    tags: ['CHEF', 'DOCUMENTARY', 'CULINARY'],
+    videoUrl: '',
+    thumbnailUrl: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/3-TzPVHUjCuBAdIPAhFs8ZOeADYHWLKc.jpg',
+    gradient: 'from-yellow-400 to-orange-500',
+    technologies: ['Documentary Style', 'Process Photography', 'Kitchen Lighting'],
+    duration: '',
+    deliverables: ['Process Images', 'Restaurant Portfolio', 'Marketing Content'],
+    results: {
+      brandAuthenticity: '強化',
+      customerTrust: '向上',
+      reservations: '20%増加'
+    },
+    testimonial: {
+      text: 'シェフの技術と情熱が伝わる素晴らしい写真により、レストランの価値が向上しました。',
+      author: 'レストラン オーナーシェフ様'
+    }
+  },
+  {
+    id: 'wagashi-japanese-sweets',
+    title: 'JAPANESE CONFECTIONERY',
+    subtitle: '伝統和菓子撮影',
+    category: 'photo',
+    industry: '和菓子',
+    year: '2024',
+    client: '和菓子店',
+    description: '日本の伝統的な和菓子の美しさを表現',
+    detailedDescription: '繊細な色彩と造形美を持つ伝統的な和菓子を、黒い器で引き立てながら撮影。和の美意識と職人の技術が生み出す芸術的な菓子の魅力を、上品かつモダンな構図で表現しました。',
+    tags: ['WAGASHI', 'TRADITIONAL', 'ARTISAN'],
+    videoUrl: '',
+    thumbnailUrl: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/4-XoQ2KJrHwhwWFyCx1xhUsArWI6BuwB.jpg',
+    gradient: 'from-purple-400 to-pink-500',
+    technologies: ['Product Photography', 'Traditional Styling', 'Soft Lighting'],
+    duration: '',
+    deliverables: ['Product Catalog', 'Seasonal Collection', 'Gift Box Images'],
+    results: {
+      sales: '30%向上',
+      giftOrders: '大幅増加',
+      brandPrestige: '強化'
+    },
+    testimonial: {
+      text: '和菓子の繊細な美しさを完璧に表現していただき、高級感が大幅に向上しました。',
+      author: '和菓子店 三代目様'
+    }
+  },
+  {
+    id: 'healthy-bowl-lifestyle',
+    title: 'HEALTHY LIFESTYLE',
+    subtitle: 'ヘルシーボウル撮影',
+    category: 'photo',
+    industry: 'ヘルスケア',
+    year: '2024',
+    client: 'ヘルシーフードブランド',
+    description: '健康的なライフスタイルを提案するフード撮影',
+    detailedDescription: 'カラフルな野菜と栄養豊富な食材で構成されたヘルシーボウルを、真上からのモダンな構図で撮影。健康志向のライフスタイルと美味しさの両立を視覚的に表現し、ブランドの価値観を訴求しました。',
+    tags: ['HEALTHY', 'FOOD', 'MODERN'],
+    videoUrl: '',
+    thumbnailUrl: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/5-hl4KhogTlAig2r6RUD0SCvrDL22c3i.jpg',
+    gradient: 'from-teal-400 to-cyan-500',
+    technologies: ['Flat Lay Photography', 'Natural Colors', 'Modern Composition'],
+    duration: '',
+    deliverables: ['Recipe Photos', 'Social Media Content', 'Menu Design'],
+    results: {
+      healthAwareness: '向上',
+      socialEngagement: '200%増加',
+      newCustomers: '35%増加'
+    },
+    testimonial: {
+      text: '美味しさと健康が両立した魅力的な写真で、ブランドイメージが大幅に向上しました。',
+      author: 'ヘルシーフードブランド 代表様'
+    }
+  },
+  {
+    id: 'hamaguri-seafood',
+    title: 'FRESH SEAFOOD',
+    subtitle: '新鮮はまぐり撮影',
+    category: 'photo',
+    industry: '海鮮料理',
+    year: '2024',
+    client: '日本料理店',
+    description: '新鮮な海の幸の魅力を伝える食材撮影',
+    detailedDescription: '箸で優雅に持ち上げられた新鮮なはまぐりを撮影。日本料理の繊細さと素材の新鮮さを強調し、和の演出と共に高級感のある食材写真を制作。見る人に素材の品質の高さを訴求しました。',
+    tags: ['SEAFOOD', 'JAPANESE', 'PREMIUM'],
     videoUrl: '',
     thumbnailUrl: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/6-lBfVjkw1GyFlaswiLfy0XVr7Y2iBjC.jpg',
     gradient: 'from-red-400 to-pink-500',
-    technologies: ['Food Photography', 'Styling', 'Natural Light'],
+    technologies: ['Food Photography', 'Japanese Styling', 'Action Shot'],
     duration: '',
-    deliverables: ['Menu Photography', 'Social Media Images', 'Marketing Materials'],
+    deliverables: ['Menu Photography', 'Seasonal Campaign', 'Premium Materials'],
     results: {
-      menuAppeal: '向上',
-      customerInterest: '増加',
-      reservations: '10%増加'
+      premiumDishes: '注文増加',
+      customerSatisfaction: '向上',
+      brandPrestige: '強化'
     },
     testimonial: {
-      text: '料理が美しく撮影され、お客様からの反響も大変良好です。',
-      author: 'レストラン オーナー様'
+      text: '素材の新鮮さと高級感が完璧に表現され、お客様からの評価も非常に高いです。',
+      author: '日本料理店 料理長様'
     }
   },
   {
-    id: 'corporate-photography-7',
-    title: 'PORTRAIT PHOTOGRAPHY',
-    subtitle: 'ポートレート撮影',
+    id: 'photographer-portrait',
+    title: 'PROFESSIONAL PHOTOGRAPHER',
+    subtitle: 'プロカメラマンポートレート',
     category: 'photo',
-    industry: '人物',
+    industry: 'クリエイティブ',
     year: '2024',
-    client: '個人・企業',
-    description: '人物の魅力を引き出すポートレート撮影',
-    detailedDescription: '人物の個性と魅力を最大限に引き出すプロフェッショナルポートレート。',
-    tags: ['PORTRAIT', 'PROFESSIONAL', 'CHARACTER'],
+    client: 'フォトグラファー',
+    description: 'プロフェッショナルカメラマンのビジネスポートレート',
+    detailedDescription: 'カメラ機材と共にプロフェッショナルな雰囲気を演出したカメラマンのポートレート撮影。スタジオライティングを駆使し、専門性と信頼感を表現。クリエイターとしての個性と技術力を視覚的に訴求しました。',
+    tags: ['PHOTOGRAPHER', 'PROFESSIONAL', 'CREATIVE'],
     videoUrl: '',
     thumbnailUrl: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/7-mJKwnJ1MV7rgCTVH2W7YH58O16jhJM.jpg',
     gradient: 'from-indigo-400 to-purple-500',
-    technologies: ['Portrait Photography', 'Studio Lighting', 'Retouching'],
+    technologies: ['Studio Portrait', 'Professional Lighting', 'Equipment Styling'],
     duration: '',
-    deliverables: ['Professional Headshots', 'Portfolio Images', 'Social Media Ready'],
+    deliverables: ['Business Portrait', 'Website Profile', 'Marketing Materials'],
     results: {
-      professionalImage: '向上',
-      marketingImpact: '効果的',
-      clientSatisfaction: '非常に高い'
+      professionalImage: '大幅向上',
+      clientInquiries: '50%増加',
+      brandRecognition: '強化'
     },
     testimonial: {
-      text: '期待を上回る素晴らしいポートレートを撮影していただきました。',
-      author: 'クライアント様'
+      text: 'プロフェッショナルな印象を完璧に表現していただき、仕事の依頼が増えました。',
+      author: 'フォトグラファー様'
     }
   },
   {
-    id: 'corporate-photography-8',
-    title: 'FASHION PHOTOGRAPHY',
-    subtitle: 'ファッション撮影',
+    id: 'sushi-craftsman',
+    title: 'SUSHI CRAFTSMAN',
+    subtitle: '寿司職人の技',
     category: 'photo',
-    industry: 'ファッション',
+    industry: '日本料理',
     year: '2024',
-    client: 'ファッションブランド',
-    description: 'ファッションの魅力を表現する撮影',
-    detailedDescription: 'ファッションアイテムとモデルの美しさを表現したスタイリッシュな撮影。',
-    tags: ['FASHION', 'STYLE', 'TREND'],
+    client: '高級寿司店',
+    description: '伝統的な寿司職人の技術と精神を記録',
+    detailedDescription: '白い職人服に身を包んだ寿司職人の熟練の技を撮影。日本の伝統的な職人文化と、素材への敬意、技術の継承を視覚的に表現。高級寿司店の格式と品質の高さを訴求する写真を制作しました。',
+    tags: ['SUSHI', 'CRAFTSMAN', 'TRADITION'],
     videoUrl: '',
     thumbnailUrl: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/8-Zs2WBv7g88WxHD85HWhaQoWWExe7Xp.jpg',
     gradient: 'from-pink-400 to-rose-500',
-    technologies: ['Fashion Photography', 'Model Direction', 'Creative Lighting'],
+    technologies: ['Documentary Photography', 'Traditional Setting', 'Natural Expression'],
     duration: '',
-    deliverables: ['Lookbook', 'Campaign Images', 'E-commerce Photos'],
+    deliverables: ['Craftsman Portfolio', 'Restaurant Branding', 'Cultural Documentation'],
     results: {
-      brandImage: '大幅向上',
-      salesImpact: 'ポジティブ',
-      socialEngagement: '増加'
+      brandPrestige: '大幅向上',
+      internationalRecognition: '獲得',
+      reservationValue: '向上'
     },
     testimonial: {
-      text: 'ブランドのコンセプトを完璧に表現していただき、大変満足しています。',
-      author: 'ファッションブランド 担当者様'
+      text: '職人の技と精神が見事に表現され、店の格式が大きく向上しました。',
+      author: '高級寿司店 大将様'
     }
   },
   {
-    id: 'corporate-photography-9',
-    title: 'STREET PHOTOGRAPHY',
-    subtitle: 'ストリート撮影',
+    id: 'maguro-nigiri-sushi',
+    title: 'PREMIUM SUSHI',
+    subtitle: 'マグロの握り',
     category: 'photo',
-    industry: 'ドキュメンタリー',
+    industry: '高級寿司',
     year: '2024',
-    client: 'メディア',
-    description: '都市の魅力を捉えるストリート撮影',
-    detailedDescription: '都市の日常と文化を捉えたドキュメンタリースタイルの撮影。',
-    tags: ['STREET', 'DOCUMENTARY', 'URBAN'],
+    client: '銀座寿司店',
+    description: '最高級マグロの握り寿司の美しさを表現',
+    detailedDescription: '職人の手と共に捉えた最高級マグロの握り寿司。シャリとネタの絶妙なバランス、職人の繊細な手仕事を通じて、江戸前寿司の真髄を表現。素材の品質と技術の高さを視覚的に訴求しました。',
+    tags: ['SUSHI', 'PREMIUM', 'MAGURO'],
     videoUrl: '',
     thumbnailUrl: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/9-HS8CW5NXVIyjfZI7IBnbIAamIM35If.jpg',
     gradient: 'from-gray-400 to-slate-500',
-    technologies: ['Street Photography', 'Documentary Style', 'Available Light'],
+    technologies: ['Close-up Photography', 'Sushi Styling', 'Premium Presentation'],
     duration: '',
-    deliverables: ['Photo Series', 'Editorial Images', 'Social Documentary'],
+    deliverables: ['Menu Photography', 'Brand Materials', 'Premium Collection'],
     results: {
-      culturalImpact: '大きい',
-      publicEngagement: '高い',
-      mediaRecognition: '獲得'
+      premiumCourse: '予約殺到',
+      brandValue: '最高級確立',
+      mediaFeature: '多数掲載'
     },
     testimonial: {
-      text: '都市の魅力を独特の視点で捉えていただき、多くの反響をいただいています。',
-      author: 'メディア編集者様'
+      text: '寿司の美しさと品質が完璧に表現され、ブランド価値が大幅に向上しました。',
+      author: '銀座寿司店 店主様'
     }
   }
 ]

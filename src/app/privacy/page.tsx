@@ -173,7 +173,7 @@ export default function Privacy() {
                     <p>神奈川県横浜市西区みなとみらい3-7-1</p>
                     <p>オーシャンゲートみなとみらい8F</p>
                     <p className="mt-2">
-                      Email: <a href="mailto:n.sawada@non-turn.com" className="text-yellow-400 hover:text-yellow-300 transition-colors">n.sawada@non-turn.com</a>
+                      Email: <a href="mailto:info@non-turn.com" className="text-yellow-400 hover:text-yellow-300 transition-colors">info@non-turn.com</a>
                     </p>
                   </div>
                 </div>
