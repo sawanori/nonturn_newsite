@@ -359,26 +359,27 @@ export default function AboutPage() {
             >
               <h3 className="text-2xl font-bold mb-6 text-yellow-400">会社概要</h3>
               <div className="space-y-4">
-                <div className="flex justify-between items-center border-b border-gray-700 pb-2">
+                <div className="grid grid-cols-[100px_1fr] gap-4 border-b border-gray-700 pb-2">
                   <span className="text-gray-300">会社名</span>
                   <span className="text-white font-medium">{companyInfo.name}</span>
                 </div>
-                <div className="flex justify-between items-center border-b border-gray-700 pb-2">
+                <div className="grid grid-cols-[100px_1fr] gap-4 border-b border-gray-700 pb-2">
                   <span className="text-gray-300">代表者</span>
                   <span className="text-white font-medium">{companyInfo.representative.name}</span>
                 </div>
-                <div className="flex justify-between items-start border-b border-gray-700 pb-2">
+                <div className="grid grid-cols-[100px_1fr] gap-4 border-b border-gray-700 pb-4">
                   <span className="text-gray-300">所在地</span>
-                  <div className="text-right">
-                    <div className="text-white font-medium">{companyInfo.address.postal}</div>
-                    <div className="text-white font-medium">{companyInfo.address.full}</div>
+                  <div className="text-left">
+                    <p className="text-white font-medium">{companyInfo.address.postal}</p>
+                    <p className="text-white font-medium">
+                      神奈川県横浜市西区<br/>
+                      みなとみらい3-7-1<br/>
+                      オーシャンゲートみなとみらい8F
+                    </p>
+                    <p className="text-yellow-400 text-sm mt-1">{companyInfo.address.access}</p>
                   </div>
                 </div>
-                <div className="flex justify-between items-center border-b border-gray-700 pb-2">
-                  <span className="text-gray-300">アクセス</span>
-                  <span className="text-white font-medium">{companyInfo.address.access}</span>
-                </div>
-                <div className="flex justify-between items-center">
+                <div className="grid grid-cols-[100px_1fr] gap-4">
                   <span className="text-gray-300">連絡先</span>
                   <span className="text-white font-medium">{companyInfo.contact.email}</span>
                 </div>

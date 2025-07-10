@@ -268,7 +268,7 @@ export default function WebServicePage() {
                   }`}
                 >
                   {/* Step Content */}
-                  <div className="flex-1">
+                  <div className="flex-1 w-full lg:w-auto">
                     <motion.div
                       className="bg-gradient-to-br from-gray-800/80 to-black/80 backdrop-blur-xl border border-gray-700/50 p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl hover:border-purple-400/50 transition-all duration-500 group"
                       whileHover={{ scale: 1.02, y: -5 }}
@@ -281,12 +281,12 @@ export default function WebServicePage() {
                         >
                           {step.step}
                         </motion.div>
-                        <h3 className="text-3xl font-bold text-white group-hover:text-purple-400 transition-colors duration-300">
+                        <h3 className="text-2xl sm:text-3xl font-bold text-white group-hover:text-purple-400 transition-colors duration-300">
                           {step.title}
                         </h3>
                       </div>
                       
-                      <p className="text-gray-300 mb-6 text-lg leading-relaxed">
+                      <p className="text-gray-300 mb-6 text-base sm:text-lg leading-relaxed">
                         {step.description}
                       </p>
                       
@@ -295,9 +295,9 @@ export default function WebServicePage() {
                           <motion.div
                             key={deliverableIndex}
                             initial={false}
-                            className="flex items-center text-purple-400"
+                            className="flex items-center text-purple-400 text-sm sm:text-base"
                           >
-                            <span className="w-2 h-2 bg-purple-400 rounded-full mr-3"></span>
+                            <span className="w-2 h-2 bg-purple-400 rounded-full mr-3 flex-shrink-0"></span>
                             {deliverable}
                           </motion.div>
                         ))}
@@ -306,7 +306,7 @@ export default function WebServicePage() {
                   </div>
                   
                   {/* Step Visualization */}
-                  <div className="flex-1">
+                  <div className="flex-1 w-full lg:w-auto max-w-md mx-auto lg:max-w-none">
                     <motion.div
                       className="aspect-square bg-gradient-to-br from-purple-400/10 to-pink-500/10 rounded-3xl flex items-center justify-center relative overflow-hidden group"
                       whileHover={{ scale: 1.05 }}

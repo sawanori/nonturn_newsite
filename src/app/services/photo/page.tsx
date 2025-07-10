@@ -283,7 +283,50 @@ export default function PhotoServicePage() {
        </p>
       </motion.div>
 
-      <div className="relative">
+      {/* Mobile Layout - Compact Cards */}
+      <div className="block md:hidden space-y-6">
+       {serviceData.process.map((step, index) => (
+        <motion.div
+         key={step.step}
+         initial={{ opacity: 0, y: 30 }}
+         whileInView={{ opacity: 1, y: 0 }}
+         viewport={{ once: true }}
+         transition={{ duration: 0.5, delay: index * 0.1 }}
+         className="relative"
+        >
+         <motion.div
+          className="bg-gradient-to-br from-gray-800/80 to-black/80 backdrop-blur-xl border border-gray-700/50 p-6 rounded-2xl hover:border-blue-400/50 transition-all duration-500 group"
+          whileHover={{ scale: 1.02 }}
+         >
+          <div className="flex items-start gap-4">
+           <motion.div
+            className="w-14 h-14 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-xl flex-shrink-0"
+            whileHover={{ rotate: 360 }}
+            transition={{ duration: 0.6 }}
+           >
+            {step.icon || step.step}
+           </motion.div>
+           <div className="flex-1">
+            <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors duration-300 mb-2">
+             {step.title}
+            </h3>
+            <p className="text-blue-400 font-semibold text-sm mb-2">{step.duration}</p>
+            <p className="text-gray-300 text-sm mb-3">{step.description}</p>
+            <p className="text-yellow-400 font-semibold text-sm">{step.price}</p>
+           </div>
+          </div>
+         </motion.div>
+         
+         {/* Connecting Line (not on last item) */}
+         {index < serviceData.process.length - 1 && (
+          <div className="absolute left-7 top-20 h-6 w-0.5 bg-gradient-to-b from-blue-400 to-purple-500 opacity-50"></div>
+         )}
+        </motion.div>
+       ))}
+      </div>
+
+      {/* Desktop Layout - Original Timeline */}
+      <div className="hidden md:block relative">
        {/* Timeline Line */}
        <div className="absolute left-1/2 transform -translate-x-0.5 h-full w-1 bg-gradient-to-b from-blue-400 via-purple-500 to-pink-500 opacity-30"></div>
        

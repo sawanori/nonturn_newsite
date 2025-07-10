@@ -72,7 +72,7 @@ export default function Home() {
    {/* Hero Section */}
    <section 
     ref={heroRef} 
-    className="relative min-h-screen flex items-center overflow-hidden"
+    className="relative min-h-screen flex items-center overflow-hidden py-12 sm:py-8 md:py-0"
     aria-labelledby="hero-heading"
     role="banner"
    >
