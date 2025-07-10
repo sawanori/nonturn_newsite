@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "https://www.non-turn.com/:path*",
+      "destination": "https://non-turn.com/:path*",
+      "permanent": true
+    }
+  ]
+}
