@@ -110,7 +110,6 @@ export const services = {
         title: 'ヒアリング',
         duration: '3日以内',
         description: '撮影内容の詳細確認と打ち合わせ',
-        price: '¥22,000/時間',
         icon: '💬'
       },
       {

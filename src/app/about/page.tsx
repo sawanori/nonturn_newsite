@@ -79,13 +79,7 @@ export default function AboutPage() {
               <p className="text-lg text-gray-300 mb-8 leading-relaxed">
                 {companyInfo.mission}
               </p>
-              <h3 className="text-2xl font-bold mb-4 text-white">
-                <span lang="en" className="eng-only">Our</span> <span className="text-yellow-400 eng-only" lang="en">Vision</span>
-              </h3>
-              <p className="text-lg text-gray-300 leading-relaxed">
-                {companyInfo.vision}
-              </p>
-            </motion.div>
+           </motion.div>
 
             <motion.div
               initial={{ opacity: 0, x: 50 }}
