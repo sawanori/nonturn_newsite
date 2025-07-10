@@ -41,7 +41,9 @@ export async function POST(request: NextRequest) {
     const csrfCookie = request.cookies.get('csrf-token')?.value
     
     // Verify both header token and cookie token
-    const isValidCSRF = await verifyCSRFToken(csrfToken) && 
+    const isValidCSRF = csrfToken && 
+                       csrfCookie &&
+                       await verifyCSRFToken(csrfToken) && 
                        await verifyCSRFToken(csrfCookie) &&
                        csrfToken === csrfCookie
 

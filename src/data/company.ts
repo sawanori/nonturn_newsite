@@ -12,7 +12,7 @@ export const companyInfo = {
   vision: '共に目指す場所は、企業イメージの向上、事業の宣伝、実際の顧客獲得の実現です',
   values: [
     {
-    y  title: 'Problem Solving',
+      title: 'Problem Solving',
       subtitle: '中小企業の悩み解決',
       description: 'Webでの見せ方に自信がない中小企業の課題を理解し、魅力的なプロモーション素材制作でお客様の不安を解消します。'
     },
