@@ -57,6 +57,8 @@ export async function POST(request: NextRequest) {
     // Parse and validate request body
     const body = await request.json()
     
+    console.log('Received form data:', body)
+    
     // Validate input data with Zod
     let validatedData
     try {
@@ -89,7 +91,13 @@ export async function POST(request: NextRequest) {
 
     // Check if SendGrid is configured
     if (!process.env.SENDGRID_API_KEY || !process.env.CONTACT_EMAIL_TO || !process.env.SENDGRID_FROM_EMAIL) {
-      console.error('SendGrid configuration is missing')
+      console.error('SendGrid configuration is missing:', {
+        hasApiKey: !!process.env.SENDGRID_API_KEY,
+        hasContactEmailTo: !!process.env.CONTACT_EMAIL_TO,
+        hasSendGridFromEmail: !!process.env.SENDGRID_FROM_EMAIL,
+        contactEmailTo: process.env.CONTACT_EMAIL_TO,
+        sendGridFromEmail: process.env.SENDGRID_FROM_EMAIL
+      })
       return NextResponse.json(
         { error: 'メール送信の設定が完了していません。管理者にお問い合わせください。' },
         { status: 500 }
@@ -188,12 +196,36 @@ Website: https://non-turn.com
     successResponse.cookies.delete('csrf-token')
     
     return successResponse
-  } catch (error) {
+  } catch (error: any) {
     console.error('Email send error:', error)
+    console.error('Error details:', {
+      message: error.message,
+      code: error.code,
+      response: error.response?.body,
+      stack: error.stack
+    })
     
-    // Don't expose internal error details to client
+    // SendGrid specific error handling
+    if (error.code === 401) {
+      return NextResponse.json(
+        { error: 'メール送信の認証に失敗しました。APIキーを確認してください。' },
+        { status: 500 }
+      )
+    }
+    
+    if (error.code === 403) {
+      return NextResponse.json(
+        { error: 'メール送信が拒否されました。送信元メールアドレスを確認してください。' },
+        { status: 500 }
+      )
+    }
+    
+    // Don't expose internal error details to client in production
     return NextResponse.json(
-      { error: 'メールの送信中にエラーが発生しました。しばらくしてから再度お試しください。' },
+      { 
+        error: 'メールの送信中にエラーが発生しました。しばらくしてから再度お試しください。',
+        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      },
       { status: 500 }
     )
   }

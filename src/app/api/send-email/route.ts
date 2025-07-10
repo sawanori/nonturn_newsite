@@ -62,7 +62,10 @@ export async function POST(request: NextRequest) {
     // 管理者への通知メール
     const adminMsg = {
       to: process.env.ADMIN_EMAIL || 'info@non-turn.com',
-      from: process.env.FROM_EMAIL || 'info@non-turn.com',
+      from: {
+        email: process.env.FROM_EMAIL || 'info@non-turn.com',
+        name: 'NonTurn.LLC'
+      },
       subject: `【NonTurn.LLC】新しいお問い合わせ: ${inquiryType}`,
       html: emailContent,
       replyTo: email
@@ -71,7 +74,10 @@ export async function POST(request: NextRequest) {
     // お客様への自動返信メール
     const customerMsg = {
       to: email,
-      from: process.env.FROM_EMAIL || 'info@non-turn.com',
+      from: {
+        email: process.env.FROM_EMAIL || 'info@non-turn.com',
+        name: 'NonTurn.LLC'
+      },
       subject: '【NonTurn.LLC】お問い合わせを受け付けました',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -122,17 +128,64 @@ export async function POST(request: NextRequest) {
     }
 
     // メール送信
-    await sgMail.send(adminMsg)
-    await sgMail.send(customerMsg)
+    console.log('Attempting to send admin email...')
+    try {
+      const adminResponse = await sgMail.send(adminMsg)
+      console.log('Admin email sent successfully:', adminResponse[0].statusCode)
+    } catch (adminError: any) {
+      console.error('Admin email error:', {
+        code: adminError.code,
+        message: adminError.message,
+        response: adminError.response?.body
+      })
+      throw adminError
+    }
+
+    console.log('Attempting to send customer email...')
+    try {
+      const customerResponse = await sgMail.send(customerMsg)
+      console.log('Customer email sent successfully:', customerResponse[0].statusCode)
+    } catch (customerError: any) {
+      console.error('Customer email error:', {
+        code: customerError.code,
+        message: customerError.message,
+        response: customerError.response?.body
+      })
+      throw customerError
+    }
 
     return NextResponse.json(
       { success: true, message: 'メールを送信しました' },
       { status: 200 }
     )
-  } catch (error) {
+  } catch (error: any) {
     console.error('Email sending error:', error)
+    console.error('Error details:', {
+      message: error.message,
+      code: error.code,
+      response: error.response?.body
+    })
+    
+    // SendGrid specific error handling
+    if (error.code === 401) {
+      return NextResponse.json(
+        { error: 'メール送信の認証に失敗しました。APIキーを確認してください。' },
+        { status: 500 }
+      )
+    }
+    
+    if (error.code === 403) {
+      return NextResponse.json(
+        { error: 'メール送信が拒否されました。送信元メールアドレスを確認してください。' },
+        { status: 500 }
+      )
+    }
+    
     return NextResponse.json(
-      { error: 'メールの送信に失敗しました' },
+      { 
+        error: 'メールの送信に失敗しました', 
+        details: process.env.NODE_ENV === 'development' ? error.message : undefined 
+      },
       { status: 500 }
     )
   }
