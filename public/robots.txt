@@ -1,0 +1,17 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /*.json$
+Disallow: /*_buildManifest.js$
+Disallow: /*_middlewareManifest.js$
+Disallow: /*_ssgManifest.js$
+Disallow: /*.js.map$
+
+# Host
+Host: https://non-turn.com
+
+# Sitemaps
+Sitemap: https://non-turn.com/sitemap.xml

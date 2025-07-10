@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Noto_Serif_JP } from "next/font/google";
 import Script from "next/script";
+import { GoogleTagManager, GoogleTagManagerNoscript } from "@/components/GoogleTagManager";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -195,10 +196,12 @@ export default function RootLayout({
         <meta name="geo.placename" content="東京,横浜" />
         <meta name="geo.position" content="35.4589;139.6317" />
         <meta name="ICBM" content="35.4589, 139.6317" />
+        <GoogleTagManager />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${notoSerifJP.variable} antialiased`}
       >
+        <GoogleTagManagerNoscript />
         {children}
       </body>
     </html>
