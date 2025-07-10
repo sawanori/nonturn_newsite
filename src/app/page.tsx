@@ -817,7 +817,7 @@ export default function Home() {
         </span>
        </h2>
        <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-        NonTurn.LLCは、映像制作とクリエイティブソリューションを通じて、
+        NonTurn.LLCは、映像制作を通じた問題解決を通じて、
         企業のビジネス課題解決をサポートします。
        </p>
        <div className="space-y-4 mb-8">
@@ -826,8 +826,8 @@ export default function Home() {
           <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
          </div>
          <div>
-          <h4 className="text-white font-semibold mb-1">ストーリーテリングの力</h4>
-          <p className="text-gray-400 text-sm">企業の想いを心に響く物語として映像化し、深い共感を生み出します</p>
+          <h4 className="text-white font-semibold mb-1">問題の本質を見定める</h4>
+          <p className="text-gray-400 text-sm">企業の課題を明確にし、それらを解消するためのクリエイティブを考える</p>
          </div>
         </div>
         <div className="flex items-start gap-3">
@@ -844,7 +844,7 @@ export default function Home() {
           <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
          </div>
          <div>
-          <h4 className="text-white font-semibold mb-1">ワンストップソリューション</h4>
+          <h4 className="text-white font-semibold mb-1">一貫したサポート体制</h4>
           <p className="text-gray-400 text-sm">企画から納品まで、すべてのプロセスを一貫してサポート</p>
          </div>
         </div>
@@ -943,7 +943,7 @@ export default function Home() {
          <span>横浜みなとみらい</span>
         </div>
         <div className="flex items-center gap-4">
-         <a href="#" className="hover:text-yellow-400 transition-colors">
+         <a href="https://www.instagram.com/nonturn2022" target="_blank" rel="noopener noreferrer" className="hover:text-yellow-400 transition-colors">
           <span>📷 <span className="eng-only">Instagram</span></span>
          </a>
         </div>
