@@ -15,8 +15,8 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
     name: '',
     company: '',
     email: '',
-    service: '',
-    budget: '',
+    phone: '',
+    inquiryType: '',
     message: ''
   })
 
@@ -82,7 +82,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
     }
 
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -104,8 +104,8 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
           name: '',
           company: '',
           email: '',
-          service: '',
-          budget: '',
+          phone: '',
+          inquiryType: '',
           message: ''
         })
         onSuccess?.()
@@ -215,44 +215,44 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
           </div>
           
           <div>
-            <label htmlFor="service" className="block text-sm font-medium text-yellow-400 mb-2 uppercase tracking-wider">
-              ご希望サービス
+            <label htmlFor="phone" className="block text-sm font-medium text-yellow-400 mb-2 uppercase tracking-wider">
+              電話番号
             </label>
-            <select
-              id="service"
-              name="service"
-              value={formData.service}
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              value={formData.phone}
               onChange={handleInputChange}
-              className="w-full px-4 py-3 bg-black/50 border border-yellow-400/30 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 text-white transition-all duration-300 rounded"
-            >
-              <option value="" className="bg-black">選択してください</option>
-              <option value="movie" className="bg-black">映像制作</option>
-              <option value="photo" className="bg-black">写真撮影</option>
-              <option value="web" className="bg-black">Web制作</option>
-              <option value="other" className="bg-black">その他</option>
-            </select>
+              className="w-full px-4 py-3 bg-black/50 border border-yellow-400/30 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 text-white placeholder-gray-400 transition-all duration-300 rounded"
+              placeholder="090-1234-5678"
+            />
           </div>
         </div>
 
         <div className="mb-6">
-          <label htmlFor="budget" className="block text-sm font-medium text-yellow-400 mb-2 uppercase tracking-wider">
-            ご予算
+          <label htmlFor="inquiryType" className="block text-sm font-medium text-yellow-400 mb-2 uppercase tracking-wider">
+            お問い合わせ種別 <span className="text-red-400">*</span>
           </label>
           <select
-            id="budget"
-            name="budget"
-            value={formData.budget}
+            id="inquiryType"
+            name="inquiryType"
+            required
+            value={formData.inquiryType}
             onChange={handleInputChange}
-            className="w-full px-4 py-3 bg-black/50 border border-yellow-400/30 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 text-white transition-all duration-300 rounded"
+            className={`w-full px-4 py-3 bg-black/50 border ${fieldErrors.inquiryType ? 'border-red-400' : 'border-yellow-400/30'} focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 text-white transition-all duration-300 rounded`}
           >
             <option value="" className="bg-black">選択してください</option>
-            <option value="under-100k" className="bg-black">10万円未満</option>
-            <option value="100k-300k" className="bg-black">10万円〜30万円</option>
-            <option value="300k-500k" className="bg-black">30万円〜50万円</option>
-            <option value="500k-1m" className="bg-black">50万円〜100万円</option>
-            <option value="over-1m" className="bg-black">100万円以上</option>
-            <option value="undecided" className="bg-black">未定</option>
+            <option value="映像制作" className="bg-black">映像制作</option>
+            <option value="写真撮影" className="bg-black">写真撮影</option>
+            <option value="Web制作" className="bg-black">Web制作</option>
+            <option value="その他のお問い合わせ" className="bg-black">その他のお問い合わせ</option>
           </select>
+          {fieldErrors.inquiryType && (
+            <p className="text-red-400 text-sm mt-1">
+              {fieldErrors.inquiryType}
+            </p>
+          )}
         </div>
         
         <div className="mb-8">

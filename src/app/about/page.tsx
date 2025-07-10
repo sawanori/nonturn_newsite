@@ -7,6 +7,25 @@ import { companyInfo } from '@/data/company'
 import { useEffect, useRef, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Float, MeshDistortMaterial, Sphere } from '@react-three/drei'
+import dynamic from 'next/dynamic'
+
+// Dynamic import for Google Maps to avoid SSR issues
+const GoogleMapComponent = dynamic(
+  () => import('@/components/ui/GoogleMap').then((mod) => mod.GoogleMapComponent),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="relative overflow-hidden rounded-lg border border-yellow-400/20 bg-gray-900/50 h-[300px] flex items-center justify-center">
+        <p className="text-gray-400">地図を読み込み中...</p>
+      </div>
+    )
+  }
+)
+
+const MapFallback = dynamic(
+  () => import('@/components/ui/GoogleMap').then((mod) => mod.MapFallback),
+  { ssr: false }
+)
 
 export default function AboutPage() {
   return (
@@ -389,16 +408,11 @@ export default function AboutPage() {
               <div className="mt-8">
                 <h4 className="text-xl font-bold mb-4 text-yellow-400">アクセスマップ</h4>
                 <div className="relative overflow-hidden rounded-lg border border-yellow-400/20">
-                  <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3249.8638413314015!2d139.62985619902608!3d35.45816515779981!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60185dbcbbbfa3c5%3A0xe1dff56abc6e8fe8!2zV2UgV29yayDjgqrjg7zjgrfjg6Pjg7PjgrLjg7zjg4jjgb_jgarjgajjgb_jgonjgYQ!5e0!3m2!1sja!2sjp!4v1751354574428!5m2!1sja!2sjp" 
-                    width="100%" 
-                    height="300" 
-                    style={{border:0}} 
-                    allowFullScreen={true}
-                    loading="lazy" 
-                    referrerPolicy="no-referrer-when-downgrade"
-                    className="w-full"
-                  />
+                  {process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ? (
+                    <GoogleMapComponent apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY} />
+                  ) : (
+                    <MapFallback />
+                  )}
                 </div>
               </div>
             </motion.div>
