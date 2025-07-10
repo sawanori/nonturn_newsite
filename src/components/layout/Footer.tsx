@@ -5,9 +5,7 @@ import { motion } from 'framer-motion'
 const services = ['映像制作', '写真撮影', 'Web制作', 'コンサルティング']
 const company = ['会社概要', 'プライバシーポリシー', '利用規約']
 const socialLinks = [
- { name: 'Instagram', icon: 'I', color: 'from-pink-500 to-yellow-500', href: 'https://instagram.com/nonturn2022', isEnglish: true },
- { name: 'Twitter', icon: 'T', color: 'from-blue-400 to-blue-600', href: 'https://twitter.com/NonTurn_S', isEnglish: true },
- { name: 'YouTube', icon: 'Y', color: 'from-red-500 to-red-700', href: '#', isEnglish: true }
+ { name: 'Instagram', icon: 'I', color: 'from-pink-500 to-yellow-500', href: 'https://www.instagram.com/nonturn2022', isEnglish: true }
 ]
 
 export function Footer() {
@@ -156,7 +154,7 @@ export function Footer() {
      transition={{ duration: 0.8, delay: 0.6 }}
     >
      <p className="">
-      &copy; 2024 
+      &copy; 2025 
       <span className="text-yellow-400 font-semibold eng-only"> NonTurn.LLC</span>
       . <span lang="en" className="eng-only">All rights reserved.</span>
      </p>

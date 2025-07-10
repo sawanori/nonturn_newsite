@@ -575,7 +575,7 @@ export default function AccessPage() {
                     <h4 className="text-lg font-semibold text-cyan-400 mb-4">SNS</h4>
                     <div className="flex space-x-4">
                       <motion.a
-                        href={`https://instagram.com/${companyInfo.contact.socialMedia.instagram.replace('@', '')}`}
+                        href={`https://www.instagram.com/${companyInfo.contact.socialMedia.instagram.replace('@', '')}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-12 h-12 bg-gradient-to-r from-pink-500 to-purple-500 rounded-xl flex items-center justify-center text-white hover:scale-110 transition-transform duration-300"
@@ -583,16 +583,6 @@ export default function AccessPage() {
                         whileTap={{ scale: 0.95 }}
                       >
                         📸
-                      </motion.a>
-                      <motion.a
-                        href={`https://twitter.com/${companyInfo.contact.socialMedia.twitter.replace('@', '')}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-12 h-12 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-xl flex items-center justify-center text-white hover:scale-110 transition-transform duration-300"
-                        whileHover={{ rotate: 360 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        🐦
                       </motion.a>
                     </div>
                   </div>

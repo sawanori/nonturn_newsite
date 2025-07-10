@@ -37,8 +37,7 @@ export const companyInfo = {
     email: 'info@non-turn.com',
     phone: '', // 電話番号は要確認
     socialMedia: {
-      instagram: '@nonturn2022',
-      twitter: '@NonTurn_S'
+      instagram: '@nonturn2022'
     }
   },
   businessScope: [

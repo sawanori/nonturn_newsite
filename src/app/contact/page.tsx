@@ -186,7 +186,7 @@ export default function ContactPage() {
                 <h3 className="text-white font-medium mb-4">Follow Us</h3>
                 <div className="flex space-x-4">
                   <motion.a
-                    href={`https://instagram.com/${companyInfo.contact.socialMedia.instagram.replace('@', '')}`}
+                    href={`https://www.instagram.com/${companyInfo.contact.socialMedia.instagram.replace('@', '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-10 h-10 bg-gradient-to-r from-pink-500 to-yellow-500 rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform duration-300"
@@ -194,16 +194,6 @@ export default function ContactPage() {
                     whileTap={{ scale: 0.95 }}
                   >
                     <span className="font-bold">I</span>
-                  </motion.a>
-                  <motion.a
-                    href={`https://twitter.com/${companyInfo.contact.socialMedia.twitter.replace('@', '')}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 bg-gradient-to-r from-blue-400 to-blue-600 rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform duration-300"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <span className="font-bold">T</span>
                   </motion.a>
                 </div>
               </div>
