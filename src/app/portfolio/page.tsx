@@ -53,50 +53,6 @@ export default function PortfolioPage() {
         </div>
       </section>
 
-      {/* Portfolio Stats */}
-      <section className="py-16 bg-gradient-to-b from-black to-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="fade-in"
-            >
-              <div className="text-4xl md:text-6xl font-bold text-yellow-400 mb-2">
-                {portfolioStats.totalProjects}+
-              </div>
-              <p className="text-gray-400 uppercase tracking-wider">プロジェクト完了</p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="fade-in"
-            >
-              <div className="text-4xl md:text-6xl font-bold text-yellow-400 mb-2">
-                {portfolioStats.industries.length}+
-              </div>
-              <p className="text-gray-400 uppercase tracking-wider">業界対応</p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="fade-in"
-            >
-              <div className="text-4xl md:text-6xl font-bold text-yellow-400 mb-2">
-                {portfolioStats.clientSatisfaction}
-              </div>
-              <p className="text-gray-400 uppercase tracking-wider">顧客満足度</p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* Portfolio Filter */}
       <section className="py-12 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
