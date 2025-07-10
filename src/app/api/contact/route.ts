@@ -139,9 +139,9 @@ IPアドレス: ${ip}
 
     // SendGridでメール送信
     const msg = {
-      to: process.env.CONTACT_EMAIL_TO,
+      to: process.env.CONTACT_EMAIL_TO!,
       from: {
-        email: process.env.SENDGRID_FROM_EMAIL,
+        email: process.env.SENDGRID_FROM_EMAIL!,
         name: process.env.SENDGRID_FROM_NAME || 'NonTurn.LLC'
       },
       subject: `【お問い合わせ】${sanitizedData.name}様より（${getServiceName(sanitizedData.service)}）`,
@@ -196,7 +196,7 @@ Website: https://non-turn.com
     const autoReplyMsg = {
       to: sanitizedData.email,
       from: {
-        email: process.env.SENDGRID_FROM_EMAIL,
+        email: process.env.SENDGRID_FROM_EMAIL!,
         name: process.env.SENDGRID_FROM_NAME || 'NonTurn.LLC'
       },
       subject: '【NonTurn.LLC】お問い合わせありがとうございます',
