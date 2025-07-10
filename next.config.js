@@ -177,6 +177,18 @@ const nextConfig = {
   // Redirects for SEO
   async redirects() {
     return [
+      // www to non-www redirect
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.non-turn.com',
+          },
+        ],
+        destination: 'https://non-turn.com/:path*',
+        permanent: true,
+      },
       {
         source: '/home',
         destination: '/',
