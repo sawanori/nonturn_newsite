@@ -90,8 +90,14 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if SendGrid is configured
-    if (!process.env.SENDGRID_API_KEY || !process.env.CONTACT_EMAIL_TO || !process.env.SENDGRID_FROM_EMAIL) {
+    const missingEnvVars = []
+    if (!process.env.SENDGRID_API_KEY) missingEnvVars.push('SENDGRID_API_KEY')
+    if (!process.env.CONTACT_EMAIL_TO) missingEnvVars.push('CONTACT_EMAIL_TO')
+    if (!process.env.SENDGRID_FROM_EMAIL) missingEnvVars.push('SENDGRID_FROM_EMAIL')
+    
+    if (missingEnvVars.length > 0) {
       console.error('SendGrid configuration is missing:', {
+        missingEnvVars,
         hasApiKey: !!process.env.SENDGRID_API_KEY,
         hasContactEmailTo: !!process.env.CONTACT_EMAIL_TO,
         hasSendGridFromEmail: !!process.env.SENDGRID_FROM_EMAIL,
@@ -99,7 +105,10 @@ export async function POST(request: NextRequest) {
         sendGridFromEmail: process.env.SENDGRID_FROM_EMAIL
       })
       return NextResponse.json(
-        { error: 'メール送信の設定が完了していません。管理者にお問い合わせください。' },
+        { 
+          error: 'メール送信の設定が完了していません。管理者にお問い合わせください。',
+          missing: process.env.NODE_ENV === 'development' ? missingEnvVars : undefined
+        },
         { status: 500 }
       )
     }
