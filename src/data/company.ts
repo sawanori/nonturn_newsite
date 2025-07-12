@@ -1,7 +1,7 @@
 export const companyInfo = {
   name: 'NonTurn.LLC',
   tagline: 'Powering Business with Creative Solutions',
-  subtitle: '中小企業の悩みをクリエイティブソリューションで解決',
+  subtitle: '中小企業の悩みの根幹から解決',
   representative: {
     name: '澤田憲孝',
     nameEn: 'Sawada Noritaka',
