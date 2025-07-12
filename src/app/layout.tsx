@@ -40,6 +40,15 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", type: "image/x-icon" },
+      { url: "/icon.png", type: "image/png" }
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180" }
+    ]
+  },
   openGraph: {
     title: "NonTurn.LLC | 東京・横浜の企業向け動画制作 | 縦型動画制作のプロフェッショナル",
     description: "東京・横浜エリアで企業向け動画制作を提供。縦型動画、プロモーション映像制作のプロフェッショナル集団。",
