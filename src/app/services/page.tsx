@@ -2,26 +2,29 @@ import { Metadata } from 'next'
 import ServicesPageClient from '@/components/services/ServicesPageClient'
 
 export const metadata: Metadata = {
-  title: 'サービス一覧',
-  description: '映像制作・写真撮影・Web制作の3つのサービスで、企業のビジュアルコミュニケーションを総合的にサポート。東京・横浜エリアで高品質なクリエイティブサービスを提供します。',
+  title: 'サービス紹介 | NonTurn',
+  description: '映像・写真・Web制作など、NonTurnの提供サービス一覧',
   openGraph: {
-    title: 'サービス一覧 | NonTurn.LLC',
-    description: '映像制作・写真撮影・Web制作の3つのサービスで、企業のビジュアルコミュニケーションを総合的にサポート',
+    title: 'サービス紹介 | NonTurn',
+    description: '映像・写真・Web制作など、NonTurnの提供サービス一覧',
     url: 'https://non-turn.com/services',
+    siteName: 'NonTurn',
     images: [
       {
-        url: '/og-services.jpg',
+        url: 'https://non-turn.com/ogp/services.jpg',
         width: 1200,
         height: 630,
-        alt: 'NonTurn.LLC サービス一覧',
+        alt: 'NonTurn サービス紹介',
       },
     ],
+    locale: 'ja_JP',
+    type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'サービス一覧 | NonTurn.LLC',
-    description: '映像制作・写真撮影・Web制作の総合クリエイティブサービス',
-    images: ['/og-services.jpg'],
+    title: 'サービス紹介 | NonTurn',
+    description: '映像・写真・Web制作など、NonTurnの提供サービス一覧',
+    images: ['https://non-turn.com/ogp/services.jpg'],
   },
 }
 

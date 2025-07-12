@@ -3,8 +3,30 @@ import { MainLayout } from '@/components/layout/MainLayout'
 import { PortfolioClient } from '@/components/portfolio/PortfolioClient'
 
 export const metadata: Metadata = {
-  title: '制作実績 | 映像・写真・WEBの事例紹介',
-  description: 'NonTurnが手がけた映像制作・写真撮影・WEB制作の事例をご紹介。クオリティと成果にこだわった実績をご覧ください。',
+  title: '制作実績 | NonTurn',
+  description: '映像、写真、Web制作の過去事例を一覧でご紹介。',
+  openGraph: {
+    title: '制作実績 | NonTurn',
+    description: '映像、写真、Web制作の過去事例を一覧でご紹介。',
+    url: 'https://non-turn.com/portfolio',
+    siteName: 'NonTurn',
+    locale: 'ja_JP',
+    type: 'website',
+    images: [
+      {
+        url: 'https://non-turn.com/ogp/portfolio.jpg',
+        width: 1200,
+        height: 630,
+        alt: '制作実績 | NonTurn',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '制作実績 | NonTurn',
+    description: '映像、写真、Web制作の過去事例を一覧でご紹介。',
+    images: ['https://non-turn.com/ogp/portfolio.jpg'],
+  },
 }
 
 export default function PortfolioPage() {
