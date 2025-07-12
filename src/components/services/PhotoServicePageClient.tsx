@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
+import Script from 'next/script'
 import { MainLayout } from '@/components/layout/MainLayout'
 import { HeroSection } from '@/components/ui/HeroSection'
 import { services } from '@/data/services'
@@ -78,8 +79,38 @@ export default function PhotoServicePageClient() {
   }
  }
 
+ const photoServiceStructuredData = {
+   "@context": "https://schema.org",
+   "@type": "Service",
+   "name": "写真撮影",
+   "description": "料理写真や商品撮影などプロによる商業撮影",
+   "provider": {
+     "@type": "Organization",
+     "name": "NonTurn合同会社",
+     "url": "https://non-turn.com"
+   },
+   "areaServed": {
+     "@type": "Place",
+     "address": {
+       "@type": "PostalAddress",
+       "addressLocality": "横浜市西区",
+       "addressRegion": "神奈川県"
+     }
+   },
+   "url": "https://non-turn.com/services/photo"
+ }
+
  return (
-  <MainLayout>
+  <>
+    <Script
+      id="photo-service-structured-data"
+      type="application/ld+json"
+      strategy="beforeInteractive"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(photoServiceStructuredData),
+      }}
+    />
+    <MainLayout>
    <div className="relative overflow-hidden">
     {/* Hero Section */}
     <HeroSection 
@@ -567,5 +598,6 @@ export default function PhotoServicePageClient() {
     </AnimatePresence>
    </div>
   </MainLayout>
+  </>
  )
 }

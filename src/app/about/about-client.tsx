@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Float, MeshDistortMaterial, Sphere } from '@react-three/drei'
 import dynamic from 'next/dynamic'
+import Script from 'next/script'
 
 // Dynamic import for Google Maps to avoid SSR issues
 const GoogleMapComponent = dynamic(
@@ -28,9 +29,41 @@ const MapFallback = dynamic(
 )
 
 export default function AboutClient() {
+  const organizationStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "NonTurn合同会社",
+    url: "https://non-turn.com/about",
+    logo: "https://non-turn.com/ogp/default.jpg",
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: "+81-45-900-8652",
+      contactType: "customer service",
+      areaServed: "JP",
+      availableLanguage: ["Japanese"],
+    },
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "みなとみらい3-7-1 オーシャンゲートみなとみらい8F",
+      addressLocality: "横浜市西区",
+      addressRegion: "神奈川県",
+      postalCode: "220-0012",
+      addressCountry: "JP"
+    },
+  }
+
   return (
-    <MainLayout>
-      {/* Hero Section */}
+    <>
+      <Script
+        id="organization-structured-data"
+        type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(organizationStructuredData),
+        }}
+      />
+      <MainLayout>
+        {/* Hero Section */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <Scene3D className="absolute inset-0 z-0 opacity-30" />
         
@@ -439,5 +472,6 @@ export default function AboutClient() {
         </div>
       </section>
     </MainLayout>
+    </>
   )
 }

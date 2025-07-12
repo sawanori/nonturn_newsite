@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
+import Script from 'next/script'
 import { MainLayout } from '@/components/layout/MainLayout'
 import { HeroSection } from '@/components/ui/HeroSection'
 import { services } from '@/data/services'
@@ -13,6 +14,26 @@ export default function MovieServicePageClient() {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
   
+  const movieServiceStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "映像制作",
+    "description": "企業VP・採用動画など高品質な映像制作を提供",
+    "provider": {
+      "@type": "Organization",
+      "name": "NonTurn合同会社",
+      "url": "https://non-turn.com"
+    },
+    "areaServed": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "横浜市西区",
+        "addressRegion": "神奈川県"
+      }
+    },
+    "url": "https://non-turn.com/services/movie"
+  }
 
   const cardHover = {
     rest: { scale: 1, rotateY: 0, z: 0 },
@@ -24,7 +45,16 @@ export default function MovieServicePageClient() {
   }
 
   return (
-    <MainLayout>
+    <>
+      <Script
+        id="movie-service-structured-data"
+        type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(movieServiceStructuredData),
+        }}
+      />
+      <MainLayout>
       <div className="relative overflow-hidden">
         {/* Hero Section */}
         <HeroSection
@@ -378,5 +408,6 @@ export default function MovieServicePageClient() {
         </AnimatePresence>
       </div>
     </MainLayout>
+    </>
   )
 }

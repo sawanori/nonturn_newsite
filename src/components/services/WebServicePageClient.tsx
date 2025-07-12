@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Script from 'next/script'
 import { MainLayout } from '@/components/layout/MainLayout'
 import { HeroSection } from '@/components/ui/HeroSection'
 import { services } from '@/data/services'
@@ -27,8 +28,38 @@ export default function WebServicePageClient() {
     }
   }
 
+  const webServiceStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Web制作",
+    "description": "飲食店や企業向けのサイト制作をトータルで支援",
+    "provider": {
+      "@type": "Organization",
+      "name": "NonTurn合同会社",
+      "url": "https://non-turn.com"
+    },
+    "areaServed": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "横浜市西区",
+        "addressRegion": "神奈川県"
+      }
+    },
+    "url": "https://non-turn.com/services/web"
+  }
+
   return (
-    <MainLayout>
+    <>
+      <Script
+        id="web-service-structured-data"
+        type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(webServiceStructuredData),
+        }}
+      />
+      <MainLayout>
       <div className="relative overflow-hidden">
         {/* Hero Section */}
         <HeroSection
@@ -368,5 +399,6 @@ export default function WebServicePageClient() {
         </section>
       </div>
     </MainLayout>
+    </>
   )
 }

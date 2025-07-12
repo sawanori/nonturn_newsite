@@ -94,21 +94,21 @@ const structuredData = {
     {
       "@type": "Organization",
       "@id": "https://non-turn.com/#organization",
-      name: "NonTurn.LLC",
-      alternateName: "ノンターン",
+      name: "NonTurn合同会社",
+      alternateName: "NonTurn.LLC",
       url: "https://non-turn.com",
       logo: {
         "@type": "ImageObject",
-        url: "https://non-turn.com/logo.png",
-        width: 300,
-        height: 100,
+        url: "https://non-turn.com/ogp/default.jpg",
+        width: 1200,
+        height: 630,
       },
       contactPoint: {
         "@type": "ContactPoint",
-        telephone: "",
+        telephone: "+81-45-900-8652",
         contactType: "customer service",
         areaServed: ["JP"],
-        availableLanguage: "Japanese",
+        availableLanguage: ["Japanese"],
       },
       address: {
         "@type": "PostalAddress",
@@ -140,11 +140,11 @@ const structuredData = {
     {
       "@type": "LocalBusiness",
       "@id": "https://non-turn.com/#localbusiness",
-      name: "NonTurn.LLC",
+      name: "NonTurn合同会社",
       description: "東京・横浜エリアで企業向け動画制作・映像制作を提供する映像制作会社",
       url: "https://non-turn.com",
-      telephone: "",
-      email: "n.sawada@non-turn.com",
+      telephone: "+81-45-900-8652",
+      email: "info@non-turn.com",
       address: {
         "@type": "PostalAddress",
         streetAddress: "みなとみらい3-7-1 オーシャンゲートみなとみらい8F",
@@ -175,12 +175,20 @@ const structuredData = {
       "@type": "WebSite",
       "@id": "https://non-turn.com/#website",
       url: "https://non-turn.com",
-      name: "NonTurn.LLC | 東京・横浜の企業向け動画制作",
+      name: "NonTurn",
       description: "東京・横浜エリアで企業向け動画制作を提供",
       publisher: {
         "@id": "https://non-turn.com/#organization",
       },
       inLanguage: "ja-JP",
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: "https://non-turn.com/?s={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
     },
   ],
 };
