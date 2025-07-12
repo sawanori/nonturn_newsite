@@ -64,7 +64,7 @@ export default function AboutClient() {
       />
       <MainLayout>
         {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-[67vh] lg:min-h-screen flex items-center overflow-hidden">
         <Scene3D className="absolute inset-0 z-0 opacity-30" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -124,7 +124,7 @@ export default function AboutClient() {
               <div className="aspect-square bg-gradient-to-br from-yellow-400/20 to-blue-500/20 backdrop-blur-sm border border-yellow-400/30 flex items-center justify-center relative overflow-hidden group  rounded-2xl">
                 <div className="text-center relative z-10">
                   <motion.div 
-                    className="grid grid-cols-2 gap-4 mb-6"
+                    className="grid grid-cols-2 gap-4 mb-6 place-items-center justify-center mx-auto"
                     whileHover={{ scale: 1.05 }}
                     transition={{ type: "spring", stiffness: 400 }}
                   >
