@@ -208,7 +208,6 @@ export default function RootLayout({
             __html: JSON.stringify(structuredData),
           }}
         />
-        <link rel="canonical" href="https://non-turn.com" />
         <meta name="geo.region" content="JP-14" />
         <meta name="geo.placename" content="東京,横浜" />
         <meta name="geo.position" content="35.4589;139.6317" />

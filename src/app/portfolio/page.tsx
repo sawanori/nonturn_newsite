@@ -5,6 +5,9 @@ import { PortfolioClient } from '@/components/portfolio/PortfolioClient'
 export const metadata: Metadata = {
   title: '制作実績 | NonTurn',
   description: '映像、写真、Web制作の過去事例を一覧でご紹介。',
+  alternates: {
+    canonical: 'https://non-turn.com/portfolio',
+  },
   openGraph: {
     title: '制作実績 | NonTurn',
     description: '映像、写真、Web制作の過去事例を一覧でご紹介。',

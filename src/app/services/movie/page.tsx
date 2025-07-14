@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: '映像制作サービス | NonTurn',
   description: '企業VP、採用動画、商品・イベント撮影などの映像制作サービスを提供しています。',
   keywords: '映像制作,動画制作,企業VP,プロモーション動画,4K撮影,ドローン撮影,モーショングラフィックス,東京,横浜',
+  alternates: {
+    canonical: 'https://non-turn.com/services/movie',
+  },
   openGraph: {
     title: '映像制作サービス | NonTurn',
     description: '企業VP、採用動画、商品・イベント撮影などの映像制作サービスを提供しています。',
