@@ -4,51 +4,66 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 
 const tokyoAreas = [
-  { name: '千代田区', features: ['オフィス街撮影', '企業PR動画'], landmark: '皇居・大手町' },
-  { name: '中央区', features: ['商業施設撮影', '商品紹介動画'], landmark: '銀座・築地' },
-  { name: '港区', features: ['高級感演出', '企業ブランディング'], landmark: '六本木・赤坂' },
-  { name: '新宿区', features: ['繁華街撮影', 'リクルート動画'], landmark: '新宿・歌舞伎町' },
-  { name: '渋谷区', features: ['トレンド撮影', 'SNS動画'], landmark: '渋谷・原宿' },
-  { name: '品川区', features: ['ビジネス街撮影', '企業説明動画'], landmark: '品川・大崎' },
-  { name: '世田谷区', features: ['住宅系撮影', 'ライフスタイル動画'], landmark: '二子玉川・下北沢' },
-  { name: '台東区', features: ['伝統文化撮影', '職人技動画'], landmark: '浅草・上野' },
+  { name: '千代田区', features: ['縦型動画Instagram', '企業縦型動画'], landmark: '大手町・丸の内' },
+  { name: '中央区', features: ['縦型動画TikTok', '商品縦型動画'], landmark: '銀座・日本橋' },
+  { name: '港区', features: ['縦型動画Reels', 'ブランド縦型動画'], landmark: '六本木・表参道' },
+  { name: '新宿区', features: ['縦型動画Shorts', 'リクルート縦型動画'], landmark: '新宿・高田馬場' },
+  { name: '文京区', features: ['教育縦型動画', '大学縦型動画'], landmark: '東京大学・後楽園' },
+  { name: '台東区', features: ['観光縦型動画', '伝統縦型動画'], landmark: '浅草・上野' },
+  { name: '墨田区', features: ['イベント縦型動画', '観光縦型動画'], landmark: 'スカイツリー・両国' },
+  { name: '江東区', features: ['企業縦型動画', '展示会縦型動画'], landmark: '有明・豊洲' },
+  { name: '品川区', features: ['ビジネス縦型動画', 'IT企業縦型動画'], landmark: '品川・大崎' },
+  { name: '目黒区', features: ['ファッション縦型動画', 'カフェ縦型動画'], landmark: '中目黒・自由が丘' },
+  { name: '大田区', features: ['製造業縦型動画', '物流縦型動画'], landmark: '羽田空港・蒲田' },
+  { name: '世田谷区', features: ['住宅縦型動画', 'ライフ縦型動画'], landmark: '二子玉川・三軒茶屋' },
+  { name: '渋谷区', features: ['トレンド縦型動画', 'SNS縦型動画'], landmark: '渋谷・原宿' },
+  { name: '中野区', features: ['サブカル縦型動画', 'アニメ縦型動画'], landmark: '中野・ブロードウェイ' },
+  { name: '杉並区', features: ['文化縦型動画', 'コミュニティ縦型動画'], landmark: '高円寺・阿佐ヶ谷' },
+  { name: '豊島区', features: ['エンタメ縦型動画', 'サブカル縦型動画'], landmark: '池袋・サンシャイン' },
+  { name: '北区', features: ['地域縦型動画', '商店街縦型動画'], landmark: '赤羽・王子' },
+  { name: '荒川区', features: ['下町縦型動画', '職人縦型動画'], landmark: '日暮里・町屋' },
+  { name: '板橋区', features: ['地域縦型動画', '商店縦型動画'], landmark: '板橋・大山' },
+  { name: '練馬区', features: ['ファミリー縦型動画', 'アニメ縦型動画'], landmark: '練馬・光が丘' },
+  { name: '足立区', features: ['地域縦型動画', '教育縦型動画'], landmark: '北千住・竹ノ塚' },
+  { name: '葛飾区', features: ['観光縦型動画', '下町縦型動画'], landmark: '柴又・亀有' },
+  { name: '江戸川区', features: ['地域縦型動画', 'ファミリー縦型動画'], landmark: '葛西・小岩' },
 ]
 
 const tokyoServices = [
   {
-    title: '東京都内企業PR動画制作',
-    price: '¥150,000〜',
-    description: '東京の企業イメージに合わせたプロフェッショナルなPR動画を制作',
+    title: '渋谷区 新宿区 港区 縦型動画制作',
+    price: '¥48,000〜',
+    description: '渋谷区・新宿区・港区・千代田区・中央区・文京区・台東区でInstagram・TikTok向け縦型動画を高速制作',
     features: [
-      '東京都内ロケーション撮影',
-      '企業理念の映像化',
-      '社員インタビュー',
-      '事業内容説明',
-      '多言語対応（英語・中国語）'
+      '縦型動画（9:16）専門制作',
+      '最速24時間納品',
+      '各区出張撮影対応',
+      'SNSバズる演出提案',
+      '複数SNS同時投稿用最適化'
     ]
   },
   {
-    title: '東京エリア商品紹介動画',
-    price: '¥100,000〜',
-    description: '東京の消費者に訴求力の高い商品紹介動画を制作',
+    title: '千代田区 中央区 文京区 企業縦型動画',
+    price: '¥120,000〜',
+    description: '千代田区・中央区・文京区・台東区・墨田区・江東区の企業ブランドを縦型動画で発信',
     features: [
-      '東京トレンドを意識した演出',
-      '商品の魅力最大化',
-      'EC サイト用最適化',
-      '複数バリエーション制作',
-      'SNS用縦型動画対応'
+      '縦型動画10本セット',
+      '各区ロケーション撮影',
+      'スマホファースト映像設計',
+      '英語・中国語字幕対応',
+      'Instagram・TikTok最適化'
     ]
   },
   {
-    title: '東京企業採用動画制作',
-    price: '¥200,000〜',
-    description: '東京で働く魅力を伝える採用動画で優秀な人材を獲得',
+    title: '世田谷区 目黒区 大田区 店舗縦型動画',
+    price: '¥80,000〜',
+    description: '世田谷区・目黒区・大田区・品川区・中野区・杉並区・練馬区の店舗集客用縦型動画制作',
     features: [
-      '東京オフィス環境紹介',
-      '働く社員の声',
-      '東京ライフスタイル提案',
-      '職場の雰囲気伝達',
-      '新卒・中途採用対応'
+      '縦型動画月額制作プラン',
+      '各区の特性に合わせた制作',
+      'インフルエンサーコラボ可能',
+      'ストーリーズ専用動画',
+      '毎月新作縦型動画納品'
     ]
   }
 ]
@@ -159,10 +174,10 @@ export function TokyoClient({ isHeroButtons = false }: TokyoClientProps) {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              東京<span className="bg-gradient-to-r from-red-400 to-pink-500 bg-clip-text text-transparent">23区対応</span>
+              渋谷区 新宿区 港区<span className="bg-gradient-to-r from-red-400 to-pink-500 bg-clip-text text-transparent"> 縦型動画制作</span>
             </h2>
             <p className="text-xl text-gray-300 max-w-4xl mx-auto">
-              東京都内のあらゆるエリアで、その地域特性を活かした動画制作を行います
+              千代田区・中央区・文京区・台東区・墨田区・江東区・品川区・目黒区・大田区・世田谷区・中野区・杉並区・豊島区・北区・荒川区・板橋区・練馬区・足立区・葛飾区・江戸川区の縦型動画専門
             </p>
           </motion.div>
 
@@ -178,7 +193,7 @@ export function TokyoClient({ isHeroButtons = false }: TokyoClientProps) {
                 whileHover={{ y: -5 }}
               >
                 <h3 className="text-lg font-bold text-white mb-2 group-hover:text-red-400 transition-colors">
-                  {area.name}
+                  {area.name} 縦型動画制作
                 </h3>
                 <p className="text-sm text-gray-400 mb-3">{area.landmark}</p>
                 <div className="space-y-1">
@@ -206,10 +221,10 @@ export function TokyoClient({ isHeroButtons = false }: TokyoClientProps) {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              東京企業向け<span className="bg-gradient-to-r from-red-400 to-pink-500 bg-clip-text text-transparent">動画制作サービス</span>
+              港区 品川区 世田谷区<span className="bg-gradient-to-r from-red-400 to-pink-500 bg-clip-text text-transparent"> 縦型動画サービス</span>
             </h2>
             <p className="text-xl text-gray-300 max-w-4xl mx-auto">
-              東京の企業様のニーズに特化した動画制作メニュー
+              目黒区・大田区・中野区・杉並区の企業向けInstagram Reels、豊島区・北区・荒川区・板橋区のTikTok動画制作
             </p>
           </motion.div>
 
