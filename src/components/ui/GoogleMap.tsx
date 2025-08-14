@@ -1,7 +1,28 @@
 'use client'
 
-import { useCallback, useState } from 'react'
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
+import { useCallback, useState, Suspense } from 'react'
+import dynamic from 'next/dynamic'
+import { useIntersectionObserver } from '@/hooks/useIntersectionObserver'
+
+// Lazy load Google Maps components
+const DynamicGoogleMap = dynamic(
+  () => import('@react-google-maps/api').then(mod => ({ 
+    default: ({ children, ...props }: any) => (
+      <mod.GoogleMap {...props}>{children}</mod.GoogleMap>
+    )
+  })),
+  { ssr: false }
+)
+
+const LoadScript = dynamic(
+  () => import('@react-google-maps/api').then(mod => ({ default: mod.LoadScript })),
+  { ssr: false }
+)
+
+const Marker = dynamic(
+  () => import('@react-google-maps/api').then(mod => ({ default: mod.Marker })),
+  { ssr: false }
+)
 
 const mapContainerStyle = {
   width: '100%',
@@ -261,7 +282,12 @@ interface GoogleMapComponentProps {
 }
 
 export function GoogleMapComponent({ apiKey }: GoogleMapComponentProps) {
-  const [map, setMap] = useState<google.maps.Map | null>(null)
+  const [mapRef, isVisible] = useIntersectionObserver({ 
+    threshold: 0.1,
+    rootMargin: '50px'
+  })
+  const [_map, setMap] = useState<google.maps.Map | null>(null)
+  const [showMap, setShowMap] = useState(false)
 
   const onLoad = useCallback((map: google.maps.Map) => {
     setMap(map)
@@ -271,22 +297,50 @@ export function GoogleMapComponent({ apiKey }: GoogleMapComponentProps) {
     setMap(null)
   }, [])
 
+  // Only load Google Maps when visible and user interacts
+  const handleLoadMap = () => {
+    setShowMap(true)
+  }
+
   return (
-    <LoadScript googleMapsApiKey={apiKey}>
-      <GoogleMap
-        mapContainerStyle={mapContainerStyle}
-        center={center}
-        zoom={16}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-        options={options}
-      >
-        <Marker 
-          position={center}
-          title="NonTurn.LLC - オーシャンゲートみなとみらい8F"
-        />
-      </GoogleMap>
-    </LoadScript>
+    <div ref={mapRef} style={mapContainerStyle} className="relative">
+      {!showMap ? (
+        <div 
+          className="w-full h-full bg-gray-800 flex items-center justify-center cursor-pointer rounded-lg border border-yellow-400/20"
+          onClick={handleLoadMap}
+        >
+          <div className="text-center">
+            <div className="w-16 h-16 bg-yellow-400/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl">📍</span>
+            </div>
+            <p className="text-white mb-2">地図を読み込む</p>
+            <p className="text-gray-400 text-sm">クリックして表示</p>
+          </div>
+        </div>
+      ) : (
+        <Suspense fallback={
+          <div className="w-full h-full bg-gray-800 flex items-center justify-center animate-pulse">
+            <span className="text-gray-400">地図を読み込み中...</span>
+          </div>
+        }>
+          <LoadScript googleMapsApiKey={apiKey} id="google-maps-script">
+            <DynamicGoogleMap
+              mapContainerStyle={mapContainerStyle}
+              center={center}
+              zoom={16}
+              onLoad={onLoad}
+              onUnmount={onUnmount}
+              options={options}
+            >
+              <Marker 
+                position={center}
+                title="NonTurn.LLC - オーシャンゲートみなとみらい8F"
+              />
+            </DynamicGoogleMap>
+          </LoadScript>
+        </Suspense>
+      )}
+    </div>
   )
 }
 

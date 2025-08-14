@@ -54,7 +54,7 @@ export default function WebServicePageClient() {
       <Script
         id="web-service-structured-data"
         type="application/ld+json"
-        strategy="beforeInteractive"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(webServiceStructuredData),
         }}

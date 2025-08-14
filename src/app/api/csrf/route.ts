@@ -17,7 +17,7 @@ export async function GET() {
     })
     
     return response
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to generate CSRF token' },
       { status: 500 }

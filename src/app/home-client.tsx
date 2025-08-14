@@ -20,13 +20,14 @@ function VideoThumbnail({ src, alt, fallbackGradient }: { src: string; alt: stri
   return (
     <>
       <div className={`absolute inset-0 bg-gradient-to-br ${fallbackGradient} animate-pulse`} />
-      <img
+      <Image
         src={src}
         alt={alt}
-        className={`w-full h-full object-cover transition-opacity duration-500 ${imageState === 'loaded' ? 'opacity-100' : 'opacity-0'}`}
+        fill
+        className={`object-cover transition-opacity duration-500 ${imageState === 'loaded' ? 'opacity-100' : 'opacity-0'}`}
         onLoad={() => setImageState('loaded')}
         onError={() => setImageState('error')}
-        loading="lazy"
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
     </>
   )

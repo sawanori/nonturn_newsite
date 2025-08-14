@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import sgMail from '@sendgrid/mail'
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     // SendGrid APIキーの存在確認
     const apiKey = process.env.SENDGRID_API_KEY
@@ -50,20 +50,26 @@ export async function GET(request: NextRequest) {
       }
     }, { status: 200 })
 
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const err = error as {
+      message?: string;
+      code?: number;
+      response?: { body?: unknown };
+    };
+    
     console.error('SendGrid test error:', error)
     
     return NextResponse.json({
       status: 'error',
-      error: error.message,
-      code: error.code,
-      response: error.response?.body,
-      suggestion: getSuggestion(error.code)
+      error: err.message,
+      code: err.code,
+      response: err.response?.body,
+      suggestion: getSuggestion(err.code)
     }, { status: 500 })
   }
 }
 
-function getSuggestion(errorCode: number): string {
+function getSuggestion(errorCode: number | undefined): string {
   switch (errorCode) {
     case 401:
       return 'APIキーが無効です。SendGridダッシュボードで新しいAPIキーを生成してください。'

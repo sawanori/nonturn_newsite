@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { MainLayout } from '@/components/layout/MainLayout'
-import { Scene3D } from '@/components/3d/Scene3D'
+import { DynamicScene3D } from '@/components/3d/DynamicScene3D'
 import { services, serviceOverview } from '@/data/services'
 
 export default function ServicesPageClient() {
@@ -13,7 +13,7 @@ export default function ServicesPageClient() {
     <MainLayout>
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
-        <Scene3D className="absolute inset-0 z-0 opacity-30" />
+        <DynamicScene3D className="absolute inset-0 z-0 opacity-30" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div

@@ -17,8 +17,9 @@ const geistMono = Geist_Mono({
 const notoSerifJP = Noto_Serif_JP({
   variable: "--font-noto-serif-jp",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600"], // Reduce weight variations
   display: "swap",
+  preload: false, // Lazy load to reduce initial bundle
 });
 
 export const metadata: Metadata = {
@@ -43,10 +44,10 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.ico", type: "image/x-icon" },
-      { url: "/icon.png", type: "image/png" }
+      { url: "/icon.svg", type: "image/svg+xml" }
     ],
     apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180" }
+      { url: "/apple-touch-icon.svg", sizes: "180x180", type: "image/svg+xml" }
     ]
   },
   openGraph: {

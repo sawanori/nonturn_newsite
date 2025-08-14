@@ -1,9 +1,27 @@
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Performance optimizations
   experimental: {
     optimizeCss: true,
-    optimizePackageImports: ['framer-motion', '@react-three/fiber', '@react-three/drei'],
+    optimizePackageImports: [
+      'framer-motion',
+      '@react-three/fiber',
+      '@react-three/drei',
+      'three',
+      '@sendgrid/mail',
+      'zod',
+      '@react-google-maps/api',
+      'clsx',
+      'tailwind-merge',
+      'uuid',
+      'web-vitals'
+    ],
+    // Code splitting optimizations
+    // Moved to serverExternalPackages as per Next.js 15 requirements
   },
 
   // Turbopack configuration
@@ -36,6 +54,18 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'img.youtube.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'vumbnail.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 
@@ -44,10 +74,6 @@ const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
 
-  // Bundle analyzer (enable when needed)
-  // bundleAnalyzer: {
-  //   enabled: process.env.ANALYZE === 'true',
-  // },
 
   // Headers for performance and security
   async headers() {
@@ -238,6 +264,8 @@ const nextConfig = {
   // Output configuration for deployment
   output: 'standalone',
   
+  // Server external packages for better code splitting (removed due to conflicts)
+  
   // Webpack configuration is commented out since we're using Turbopack
   // If you need to switch back to Webpack, uncomment this section
   /*
@@ -253,4 +281,4 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig
+module.exports = withBundleAnalyzer(nextConfig)

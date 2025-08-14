@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { MainLayout } from '@/components/layout/MainLayout'
-import { Scene3D } from '@/components/3d/Scene3D'
+import { DynamicScene3D } from '@/components/3d/DynamicScene3D'
 import { companyInfo } from '@/data/company'
 
 export default function AccessPage() {
@@ -106,7 +106,7 @@ export default function AccessPage() {
             style={{ y: backgroundY }}
             className="absolute inset-0 z-0"
           >
-            <Scene3D className="opacity-40" />
+            <DynamicScene3D className="opacity-40" />
             <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/20 via-blue-500/10 to-indigo-600/20" />
           </motion.div>
           

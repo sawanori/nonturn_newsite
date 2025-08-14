@@ -132,11 +132,16 @@ export async function POST(request: NextRequest) {
     try {
       const adminResponse = await sgMail.send(adminMsg)
       console.log('Admin email sent successfully:', adminResponse[0].statusCode)
-    } catch (adminError: any) {
+    } catch (adminError: unknown) {
+      const error = adminError as {
+        code?: number;
+        message?: string;
+        response?: { body?: unknown };
+      };
       console.error('Admin email error:', {
-        code: adminError.code,
-        message: adminError.message,
-        response: adminError.response?.body
+        code: error.code,
+        message: error.message,
+        response: error.response?.body
       })
       throw adminError
     }
@@ -145,11 +150,16 @@ export async function POST(request: NextRequest) {
     try {
       const customerResponse = await sgMail.send(customerMsg)
       console.log('Customer email sent successfully:', customerResponse[0].statusCode)
-    } catch (customerError: any) {
+    } catch (customerError: unknown) {
+      const error = customerError as {
+        code?: number;
+        message?: string;
+        response?: { body?: unknown };
+      };
       console.error('Customer email error:', {
-        code: customerError.code,
-        message: customerError.message,
-        response: customerError.response?.body
+        code: error.code,
+        message: error.message,
+        response: error.response?.body
       })
       throw customerError
     }
@@ -158,23 +168,29 @@ export async function POST(request: NextRequest) {
       { success: true, message: 'メールを送信しました' },
       { status: 200 }
     )
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const err = error as {
+      code?: number;
+      message?: string;
+      response?: { body?: unknown };
+    };
+    
     console.error('Email sending error:', error)
     console.error('Error details:', {
-      message: error.message,
-      code: error.code,
-      response: error.response?.body
+      message: err.message,
+      code: err.code,
+      response: err.response?.body
     })
     
     // SendGrid specific error handling
-    if (error.code === 401) {
+    if (err.code === 401) {
       return NextResponse.json(
         { error: 'メール送信の認証に失敗しました。APIキーを確認してください。' },
         { status: 500 }
       )
     }
     
-    if (error.code === 403) {
+    if (err.code === 403) {
       return NextResponse.json(
         { error: 'メール送信が拒否されました。送信元メールアドレスを確認してください。' },
         { status: 500 }
@@ -184,7 +200,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       { 
         error: 'メールの送信に失敗しました', 
-        details: process.env.NODE_ENV === 'development' ? error.message : undefined 
+        details: process.env.NODE_ENV === 'development' ? err.message : undefined 
       },
       { status: 500 }
     )

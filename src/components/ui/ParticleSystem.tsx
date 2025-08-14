@@ -57,7 +57,7 @@ export function ParticleSystem({
   const containerRef = useRef<HTMLDivElement>(null)
   const animationRef = useRef<number>(0)
   const [particles, setParticles] = useState<Particle[]>([])
-  const particleIdPrefix = useId()
+  const _particleIdPrefix = useId()
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isActive, setIsActive] = useState(true)
   const lastEmissionTime = useRef(0)
@@ -258,7 +258,7 @@ export function ParticleSystem({
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('click', handleMouseClick)
     }
-  }, [interactive, followMouse, effect, createParticle])
+  }, [interactive, followMouse, effect, createParticle, colors, lifetime, particleSize])
 
   // Animation loop
   useEffect(() => {
@@ -411,7 +411,7 @@ export function ParticleSystem({
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [isActive, effect, gravity, wind, followMouse, mousePosition, respawn, particleCount, emissionRate, createParticle])
+  }, [isActive, effect, gravity, wind, followMouse, mousePosition, respawn, particleCount, emissionRate, createParticle, colors, lifetime, particleSize, speed])
 
   // Calculate connections between particles
   const connections = showConnections ? particles.flatMap((particle, i) => 

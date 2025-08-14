@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import Script from 'next/script'
+import Image from 'next/image'
 import { MainLayout } from '@/components/layout/MainLayout'
 import { HeroSection } from '@/components/ui/HeroSection'
 import { services } from '@/data/services'
@@ -105,7 +106,7 @@ export default function PhotoServicePageClient() {
     <Script
       id="photo-service-structured-data"
       type="application/ld+json"
-      strategy="beforeInteractive"
+      strategy="afterInteractive"
       dangerouslySetInnerHTML={{
         __html: JSON.stringify(photoServiceStructuredData),
       }}
@@ -549,13 +550,15 @@ export default function PhotoServicePageClient() {
              className="cursor-pointer group relative overflow-hidden rounded-lg"
              style={{ gridRowEnd: `span ${gridRowEnd}` }}
             >
-             <img 
-              src={image.src} 
-              alt={image.alt}
-              className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
-              style={{ height: `${height}px` }}
-              loading="lazy"
-             />
+             <div className="relative w-full" style={{ height: `${height}px` }}>
+              <Image 
+               src={image.src} 
+               alt={image.alt}
+               fill
+               className="object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
+               sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              />
+             </div>
              
              {/* Overlay */}
              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex items-end">

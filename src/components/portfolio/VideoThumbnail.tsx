@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Portfolio } from '@/types'
+import Image from 'next/image'
 
 interface VideoThumbnailProps {
   project: Portfolio
@@ -24,10 +25,12 @@ export function VideoThumbnail({ project, index }: VideoThumbnailProps) {
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900 to-black">
         {/* Thumbnail Image */}
         <div className="aspect-video bg-gray-800 relative">
-          <img
+          <Image
             src={project.thumbnailUrl}
             alt={project.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
           
           {/* Overlay */}

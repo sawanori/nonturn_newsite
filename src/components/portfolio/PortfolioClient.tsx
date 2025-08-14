@@ -2,8 +2,9 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Scene3D } from '@/components/3d/Scene3D'
-import { portfolioProjects, portfolioCategories, portfolioStats } from '@/data/portfolio'
+import { DynamicScene3D } from '@/components/3d/DynamicScene3D'
+import { portfolioProjects, portfolioCategories } from '@/data/portfolio'
+import Image from 'next/image'
 
 export function PortfolioClient() {
   const [activeCategory, setActiveCategory] = useState('all')
@@ -21,7 +22,7 @@ export function PortfolioClient() {
     <>
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
-        <Scene3D className="absolute inset-0 z-0 opacity-30" />
+        <DynamicScene3D className="absolute inset-0 z-0 opacity-30" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
@@ -117,10 +118,12 @@ export function PortfolioClient() {
                     {project.category === 'photo' ? (
                       // Photography projects - show image directly
                       <div className="relative w-full h-full">
-                        <img
+                        <Image
                           src={project.thumbnailUrl}
                           alt={project.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-110"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
                         <div className="absolute top-3 right-3">
@@ -247,10 +250,12 @@ export function PortfolioClient() {
 
                   {/* Main Image */}
                   <div className="relative w-full h-full flex items-center justify-center">
-                    <img
+                    <Image
                       src={selectedProjectData.thumbnailUrl}
                       alt={selectedProjectData.title}
-                      className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                      fill
+                      className="object-contain rounded-lg shadow-2xl"
+                      sizes="(max-width: 1200px) 100vw, 80vw"
                     />
                   </div>
 

@@ -1,13 +1,11 @@
 'use client'
 
-import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { MainLayout } from '@/components/layout/MainLayout'
-import { Scene3D } from '@/components/3d/Scene3D'
+import { DynamicScene3D } from '@/components/3d/DynamicScene3D'
 import { companyInfo } from '@/data/company'
-import { useEffect, useRef, useState } from 'react'
-import { Canvas } from '@react-three/fiber'
-import { OrbitControls, Float, MeshDistortMaterial, Sphere } from '@react-three/drei'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import Script from 'next/script'
 
 // Dynamic import for Google Maps to avoid SSR issues
@@ -65,7 +63,7 @@ export default function AboutClient() {
       <MainLayout>
         {/* Hero Section */}
       <section className="relative min-h-[67vh] lg:min-h-screen flex items-center overflow-hidden">
-        <Scene3D className="absolute inset-0 z-0 opacity-30" />
+        <DynamicScene3D className="absolute inset-0 z-0 opacity-30" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
@@ -184,10 +182,13 @@ export default function AboutClient() {
               <div className="relative aspect-square bg-black rounded-lg overflow-hidden shadow-2xl group">
                 
                 {/* Full Image Background */}
-                <img 
+                <Image 
                   src="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/6A4F63FB-ED0B-4A44-A685-33A0809450A1-haCoMJ0OFBBjS6foXiVFcNXdgiNH8w.jpg"
                   alt="Noritaka Sawada"
-                  className="absolute inset-0 w-full h-full object-cover object-center"
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  priority
                 />
                 
                 {/* Gradient Overlay */}

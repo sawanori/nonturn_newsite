@@ -48,12 +48,13 @@ export async function POST(request: NextRequest) {
       },
       { status: 200 }
     )
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const err = error as { message?: string };
     console.error('Error processing contact form:', error)
     return NextResponse.json(
       { 
         error: 'お問い合わせの処理に失敗しました', 
-        details: error.message 
+        details: err.message 
       },
       { status: 500 }
     )

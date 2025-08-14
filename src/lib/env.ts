@@ -28,4 +28,4 @@ function validateEnv() {
 }
 
 // Export validated environment variables
-export const env = process.env.NODE_ENV === 'production' ? validateEnv() : process.env as any
+export const env = process.env.NODE_ENV === 'production' ? validateEnv() : process.env as Record<string, string | undefined>

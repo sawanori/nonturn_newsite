@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef, ReactNode } from 'react'
-import { Scene3D } from '@/components/3d/Scene3D'
+import { DynamicScene3D } from '@/components/3d/DynamicScene3D'
 
 interface HeroSectionProps {
   title: string
@@ -62,7 +62,7 @@ export function HeroSection({
         style={{ y: backgroundY }}
         className="absolute inset-0 z-0"
       >
-        {showScene3D && <Scene3D className={`opacity-${Math.round(backgroundOpacity * 100)}`} />}
+        {showScene3D && <DynamicScene3D className={`opacity-${Math.round(backgroundOpacity * 100)}`} />}
         <div className={`absolute inset-0 bg-gradient-to-br ${gradient}/20 via-transparent`} />
       </motion.div>
       

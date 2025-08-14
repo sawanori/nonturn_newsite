@@ -1,7 +1,8 @@
 'use client'
 
-import { motion } from 'framer-motion'
+// import { motion } from 'framer-motion'
 import { ReactNode } from 'react'
+import { FadeIn, SlideUp, ScaleIn } from '@/components/animations/LightweightAnimations'
 
 interface AnimatedSectionProps {
   children: ReactNode
@@ -22,47 +23,28 @@ export function AnimatedSection({
   once = true,
   threshold = 0.1
 }: AnimatedSectionProps) {
-  const getInitialState = () => {
-    switch (direction) {
-      case 'up':
-        return { opacity: 0, y: 30 }
-      case 'down':
-        return { opacity: 0, y: -30 }
-      case 'left':
-        return { opacity: 0, x: -30 }
-      case 'right':
-        return { opacity: 0, x: 30 }
-      case 'scale':
-        return { opacity: 0, scale: 0.8 }
-      default:
-        return { opacity: 0, y: 30 }
-    }
-  }
+  const durationMs = Math.round(duration * 1000)
 
-  const getAnimateState = () => {
-    switch (direction) {
-      case 'up':
-      case 'down':
-        return { opacity: 1, y: 0 }
-      case 'left':
-      case 'right':
-        return { opacity: 1, x: 0 }
-      case 'scale':
-        return { opacity: 1, scale: 1 }
-      default:
-        return { opacity: 1, y: 0 }
-    }
+  // Use lightweight animations based on direction
+  switch (direction) {
+    case 'up':
+    case 'down':
+      return (
+        <SlideUp className={className} delay={delay * 1000} duration={durationMs}>
+          {children}
+        </SlideUp>
+      )
+    case 'scale':
+      return (
+        <ScaleIn className={className} delay={delay * 1000} duration={durationMs}>
+          {children}
+        </ScaleIn>
+      )
+    default:
+      return (
+        <FadeIn className={className} delay={delay * 1000} duration={durationMs}>
+          {children}
+        </FadeIn>
+      )
   }
-
-  return (
-    <motion.div
-      initial={getInitialState()}
-      whileInView={getAnimateState()}
-      viewport={{ once, amount: threshold }}
-      transition={{ duration, delay }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  )
 }

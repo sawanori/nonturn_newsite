@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   // 本番環境でのデバッグ用（一時的）
   const envStatus = {
     NODE_ENV: process.env.NODE_ENV,

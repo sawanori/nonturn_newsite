@@ -152,11 +152,16 @@ IPアドレス: ${ip}
     try {
       const response = await sgMail.send(msg)
       console.log('SendGrid response:', response[0].statusCode)
-    } catch (sendError: any) {
+    } catch (sendError: unknown) {
+      const error = sendError as {
+        code?: number;
+        message?: string;
+        response?: { body?: unknown };
+      };
       console.error('SendGrid send error:', {
-        code: sendError.code,
-        message: sendError.message,
-        response: sendError.response?.body
+        code: error.code,
+        message: error.message,
+        response: error.response?.body
       })
       throw sendError
     }
@@ -215,24 +220,31 @@ Website: https://non-turn.com
     successResponse.cookies.delete('csrf-token')
     
     return successResponse
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const err = error as {
+      code?: number;
+      message?: string;
+      response?: { body?: unknown };
+      stack?: string;
+    };
+    
     console.error('Email send error:', error)
     console.error('Error details:', {
-      message: error.message,
-      code: error.code,
-      response: error.response?.body,
-      stack: error.stack
+      message: err.message,
+      code: err.code,
+      response: err.response?.body,
+      stack: err.stack
     })
     
     // SendGrid specific error handling
-    if (error.code === 401) {
+    if (err.code === 401) {
       return NextResponse.json(
         { error: 'メール送信の認証に失敗しました。APIキーを確認してください。' },
         { status: 500 }
       )
     }
     
-    if (error.code === 403) {
+    if (err.code === 403) {
       return NextResponse.json(
         { error: 'メール送信が拒否されました。送信元メールアドレスを確認してください。' },
         { status: 500 }
@@ -243,7 +255,7 @@ Website: https://non-turn.com
     return NextResponse.json(
       { 
         error: 'メールの送信中にエラーが発生しました。しばらくしてから再度お試しください。',
-        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+        details: process.env.NODE_ENV === 'development' ? err.message : undefined
       },
       { status: 500 }
     )

@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postbuild": "next-sitemap"
+    "postbuild": "next-sitemap",
+    "analyze": "ANALYZE=true npm run build"
   },
   "dependencies": {
     "@react-google-maps/api": "^2.20.7",
@@ -15,17 +16,13 @@
     "@react-three/fiber": "^9.1.2",
     "@sendgrid/mail": "^8.1.5",
     "@types/lru-cache": "^7.10.9",
-    "@types/marked": "^5.0.2",
     "@types/uuid": "^10.0.0",
     "clsx": "^2.1.1",
     "critters": "^0.0.23",
     "framer-motion": "^12.18.1",
     "jose": "^6.0.11",
     "lru-cache": "^11.1.0",
-    "marked": "^16.0.0",
-    "microcms-js-sdk": "^3.2.0",
     "next": "15.3.4",
-    "next-auth": "^4.24.11",
     "next-sitemap": "^4.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -37,6 +34,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@next/bundle-analyzer": "^15.4.6",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

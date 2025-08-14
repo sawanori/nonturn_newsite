@@ -131,7 +131,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
           })
         }
       }
-    } catch (error) {
+    } catch {
       setSubmitStatus({
         type: 'error',
         message: 'ネットワークエラーが発生しました。もう一度お試しください。'
