@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import { formSchema, ORDER_TYPES, BILL_TO, PLANS, EXTRA_MINUTES, calcTotalJPY } from '@/lib/foodOrderSchema'
+import { formSchema, ORDER_TYPES, calcTotalJPY } from '@/lib/foodOrderSchema'
 import type { FoodOrder } from '@/lib/foodOrderSchema'
 
 // Prefecture list
@@ -106,8 +106,62 @@ export function FoodPhotoFormClient() {
     }
   }
 
+  // Validation for each step
+  const validateStep1 = () => {
+    if (!formData.applicantName || !formData.applicantKana || 
+        !formData.applicantAddress?.postal || !formData.applicantAddress?.prefecture ||
+        !formData.applicantAddress?.city || !formData.applicantAddress?.address1 ||
+        !formData.applicantPhone || !formData.applicantEmail) {
+      return false;
+    }
+    if (formData.applicantType === 'corporate') {
+      if (!formData.corporate?.contactName || !formData.corporate?.contactKana || 
+          !formData.corporate?.relation) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  const validateStep2 = () => {
+    if (!formData.store?.name || !formData.store?.address?.postal ||
+        !formData.store?.address?.prefecture || !formData.store?.address?.city ||
+        !formData.store?.address?.address1 || !formData.store?.phone ||
+        !formData.store?.managerName || !formData.store?.managerKana ||
+        !formData.store?.coordinator || formData.store?.attendees?.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
+  const validateStep4 = () => {
+    if (!formData.wish1?.date || !formData.wish1?.time ||
+        !formData.wish2?.date || !formData.wish2?.time ||
+        !formData.wish3?.date || !formData.wish3?.time) {
+      return false;
+    }
+    if (!formData.media?.web && !formData.media?.print && !formData.media?.signage) {
+      return false;
+    }
+    return true;
+  }
+
   // Step navigation
   const nextStep = () => {
+    // Validate current step before proceeding
+    if (currentStep === 1 && !validateStep1()) {
+      alert('すべての必須項目を入力してください');
+      return;
+    }
+    if (currentStep === 2 && !validateStep2()) {
+      alert('すべての必須項目を入力してください');
+      return;
+    }
+    if (currentStep === 4 && !validateStep4()) {
+      alert('希望撮影日時（第1〜第3希望）と画像利用媒体は必須です');
+      return;
+    }
+    
     if (currentStep < 6) setCurrentStep(currentStep + 1)
   }
   
@@ -609,7 +663,6 @@ export function FoodPhotoFormClient() {
                     className="px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
                   >
                     <option value="0">なし</option>
-                    <option value="30">30分 (+¥5,500)</option>
                     <option value="60">60分 (+¥11,000)</option>
                     <option value="90">90分 (+¥16,500)</option>
                     <option value="120">120分 (+¥22,000)</option>
@@ -623,27 +676,8 @@ export function FoodPhotoFormClient() {
                     <label className="flex items-center">
                       <input
                         type="checkbox"
-                        checked={formData.phoneCall || false}
-                        onChange={(e) => {
-                          updateField('phoneCall', e.target.checked)
-                          if (e.target.checked) updateField('locationScout', false)
-                        }}
-                        className="mr-3"
-                      />
-                      <div>
-                        <span className="text-white">電話打合せ (+¥1,100)</span>
-                        <p className="text-gray-400 text-sm">事前に電話で撮影内容を打ち合わせ</p>
-                      </div>
-                    </label>
-                    
-                    <label className="flex items-center">
-                      <input
-                        type="checkbox"
                         checked={formData.locationScout || false}
-                        onChange={(e) => {
-                          updateField('locationScout', e.target.checked)
-                          if (e.target.checked) updateField('phoneCall', false)
-                        }}
+                        onChange={(e) => updateField('locationScout', e.target.checked)}
                         className="mr-3"
                       />
                       <div>
@@ -655,13 +689,13 @@ export function FoodPhotoFormClient() {
                     <label className="flex items-center">
                       <input
                         type="checkbox"
-                        checked={formData.namedPhotographer || false}
-                        onChange={(e) => updateField('namedPhotographer', e.target.checked)}
+                        checked={formData.siteImprovement || false}
+                        onChange={(e) => updateField('siteImprovement', e.target.checked)}
                         className="mr-3"
                       />
                       <div>
-                        <span className="text-white">カメラマン指名 (+¥5,500)</span>
-                        <p className="text-gray-400 text-sm">撮影担当カメラマンを指名</p>
+                        <span className="text-white">販促サイトページブラッシュアップ代行 (+¥100,000)</span>
+                        <p className="text-gray-400 text-sm">食べログ・ぐるなび・ホットペッパー等の掲載ページを最適化</p>
                       </div>
                     </label>
                   </div>
@@ -701,7 +735,7 @@ export function FoodPhotoFormClient() {
                 
                 {/* Preferred Dates */}
                 <div>
-                  <label className="block text-gray-300 mb-4">希望撮影日時</label>
+                  <label className="block text-gray-300 mb-4">希望撮影日時 *</label>
                   <div className="space-y-4">
                     <div>
                       <label className="block text-gray-400 text-sm mb-2">第1希望 *</label>
@@ -722,7 +756,7 @@ export function FoodPhotoFormClient() {
                     </div>
                     
                     <div>
-                      <label className="block text-gray-400 text-sm mb-2">第2希望</label>
+                      <label className="block text-gray-400 text-sm mb-2">第2希望 *</label>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <input
                           type="date"
@@ -740,7 +774,7 @@ export function FoodPhotoFormClient() {
                     </div>
                     
                     <div>
-                      <label className="block text-gray-400 text-sm mb-2">第3希望</label>
+                      <label className="block text-gray-400 text-sm mb-2">第3希望 *</label>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <input
                           type="date"
@@ -847,30 +881,6 @@ export function FoodPhotoFormClient() {
                       />
                       <span className="text-white">デジタルサイネージ</span>
                     </label>
-                  </div>
-                </div>
-
-                {/* Campaign Codes */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-gray-300 mb-2">キャンペーンコード</label>
-                    <input
-                      type="text"
-                      value={formData.campaignCode || ''}
-                      onChange={(e) => updateField('campaignCode', e.target.value)}
-                      className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
-                      placeholder="お持ちの方のみ"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-gray-300 mb-2">紹介コード</label>
-                    <input
-                      type="text"
-                      value={formData.referralCode || ''}
-                      onChange={(e) => updateField('referralCode', e.target.value)}
-                      className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
-                      placeholder="お持ちの方のみ"
-                    />
                   </div>
                 </div>
               </motion.div>

@@ -3,7 +3,7 @@ import { z } from "zod";
 export const ORDER_TYPES = ["individual", "corporate"] as const;
 export const BILL_TO = ["applicant", "store", "separate"] as const;
 export const PLANS = ["light", "standard", "premium"] as const;
-export const EXTRA_MINUTES = [0, 30, 60, 90, 120] as const;
+export const EXTRA_MINUTES = [0, 60, 90, 120] as const; // 30分を削除
 
 export const mediaSchema = z.object({
   web: z.boolean().optional(),
@@ -16,8 +16,11 @@ export const dateTimeSchema = z.object({
   time: z.string().min(1, "時間は必須です"),
 });
 
-const jpZip = /^\d{3}-?\d{4}$/;
-const phone = /^[0-9\-+() ]{9,16}$/;
+// セキュリティ強化のための正規表現
+const jpZip = /^\d{3}-\d{4}$/; // ハイフン必須
+const phone = /^0\d{1,4}-\d{1,4}-\d{4}$/; // 日本の電話番号形式
+const katakana = /^[ァ-ヶー]+$/; // カタカナのみ
+const safeText = /^[ぁ-んァ-ヶー一-龯a-zA-Z0-9\s\-_,.\u3000-\u303F]+$/; // 安全な文字のみ
 
 export const addressSchema = z.object({
   postal: z.string().regex(jpZip, "郵便番号の形式が不正です"),
@@ -28,24 +31,24 @@ export const addressSchema = z.object({
 
 export const formSchema = z.object({
   applicantType: z.enum(ORDER_TYPES),
-  applicantName: z.string().min(1, "申込者名称は必須です"),
-  applicantKana: z.string().min(1, "フリガナは必須です"),
+  applicantName: z.string().min(1, "申込者名称は必須です").max(100).regex(safeText, "不正な文字が含まれています"),
+  applicantKana: z.string().min(1, "フリガナは必須です").max(100).regex(katakana, "カタカナで入力してください"),
   applicantAddress: addressSchema,
-  applicantPhone: z.string().regex(phone, "電話番号の形式が不正です"),
-  applicantEmail: z.string().email("メールアドレスの形式が不正です"),
+  applicantPhone: z.string().regex(phone, "正しい電話番号形式で入力してください（例: 03-1234-5678）"),
+  applicantEmail: z.string().email("メールアドレスの形式が不正です").max(255),
 
   corporate: z.object({
-    contactName: z.string().min(1, "担当者名は必須です"),
-    contactKana: z.string().min(1, "フリガナは必須です"),
-    relation: z.string().min(1, "店舗との関係は必須です"),
+    contactName: z.string().min(1, "担当者名は必須です").max(50).regex(safeText, "不正な文字が含まれています"),
+    contactKana: z.string().min(1, "フリガナは必須です").max(50).regex(katakana, "カタカナで入力してください"),
+    relation: z.string().min(1, "店舗との関係は必須です").max(100).regex(safeText, "不正な文字が含まれています"),
   }).optional(),
 
   store: z.object({
-    name: z.string().min(1, "店舗名は必須です"),
+    name: z.string().min(1, "店舗名は必須です").max(100).regex(safeText, "不正な文字が含まれています"),
     address: addressSchema,
-    phone: z.string().regex(phone, "電話番号の形式が不正です"),
-    managerName: z.string().min(1, "責任者名は必須です"),
-    managerKana: z.string().min(1, "フリガナは必須です"),
+    phone: z.string().regex(phone, "正しい電話番号形式で入力してください（例: 03-1234-5678）"),
+    managerName: z.string().min(1, "責任者名は必須です").max(50).regex(safeText, "不正な文字が含まれています"),
+    managerKana: z.string().min(1, "フリガナは必須です").max(50).regex(katakana, "カタカナで入力してください"),
     coordinator: z.enum(["applicant", "corporateContact", "storeManager"]),
     attendees: z.array(z.enum(["applicant", "corporateContact", "storeManager"])).min(1, "同席者を1名以上選択してください"),
   }),
@@ -55,26 +58,22 @@ export const formSchema = z.object({
 
   plan: z.enum(PLANS),
   extraMinutes: z.enum(EXTRA_MINUTES.map(String) as [string, ...string[]]),
-  phoneCall: z.boolean().optional(),
   locationScout: z.boolean().optional(),
-  namedPhotographer: z.boolean().optional(),
+  siteImprovement: z.boolean().optional(), // 新規追加：販促サイトブラッシュアップ
 
   wish1: dateTimeSchema,
-  wish2: dateTimeSchema.optional(),
-  wish3: dateTimeSchema.optional(),
+  wish2: dateTimeSchema,
+  wish3: dateTimeSchema,
 
   cuts: z.object({
     food: z.coerce.number().min(0).max(999),
     interior: z.coerce.number().min(0).max(999),
     exterior: z.coerce.number().min(0).max(999),
     people: z.coerce.number().min(0).max(999),
-    note: z.string().optional(),
+    note: z.string().max(500).optional(),
   }),
 
   media: mediaSchema,
-
-  campaignCode: z.string().optional(),
-  referralCode: z.string().optional(),
 
   agree: z.boolean().refine(v => v === true, { message: "利用規約への同意が必要です" }),
 
@@ -96,13 +95,6 @@ export const formSchema = z.object({
       path: ["billingAddress"]
     });
   }
-  if (data.phoneCall && data.locationScout) {
-    ctx.addIssue({ 
-      code: "custom", 
-      message: "電話打合せとロケハンは同時選択できません",
-      path: ["phoneCall"]
-    });
-  }
 });
 
 export type FoodOrder = z.infer<typeof formSchema>;
@@ -116,7 +108,6 @@ export function calcTotalJPY(payload: FoodOrder): { total: number; breakdown: st
   
   const extraPrice: Record<string, number> = { 
     "0": 0, 
-    "30": 5500, 
     "60": 11000, 
     "90": 16500, 
     "120": 22000 
@@ -137,17 +128,13 @@ export function calcTotalJPY(payload: FoodOrder): { total: number; breakdown: st
   }
   
   // オプション
-  if (payload.phoneCall) { 
-    total += 1100; 
-    items.push("電話打合せ: ¥1,100"); 
-  }
   if (payload.locationScout) { 
     total += 11000; 
     items.push("ロケハン: ¥11,000"); 
   }
-  if (payload.namedPhotographer) { 
-    total += 5500; 
-    items.push("カメラマン指名: ¥5,500"); 
+  if (payload.siteImprovement) { 
+    total += 100000; 
+    items.push("販促サイトブラッシュアップ: ¥100,000"); 
   }
 
   return { total, breakdown: items };
