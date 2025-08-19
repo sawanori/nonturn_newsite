@@ -189,7 +189,7 @@ export function FoodPhotoFormClient() {
             </svg>
             戻る
           </Link>
-          <h1 className="text-2xl font-bold text-white">飲食店写真 Art Studio 撮影お申し込み</h1>
+          <h1 className="text-2xl font-bold text-white">飲食店撮影PhotoStudio 撮影お申し込み</h1>
         </div>
       </div>
 

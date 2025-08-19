@@ -3,11 +3,11 @@ import FoodPhotoClient from './FoodPhotoClient'
 import Script from 'next/script'
 
 export const metadata: Metadata = {
-  title: '飲食店写真 Art Studio | プロフェッショナルフードフォトグラフィー',
-  description: '飲食店写真 Art Studioは、アートの視点から料理を撮影するプロフェッショナルスタジオ。メニュー撮影、フードアート、店舗空間撮影まで、芸術的な表現でお店の魅力を引き出します。',
-  keywords: '飲食店写真,Art Studio,フードフォトグラフィー,アート撮影,料理写真,メニュー撮影,フードアート,レストラン撮影,カフェ撮影,プロカメラマン',
+  title: '飲食店撮影PhotoStudio | プロフェッショナルフードフォトグラフィー',
+  description: '飲食店撮影PhotoStudioは、アートの視点から料理を撮影するプロフェッショナルスタジオ。メニュー撮影、フードアート、店舗空間撮影まで、芸術的な表現でお店の魅力を引き出します。',
+  keywords: '飲食店撮影,PhotoStudio,フードフォトグラフィー,アート撮影,料理写真,メニュー撮影,フードアート,レストラン撮影,カフェ撮影,プロカメラマン',
   openGraph: {
-    title: '飲食店写真 Art Studio | プロフェッショナルフードフォトグラフィー',
+    title: '飲食店撮影PhotoStudio | プロフェッショナルフードフォトグラフィー',
     description: 'アートの視点から料理を撮影するプロフェッショナルスタジオ。芸術的な表現でお店の魅力を最大化。',
     url: 'https://non-turn.com/services/photo/foodphoto',
     siteName: 'NonTurn.LLC',
@@ -18,13 +18,13 @@ export const metadata: Metadata = {
         url: 'https://non-turn.com/ogp/foodphoto.jpg',
         width: 1200,
         height: 630,
-        alt: '飲食店写真 Art Studio - プロフェッショナルフードフォトグラフィー',
+        alt: '飲食店撮影PhotoStudio - プロフェッショナルフードフォトグラフィー',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: '飲食店写真 Art Studio | プロフェッショナルフードフォトグラフィー',
+    title: '飲食店撮影PhotoStudio | プロフェッショナルフードフォトグラフィー',
     description: 'アートの視点から料理を撮影。全国対応、年間5,000件の実績。',
     images: ['https://non-turn.com/ogp/foodphoto.jpg'],
   },
@@ -37,7 +37,7 @@ export default function FoodPhotoPage() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Service",
-    "name": "飲食店写真 Art Studio",
+    "name": "飲食店撮影PhotoStudio",
     "description": "プロフェッショナルフードフォトグラフィースタジオ。アートの視点から料理を撮影し、お店の魅力を最大限に引き出します。",
     "provider": {
       "@type": "Organization",

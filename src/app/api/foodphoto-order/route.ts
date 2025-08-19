@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
     // メール本文を構築
     const text = [
       "━━━━━━━━━━━━━━━━━━━━━━",
-      "飲食店写真 Art Studio 撮影お申し込み",
+      "飲食店撮影PhotoStudio 撮影お申し込み",
       "━━━━━━━━━━━━━━━━━━━━━━",
       "",
       "【申込者情報】",
@@ -109,7 +109,7 @@ export async function POST(req: NextRequest) {
     const html = `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="background: linear-gradient(to right, #fb923c, #ef4444); color: white; padding: 20px; margin: 0;">
-          飲食店写真 Art Studio 撮影お申し込み
+          飲食店撮影PhotoStudio 撮影お申し込み
         </h2>
         <div style="padding: 20px; background: #f9f9f9;">
           <pre style="font-family: monospace; white-space: pre-wrap; word-wrap: break-word;">

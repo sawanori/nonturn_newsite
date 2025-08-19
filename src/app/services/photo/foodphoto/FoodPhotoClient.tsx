@@ -109,27 +109,33 @@ const CaseCard = ({ title, company, role, name, comment }: any) => (
 
 // Organisms
 const Header = () => (
-  <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm">
+  <header className="sticky top-0 z-50 shadow-sm" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
     <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
       <Link href="/" className="flex items-center gap-2">
-        <span className="text-2xl">🍜</span>
-        <span className="text-xl font-bold text-gray-800">飲食店写真 Art Studio</span>
+        <Image
+          src="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/cameralogo.svg"
+          alt="飲食店撮影PhotoStudio"
+          width={40}
+          height={40}
+          className="w-8 h-8 md:w-10 md:h-10"
+        />
+        <span className="text-base md:text-xl font-bold text-white">飲食店撮影PhotoStudio</span>
       </Link>
       
       <nav className="hidden md:flex items-center gap-6">
-        <Link href="#features" className="text-gray-600 hover:text-orange-500 transition-colors">
+        <Link href="#features" className="text-gray-300 hover:text-orange-500 transition-colors">
           サービスの特徴
         </Link>
-        <Link href="#pricing" className="text-gray-600 hover:text-orange-500 transition-colors">
+        <Link href="#pricing" className="text-gray-300 hover:text-orange-500 transition-colors">
           料金
         </Link>
-        <Link href="#samples" className="text-gray-600 hover:text-orange-500 transition-colors">
+        <Link href="#samples" className="text-gray-300 hover:text-orange-500 transition-colors">
           サンプル
         </Link>
-        <Link href="#flow" className="text-gray-600 hover:text-orange-500 transition-colors">
+        <Link href="#flow" className="text-gray-300 hover:text-orange-500 transition-colors">
           撮影の流れ
         </Link>
-        <Link href="#cases" className="text-gray-600 hover:text-orange-500 transition-colors">
+        <Link href="#cases" className="text-gray-300 hover:text-orange-500 transition-colors">
           導入事例
         </Link>
       </nav>
@@ -269,11 +275,39 @@ const IntroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              <h1 className="text-5xl md:text-7xl font-bold leading-tight bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent">
-                <span className="block md:inline">飲食店写真</span>
-                <span className="md:ml-2">Art Studio</span>
-              </h1>
-              <p className="text-xl md:text-2xl font-light text-white mt-2">
+              <div className="flex items-center justify-center gap-4 md:gap-6 mb-4">
+                <Image
+                  src="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/cameralogo.svg"
+                  alt="Logo"
+                  width={80}
+                  height={80}
+                  className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24"
+                />
+                <div className="relative">
+                  <h1 className="relative inline-block">
+                    <span 
+                      className="block text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-tight"
+                      style={{ 
+                        fontFamily: '"Playfair Display", "Noto Serif JP", serif',
+                        letterSpacing: '-0.02em'
+                      }}
+                    >
+                      飲食店撮影
+                    </span>
+                    <span 
+                      className="absolute -bottom-1 md:-bottom-2 right-0 text-xl md:text-2xl lg:text-3xl font-light italic text-white opacity-90 tracking-[0.2em]"
+                      style={{ 
+                        fontFamily: '"Dancing Script", "Caveat", cursive',
+                        transform: 'rotate(-2deg)',
+                        transformOrigin: 'bottom right'
+                      }}
+                    >
+                      PhotoStudio
+                    </span>
+                  </h1>
+                </div>
+              </div>
+              <p className="text-xl md:text-2xl font-light text-white mt-2 text-center">
                 飲食店専門出張撮影サービス
               </p>
             </motion.div>
@@ -343,7 +377,7 @@ const NewsSection = () => (
           viewport={{ once: true }}
         >
           <span className="text-sm text-gray-300">2025.8.19</span>
-          <span className="text-white">飲食店写真Art Studioサイトオープン</span>
+          <span className="text-white">飲食店撮影PhotoStudioサイトオープン</span>
         </motion.div>
       </div>
     </div>
@@ -395,8 +429,8 @@ const FeaturesSection = () => {
             className="text-center mb-12"
           >
             <SectionTitle>
-              <span className="inline md:hidden">飲食店写真<br />Art Studioの特徴</span>
-              <span className="hidden md:inline">飲食店写真Art Studioの特徴</span>
+              <span className="inline md:hidden">飲食店撮影<br />PhotoStudioの特徴</span>
+              <span className="hidden md:inline">飲食店撮影PhotoStudioの特徴</span>
             </SectionTitle>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
@@ -684,7 +718,7 @@ const ParallaxSection = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             一瞬の美しさを永遠に。<br />
-            飲食店写真 Art Studioが創り出す、芸術としての料理写真
+            飲食店撮影PhotoStudioが創り出す、芸術としての料理写真
           </motion.p>
           
           {/* スクロールインジケーター */}
@@ -754,7 +788,7 @@ const SamplesSection = () => {
           >
             <SectionTitle>ポートフォリオ</SectionTitle>
             <p className="text-gray-300 text-lg max-w-3xl mx-auto mb-8">
-              飲食店写真 Art Studioが手掛けた作品の一部をご紹介。
+              飲食店撮影PhotoStudioが手掛けた作品の一部をご紹介。
               単なる写真ではなく、芸術作品としてのフードフォトグラフィーをご覧ください。
             </p>
             
@@ -928,7 +962,7 @@ const CasesSection = () => {
       company: 'イタリアンレストラン Bella Vista',
       role: 'オーナーシェフ',
       name: '山田',
-      comment: '飲食店写真 Art Studioの作品は芸術品。お店の格が上がりました。'
+      comment: '飲食店撮影PhotoStudioの作品は芸術品。お店の格が上がりました。'
     },
     {
       title: 'SNSフォロワー3倍増',
@@ -964,7 +998,7 @@ const CasesSection = () => {
         >
           <SectionTitle>クライアントの声</SectionTitle>
           <p className="text-gray-300 text-lg max-w-3xl mx-auto">
-            飲食店写真 Art Studioでブランドイメージを一新されたお客様の声
+            飲食店撮影PhotoStudioでブランドイメージを一新されたお客様の声
           </p>
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -999,7 +1033,7 @@ const BottomCTA = () => (
           webで今すぐお申し込みいただけます。
         </h2>
         <p className="text-white text-lg mb-8">
-          飲食店写真 Art Studioで、料理の新しい表現を発見してください。
+          飲食店撮影PhotoStudioで、料理の新しい表現を発見してください。
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/services/photo/foodphoto/form">
@@ -1009,9 +1043,6 @@ const BottomCTA = () => (
             <Button variant="secondary">まずは問い合わせる</Button>
           </Link>
         </div>
-        <p className="text-sm text-gray-300 mt-8">
-          ※ 東京23区内は最短翌日対応可能です
-        </p>
       </motion.div>
     </div>
   </section>
@@ -1022,7 +1053,7 @@ const Footer = () => (
     <div className="max-w-5xl mx-auto px-4">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
         <div>
-          <h3 className="font-bold mb-4">飲食店写真 Art Studio</h3>
+          <h3 className="font-bold mb-4">飲食店撮影PhotoStudio</h3>
           <p className="text-gray-400 text-sm">
             プロフェッショナルフードフォトグラフィー
           </p>

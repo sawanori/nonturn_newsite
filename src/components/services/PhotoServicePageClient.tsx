@@ -294,6 +294,28 @@ export default function PhotoServicePageClient() {
         </motion.div>
        ))}
       </div>
+
+      {/* Food Photography Link */}
+      <motion.div
+       initial={{ opacity: 0, y: 30 }}
+       whileInView={{ opacity: 1, y: 0 }}
+       viewport={{ once: true }}
+       transition={{ duration: 0.5 }}
+       className="mt-12 text-center bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-400/30 rounded-2xl p-8"
+      >
+       <p className="text-gray-300 mb-4">
+        飲食店専門の撮影サービスもご用意しています
+       </p>
+       <Link
+        href="/services/photo/foodphoto"
+        className="inline-flex items-center bg-gradient-to-r from-orange-400 to-red-500 text-white px-6 py-3 rounded-lg font-medium hover:from-orange-500 hover:to-red-600 transition-all duration-300"
+       >
+        飲食店の撮影はこちら
+        <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
+       </Link>
+      </motion.div>
      </div>
     </section>
 
