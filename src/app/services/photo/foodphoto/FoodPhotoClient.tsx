@@ -312,20 +312,20 @@ const IntroSection = () => {
               </p>
             </motion.div>
             <motion.div 
-              className="flex flex-col items-center gap-3 mb-8 text-lg text-white/90"
+              className="flex flex-col items-center gap-3 mb-8 text-sm md:text-lg text-white/90"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
             >
-              <span className="flex items-center justify-center gap-2 bg-black/30 px-6 py-2 rounded-full w-full md:min-w-[600px] max-w-[600px]">
+              <span className="flex items-center justify-center gap-2 bg-black/30 px-4 md:px-6 py-2 rounded-full w-full md:min-w-[600px] max-w-[600px]">
                 <span className="text-green-400">✓</span>
                 日本フードフォトグラファー協会認定カメラマンが撮影
               </span>
-              <span className="flex items-center justify-center gap-2 bg-black/30 px-6 py-2 rounded-full w-full md:min-w-[600px] max-w-[600px]">
+              <span className="flex items-center justify-center gap-2 bg-black/30 px-4 md:px-6 py-2 rounded-full w-full md:min-w-[600px] max-w-[600px]">
                 <span className="text-green-400">✓</span>
                 撮影枚数時間内無制限(一部プラン対象外)
               </span>
-              <span className="flex items-center justify-center gap-2 bg-black/30 px-6 py-2 rounded-full w-full md:min-w-[600px] max-w-[600px]">
+              <span className="flex items-center justify-center gap-2 bg-black/30 px-4 md:px-6 py-2 rounded-full w-full md:min-w-[600px] max-w-[600px]">
                 <span className="text-green-400">✓</span>
                 飲食媒体で効果の出やすい撮影素材
               </span>
