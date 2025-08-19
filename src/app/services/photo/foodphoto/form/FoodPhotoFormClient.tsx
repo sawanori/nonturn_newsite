@@ -26,6 +26,7 @@ export function FoodPhotoFormClient() {
   const [currentStep, setCurrentStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitResult, setSubmitResult] = useState<{ success: boolean; message: string } | null>(null)
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({})
   
   // Form state
   const [formData, setFormData] = useState<Partial<FoodOrder>>({
@@ -106,67 +107,225 @@ export function FoodPhotoFormClient() {
     }
   }
 
-  // Validation for each step
+  // Validation patterns
+  const jpZip = /^\d{3}-\d{4}$/
+  const phone = /^0\d{1,4}-\d{1,4}-\d{4}$/
+  const katakana = /^[ァ-ヶー]+$/
+  const email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+  // Validation for each step with detailed error messages
   const validateStep1 = () => {
-    if (!formData.applicantName || !formData.applicantKana || 
-        !formData.applicantAddress?.postal || !formData.applicantAddress?.prefecture ||
-        !formData.applicantAddress?.city || !formData.applicantAddress?.address1 ||
-        !formData.applicantPhone || !formData.applicantEmail) {
-      return false;
+    const errors: Record<string, string> = {}
+    
+    // 申込者名
+    if (!formData.applicantName) {
+      errors.applicantName = '申込者名を入力してください'
     }
+    
+    // フリガナ
+    if (!formData.applicantKana) {
+      errors.applicantKana = 'フリガナを入力してください'
+    } else if (!katakana.test(formData.applicantKana)) {
+      errors.applicantKana = 'フリガナはカタカナで入力してください'
+    }
+    
+    // 郵便番号
+    if (!formData.applicantAddress?.postal) {
+      errors['applicantAddress.postal'] = '郵便番号を入力してください'
+    } else if (!jpZip.test(formData.applicantAddress.postal)) {
+      errors['applicantAddress.postal'] = '郵便番号は123-4567の形式で入力してください'
+    }
+    
+    // 都道府県
+    if (!formData.applicantAddress?.prefecture) {
+      errors['applicantAddress.prefecture'] = '都道府県を選択してください'
+    }
+    
+    // 市区町村
+    if (!formData.applicantAddress?.city) {
+      errors['applicantAddress.city'] = '市区町村を入力してください'
+    }
+    
+    // 番地
+    if (!formData.applicantAddress?.address1) {
+      errors['applicantAddress.address1'] = '番地・建物名を入力してください'
+    }
+    
+    // 電話番号
+    if (!formData.applicantPhone) {
+      errors.applicantPhone = '電話番号を入力してください'
+    } else if (!phone.test(formData.applicantPhone)) {
+      errors.applicantPhone = '電話番号は03-1234-5678の形式で入力してください'
+    }
+    
+    // メールアドレス
+    if (!formData.applicantEmail) {
+      errors.applicantEmail = 'メールアドレスを入力してください'
+    } else if (!email.test(formData.applicantEmail)) {
+      errors.applicantEmail = '正しいメールアドレスを入力してください'
+    }
+    
+    // 法人の場合の追加検証
     if (formData.applicantType === 'corporate') {
-      if (!formData.corporate?.contactName || !formData.corporate?.contactKana || 
-          !formData.corporate?.relation) {
-        return false;
+      if (!formData.corporate?.contactName) {
+        errors['corporate.contactName'] = '担当者名を入力してください'
+      }
+      if (!formData.corporate?.contactKana) {
+        errors['corporate.contactKana'] = '担当者フリガナを入力してください'
+      } else if (!katakana.test(formData.corporate.contactKana)) {
+        errors['corporate.contactKana'] = 'フリガナはカタカナで入力してください'
+      }
+      if (!formData.corporate?.relation) {
+        errors['corporate.relation'] = '店舗との関係を入力してください'
       }
     }
-    return true;
+    
+    setValidationErrors(errors)
+    return Object.keys(errors).length === 0
   }
 
   const validateStep2 = () => {
-    if (!formData.store?.name || !formData.store?.address?.postal ||
-        !formData.store?.address?.prefecture || !formData.store?.address?.city ||
-        !formData.store?.address?.address1 || !formData.store?.phone ||
-        !formData.store?.managerName || !formData.store?.managerKana ||
-        !formData.store?.coordinator || formData.store?.attendees?.length === 0) {
-      return false;
+    const errors: Record<string, string> = {}
+    
+    // 店舗名
+    if (!formData.store?.name) {
+      errors['store.name'] = '店舗名を入力してください'
     }
-    return true;
+    
+    // 店舗住所
+    if (!formData.store?.address?.postal) {
+      errors['store.address.postal'] = '郵便番号を入力してください'
+    } else if (!jpZip.test(formData.store.address.postal)) {
+      errors['store.address.postal'] = '郵便番号は123-4567の形式で入力してください'
+    }
+    
+    if (!formData.store?.address?.prefecture) {
+      errors['store.address.prefecture'] = '都道府県を選択してください'
+    }
+    
+    if (!formData.store?.address?.city) {
+      errors['store.address.city'] = '市区町村を入力してください'
+    }
+    
+    if (!formData.store?.address?.address1) {
+      errors['store.address.address1'] = '番地・建物名を入力してください'
+    }
+    
+    // 店舗電話番号
+    if (!formData.store?.phone) {
+      errors['store.phone'] = '店舗電話番号を入力してください'
+    } else if (!phone.test(formData.store.phone)) {
+      errors['store.phone'] = '電話番号は03-1234-5678の形式で入力してください'
+    }
+    
+    // 責任者
+    if (!formData.store?.managerName) {
+      errors['store.managerName'] = '店舗責任者名を入力してください'
+    }
+    
+    if (!formData.store?.managerKana) {
+      errors['store.managerKana'] = '店舗責任者フリガナを入力してください'
+    } else if (!katakana.test(formData.store.managerKana)) {
+      errors['store.managerKana'] = 'フリガナはカタカナで入力してください'
+    }
+    
+    // 撮影同席者
+    if (!formData.store?.attendees || formData.store.attendees.length === 0) {
+      errors['store.attendees'] = '撮影同席者を1名以上選択してください'
+    }
+    
+    setValidationErrors(errors)
+    return Object.keys(errors).length === 0
   }
 
   const validateStep4 = () => {
-    if (!formData.wish1?.date || !formData.wish1?.time ||
-        !formData.wish2?.date || !formData.wish2?.time ||
-        !formData.wish3?.date || !formData.wish3?.time) {
-      return false;
+    const errors: Record<string, string> = {}
+    
+    // 希望撮影日時
+    if (!formData.wish1?.date) {
+      errors['wish1.date'] = '第1希望の日付を入力してください'
     }
+    if (!formData.wish1?.time) {
+      errors['wish1.time'] = '第1希望の時間を入力してください'
+    }
+    
+    if (!formData.wish2?.date) {
+      errors['wish2.date'] = '第2希望の日付を入力してください'
+    }
+    if (!formData.wish2?.time) {
+      errors['wish2.time'] = '第2希望の時間を入力してください'
+    }
+    
+    if (!formData.wish3?.date) {
+      errors['wish3.date'] = '第3希望の日付を入力してください'
+    }
+    if (!formData.wish3?.time) {
+      errors['wish3.time'] = '第3希望の時間を入力してください'
+    }
+    
+    // 画像利用媒体
     if (!formData.media?.web && !formData.media?.print && !formData.media?.signage) {
-      return false;
+      errors.media = '画像利用媒体を1つ以上選択してください'
     }
-    return true;
+    
+    setValidationErrors(errors)
+    return Object.keys(errors).length === 0
+  }
+
+  const validateStep5 = () => {
+    const errors: Record<string, string> = {}
+    
+    if (formData.billingTo === 'separate') {
+      if (!formData.billingAddress?.postal) {
+        errors['billingAddress.postal'] = '請求先郵便番号を入力してください'
+      } else if (!jpZip.test(formData.billingAddress.postal)) {
+        errors['billingAddress.postal'] = '郵便番号は123-4567の形式で入力してください'
+      }
+      
+      if (!formData.billingAddress?.prefecture) {
+        errors['billingAddress.prefecture'] = '請求先都道府県を選択してください'
+      }
+      if (!formData.billingAddress?.city) {
+        errors['billingAddress.city'] = '請求先市区町村を入力してください'
+      }
+      if (!formData.billingAddress?.address1) {
+        errors['billingAddress.address1'] = '請求先番地を入力してください'
+      }
+    }
+    
+    setValidationErrors(errors)
+    return Object.keys(errors).length === 0
   }
 
   // Step navigation
   const nextStep = () => {
+    let isValid = true
+    
     // Validate current step before proceeding
-    if (currentStep === 1 && !validateStep1()) {
-      alert('すべての必須項目を入力してください');
-      return;
-    }
-    if (currentStep === 2 && !validateStep2()) {
-      alert('すべての必須項目を入力してください');
-      return;
-    }
-    if (currentStep === 4 && !validateStep4()) {
-      alert('希望撮影日時（第1〜第3希望）と画像利用媒体は必須です');
-      return;
+    if (currentStep === 1) {
+      isValid = validateStep1()
+    } else if (currentStep === 2) {
+      isValid = validateStep2()
+    } else if (currentStep === 4) {
+      isValid = validateStep4()
+    } else if (currentStep === 5) {
+      isValid = validateStep5()
+    } else {
+      // For steps without validation, clear errors
+      setValidationErrors({})
     }
     
-    if (currentStep < 6) setCurrentStep(currentStep + 1)
+    if (isValid && currentStep < 6) {
+      setCurrentStep(currentStep + 1)
+      setValidationErrors({}) // Clear errors when moving to next step
+    }
   }
   
   const prevStep = () => {
-    if (currentStep > 1) setCurrentStep(currentStep - 1)
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1)
+      setValidationErrors({}) // Clear errors when going back
+    }
   }
 
   const steps = [
@@ -239,6 +398,13 @@ export function FoodPhotoFormClient() {
               >
                 <h2 className="text-xl font-bold text-white mb-4">申込者情報</h2>
                 
+                {/* Error Summary */}
+                {Object.keys(validationErrors).length > 0 && (
+                  <div className="bg-red-900/20 border border-red-500 rounded-lg p-4 mb-6">
+                    <p className="text-red-400 font-semibold">入力内容にエラーがあります。赤く表示された項目を確認してください。</p>
+                  </div>
+                )}
+                
                 {/* Applicant Type */}
                 <div>
                   <label className="block text-gray-300 mb-2">申込区分 *</label>
@@ -267,9 +433,14 @@ export function FoodPhotoFormClient() {
                       type="text"
                       value={formData.applicantName || ''}
                       onChange={(e) => updateField('applicantName', e.target.value)}
-                      className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
+                      className={`w-full px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                        validationErrors.applicantName ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                      }`}
                       placeholder={formData.applicantType === 'corporate' ? '株式会社〇〇' : '山田太郎'}
                     />
+                    {validationErrors.applicantName && (
+                      <p className="text-red-400 text-sm mt-1">{validationErrors.applicantName}</p>
+                    )}
                   </div>
                   <div>
                     <label className="block text-gray-300 mb-2">フリガナ *</label>
@@ -277,51 +448,82 @@ export function FoodPhotoFormClient() {
                       type="text"
                       value={formData.applicantKana || ''}
                       onChange={(e) => updateField('applicantKana', e.target.value)}
-                      className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
+                      className={`w-full px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                        validationErrors.applicantKana ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                      }`}
                       placeholder={formData.applicantType === 'corporate' ? 'カブシキガイシャ〇〇' : 'ヤマダタロウ'}
                     />
+                    {validationErrors.applicantKana && (
+                      <p className="text-red-400 text-sm mt-1">{validationErrors.applicantKana}</p>
+                    )}
                   </div>
                 </div>
 
                 {/* Address */}
                 <div>
-                  <label className="block text-gray-300 mb-2">住所</label>
+                  <label className="block text-gray-300 mb-2">住所 *</label>
                   <div className="space-y-3">
                     <div>
                       <input
                         type="text"
                         value={formData.applicantAddress?.postal || ''}
                         onChange={(e) => updateField('applicantAddress.postal', e.target.value)}
-                        className="w-full md:w-48 px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
+                        className={`w-full md:w-48 px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                          validationErrors['applicantAddress.postal'] ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                        }`}
                         placeholder="〒123-4567"
                       />
+                      {validationErrors['applicantAddress.postal'] && (
+                        <p className="text-red-400 text-sm mt-1">{validationErrors['applicantAddress.postal']}</p>
+                      )}
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <select
-                        value={formData.applicantAddress?.prefecture || ''}
-                        onChange={(e) => updateField('applicantAddress.prefecture', e.target.value)}
-                        className="px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
-                      >
-                        <option value="">都道府県を選択</option>
-                        {PREFECTURES.map(pref => (
-                          <option key={pref} value={pref}>{pref}</option>
-                        ))}
-                      </select>
+                      <div>
+                        <select
+                          value={formData.applicantAddress?.prefecture || ''}
+                          onChange={(e) => updateField('applicantAddress.prefecture', e.target.value)}
+                          className={`w-full px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                            validationErrors['applicantAddress.prefecture'] ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                          }`}
+                        >
+                          <option value="">都道府県を選択</option>
+                          {PREFECTURES.map(pref => (
+                            <option key={pref} value={pref}>{pref}</option>
+                          ))}
+                        </select>
+                        {validationErrors['applicantAddress.prefecture'] && (
+                          <p className="text-red-400 text-sm mt-1">{validationErrors['applicantAddress.prefecture']}</p>
+                        )}
+                      </div>
+                      <div>
+                        <input
+                          type="text"
+                          value={formData.applicantAddress?.city || ''}
+                          onChange={(e) => updateField('applicantAddress.city', e.target.value)}
+                          className={`w-full px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                            validationErrors['applicantAddress.city'] ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                          }`}
+                          placeholder="市区町村"
+                        />
+                        {validationErrors['applicantAddress.city'] && (
+                          <p className="text-red-400 text-sm mt-1">{validationErrors['applicantAddress.city']}</p>
+                        )}
+                      </div>
+                    </div>
+                    <div>
                       <input
                         type="text"
-                        value={formData.applicantAddress?.city || ''}
-                        onChange={(e) => updateField('applicantAddress.city', e.target.value)}
-                        className="px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
-                        placeholder="市区町村"
+                        value={formData.applicantAddress?.address1 || ''}
+                        onChange={(e) => updateField('applicantAddress.address1', e.target.value)}
+                        className={`w-full px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                          validationErrors['applicantAddress.address1'] ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                        }`}
+                        placeholder="番地・建物名"
                       />
+                      {validationErrors['applicantAddress.address1'] && (
+                        <p className="text-red-400 text-sm mt-1">{validationErrors['applicantAddress.address1']}</p>
+                      )}
                     </div>
-                    <input
-                      type="text"
-                      value={formData.applicantAddress?.address1 || ''}
-                      onChange={(e) => updateField('applicantAddress.address1', e.target.value)}
-                      className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
-                      placeholder="番地・建物名"
-                    />
                   </div>
                 </div>
 
@@ -333,9 +535,14 @@ export function FoodPhotoFormClient() {
                       type="tel"
                       value={formData.applicantPhone || ''}
                       onChange={(e) => updateField('applicantPhone', e.target.value)}
-                      className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
-                      placeholder="090-1234-5678"
+                      className={`w-full px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                        validationErrors.applicantPhone ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                      }`}
+                      placeholder="03-1234-5678"
                     />
+                    {validationErrors.applicantPhone && (
+                      <p className="text-red-400 text-sm mt-1">{validationErrors.applicantPhone}</p>
+                    )}
                   </div>
                   <div>
                     <label className="block text-gray-300 mb-2">メールアドレス *</label>
@@ -343,9 +550,14 @@ export function FoodPhotoFormClient() {
                       type="email"
                       value={formData.applicantEmail || ''}
                       onChange={(e) => updateField('applicantEmail', e.target.value)}
-                      className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
+                      className={`w-full px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                        validationErrors.applicantEmail ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                      }`}
                       placeholder="example@email.com"
                     />
+                    {validationErrors.applicantEmail && (
+                      <p className="text-red-400 text-sm mt-1">{validationErrors.applicantEmail}</p>
+                    )}
                   </div>
                 </div>
 
@@ -401,6 +613,13 @@ export function FoodPhotoFormClient() {
               >
                 <h2 className="text-xl font-bold text-white mb-4">撮影店舗情報</h2>
                 
+                {/* Error Summary */}
+                {Object.keys(validationErrors).length > 0 && (
+                  <div className="bg-red-900/20 border border-red-500 rounded-lg p-4 mb-6">
+                    <p className="text-red-400 font-semibold">入力内容にエラーがあります。赤く表示された項目を確認してください。</p>
+                  </div>
+                )}
+                
                 {/* Store Name */}
                 <div>
                   <label className="block text-gray-300 mb-2">店舗名 *</label>
@@ -408,9 +627,14 @@ export function FoodPhotoFormClient() {
                     type="text"
                     value={formData.store?.name || ''}
                     onChange={(e) => updateField('store.name', e.target.value)}
-                    className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
+                    className={`w-full px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                      validationErrors['store.name'] ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                    }`}
                     placeholder="レストラン〇〇"
                   />
+                  {validationErrors['store.name'] && (
+                    <p className="text-red-400 text-sm mt-1">{validationErrors['store.name']}</p>
+                  )}
                 </div>
 
                 {/* Store Address */}
@@ -733,9 +957,16 @@ export function FoodPhotoFormClient() {
               >
                 <h2 className="text-xl font-bold text-white mb-4">撮影希望内容</h2>
                 
+                {/* Error Summary */}
+                {Object.keys(validationErrors).length > 0 && (
+                  <div className="bg-red-900/20 border border-red-500 rounded-lg p-4 mb-6">
+                    <p className="text-red-400 font-semibold">入力内容にエラーがあります。赤く表示された項目を確認してください。</p>
+                  </div>
+                )}
+                
                 {/* Preferred Dates */}
                 <div>
-                  <label className="block text-gray-300 mb-4">希望撮影日時 *</label>
+                  <label className="block text-gray-300 mb-4">希望撮影日時 * (第1〜第3希望すべて必須)</label>
                   <div className="space-y-4">
                     <div>
                       <label className="block text-gray-400 text-sm mb-2">第1希望 *</label>
