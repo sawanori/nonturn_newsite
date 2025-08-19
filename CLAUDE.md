@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Next.js 15 corporate landing page for NonTurn.LLC, a video production company. The site features advanced 3D animations, portfolio showcase, and multi-location service pages.
+This is a Next.js 15 corporate landing page for NonTurn.LLC, a video production company. The site features advanced 3D animations, portfolio showcase, multi-location service pages, and specialized service offerings including food photography (飲食店撮影PhotoStudio).
 
 ## Common Development Commands
 
@@ -45,6 +45,7 @@ npm run analyze      # Analyze bundle size with webpack-bundle-analyzer
    - `src/components/3d/`: Three.js components (Sphere, Cubes, Particles)
    - `src/components/layout/`: Header, Footer, Navigation
    - `src/components/ui/`: Reusable UI components
+   - `src/components/services/`: Service-specific page components
    - Components use client/server separation with `"use client"` directive
 
 3. **Data Layer**: Static data in `src/data/` files for services, portfolio, and company information.
@@ -53,10 +54,11 @@ npm run analyze      # Analyze bundle size with webpack-bundle-analyzer
    - `/api/contact`: Contact form submission with SendGrid
    - `/api/send-email`: Email sending endpoint
    - `/api/csrf`: CSRF token management
+   - `/api/foodphoto-order`: Food photography order form submission
    - `/api/test-sendgrid`: SendGrid testing endpoint
    - `/api/debug-env`: Environment debugging (dev only)
 
-5. **Type Safety**: Comprehensive TypeScript types in `src/types/` directory.
+5. **Type Safety**: Comprehensive TypeScript types in `src/types/` directory and schema validation with Zod in `src/lib/`.
 
 ### Critical Implementation Details
 
@@ -120,11 +122,14 @@ NEXTAUTH_SECRET=                       # NextAuth secret (optional)
    - Check existing types in `src/types/`
    - Path alias `@/*` maps to `./src/*`
 
+6. **Form Validation**: Use Zod schemas in `src/lib/` for form validation with security patterns (regex for phone, postal codes, etc.)
+
 ## Configuration Details
 
 - **Output**: Standalone deployment mode
 - **Compression**: Enabled with Brotli/Gzip
 - **Image Optimization**: WebP/AVIF formats, multiple device sizes
+- **Image Remote Patterns**: Configured for Vercel blob storage (rpk6snz1bj3dcdnk.public.blob.vercel-storage.com)
 - **Cache Strategy**: 
   - Static assets: 1 year cache
   - Service worker: 12 hours cache

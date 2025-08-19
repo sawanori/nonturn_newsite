@@ -22,7 +22,7 @@ const navigation = [
   ]
  },
  {
-  name: '制作実績',
+  name: '撮影事例',
   href: '/portfolio',
   hasSubmenu: false
  },

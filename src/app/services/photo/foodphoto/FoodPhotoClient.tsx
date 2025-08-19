@@ -130,7 +130,7 @@ const Header = () => (
           料金
         </Link>
         <Link href="#samples" className="text-gray-300 hover:text-orange-500 transition-colors">
-          サンプル
+          撮影事例
         </Link>
         <Link href="#flow" className="text-gray-300 hover:text-orange-500 transition-colors">
           撮影の流れ
@@ -295,9 +295,13 @@ const IntroSection = () => {
                       飲食店撮影
                     </span>
                     <span 
-                      className="absolute -bottom-1 md:-bottom-2 right-0 text-xl md:text-2xl lg:text-3xl font-light italic text-white opacity-90 tracking-[0.2em]"
+                      className="absolute -bottom-1 md:-bottom-2 right-0 text-xl md:text-2xl lg:text-3xl font-light italic opacity-90 tracking-[0.2em]"
                       style={{ 
                         fontFamily: '"Dancing Script", "Caveat", cursive',
+                        background: 'linear-gradient(135deg, #F25C00 0%, #F9A603 100%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text',
                         transform: 'rotate(-2deg)',
                         transformOrigin: 'bottom right'
                       }}
@@ -786,7 +790,7 @@ const SamplesSection = () => {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <SectionTitle>ポートフォリオ</SectionTitle>
+            <SectionTitle>撮影事例</SectionTitle>
             <p className="text-gray-300 text-lg max-w-3xl mx-auto mb-8">
               飲食店撮影PhotoStudioが手掛けた作品の一部をご紹介。
               単なる写真ではなく、芸術作品としてのフードフォトグラフィーをご覧ください。

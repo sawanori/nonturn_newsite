@@ -203,10 +203,10 @@ export const siteLinks = {
     },
     {
       href: '/portfolio',
-      label: 'ポートフォリオ',
+      label: '撮影事例',
       description: '制作実績とプロジェクト事例',
       priority: 'high' as const,
-      keywords: ['ポートフォリオ', '実績', '事例']
+      keywords: ['撮影事例', '実績', '事例']
     },
     {
       href: '/about',
@@ -256,7 +256,7 @@ export const siteLinks = {
       href: '/portfolio/corporate',
       label: '企業向け制作',
       description: '企業プロモーション・ブランディング動画',
-      category: 'ポートフォリオ',
+      category: '撮影事例',
       priority: 'high' as const,
       keywords: ['企業向け', 'コーポレート', 'ブランディング']
     },
@@ -264,7 +264,7 @@ export const siteLinks = {
       href: '/portfolio/product',
       label: '商品紹介',
       description: '商品プロモーション・ECサイト用動画',
-      category: 'ポートフォリオ',
+      category: '撮影事例',
       priority: 'high' as const,
       keywords: ['商品紹介', 'プロダクト', 'Eコマース']
     },
@@ -272,7 +272,7 @@ export const siteLinks = {
       href: '/portfolio/event',
       label: 'イベント記録',
       description: 'セミナー・カンファレンス・式典の記録',
-      category: 'ポートフォリオ',
+      category: '撮影事例',
       priority: 'medium' as const,
       keywords: ['イベント', '記録', 'セミナー']
     }

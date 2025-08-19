@@ -132,7 +132,7 @@ function generateBreadcrumbsFromPath(pathname: string): BreadcrumbItem[] {
     'movie': '映像制作',
     'photo': '写真撮影',
     'web': 'Web制作',
-    'portfolio': 'ポートフォリオ',
+    'portfolio': '撮影事例',
     'about': '会社概要',
     'contact': 'お問い合わせ',
     'pricing': '料金',
@@ -229,7 +229,7 @@ export function useServiceBreadcrumbs(serviceType?: string) {
 
 export function usePortfolioBreadcrumbs(category?: string, projectId?: string) {
   const breadcrumbs = [
-    { label: 'ポートフォリオ', href: '/portfolio' }
+    { label: '撮影事例', href: '/portfolio' }
   ]
   
   if (category) {

@@ -157,10 +157,10 @@ export default function HomeClient() {
         className="border-2 border-yellow-400 text-yellow-400 px-8 py-4 font-medium text-lg uppercase tracking-wider hover:bg-yellow-400 hover:text-black transition-all duration-300 relative overflow-hidden group inline-block"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        aria-label="制作実績ページへ移動"
+        aria-label="撮影事例ページへ移動"
        >
-        <span className="relative z-10">制作実績を見る</span>
-        <VisuallyHidden>ポートフォリオページに移動します</VisuallyHidden>
+        <span className="relative z-10">撮影事例を見る</span>
+        <VisuallyHidden>撮影事例ページに移動します</VisuallyHidden>
         <div className="absolute inset-0 bg-yellow-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
        </motion.a>
       </motion.div>
