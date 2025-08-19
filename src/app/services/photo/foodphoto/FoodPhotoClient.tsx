@@ -712,7 +712,7 @@ const ParallaxSection = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            写真は<span className="text-orange-400">記憶</span>を超える
+            写真は、<span className="text-orange-400">売上を変える</span>チカラになる
           </motion.h2>
           <motion.p 
             className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto"
@@ -721,8 +721,8 @@ const ParallaxSection = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            一瞬の美しさを永遠に。<br />
-            飲食店撮影PhotoStudioが創り出す、芸術としての料理写真
+            料理の一瞬の輝きを捉え、集客につながる魅力的なビジュアルに。<br />
+            飲食店専門PhotoStudioが、売上アップを後押しする&ldquo;集客できる料理写真&rdquo;を創り出します。
           </motion.p>
           
           {/* スクロールインジケーター */}
