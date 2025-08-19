@@ -342,18 +342,8 @@ const NewsSection = () => (
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
         >
-          <span className="text-sm text-gray-300">2024.12.01</span>
-          <span className="text-white">年末年始の撮影予約受付を開始しました</span>
-        </motion.div>
-        <motion.div
-          className="flex flex-col md:flex-row md:items-center gap-3 p-4 rounded-lg" style={{ backgroundColor: 'rgb(77, 76, 76)' }}
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-        >
-          <span className="text-sm text-gray-300">2024.11.15</span>
-          <span className="text-white">東京23区内の撮影料金を改定しました</span>
+          <span className="text-sm text-gray-300">2025.8.19</span>
+          <span className="text-white">飲食店写真Art Studioサイトオープン</span>
         </motion.div>
       </div>
     </div>
@@ -404,7 +394,10 @@ const FeaturesSection = () => {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <SectionTitle>飲食店写真Art Studioの特徴</SectionTitle>
+            <SectionTitle>
+              <span className="inline md:hidden">飲食店写真<br />Art Studioの特徴</span>
+              <span className="hidden md:inline">飲食店写真Art Studioの特徴</span>
+            </SectionTitle>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {features.map((feature, index) => (
@@ -492,8 +485,8 @@ const PricingSection = () => {
         '撮影枚数3-5カット限定',
         'データ即日納品可能',
         '商用利用OK',
-        '基本レタッチ込み',
-        '出張費込み（東京23区内）',
+        '現像のみ',
+        '出張費込み（東京23区内、横浜市内、千葉※船橋）',
         'お試し撮影に最適'
       ]
     },
@@ -509,8 +502,8 @@ const PricingSection = () => {
         '撮影枚数時間内無制限（目安10-15カット）',
         'データ即日納品可能',
         '商用利用OK',
-        'プロフェッショナルレタッチ込み',
-        '出張費込み（東京23区内）',
+        '標準的なレタッチ込み',
+        '出張費込み（東京23区内、横浜市内、千葉※船橋）',
         '人気メニュー重点撮影'
       ]
     },
@@ -526,8 +519,8 @@ const PricingSection = () => {
         '撮影枚数時間内無制限（目安30-40カット）',
         'データ即日納品可能',
         '商用利用OK',
-        'アーティスティックレタッチ込み',
-        '出張費込み（関東全域）',
+        '標準的なレタッチ込み',
+        '出張費込み（東京23区内、横浜市内、千葉※船橋）',
         '撮影ディレクション付き',
         '年間契約割引あり'
       ]
@@ -545,7 +538,8 @@ const PricingSection = () => {
         >
           <SectionTitle>料金プラン</SectionTitle>
           <p className="text-gray-300 text-lg">
-            シンプルで分かりやすい3つのプラン。全て込みの明朗会計です。
+            <span className="inline md:hidden">シンプルで分かりやすい3つのプラン。<br />全て込みの明朗会計です。</span>
+            <span className="hidden md:inline">シンプルで分かりやすい3つのプラン。全て込みの明朗会計です。</span>
           </p>
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -599,11 +593,6 @@ const PricingSection = () => {
                   {plan.isPopular ? '今すぐ申し込む' : 'プランを選択'}
                 </Button>
               </Link>
-              {plan.isPopular && (
-                <p className="text-center text-sm text-gray-500 mt-4">
-                  ※ 初回限定20%OFFキャンペーン実施中
-                </p>
-              )}
             </motion.div>
           ))}
         </div>
@@ -770,22 +759,41 @@ const SamplesSection = () => {
             </p>
             
             {/* カテゴリーフィルター */}
-            <div className="flex flex-wrap justify-center gap-3">
-              {categories.map((category) => (
+            <div className="flex flex-col md:flex-row md:flex-wrap justify-center gap-3">
+              {/* Mobile: 全て button on its own row */}
+              <div className="flex justify-center md:contents">
                 <motion.button
-                  key={category.id}
-                  onClick={() => setActiveCategory(category.id)}
-                  className={`px-8 py-3 font-semibold text-base transition-all duration-300 rounded-full ${
-                    activeCategory === category.id
+                  onClick={() => setActiveCategory('all')}
+                  className={`px-8 py-3 font-semibold text-base transition-all duration-300 rounded-full w-full md:w-auto max-w-xs ${
+                    activeCategory === 'all'
                       ? 'bg-orange-500 text-white shadow-lg'
                       : 'bg-white border-2 border-orange-400 text-orange-500 hover:bg-orange-50'
                   }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  {category.name} ({category.count})
+                  全て ({categories.find(c => c.id === 'all')?.count})
                 </motion.button>
-              ))}
+              </div>
+              
+              {/* Mobile: Other buttons in a row */}
+              <div className="flex justify-center gap-3 md:contents">
+                {categories.filter(category => category.id !== 'all').map((category) => (
+                  <motion.button
+                    key={category.id}
+                    onClick={() => setActiveCategory(category.id)}
+                    className={`px-6 md:px-8 py-3 font-semibold text-base transition-all duration-300 rounded-full flex-1 md:flex-initial ${
+                      activeCategory === category.id
+                        ? 'bg-orange-500 text-white shadow-lg'
+                        : 'bg-white border-2 border-orange-400 text-orange-500 hover:bg-orange-50'
+                    }`}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {category.name} ({category.count})
+                  </motion.button>
+                ))}
+              </div>
             </div>
           </motion.div>
 
