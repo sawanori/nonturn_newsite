@@ -1,0 +1,1100 @@
+'use client'
+
+import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import Link from 'next/link'
+import Image from 'next/image'
+
+// Atoms
+const Button = ({ variant = 'primary', children, onClick, className = '' }: any) => {
+  const baseClass = 'px-8 py-4 font-bold text-lg rounded-2xl transition-all duration-300'
+  const variants: Record<string, string> = {
+    primary: 'bg-gradient-to-r from-orange-400 to-red-500 text-white hover:from-red-500 hover:to-pink-500',
+    secondary: 'bg-transparent border-2 border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-white'
+  }
+  
+  return (
+    <motion.button
+      className={`${baseClass} ${variants[variant]} ${className}`}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      onClick={onClick}
+    >
+      {children}
+    </motion.button>
+  )
+}
+
+const SectionTitle = ({ children }: any) => (
+  <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+    {children}
+  </h2>
+)
+
+const SubTitle = ({ children }: any) => (
+  <h3 className="text-2xl md:text-3xl font-semibold mb-3 text-gray-200">
+    {children}
+  </h3>
+)
+
+// Molecules
+const FeatureCard = ({ title, description, icon, image, onClick }: any) => (
+  <motion.div
+    className="aspect-square bg-white shadow-lg hover:shadow-2xl transition-all cursor-pointer overflow-hidden group"
+    whileHover={{ scale: 1.02 }}
+    whileTap={{ scale: 0.98 }}
+    onClick={onClick}
+  >
+    {/* 上部画像エリア */}
+    <div className="relative h-2/3 bg-gradient-to-br from-orange-100 to-red-100 overflow-hidden">
+      {image ? (
+        <Image
+          src={image}
+          alt={title}
+          fill
+          className="object-cover group-hover:scale-110 transition-transform duration-500"
+        />
+      ) : (
+        <div className="w-full h-full flex items-center justify-center">
+          <span className="text-6xl opacity-50">{icon}</span>
+        </div>
+      )}
+      {/* オーバーレイ */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+    </div>
+    
+    {/* 下部テキストエリア */}
+    <div className="h-1/3 p-6 flex flex-col justify-center">
+      <h3 className="text-xl font-bold mb-2 text-gray-800 group-hover:text-orange-500 transition-colors">
+        {title}
+      </h3>
+      <p className="text-base text-gray-700 line-clamp-2">{description}</p>
+      <p className="text-sm text-orange-500 mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
+        クリックして詳細を見る →
+      </p>
+    </div>
+  </motion.div>
+)
+
+
+const FlowStep = ({ number, title, description }: any) => (
+  <motion.div
+    className="rounded-2xl p-6 shadow-lg relative" style={{ backgroundColor: 'rgb(77, 76, 76)' }}
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.6, delay: number * 0.1 }}
+  >
+    <div className="absolute -top-4 -left-4 w-12 h-12 bg-gradient-to-r from-orange-400 to-red-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
+      {number}
+    </div>
+    <h3 className="text-xl font-bold text-white mb-2 mt-2">{title}</h3>
+    <p className="text-gray-300">{description}</p>
+  </motion.div>
+)
+
+const CaseCard = ({ title, company, role, name, comment }: any) => (
+  <motion.article
+    className="rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow" style={{ backgroundColor: 'rgb(77, 76, 76)' }}
+    whileHover={{ y: -5 }}
+  >
+    <h3 className="text-xl font-bold text-white mb-3">{title}</h3>
+    <p className="text-gray-300 mb-4 italic">&ldquo;{comment}&rdquo;</p>
+    <div className="text-sm text-gray-500">
+      <p>{company}</p>
+      <p>{role} {name}様</p>
+    </div>
+  </motion.article>
+)
+
+// Organisms
+const Header = () => (
+  <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm">
+    <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <Link href="/" className="flex items-center gap-2">
+        <span className="text-2xl">🍜</span>
+        <span className="text-xl font-bold text-gray-800">飲食店写真 Art Studio</span>
+      </Link>
+      
+      <nav className="hidden md:flex items-center gap-6">
+        <Link href="#features" className="text-gray-600 hover:text-orange-500 transition-colors">
+          サービスの特徴
+        </Link>
+        <Link href="#pricing" className="text-gray-600 hover:text-orange-500 transition-colors">
+          料金
+        </Link>
+        <Link href="#samples" className="text-gray-600 hover:text-orange-500 transition-colors">
+          サンプル
+        </Link>
+        <Link href="#flow" className="text-gray-600 hover:text-orange-500 transition-colors">
+          撮影の流れ
+        </Link>
+        <Link href="#cases" className="text-gray-600 hover:text-orange-500 transition-colors">
+          導入事例
+        </Link>
+      </nav>
+      
+      <div className="hidden md:flex items-center gap-3">
+        <Link href="/services/photo/foodphoto/form">
+          <Button variant="primary">
+            申し込む
+          </Button>
+        </Link>
+        <Link href="/contact">
+          <Button variant="secondary">
+            問い合わせる
+          </Button>
+        </Link>
+      </div>
+    </div>
+  </header>
+)
+
+const IntroSection = () => {
+  const [currentSlide, setCurrentSlide] = useState(0)
+  
+  const heroImages = [
+    {
+      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/1-ahUBbGFxLbRSGBp8I5zesVu1UCrEXM.jpg',
+      alt: '美味しそうな料理写真1'
+    },
+    {
+      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/2-l4gatMsuCh1slTHV3iGYszNGTlDxhx.jpg',
+      alt: '美味しそうな料理写真2'
+    },
+    {
+      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/3-TzPVHUjCuBAdIPAhFs8ZOeADYHWLKc.jpg',
+      alt: '美味しそうな料理写真3'
+    },
+    {
+      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/4-XoQ2KJrHwhwWFyCx1xhUsArWI6BuwB.jpg',
+      alt: '美味しそうな料理写真4'
+    },
+    {
+      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/5-hl4KhogTlAig2r6RUD0SCvrDL22c3i.jpg',
+      alt: '美味しそうな料理写真5'
+    }
+  ]
+
+  // Auto-advance slideshow
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroImages.length)
+    }, 4000) // Change slide every 4 seconds
+    
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <section className="relative h-screen overflow-hidden bg-black">
+      {/* Background Slideshow */}
+      <div className="absolute inset-0">
+        {/* Preload all images in background */}
+        {heroImages.map((image, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 ${index === currentSlide ? 'z-10' : 'z-0'}`}
+          >
+            <Image
+              src={image.src}
+              alt={image.alt}
+              fill
+              className="object-cover"
+              priority={index === 0}
+              sizes="100vw"
+            />
+          </div>
+        ))}
+        
+        {/* Animated overlay for transition effect */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentSlide}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8 }}
+            className="absolute inset-0 z-20"
+          >
+            <Image
+              src={heroImages[currentSlide].src}
+              alt={heroImages[currentSlide].alt}
+              fill
+              className="object-cover"
+              priority
+              sizes="100vw"
+              style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+            />
+            {/* Dark overlay for text readability */}
+            <div className="absolute inset-0 bg-black/50" />
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Slide indicators */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2 z-30">
+        {heroImages.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentSlide(index)}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              index === currentSlide 
+                ? 'w-8 bg-white' 
+                : 'bg-white/50 hover:bg-white/70'
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
+
+      {/* Content overlay */}
+      <div className="relative z-30 h-full flex items-center justify-center">
+        <div className="max-w-5xl mx-auto px-4 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.p 
+              className="text-white/90 font-semibold mb-4 text-lg"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              日本フードフォトグラファー協会認定の<br />プロカメラマンによる出張撮影
+            </motion.p>
+            <motion.div 
+              className="mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <h1 className="text-5xl md:text-7xl font-bold leading-tight bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent">
+                <span className="block md:inline">飲食店写真</span>
+                <span className="md:ml-2">Art Studio</span>
+              </h1>
+              <p className="text-xl md:text-2xl font-light text-white mt-2">
+                飲食店専門出張撮影サービス
+              </p>
+            </motion.div>
+            <motion.div 
+              className="flex flex-col items-center gap-3 mb-8 text-lg text-white/90"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+            >
+              <span className="flex items-center justify-center gap-2 bg-black/30 px-6 py-2 rounded-full w-full md:min-w-[600px] max-w-[600px]">
+                <span className="text-green-400">✓</span>
+                日本フードフォトグラファー協会認定カメラマンが撮影
+              </span>
+              <span className="flex items-center justify-center gap-2 bg-black/30 px-6 py-2 rounded-full w-full md:min-w-[600px] max-w-[600px]">
+                <span className="text-green-400">✓</span>
+                撮影枚数時間内無制限(一部プラン対象外)
+              </span>
+              <span className="flex items-center justify-center gap-2 bg-black/30 px-6 py-2 rounded-full w-full md:min-w-[600px] max-w-[600px]">
+                <span className="text-green-400">✓</span>
+                飲食媒体で効果の出やすい撮影素材
+              </span>
+            </motion.div>
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+            >
+              <Link href="/services/photo/foodphoto/form">
+                <Button variant="primary" className="min-w-[200px]">
+                  今すぐ申し込む
+                </Button>
+              </Link>
+              <Link href="/contact">
+                <Button variant="secondary" className="min-w-[200px] !border-white !text-white hover:!bg-white hover:!text-orange-500">
+                  まずは問い合わせる
+                </Button>
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <motion.div 
+        className="absolute bottom-20 left-1/2 transform -translate-x-1/2 text-white/70 z-30"
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 1.5, repeat: Infinity }}
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
+      </motion.div>
+    </section>
+  )
+}
+
+const NewsSection = () => (
+  <section className="py-12" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
+    <div className="max-w-5xl mx-auto px-4">
+      <h2 className="text-sm font-semibold text-white mb-4">お知らせ</h2>
+      <div className="space-y-3">
+        <motion.div
+          className="flex flex-col md:flex-row md:items-center gap-3 p-4 rounded-lg" style={{ backgroundColor: 'rgb(77, 76, 76)' }}
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+        >
+          <span className="text-sm text-gray-300">2024.12.01</span>
+          <span className="text-white">年末年始の撮影予約受付を開始しました</span>
+        </motion.div>
+        <motion.div
+          className="flex flex-col md:flex-row md:items-center gap-3 p-4 rounded-lg" style={{ backgroundColor: 'rgb(77, 76, 76)' }}
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+        >
+          <span className="text-sm text-gray-300">2024.11.15</span>
+          <span className="text-white">東京23区内の撮影料金を改定しました</span>
+        </motion.div>
+      </div>
+    </div>
+  </section>
+)
+
+const FeaturesSection = () => {
+  const [selectedFeature, setSelectedFeature] = useState<any>(null)
+  
+  const features = [
+    {
+      icon: '📸',
+      title: '協会認定のプロフェッショナル撮影',
+      description: '日本フードフォトグラファー協会認定カメラマンによる確かな技術力。',
+      image: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/1-ahUBbGFxLbRSGBp8I5zesVu1UCrEXM.jpg',
+      fullDescription: '日本フードフォトグラファー協会認定カメラマンが、長年培った技術と経験を活かしてプロフェッショナルな撮影を行います。料理の美味しさを最大限に引き出す構図、ライティング、スタイリングなど、すべての要素において最高水準のクオリティをお約束します。協会の厳しい基準をクリアした技術力で、お店の魅力を確実に表現します。'
+    },
+    {
+      icon: '✨',
+      title: '撮影画像は全て自由に使用可能',
+      description: '著作権フリー。SNS、Web、印刷物など用途を問わず自由にご利用いただけます。',
+      image: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/2-l4gatMsuCh1slTHV3iGYszNGTlDxhx.jpg',
+      fullDescription: '撮影した画像は全て著作権フリーでお渡しします。Instagram、Facebook、TwitterなどのSNS投稿、ホームページやECサイトへの掲載、メニューやチラシなどの印刷物、看板やポスターなど、あらゆる用途で追加料金なしでご自由にお使いいただけます。将来的な用途変更や再利用も完全自由。お店の資産として永続的にご活用ください。'
+    },
+    {
+      icon: '🚀',
+      title: '最短1週間の短期納品',
+      description: '撮影から納品まで最短1週間。急ぎの案件にも柔軟に対応いたします。',
+      image: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/3-TzPVHUjCuBAdIPAhFs8ZOeADYHWLKc.jpg',
+      fullDescription: '撮影完了から最短1週間での納品が可能です。新メニューの告知、季節限定商品のPR、急なイベント対応など、スピーディーな対応が必要な場面でも安心してご依頼いただけます。基本的なレタッチ、色調補正を含めた完成品を短期間でお届け。お急ぎの場合は特急対応（3日納品）のオプションもご用意しています。'
+    },
+    {
+      icon: '📊',
+      title: '飲食媒体に精通した効果的な撮影',
+      description: '飲食店専門WEBコンサルタントも務めるカメラマンが、集客に繋がる写真を撮影。',
+      image: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/4-XoQ2KJrHwhwWFyCx1xhUsArWI6BuwB.jpg',
+      fullDescription: '撮影を担当するカメラマンは、飲食店専門のWEBコンサルタントとしても活動しており、デジタルマーケティングの観点から最も効果的な撮影を行います。食べログ、ぐるなび、ホットペッパーなどの主要グルメサイトのアルゴリズムや、Google検索での上位表示に有利な画像の特徴を熟知。SNSでの拡散力、コンバージョン率の向上、SEO対策まで考慮した戦略的な撮影により、写真を通じて実際の集客アップに貢献します。WEBコンサルティングの知見を活かし、オンライン集客に直結する撮影をお約束します。'
+    }
+  ]
+
+  return (
+    <>
+      <section id="features" className="py-16" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
+        <div className="max-w-5xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <SectionTitle>飲食店写真Art Studioの特徴</SectionTitle>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {features.map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <FeatureCard 
+                  {...feature} 
+                  onClick={() => setSelectedFeature(feature)}
+                />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* モーダルウィンドウ */}
+      <AnimatePresence>
+        {selectedFeature && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70"
+            onClick={() => setSelectedFeature(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* モーダルヘッダー画像 */}
+              <div className="relative h-64 md:h-80">
+                <Image
+                  src={selectedFeature.image}
+                  alt={selectedFeature.title}
+                  fill
+                  className="object-cover rounded-t-2xl"
+                />
+                <button
+                  onClick={() => setSelectedFeature(null)}
+                  className="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors"
+                >
+                  <span className="text-2xl">×</span>
+                </button>
+              </div>
+              
+              {/* モーダルコンテンツ */}
+              <div className="p-8">
+                <div className="flex items-center gap-4 mb-4">
+                  <span className="text-4xl">{selectedFeature.icon}</span>
+                  <h2 className="text-3xl font-bold text-gray-800">
+                    {selectedFeature.title}
+                  </h2>
+                </div>
+                <p className="text-gray-700 leading-relaxed">
+                  {selectedFeature.fullDescription}
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  )
+}
+
+const PricingSection = () => {
+  const plans = [
+    {
+      name: 'ライトプラン',
+      time: 1,
+      price: 33000,
+      cuts: '撮影枚数限定',
+      cutsGuide: '（3-5カット納品）',
+      isPopular: false,
+      features: [
+        '1時間の撮影時間',
+        '撮影枚数3-5カット限定',
+        'データ即日納品可能',
+        '商用利用OK',
+        '基本レタッチ込み',
+        '出張費込み（東京23区内）',
+        'お試し撮影に最適'
+      ]
+    },
+    {
+      name: 'スタンダードプラン',
+      time: 2,
+      price: 44000,
+      cuts: '撮影枚数無制限',
+      cutsGuide: '（10-15カット納品目安）',
+      isPopular: true,
+      features: [
+        '2時間の撮影時間',
+        '撮影枚数時間内無制限（目安10-15カット）',
+        'データ即日納品可能',
+        '商用利用OK',
+        'プロフェッショナルレタッチ込み',
+        '出張費込み（東京23区内）',
+        '人気メニュー重点撮影'
+      ]
+    },
+    {
+      name: 'プレミアムプラン',
+      time: 4,
+      price: 88000,
+      cuts: '撮影枚数無制限',
+      cutsGuide: '（30-40カット納品目安）',
+      isPopular: false,
+      features: [
+        '4時間の撮影時間',
+        '撮影枚数時間内無制限（目安30-40カット）',
+        'データ即日納品可能',
+        '商用利用OK',
+        'アーティスティックレタッチ込み',
+        '出張費込み（関東全域）',
+        '撮影ディレクション付き',
+        '年間契約割引あり'
+      ]
+    }
+  ]
+
+  return (
+    <section id="pricing" className="py-16" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
+      <div className="max-w-5xl mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <SectionTitle>料金プラン</SectionTitle>
+          <p className="text-gray-300 text-lg">
+            シンプルで分かりやすい3つのプラン。全て込みの明朗会計です。
+          </p>
+        </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {plans.map((plan, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.2 }}
+              className={`rounded-3xl p-8 ${
+                plan.isPopular 
+                  ? 'bg-gradient-to-br from-orange-50 via-white to-red-50 border-2 border-orange-400 shadow-2xl scale-105' 
+                  : 'bg-white border border-gray-200 shadow-xl'
+              } hover:shadow-2xl transition-all relative`}
+              whileHover={{ y: -10 }}
+            >
+              {plan.isPopular && (
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-gradient-to-r from-orange-400 to-red-500 text-white text-sm font-bold px-4 py-2 rounded-full">
+                    🌟 人気No.1
+                  </div>
+                </div>
+              )}
+              <h3 className="text-xl md:text-2xl lg:text-2xl font-bold text-black mb-2 mt-2">{plan.name}</h3>
+              <div className="flex items-baseline mb-4">
+                <span className="text-3xl md:text-4xl lg:text-5xl font-bold text-orange-500">¥{plan.price.toLocaleString()}</span>
+                <span className="text-sm md:text-base text-gray-600 ml-2">/ {plan.time}H</span>
+              </div>
+              <div className="mb-6">
+                <p className="text-base md:text-lg lg:text-xl text-gray-700 font-semibold">
+                  {plan.cuts}
+                </p>
+                <p className="text-xs md:text-sm text-gray-500 mt-1">
+                  {plan.cutsGuide}
+                </p>
+              </div>
+              <ul className="space-y-3 mb-8">
+                {plan.features.map((feature, idx) => (
+                  <li key={idx} className="flex items-start text-gray-700 text-sm md:text-base">
+                    <span className="text-green-500 mr-3 mt-1">✓</span>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link href="/services/photo/foodphoto/form" className="block">
+                <Button 
+                  variant={plan.isPopular ? "primary" : "secondary"} 
+                  className="w-full text-lg py-4"
+                >
+                  {plan.isPopular ? '今すぐ申し込む' : 'プランを選択'}
+                </Button>
+              </Link>
+              {plan.isPopular && (
+                <p className="text-center text-sm text-gray-500 mt-4">
+                  ※ 初回限定20%OFFキャンペーン実施中
+                </p>
+              )}
+            </motion.div>
+          ))}
+        </div>
+        <motion.div 
+          className="text-center mt-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+        >
+          <p className="text-gray-300 mb-4">
+            その他のご要望にも柔軟に対応いたします
+          </p>
+          <Link href="/contact" className="text-orange-500 hover:text-orange-600 font-semibold text-lg">
+            カスタムプランのご相談はこちら →
+          </Link>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+const ParallaxSection = () => {
+  const [scrollY, setScrollY] = useState(0)
+  const [offsetY, setOffsetY] = useState(0)
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const scrolled = window.scrollY
+      const sectionElement = document.getElementById('parallax-section')
+      if (sectionElement) {
+        const rect = sectionElement.getBoundingClientRect()
+        const sectionTop = rect.top + window.scrollY
+        const relativeScroll = scrolled - sectionTop + window.innerHeight
+        setOffsetY(relativeScroll * 0.3)
+      }
+      setScrollY(scrolled)
+    }
+    
+    window.addEventListener('scroll', handleScroll)
+    handleScroll() // Initial call
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  return (
+    <section id="parallax-section" className="relative h-[80vh] overflow-hidden">
+      {/* パララックス背景画像 */}
+      <div 
+        className="absolute inset-0 w-full h-[130%] -top-[15%]"
+        style={{
+          transform: `translateY(${offsetY}px)`,
+          willChange: 'transform'
+        }}
+      >
+        <Image
+          src="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/7-mJKwnJ1MV7rgCTVH2W7YH58O16jhJM.jpg"
+          alt="Parallax Background"
+          fill
+          className="object-cover"
+          priority
+          quality={100}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
+      </div>
+
+      {/* コンテンツ */}
+      <div className="relative z-10 h-full flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1 }}
+          className="text-center px-4"
+        >
+          <motion.h2 
+            className="text-4xl md:text-6xl font-bold text-white mb-6"
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            写真は<span className="text-orange-400">記憶</span>を超える
+          </motion.h2>
+          <motion.p 
+            className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            一瞬の美しさを永遠に。<br />
+            飲食店写真 Art Studioが創り出す、芸術としての料理写真
+          </motion.p>
+          
+          {/* スクロールインジケーター */}
+          <motion.div
+            className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+              <div className="w-1 h-3 bg-white/50 rounded-full mt-2" />
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+const SamplesSection = () => {
+  const [activeCategory, setActiveCategory] = useState('all')
+  const [selectedImage, setSelectedImage] = useState<any>(null)
+
+  const categories = [
+    { id: 'all', name: '全て', count: 18 },
+    { id: 'food', name: '料理', count: 9 },
+    { id: 'exterior', name: '外観', count: 5 },
+    { id: 'interior', name: '内観', count: 4 }
+  ]
+
+  const images = [
+    // 料理写真
+    { id: 1, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/1-ahUBbGFxLbRSGBp8I5zesVu1UCrEXM.jpg', alt: '料理写真1' },
+    { id: 2, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/2-l4gatMsuCh1slTHV3iGYszNGTlDxhx.jpg', alt: '料理写真2' },
+    { id: 3, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/3-TzPVHUjCuBAdIPAhFs8ZOeADYHWLKc.jpg', alt: '料理写真3' },
+    { id: 4, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/4-XoQ2KJrHwhwWFyCx1xhUsArWI6BuwB.jpg', alt: '料理写真4' },
+    { id: 5, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/5-hl4KhogTlAig2r6RUD0SCvrDL22c3i.jpg', alt: '料理写真5' },
+    { id: 6, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/6-lBfVjkw1GyFlaswiLfy0XVr7Y2iBjC.jpg', alt: '料理写真6' },
+    { id: 7, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/7-mJKwnJ1MV7rgCTVH2W7YH58O16jhJM.jpg', alt: '料理写真7' },
+    { id: 8, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/8-Zs2WBv7g88WxHD85HWhaQoWWExe7Xp.jpg', alt: '料理写真8' },
+    { id: 9, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/9-HS8CW5NXVIyjfZI7IBnbIAamIM35If.jpg', alt: '料理写真9' },
+    // 外観写真
+    { id: 10, category: 'exterior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/1-ahUBbGFxLbRSGBp8I5zesVu1UCrEXM.jpg', alt: '外観写真1' },
+    { id: 11, category: 'exterior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/2-l4gatMsuCh1slTHV3iGYszNGTlDxhx.jpg', alt: '外観写真2' },
+    { id: 12, category: 'exterior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/3-TzPVHUjCuBAdIPAhFs8ZOeADYHWLKc.jpg', alt: '外観写真3' },
+    { id: 13, category: 'exterior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/4-XoQ2KJrHwhwWFyCx1xhUsArWI6BuwB.jpg', alt: '外観写真4' },
+    { id: 14, category: 'exterior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/5-hl4KhogTlAig2r6RUD0SCvrDL22c3i.jpg', alt: '外観写真5' },
+    // 内観写真
+    { id: 15, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/6-lBfVjkw1GyFlaswiLfy0XVr7Y2iBjC.jpg', alt: '内観写真1' },
+    { id: 16, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/7-mJKwnJ1MV7rgCTVH2W7YH58O16jhJM.jpg', alt: '内観写真2' },
+    { id: 17, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/8-Zs2WBv7g88WxHD85HWhaQoWWExe7Xp.jpg', alt: '内観写真3' },
+    { id: 18, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/9-HS8CW5NXVIyjfZI7IBnbIAamIM35If.jpg', alt: '内観写真4' }
+  ]
+
+  const filteredImages = activeCategory === 'all' 
+    ? images 
+    : images.filter(img => img.category === activeCategory)
+
+  return (
+    <>
+      <section id="samples" className="py-16" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
+        <div className="max-w-6xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <SectionTitle>ポートフォリオ</SectionTitle>
+            <p className="text-gray-300 text-lg max-w-3xl mx-auto mb-8">
+              飲食店写真 Art Studioが手掛けた作品の一部をご紹介。
+              単なる写真ではなく、芸術作品としてのフードフォトグラフィーをご覧ください。
+            </p>
+            
+            {/* カテゴリーフィルター */}
+            <div className="flex flex-wrap justify-center gap-3">
+              {categories.map((category) => (
+                <motion.button
+                  key={category.id}
+                  onClick={() => setActiveCategory(category.id)}
+                  className={`px-8 py-3 font-semibold text-base transition-all duration-300 rounded-full ${
+                    activeCategory === category.id
+                      ? 'bg-orange-500 text-white shadow-lg'
+                      : 'bg-white border-2 border-orange-400 text-orange-500 hover:bg-orange-50'
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {category.name} ({category.count})
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* 画像グリッド */}
+          <AnimatePresence mode="wait">
+            <motion.div 
+              key={activeCategory}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+            >
+              {filteredImages.map((image, index) => (
+                <motion.div
+                  key={image.id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.05 }}
+                  className="relative aspect-square overflow-hidden rounded-lg cursor-pointer group"
+                  whileHover={{ scale: 1.03 }}
+                  onClick={() => setSelectedImage(image)}
+                >
+                  <Image 
+                    src={image.src} 
+                    alt={image.alt}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-110"
+                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </section>
+
+      {/* 拡大表示モーダル */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90"
+            onClick={() => setSelectedImage(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.8 }}
+              className="relative max-w-5xl w-full max-h-[90vh]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setSelectedImage(null)}
+                className="absolute -top-12 right-0 text-white hover:text-orange-400 transition-colors"
+              >
+                <span className="text-3xl">×</span>
+              </button>
+              <div className="relative w-full h-[80vh]">
+                <Image
+                  src={selectedImage.src}
+                  alt={selectedImage.alt}
+                  fill
+                  className="object-contain"
+                  sizes="100vw"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  )
+}
+
+const FlowSection = () => {
+  const steps = [
+    {
+      number: 1,
+      title: 'お申し込み',
+      description: 'フォームまたはお電話でお申し込みください。'
+    },
+    {
+      number: 2,
+      title: '撮影日調整',
+      description: 'ご希望の日時を調整させていただきます。'
+    },
+    {
+      number: 3,
+      title: '撮影',
+      description: 'プロカメラマンがお店にお伺いして撮影します。'
+    },
+    {
+      number: 4,
+      title: '画像納品',
+      description: '編集済みの画像データをお渡しします。'
+    }
+  ]
+
+  return (
+    <section id="flow" className="py-16" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
+      <div className="max-w-5xl mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <SectionTitle>納品までの流れ</SectionTitle>
+          <p className="text-gray-300 text-lg">
+            撮影から撮影画像納品まで最長で7営業日となります。<br />
+            <span className="text-sm">場合によってはご希望に添えない可能性があります。</span>
+          </p>
+        </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {steps.map((step) => (
+            <FlowStep key={step.number} {...step} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+const CasesSection = () => {
+  const cases = [
+    {
+      title: '売上が前年比150%アップ',
+      company: 'イタリアンレストラン Bella Vista',
+      role: 'オーナーシェフ',
+      name: '山田',
+      comment: '飲食店写真 Art Studioの作品は芸術品。お店の格が上がりました。'
+    },
+    {
+      title: 'SNSフォロワー3倍増',
+      company: 'カフェ Morning Glory',
+      role: '店長',
+      name: '佐藤',
+      comment: 'アーティスティックな写真がSNSで大バズりしました。'
+    },
+    {
+      title: 'デリバリー注文2倍',
+      company: '中華料理 龍門',
+      role: '経営者',
+      name: '李',
+      comment: 'プロの技術で料理の魅力が200%アップしました。'
+    },
+    {
+      title: 'リピート率30%向上',
+      company: '和食処 さくら',
+      role: '女将',
+      name: '鈴木',
+      comment: '写真のクオリティが高く、高級店のイメージが定着しました。'
+    }
+  ]
+
+  return (
+    <section id="cases" className="py-16" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
+      <div className="max-w-5xl mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <SectionTitle>クライアントの声</SectionTitle>
+          <p className="text-gray-300 text-lg max-w-3xl mx-auto">
+            飲食店写真 Art Studioでブランドイメージを一新されたお客様の声
+          </p>
+        </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {cases.map((caseItem, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+            >
+              <CaseCard {...caseItem} />
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+const BottomCTA = () => (
+  <section className="hidden md:block py-16" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
+    <div className="max-w-5xl mx-auto px-4">
+      <motion.div
+        className="rounded-3xl p-12 text-center"
+        style={{ backgroundColor: 'rgb(77, 76, 76)' }}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+          webで今すぐお申し込みいただけます。
+        </h2>
+        <p className="text-white text-lg mb-8">
+          飲食店写真 Art Studioで、料理の新しい表現を発見してください。
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Link href="/services/photo/foodphoto/form">
+            <Button variant="primary">今すぐ申し込む</Button>
+          </Link>
+          <Link href="/contact">
+            <Button variant="secondary">まずは問い合わせる</Button>
+          </Link>
+        </div>
+        <p className="text-sm text-gray-300 mt-8">
+          ※ 東京23区内は最短翌日対応可能です
+        </p>
+      </motion.div>
+    </div>
+  </section>
+)
+
+const Footer = () => (
+  <footer className="bg-gray-900 text-white py-12 pb-24 md:pb-12">
+    <div className="max-w-5xl mx-auto px-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div>
+          <h3 className="font-bold mb-4">飲食店写真 Art Studio</h3>
+          <p className="text-gray-400 text-sm">
+            プロフェッショナルフードフォトグラフィー
+          </p>
+        </div>
+        <div>
+          <h3 className="font-bold mb-4">リンク</h3>
+          <ul className="space-y-2 text-sm">
+            <li>
+              <Link href="/" className="text-gray-400 hover:text-white transition-colors">
+                会社概要
+              </Link>
+            </li>
+            <li>
+              <Link href="/privacy" className="text-gray-400 hover:text-white transition-colors">
+                個人情報保護方針
+              </Link>
+            </li>
+            <li>
+              <Link href="/terms" className="text-gray-400 hover:text-white transition-colors">
+                サービス規約
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 className="font-bold mb-4">関連サービス</h3>
+          <ul className="space-y-2 text-sm">
+            <li>
+              <Link href="/services/movie" className="text-gray-400 hover:text-white transition-colors">
+                動画制作サービス
+              </Link>
+            </li>
+            <li>
+              <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">
+                お問い合わせ
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div className="border-t border-gray-800 pt-8">
+        <p className="text-center text-gray-400 text-sm">
+          © 2024 NonTurn Corporation. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+)
+
+// Main Component
+export default function FoodPhotoClient() {
+  return (
+    <div className="min-h-screen" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
+      <Header />
+      <IntroSection />
+      <NewsSection />
+      <FeaturesSection />
+      <PricingSection />
+      <ParallaxSection />
+      <SamplesSection />
+      <FlowSection />
+      <CasesSection />
+      <BottomCTA />
+      <Footer />
+      
+      {/* Mobile Fixed Bottom Buttons */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t border-gray-200 p-3">
+        <div className="flex gap-2">
+          <Link href="/services/photo/foodphoto/form" className="flex-1">
+            <button className="w-full bg-gradient-to-r from-orange-400 to-red-500 text-white py-3 px-4 rounded-lg font-bold text-sm">
+              申し込む
+            </button>
+          </Link>
+          <Link href="/contact" className="flex-1">
+            <button className="w-full bg-white border-2 border-orange-400 text-orange-400 py-3 px-4 rounded-lg font-bold text-sm">
+              問い合わせる
+            </button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  )
+}
