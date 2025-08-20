@@ -307,7 +307,7 @@ export default function PhotoServicePageClient() {
         飲食店専門の撮影サービスもご用意しています
        </p>
        <Link
-        href="https://xn--hxtwsw9j6o7dyca.com"
+        href="https://xn--yfrq8xczdsu2e.com"
         className="inline-flex items-center bg-gradient-to-r from-orange-400 to-red-500 text-white px-6 py-3 rounded-lg font-medium hover:from-orange-500 hover:to-red-600 transition-all duration-300"
        >
         飲食店の撮影はこちら
