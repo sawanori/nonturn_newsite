@@ -23,7 +23,7 @@ const STORE_PREFECTURES = [
 ]
 
 export function FoodPhotoFormClient() {
-  const [currentStep, setCurrentStep] = useState(2)
+  const [currentStep, setCurrentStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitResult, setSubmitResult] = useState<{ success: boolean; message: string } | null>(null)
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({})
@@ -244,36 +244,36 @@ export function FoodPhotoFormClient() {
     let isValid = true
     
     // Validate current step before proceeding
-    if (currentStep === 2) {
-      isValid = validateStep2()
+    if (currentStep === 1) {
+      isValid = validateStep2() // Step 1 is now store info
+    } else if (currentStep === 3) {
+      isValid = validateStep4() // Step 3 is now shooting wishes
     } else if (currentStep === 4) {
-      isValid = validateStep4()
-    } else if (currentStep === 5) {
-      isValid = validateStep5()
+      isValid = validateStep5() // Step 4 is now billing
     } else {
       // For steps without validation, clear errors
       setValidationErrors({})
     }
     
-    if (isValid && currentStep < 6) {
+    if (isValid && currentStep < 5) {
       setCurrentStep(currentStep + 1)
       setValidationErrors({}) // Clear errors when moving to next step
     }
   }
   
   const prevStep = () => {
-    if (currentStep > 2) {
+    if (currentStep > 1) {
       setCurrentStep(currentStep - 1)
       setValidationErrors({}) // Clear errors when going back
     }
   }
 
   const steps = [
-    { number: 2, title: '店舗情報' },
-    { number: 3, title: 'プラン選択' },
-    { number: 4, title: '撮影希望' },
-    { number: 5, title: '請求先' },
-    { number: 6, title: '確認' }
+    { number: 1, title: '店舗情報' },
+    { number: 2, title: 'プラン選択' },
+    { number: 3, title: '撮影希望' },
+    { number: 4, title: '請求先' },
+    { number: 5, title: '確認' }
   ]
 
   return (
@@ -307,7 +307,7 @@ export function FoodPhotoFormClient() {
                   >
                     {step.number}
                   </div>
-                  {step.number < 6 && (
+                  {step.number < 5 && (
                     <div
                       className={`flex-1 h-1 mx-2 ${
                         currentStep > step.number ? 'bg-orange-500' : 'bg-gray-600'
@@ -331,8 +331,8 @@ export function FoodPhotoFormClient() {
 
 
 
-            {/* Step 2: Store Information */}
-            {currentStep === 2 && (
+            {/* Step 1: Store Information */}
+            {currentStep === 1 && (
               <motion.div
                 key="step2"
                 initial={{ opacity: 0, x: 20 }}
@@ -564,8 +564,8 @@ export function FoodPhotoFormClient() {
               </motion.div>
             )}
 
-            {/* Step 3: Plan Selection */}
-            {currentStep === 3 && (
+            {/* Step 2: Plan Selection */}
+            {currentStep === 2 && (
               <motion.div
                 key="step3"
                 initial={{ opacity: 0, x: 20 }}
@@ -691,8 +691,8 @@ export function FoodPhotoFormClient() {
               </motion.div>
             )}
 
-            {/* Step 4: Shooting Details */}
-            {currentStep === 4 && (
+            {/* Step 3: Shooting Details */}
+            {currentStep === 3 && (
               <motion.div
                 key="step4"
                 initial={{ opacity: 0, x: 20 }}
@@ -862,8 +862,8 @@ export function FoodPhotoFormClient() {
               </motion.div>
             )}
 
-            {/* Step 5: Billing */}
-            {currentStep === 5 && (
+            {/* Step 4: Billing */}
+            {currentStep === 4 && (
               <motion.div
                 key="step5"
                 initial={{ opacity: 0, x: 20 }}
@@ -957,8 +957,8 @@ export function FoodPhotoFormClient() {
               </motion.div>
             )}
 
-            {/* Step 6: Confirmation */}
-            {currentStep === 6 && (
+            {/* Step 5: Confirmation */}
+            {currentStep === 5 && (
               <motion.div
                 key="step6"
                 initial={{ opacity: 0, x: 20 }}
