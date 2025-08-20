@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
     }
     
     // メール件名
-    const subject = `【飲食店写真撮影申込】${parsed.store.name} / ${parsed.applicantName}`;
+    const subject = `【飲食店写真撮影申込】${parsed.store.name}`;
     
     // メール本文を構築
     const text = [
@@ -40,21 +40,6 @@ export async function POST(req: NextRequest) {
       "飲食店撮影PhotoStudio 撮影お申し込み",
       "━━━━━━━━━━━━━━━━━━━━━━",
       "",
-      "【申込者情報】",
-      `区分: ${parsed.applicantType === "corporate" ? "法人" : "個人"}`,
-      `申込者名: ${parsed.applicantName} (${parsed.applicantKana})`,
-      `住所: 〒${parsed.applicantAddress?.postal || ''}`,
-      `     ${parsed.applicantAddress?.prefecture || ''}${parsed.applicantAddress?.city || ''}`,
-      `     ${parsed.applicantAddress?.address1 || ''}`,
-      `電話: ${parsed.applicantPhone}`,
-      `メール: ${parsed.applicantEmail}`,
-      "",
-      ...(parsed.applicantType === "corporate" && parsed.corporate ? [
-        "【法人情報】",
-        `担当者名: ${parsed.corporate.contactName} (${parsed.corporate.contactKana})`,
-        `店舗との関係: ${parsed.corporate.relation}`,
-        "",
-      ] : []),
       "【撮影店舗情報】",
       `店舗名: ${parsed.store.name}`,
       `住所: 〒${parsed.store.address.postal}`,
@@ -62,6 +47,7 @@ export async function POST(req: NextRequest) {
       `     ${parsed.store.address.address1}`,
       `電話: ${parsed.store.phone}`,
       `責任者: ${parsed.store.managerName} (${parsed.store.managerKana})`,
+      `メール: ${parsed.store.email}`,
       `撮影調整担当: ${formatCoordinator(parsed.store.coordinator)}`,
       `撮影同席者: ${parsed.store.attendees.map(formatCoordinator).join(", ")}`,
       "",
@@ -155,16 +141,15 @@ ${text.replace(/</g, "&lt;").replace(/>/g, "&gt;")}
 // ヘルパー関数
 function formatCoordinator(value: string): string {
   const map: Record<string, string> = {
-    applicant: "申込者",
-    corporateContact: "法人担当者",
     storeManager: "店舗責任者",
+    staff: "店舗スタッフ",
+    other: "その他",
   };
   return map[value] || value;
 }
 
 function formatBillingTo(value: string): string {
   const map: Record<string, string> = {
-    applicant: "申込者と同じ",
     store: "店舗と同じ",
     separate: "別途入力",
   };
