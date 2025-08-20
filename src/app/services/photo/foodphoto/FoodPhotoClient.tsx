@@ -181,6 +181,10 @@ const IntroSection = () => {
     {
       src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2019.jpg',
       alt: '美味しそうな料理写真5'
+    },
+    {
+      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_26.jpg',
+      alt: '美味しそうな料理写真6'
     }
   ]
   
@@ -792,8 +796,8 @@ const SamplesSection = () => {
   const [selectedImage, setSelectedImage] = useState<any>(null)
 
   const categories = [
-    { id: 'all', name: '全て', count: 36 },
-    { id: 'food', name: '料理', count: 25 },
+    { id: 'all', name: '全て', count: 37 },
+    { id: 'food', name: '料理', count: 26 },
     { id: 'exterior', name: '外観', count: 1 },
     { id: 'interior', name: '内観', count: 10 }
   ]
@@ -825,19 +829,20 @@ const SamplesSection = () => {
     { id: 23, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2023.jpg', alt: '料理写真23' },
     { id: 24, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg', alt: '料理写真24' },
     { id: 25, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2025.jpg', alt: '料理写真25' },
+    { id: 26, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_26.jpg', alt: '料理写真26' },
     // 外観写真 (LP_out_)
-    { id: 26, category: 'exterior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_out_.png', alt: '外観写真1' },
+    { id: 27, category: 'exterior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_out_.png', alt: '外観写真1' },
     // 内観写真 (LP_room_)
-    { id: 27, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%201.jpg', alt: '店内1' },
-    { id: 28, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%202.jpg', alt: '店内2' },
-    { id: 29, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%203.jpg', alt: '店内3' },
-    { id: 30, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%204.jpg', alt: '店内4' },
-    { id: 31, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%205.jpg', alt: '店内5' },
-    { id: 32, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%206.jpg', alt: '店内6' },
-    { id: 33, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%207.jpg', alt: '店内7' },
-    { id: 34, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%208.jpg', alt: '店内8' },
-    { id: 35, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%209.jpg', alt: '店内9' },
-    { id: 36, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_.jpg', alt: '店内10' }
+    { id: 28, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%201.jpg', alt: '店内1' },
+    { id: 29, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%202.jpg', alt: '店内2' },
+    { id: 30, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%203.jpg', alt: '店内3' },
+    { id: 31, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%204.jpg', alt: '店内4' },
+    { id: 32, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%205.jpg', alt: '店内5' },
+    { id: 33, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%206.jpg', alt: '店内6' },
+    { id: 34, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%207.jpg', alt: '店内7' },
+    { id: 35, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%208.jpg', alt: '店内8' },
+    { id: 36, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%209.jpg', alt: '店内9' },
+    { id: 37, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_.jpg', alt: '店内10' }
   ]
 
   const filteredImages = activeCategory === 'all' 
