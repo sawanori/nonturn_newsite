@@ -5,7 +5,7 @@
       "has": [
         {
           "type": "host",
-          "value": "xn--yfrq8xczdsu2e.com"
+          "value": "xn--hxtwsw9j6o7dyca.com"
         }
       ],
       "destination": "/services/photo/foodphoto"
@@ -15,7 +15,7 @@
       "has": [
         {
           "type": "host",
-          "value": "xn--yfrq8xczdsu2e.com"
+          "value": "xn--hxtwsw9j6o7dyca.com"
         }
       ],
       "destination": "/services/photo/foodphoto/:path*"
@@ -25,7 +25,7 @@
       "has": [
         {
           "type": "host",
-          "value": "www.xn--yfrq8xczdsu2e.com"
+          "value": "www.xn--hxtwsw9j6o7dyca.com"
         }
       ],
       "destination": "/services/photo/foodphoto"
@@ -35,7 +35,7 @@
       "has": [
         {
           "type": "host",
-          "value": "www.xn--yfrq8xczdsu2e.com"
+          "value": "www.xn--hxtwsw9j6o7dyca.com"
         }
       ],
       "destination": "/services/photo/foodphoto/:path*"
@@ -50,7 +50,7 @@
           "value": "non-turn.com"
         }
       ],
-      "destination": "https://飲食店撮影.com/",
+      "destination": "https://飲食撮影.com/",
       "permanent": true
     },
     {
@@ -61,7 +61,7 @@
           "value": "non-turn.com"
         }
       ],
-      "destination": "https://飲食店撮影.com/:path*",
+      "destination": "https://飲食撮影.com/:path*",
       "permanent": true
     }
   ]
