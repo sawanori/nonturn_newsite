@@ -109,7 +109,7 @@ export function FoodPhotoFormClient() {
 
   // Validation patterns
   const jpZip = /^\d{3}-\d{4}$/
-  const phone = /^0\d{1,4}-\d{1,4}-\d{4}$/
+  const phone = /^\d{10,11}$/  // 10-11桁の数字のみ（ハイフンなし）
   const katakana = /^[ァ-ヶー]+$/
   const email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -155,7 +155,7 @@ export function FoodPhotoFormClient() {
     if (!formData.applicantPhone) {
       errors.applicantPhone = '電話番号を入力してください'
     } else if (!phone.test(formData.applicantPhone)) {
-      errors.applicantPhone = '電話番号は03-1234-5678の形式で入力してください'
+      errors.applicantPhone = '電話番号は10-11桁の数字で入力してください（ハイフン不要）'
     }
     
     // メールアドレス
@@ -215,7 +215,7 @@ export function FoodPhotoFormClient() {
     if (!formData.store?.phone) {
       errors['store.phone'] = '店舗電話番号を入力してください'
     } else if (!phone.test(formData.store.phone)) {
-      errors['store.phone'] = '電話番号は03-1234-5678の形式で入力してください'
+      errors['store.phone'] = '電話番号は10-11桁の数字で入力してください（ハイフン不要）'
     }
     
     // 責任者
