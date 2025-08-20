@@ -1,15 +1,37 @@
 {
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "xn--hxtwsw9j6o7dyca.com" }],
+      "destination": "/services/photo/foodphoto"
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "xn--hxtwsw9j6o7dyca.com" }],
+      "destination": "/services/photo/foodphoto/:path*"
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "www.xn--hxtwsw9j6o7dyca.com" }],
+      "destination": "/services/photo/foodphoto"
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.xn--hxtwsw9j6o7dyca.com" }],
+      "destination": "/services/photo/foodphoto/:path*"
+    }
+  ],
   "redirects": [
     {
       "source": "/services/photo/foodphoto",
       "has": [{ "type": "host", "value": "non-turn.com" }],
-      "destination": "https://xn--hxtwsw9j6o7dyca.com/",
+      "destination": "https://飲食撮影.com/",
       "permanent": true
     },
     {
-      "source": "/services/photo/foodphoto/form",
+      "source": "/services/photo/foodphoto/:path*",
       "has": [{ "type": "host", "value": "non-turn.com" }],
-      "destination": "https://xn--hxtwsw9j6o7dyca.com/form",
+      "destination": "https://飲食撮影.com/:path*",
       "permanent": true
     }
   ]
