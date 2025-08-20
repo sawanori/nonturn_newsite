@@ -161,23 +161,23 @@ const IntroSection = () => {
   
   const heroImages = [
     {
-      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/1-ahUBbGFxLbRSGBp8I5zesVu1UCrEXM.jpg',
+      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%201.jpg',
       alt: '美味しそうな料理写真1'
     },
     {
-      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/2-l4gatMsuCh1slTHV3iGYszNGTlDxhx.jpg',
+      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%203.jpg',
       alt: '美味しそうな料理写真2'
     },
     {
-      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/3-TzPVHUjCuBAdIPAhFs8ZOeADYHWLKc.jpg',
+      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%205.jpg',
       alt: '美味しそうな料理写真3'
     },
     {
-      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/4-XoQ2KJrHwhwWFyCx1xhUsArWI6BuwB.jpg',
+      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%207.jpg',
       alt: '美味しそうな料理写真4'
     },
     {
-      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/5-hl4KhogTlAig2r6RUD0SCvrDL22c3i.jpg',
+      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%209.jpg',
       alt: '美味しそうな料理写真5'
     }
   ]
@@ -396,28 +396,28 @@ const FeaturesSection = () => {
       icon: '📸',
       title: '協会認定のプロフェッショナル撮影',
       description: '日本フードフォトグラファー協会認定カメラマンによる確かな技術力。',
-      image: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/1-ahUBbGFxLbRSGBp8I5zesVu1UCrEXM.jpg',
+      image: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%202.jpg',
       fullDescription: '日本フードフォトグラファー協会認定カメラマンが、長年培った技術と経験を活かしてプロフェッショナルな撮影を行います。料理の美味しさを最大限に引き出す構図、ライティング、スタイリングなど、すべての要素において最高水準のクオリティをお約束します。協会の厳しい基準をクリアした技術力で、お店の魅力を確実に表現します。'
     },
     {
       icon: '✨',
       title: '撮影画像は全て自由に使用可能',
       description: '著作権フリー。SNS、Web、印刷物など用途を問わず自由にご利用いただけます。',
-      image: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/2-l4gatMsuCh1slTHV3iGYszNGTlDxhx.jpg',
+      image: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%204.jpg',
       fullDescription: '撮影した画像は全て著作権フリーでお渡しします。Instagram、Facebook、TwitterなどのSNS投稿、ホームページやECサイトへの掲載、メニューやチラシなどの印刷物、看板やポスターなど、あらゆる用途で追加料金なしでご自由にお使いいただけます。将来的な用途変更や再利用も完全自由。お店の資産として永続的にご活用ください。'
     },
     {
       icon: '🚀',
       title: '最短1週間の短期納品',
       description: '撮影から納品まで最短1週間。急ぎの案件にも柔軟に対応いたします。',
-      image: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/3-TzPVHUjCuBAdIPAhFs8ZOeADYHWLKc.jpg',
+      image: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%206.jpg',
       fullDescription: '撮影完了から最短1週間での納品が可能です。新メニューの告知、季節限定商品のPR、急なイベント対応など、スピーディーな対応が必要な場面でも安心してご依頼いただけます。基本的なレタッチ、色調補正を含めた完成品を短期間でお届け。お急ぎの場合は特急対応（3日納品）のオプションもご用意しています。'
     },
     {
       icon: '📊',
       title: '飲食媒体に精通した効果的な撮影',
       description: '飲食店専門WEBコンサルタントも務めるカメラマンが、集客に繋がる写真を撮影。',
-      image: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/4-XoQ2KJrHwhwWFyCx1xhUsArWI6BuwB.jpg',
+      image: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%208.jpg',
       fullDescription: '撮影を担当するカメラマンは、飲食店専門のWEBコンサルタントとしても活動しており、デジタルマーケティングの観点から最も効果的な撮影を行います。食べログ、ぐるなび、ホットペッパーなどの主要グルメサイトのアルゴリズムや、Google検索での上位表示に有利な画像の特徴を熟知。SNSでの拡散力、コンバージョン率の向上、SEO対策まで考慮した戦略的な撮影により、写真を通じて実際の集客アップに貢献します。WEBコンサルティングの知見を活かし、オンライン集客に直結する撮影をお約束します。'
     }
   ]
@@ -686,7 +686,7 @@ const ParallaxSection = () => {
         }}
       >
         <Image
-          src="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/7-mJKwnJ1MV7rgCTVH2W7YH58O16jhJM.jpg"
+          src="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2010.jpg"
           alt="Parallax Background"
           fill
           className="object-cover"
@@ -746,34 +746,52 @@ const SamplesSection = () => {
   const [selectedImage, setSelectedImage] = useState<any>(null)
 
   const categories = [
-    { id: 'all', name: '全て', count: 18 },
-    { id: 'food', name: '料理', count: 9 },
-    { id: 'exterior', name: '外観', count: 5 },
-    { id: 'interior', name: '内観', count: 4 }
+    { id: 'all', name: '全て', count: 36 },
+    { id: 'food', name: '料理', count: 25 },
+    { id: 'exterior', name: '外観', count: 1 },
+    { id: 'interior', name: '内観', count: 10 }
   ]
 
   const images = [
-    // 料理写真
-    { id: 1, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/1-ahUBbGFxLbRSGBp8I5zesVu1UCrEXM.jpg', alt: '料理写真1' },
-    { id: 2, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/2-l4gatMsuCh1slTHV3iGYszNGTlDxhx.jpg', alt: '料理写真2' },
-    { id: 3, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/3-TzPVHUjCuBAdIPAhFs8ZOeADYHWLKc.jpg', alt: '料理写真3' },
-    { id: 4, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/4-XoQ2KJrHwhwWFyCx1xhUsArWI6BuwB.jpg', alt: '料理写真4' },
-    { id: 5, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/5-hl4KhogTlAig2r6RUD0SCvrDL22c3i.jpg', alt: '料理写真5' },
-    { id: 6, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/6-lBfVjkw1GyFlaswiLfy0XVr7Y2iBjC.jpg', alt: '料理写真6' },
-    { id: 7, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/7-mJKwnJ1MV7rgCTVH2W7YH58O16jhJM.jpg', alt: '料理写真7' },
-    { id: 8, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/8-Zs2WBv7g88WxHD85HWhaQoWWExe7Xp.jpg', alt: '料理写真8' },
-    { id: 9, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/9-HS8CW5NXVIyjfZI7IBnbIAamIM35If.jpg', alt: '料理写真9' },
-    // 外観写真
-    { id: 10, category: 'exterior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/1-ahUBbGFxLbRSGBp8I5zesVu1UCrEXM.jpg', alt: '外観写真1' },
-    { id: 11, category: 'exterior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/2-l4gatMsuCh1slTHV3iGYszNGTlDxhx.jpg', alt: '外観写真2' },
-    { id: 12, category: 'exterior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/3-TzPVHUjCuBAdIPAhFs8ZOeADYHWLKc.jpg', alt: '外観写真3' },
-    { id: 13, category: 'exterior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/4-XoQ2KJrHwhwWFyCx1xhUsArWI6BuwB.jpg', alt: '外観写真4' },
-    { id: 14, category: 'exterior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/5-hl4KhogTlAig2r6RUD0SCvrDL22c3i.jpg', alt: '外観写真5' },
-    // 内観写真
-    { id: 15, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/6-lBfVjkw1GyFlaswiLfy0XVr7Y2iBjC.jpg', alt: '内観写真1' },
-    { id: 16, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/7-mJKwnJ1MV7rgCTVH2W7YH58O16jhJM.jpg', alt: '内観写真2' },
-    { id: 17, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/8-Zs2WBv7g88WxHD85HWhaQoWWExe7Xp.jpg', alt: '内観写真3' },
-    { id: 18, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/9-HS8CW5NXVIyjfZI7IBnbIAamIM35If.jpg', alt: '内観写真4' }
+    // 料理写真 (LP_food_)
+    { id: 1, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%201.jpg', alt: '料理写真1' },
+    { id: 2, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%202.jpg', alt: '料理写真2' },
+    { id: 3, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%203.jpg', alt: '料理写真3' },
+    { id: 4, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%204.jpg', alt: '料理写真4' },
+    { id: 5, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%205.jpg', alt: '料理写真5' },
+    { id: 6, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%206.jpg', alt: '料理写真6' },
+    { id: 7, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%207.jpg', alt: '料理写真7' },
+    { id: 8, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%208.jpg', alt: '料理写真8' },
+    { id: 9, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%209.jpg', alt: '料理写真9' },
+    { id: 10, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2010.jpg', alt: '料理写真10' },
+    { id: 11, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2011.jpg', alt: '料理写真11' },
+    { id: 12, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2012.jpg', alt: '料理写真12' },
+    { id: 13, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2013.jpg', alt: '料理写真13' },
+    { id: 14, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2014.jpg', alt: '料理写真14' },
+    { id: 15, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2015.jpg', alt: '料理写真15' },
+    { id: 16, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2016.jpg', alt: '料理写真16' },
+    { id: 17, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2017.jpg', alt: '料理写真17' },
+    { id: 18, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2018.jpg', alt: '料理写真18' },
+    { id: 19, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2019.jpg', alt: '料理写真19' },
+    { id: 20, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2020.jpg', alt: '料理写真20' },
+    { id: 21, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2021.jpg', alt: '料理写真21' },
+    { id: 22, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2012.jpg', alt: '料理写真22' },
+    { id: 23, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2023.jpg', alt: '料理写真23' },
+    { id: 24, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg', alt: '料理写真24' },
+    { id: 25, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2025.jpg', alt: '料理写真25' },
+    // 外観写真 (LP_out_)
+    { id: 26, category: 'exterior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_out_.png', alt: '外観写真1' },
+    // 内観写真 (LP_room_)
+    { id: 27, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%201.jpg', alt: '店内1' },
+    { id: 28, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%202.jpg', alt: '店内2' },
+    { id: 29, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%203.jpg', alt: '店内3' },
+    { id: 30, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%204.jpg', alt: '店内4' },
+    { id: 31, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%205.jpg', alt: '店内5' },
+    { id: 32, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%206.jpg', alt: '店内6' },
+    { id: 33, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%207.jpg', alt: '店内7' },
+    { id: 34, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%208.jpg', alt: '店内8' },
+    { id: 35, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%209.jpg', alt: '店内9' },
+    { id: 36, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_.jpg', alt: '店内10' }
   ]
 
   const filteredImages = activeCategory === 'all' 
