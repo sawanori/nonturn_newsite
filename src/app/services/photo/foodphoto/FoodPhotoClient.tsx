@@ -158,14 +158,16 @@ const Header = () => (
 
 const IntroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
   
-  const heroImages = [
+  // Mobile/Tablet images
+  const mobileImages = [
     {
-      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%201.jpg',
+      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%209.jpg',
       alt: '美味しそうな料理写真1'
     },
     {
-      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%203.jpg',
+      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%206.jpg',
       alt: '美味しそうな料理写真2'
     },
     {
@@ -173,14 +175,53 @@ const IntroSection = () => {
       alt: '美味しそうな料理写真3'
     },
     {
-      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%207.jpg',
+      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2023.jpg',
       alt: '美味しそうな料理写真4'
     },
     {
-      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%209.jpg',
+      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2019.jpg',
       alt: '美味しそうな料理写真5'
     }
   ]
+  
+  // PC images
+  const pcImages = [
+    {
+      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg',
+      alt: '美味しそうな料理写真1'
+    },
+    {
+      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2021.jpg',
+      alt: '美味しそうな料理写真2'
+    },
+    {
+      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2022.jpg',
+      alt: '美味しそうな料理写真3'
+    },
+    {
+      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_.jpg',
+      alt: '店内写真1'
+    },
+    {
+      src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%201.jpg',
+      alt: '店内写真2'
+    }
+  ]
+  
+  // Select images based on screen size
+  const heroImages = isMobile ? mobileImages : pcImages
+  
+  // Detect screen size
+  React.useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 1024) // Use lg breakpoint (1024px)
+    }
+    
+    checkScreenSize()
+    window.addEventListener('resize', checkScreenSize)
+    
+    return () => window.removeEventListener('resize', checkScreenSize)
+  }, [])
 
   // Auto-advance slideshow
   React.useEffect(() => {
@@ -189,7 +230,12 @@ const IntroSection = () => {
     }, 4000) // Change slide every 4 seconds
     
     return () => clearInterval(interval)
-  }, [])
+  }, [heroImages.length])
+  
+  // Reset slide when switching between mobile and PC
+  React.useEffect(() => {
+    setCurrentSlide(0)
+  }, [isMobile])
 
   return (
     <section className="relative h-screen overflow-hidden bg-black">
