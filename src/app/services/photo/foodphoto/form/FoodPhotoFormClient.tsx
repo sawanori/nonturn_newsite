@@ -745,54 +745,96 @@ export function FoodPhotoFormClient() {
                     <div>
                       <label className="block text-gray-400 text-sm mb-2">第1希望 *</label>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <input
-                          type="date"
-                          value={formData.wish1?.date || ''}
-                          onChange={(e) => updateField('wish1.date', e.target.value)}
-                          className="px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
-                        />
-                        <input
-                          type="time"
-                          value={formData.wish1?.time || ''}
-                          onChange={(e) => updateField('wish1.time', e.target.value)}
-                          className="px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
-                        />
+                        <div>
+                          <input
+                            type="date"
+                            value={formData.wish1?.date || ''}
+                            onChange={(e) => updateField('wish1.date', e.target.value)}
+                            className={`w-full px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                              validationErrors['wish1.date'] ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                            }`}
+                          />
+                          {validationErrors['wish1.date'] && (
+                            <p className="text-red-400 text-sm mt-1">{validationErrors['wish1.date']}</p>
+                          )}
+                        </div>
+                        <div>
+                          <input
+                            type="time"
+                            value={formData.wish1?.time || ''}
+                            onChange={(e) => updateField('wish1.time', e.target.value)}
+                            className={`w-full px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                              validationErrors['wish1.time'] ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                            }`}
+                          />
+                          {validationErrors['wish1.time'] && (
+                            <p className="text-red-400 text-sm mt-1">{validationErrors['wish1.time']}</p>
+                          )}
+                        </div>
                       </div>
                     </div>
                     
                     <div>
                       <label className="block text-gray-400 text-sm mb-2">第2希望 *</label>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <input
-                          type="date"
-                          value={formData.wish2?.date || ''}
-                          onChange={(e) => updateField('wish2.date', e.target.value)}
-                          className="px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
-                        />
-                        <input
-                          type="time"
-                          value={formData.wish2?.time || ''}
-                          onChange={(e) => updateField('wish2.time', e.target.value)}
-                          className="px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
-                        />
+                        <div>
+                          <input
+                            type="date"
+                            value={formData.wish2?.date || ''}
+                            onChange={(e) => updateField('wish2.date', e.target.value)}
+                            className={`w-full px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                              validationErrors['wish2.date'] ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                            }`}
+                          />
+                          {validationErrors['wish2.date'] && (
+                            <p className="text-red-400 text-sm mt-1">{validationErrors['wish2.date']}</p>
+                          )}
+                        </div>
+                        <div>
+                          <input
+                            type="time"
+                            value={formData.wish2?.time || ''}
+                            onChange={(e) => updateField('wish2.time', e.target.value)}
+                            className={`w-full px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                              validationErrors['wish2.time'] ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                            }`}
+                          />
+                          {validationErrors['wish2.time'] && (
+                            <p className="text-red-400 text-sm mt-1">{validationErrors['wish2.time']}</p>
+                          )}
+                        </div>
                       </div>
                     </div>
                     
                     <div>
                       <label className="block text-gray-400 text-sm mb-2">第3希望 *</label>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <input
-                          type="date"
-                          value={formData.wish3?.date || ''}
-                          onChange={(e) => updateField('wish3.date', e.target.value)}
-                          className="px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
-                        />
-                        <input
-                          type="time"
-                          value={formData.wish3?.time || ''}
-                          onChange={(e) => updateField('wish3.time', e.target.value)}
-                          className="px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
-                        />
+                        <div>
+                          <input
+                            type="date"
+                            value={formData.wish3?.date || ''}
+                            onChange={(e) => updateField('wish3.date', e.target.value)}
+                            className={`w-full px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                              validationErrors['wish3.date'] ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                            }`}
+                          />
+                          {validationErrors['wish3.date'] && (
+                            <p className="text-red-400 text-sm mt-1">{validationErrors['wish3.date']}</p>
+                          )}
+                        </div>
+                        <div>
+                          <input
+                            type="time"
+                            value={formData.wish3?.time || ''}
+                            onChange={(e) => updateField('wish3.time', e.target.value)}
+                            className={`w-full px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                              validationErrors['wish3.time'] ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                            }`}
+                          />
+                          {validationErrors['wish3.time'] && (
+                            <p className="text-red-400 text-sm mt-1">{validationErrors['wish3.time']}</p>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1101,7 +1143,7 @@ export function FoodPhotoFormClient() {
               前へ
             </button>
 
-            {currentStep < 6 ? (
+            {currentStep < 5 ? (
               <button
                 type="button"
                 onClick={nextStep}
