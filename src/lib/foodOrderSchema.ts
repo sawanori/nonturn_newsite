@@ -17,13 +17,13 @@ export const dateTimeSchema = z.object({
 });
 
 // セキュリティ強化のための正規表現
-const jpZip = /^\d{3}-\d{4}$/; // ハイフン必須
+const jpZip = /^〒?\d{3}-\d{4}$/; // 〒記号はオプション、ハイフン必須
 const phone = /^\d{10,11}$/; // 10-11桁の数字のみ（ハイフンなし）
 const katakana = /^[ァ-ヶー\s]+$/; // カタカナとスペース
 const safeText = /^[ぁ-んァ-ヶー一-龯a-zA-Z0-9\s\-_,.\u3000-\u303F]+$/; // 安全な文字のみ
 
 export const addressSchema = z.object({
-  postal: z.string().regex(jpZip, "郵便番号の形式が不正です"),
+  postal: z.string().regex(jpZip, "郵便番号は123-4567または〒123-4567の形式で入力してください"),
   prefecture: z.string().min(1, "都道府県は必須です"),
   city: z.string().min(1, "市区郡は必須です"),
   address1: z.string().min(1, "町村番地以下は必須です"),

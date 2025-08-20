@@ -109,7 +109,7 @@ export function FoodPhotoFormClient() {
   }
 
   // Validation patterns
-  const jpZip = /^\d{3}-\d{4}$/
+  const jpZip = /^〒?\d{3}-\d{4}$/  // 〒記号はオプション
   const phone = /^\d{10,11}$/  // 10-11桁の数字のみ（ハイフンなし）
   const katakana = /^[ァ-ヶー]+$/
   const email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -129,7 +129,7 @@ export function FoodPhotoFormClient() {
     if (!formData.store?.address?.postal) {
       errors['store.address.postal'] = '郵便番号を入力してください'
     } else if (!jpZip.test(formData.store.address.postal)) {
-      errors['store.address.postal'] = '郵便番号は123-4567の形式で入力してください'
+      errors['store.address.postal'] = '郵便番号は123-4567または〒123-4567の形式で入力してください'
     }
     
     if (!formData.store?.address?.prefecture) {
@@ -375,36 +375,60 @@ export function FoodPhotoFormClient() {
                         type="text"
                         value={formData.store?.address?.postal || ''}
                         onChange={(e) => updateField('store.address.postal', e.target.value)}
-                        className="w-full md:w-48 px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
+                        className={`w-full md:w-48 px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                          validationErrors['store.address.postal'] ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                        }`}
                         placeholder="〒123-4567"
                       />
+                      {validationErrors['store.address.postal'] && (
+                        <p className="text-red-400 text-sm mt-1">{validationErrors['store.address.postal']}</p>
+                      )}
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <select
-                        value={formData.store?.address?.prefecture || ''}
-                        onChange={(e) => updateField('store.address.prefecture', e.target.value)}
-                        className="px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
-                      >
-                        <option value="">都道府県を選択</option>
-                        {STORE_PREFECTURES.map(pref => (
-                          <option key={pref} value={pref}>{pref}</option>
-                        ))}
-                      </select>
-                      <input
-                        type="text"
-                        value={formData.store?.address?.city || ''}
-                        onChange={(e) => updateField('store.address.city', e.target.value)}
-                        className="px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
-                        placeholder="市区町村"
-                      />
+                      <div>
+                        <select
+                          value={formData.store?.address?.prefecture || ''}
+                          onChange={(e) => updateField('store.address.prefecture', e.target.value)}
+                          className={`w-full px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                            validationErrors['store.address.prefecture'] ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                          }`}
+                        >
+                          <option value="">都道府県を選択</option>
+                          {STORE_PREFECTURES.map(pref => (
+                            <option key={pref} value={pref}>{pref}</option>
+                          ))}
+                        </select>
+                        {validationErrors['store.address.prefecture'] && (
+                          <p className="text-red-400 text-sm mt-1">{validationErrors['store.address.prefecture']}</p>
+                        )}
+                      </div>
+                      <div>
+                        <input
+                          type="text"
+                          value={formData.store?.address?.city || ''}
+                          onChange={(e) => updateField('store.address.city', e.target.value)}
+                          className={`w-full px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                            validationErrors['store.address.city'] ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                          }`}
+                          placeholder="市区町村"
+                        />
+                        {validationErrors['store.address.city'] && (
+                          <p className="text-red-400 text-sm mt-1">{validationErrors['store.address.city']}</p>
+                        )}
+                      </div>
                     </div>
                     <input
                       type="text"
                       value={formData.store?.address?.address1 || ''}
                       onChange={(e) => updateField('store.address.address1', e.target.value)}
-                      className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
+                      className={`w-full px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                        validationErrors['store.address.address1'] ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                      }`}
                       placeholder="番地・建物名"
                     />
+                    {validationErrors['store.address.address1'] && (
+                      <p className="text-red-400 text-sm mt-1">{validationErrors['store.address.address1']}</p>
+                    )}
                   </div>
                 </div>
 
@@ -415,9 +439,14 @@ export function FoodPhotoFormClient() {
                     type="tel"
                     value={formData.store?.phone || ''}
                     onChange={(e) => updateField('store.phone', e.target.value)}
-                    className="w-full md:w-1/2 px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
-                    placeholder="03-1234-5678"
+                    className={`w-full md:w-1/2 px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                      validationErrors['store.phone'] ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                    }`}
+                    placeholder="0312345678 (ハイフンなし)"
                   />
+                  {validationErrors['store.phone'] && (
+                    <p className="text-red-400 text-sm mt-1">{validationErrors['store.phone']}</p>
+                  )}
                 </div>
 
                 {/* Store Manager */}
@@ -829,6 +858,11 @@ export function FoodPhotoFormClient() {
                 {/* Media Usage */}
                 <div>
                   <label className="block text-gray-300 mb-4">画像利用媒体 * (複数選択可)</label>
+                  {validationErrors.media && (
+                    <div className="bg-red-900/20 border border-red-500 rounded-lg p-3 mb-3">
+                      <p className="text-red-400 text-sm">{validationErrors.media}</p>
+                    </div>
+                  )}
                   <div className="space-y-2">
                     <label className="flex items-center">
                       <input
@@ -873,6 +907,13 @@ export function FoodPhotoFormClient() {
               >
                 <h2 className="text-xl font-bold text-white mb-4">請求先情報</h2>
                 
+                {/* Error Summary */}
+                {Object.keys(validationErrors).length > 0 && (
+                  <div className="bg-red-900/20 border border-red-500 rounded-lg p-4 mb-6">
+                    <p className="text-red-400 font-semibold">入力内容にエラーがあります。赤く表示された項目を確認してください。</p>
+                  </div>
+                )}
+                
                 <div>
                   <label className="block text-gray-300 mb-4">請求先 *</label>
                   <div className="space-y-3">
@@ -910,36 +951,60 @@ export function FoodPhotoFormClient() {
                           type="text"
                           value={formData.billingAddress?.postal || ''}
                           onChange={(e) => updateField('billingAddress.postal', e.target.value)}
-                          className="w-full md:w-48 px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
+                          className={`w-full md:w-48 px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                            validationErrors['billingAddress.postal'] ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                          }`}
                           placeholder="〒123-4567"
                         />
+                        {validationErrors['billingAddress.postal'] && (
+                          <p className="text-red-400 text-sm mt-1">{validationErrors['billingAddress.postal']}</p>
+                        )}
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <select
-                          value={formData.billingAddress?.prefecture || ''}
-                          onChange={(e) => updateField('billingAddress.prefecture', e.target.value)}
-                          className="px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
-                        >
-                          <option value="">都道府県を選択</option>
+                        <div>
+                          <select
+                            value={formData.billingAddress?.prefecture || ''}
+                            onChange={(e) => updateField('billingAddress.prefecture', e.target.value)}
+                            className={`w-full px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                              validationErrors['billingAddress.prefecture'] ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                            }`}
+                          >
+                            <option value="">都道府県を選択</option>
                           {PREFECTURES.map(pref => (
                             <option key={pref} value={pref}>{pref}</option>
                           ))}
-                        </select>
-                        <input
-                          type="text"
-                          value={formData.billingAddress?.city || ''}
-                          onChange={(e) => updateField('billingAddress.city', e.target.value)}
-                          className="px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
-                          placeholder="市区町村"
-                        />
+                          </select>
+                          {validationErrors['billingAddress.prefecture'] && (
+                            <p className="text-red-400 text-sm mt-1">{validationErrors['billingAddress.prefecture']}</p>
+                          )}
+                        </div>
+                        <div>
+                          <input
+                            type="text"
+                            value={formData.billingAddress?.city || ''}
+                            onChange={(e) => updateField('billingAddress.city', e.target.value)}
+                            className={`w-full px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                              validationErrors['billingAddress.city'] ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                            }`}
+                            placeholder="市区町村"
+                          />
+                          {validationErrors['billingAddress.city'] && (
+                            <p className="text-red-400 text-sm mt-1">{validationErrors['billingAddress.city']}</p>
+                          )}
+                        </div>
                       </div>
                       <input
                         type="text"
                         value={formData.billingAddress?.address1 || ''}
                         onChange={(e) => updateField('billingAddress.address1', e.target.value)}
-                        className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-orange-500 focus:outline-none"
+                        className={`w-full px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                          validationErrors['billingAddress.address1'] ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                        }`}
                         placeholder="番地・建物名"
                       />
+                      {validationErrors['billingAddress.address1'] && (
+                        <p className="text-red-400 text-sm mt-1">{validationErrors['billingAddress.address1']}</p>
+                      )}
                     </div>
                   </div>
                 )}
