@@ -52,6 +52,7 @@ export async function POST(req: NextRequest) {
       `撮影同席者: ${parsed.store.attendees.map(formatCoordinator).join(", ")}`,
       "",
       "【請求先】",
+      `宛名: ${parsed.billingName || ''}`,
       `種別: ${formatBillingTo(parsed.billingTo)}`,
       ...(parsed.billingTo === "separate" && parsed.billingAddress ? [
         `住所: 〒${parsed.billingAddress.postal}`,

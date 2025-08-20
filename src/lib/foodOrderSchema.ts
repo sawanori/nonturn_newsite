@@ -55,6 +55,7 @@ export const formSchema = z.object({
   }),
 
   billingTo: z.enum(BILL_TO),
+  billingName: z.string().min(1, "請求先宛名は必須です").max(100).regex(safeText, "不正な文字が含まれています").optional(),
   billingAddress: addressSchema.optional(),
 
   plan: z.enum(PLANS),
@@ -87,6 +88,13 @@ export const formSchema = z.object({
       code: "custom", 
       message: "法人情報は必須です",
       path: ["corporate"]
+    });
+  }
+  if (!data.billingName) {
+    ctx.addIssue({ 
+      code: "custom", 
+      message: "請求先宛名は必須です",
+      path: ["billingName"]
     });
   }
   if (data.billingTo === "separate" && !data.billingAddress) {

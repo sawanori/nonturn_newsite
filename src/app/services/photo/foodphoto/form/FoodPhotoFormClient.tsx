@@ -217,6 +217,11 @@ export function FoodPhotoFormClient() {
   const validateStep5 = () => {
     const errors: Record<string, string> = {}
     
+    // 請求先宛名のバリデーション
+    if (!formData.billingName?.trim()) {
+      errors['billingName'] = '請求先宛名を入力してください'
+    }
+    
     if (formData.billingTo === 'separate') {
       if (!formData.billingAddress?.postal) {
         errors['billingAddress.postal'] = '請求先郵便番号を入力してください'
@@ -984,6 +989,23 @@ export function FoodPhotoFormClient() {
                   </div>
                 </div>
 
+                {/* 請求先宛名 */}
+                <div>
+                  <label className="block text-gray-300 mb-2">請求先宛名 *</label>
+                  <input
+                    type="text"
+                    value={formData.billingName || ''}
+                    onChange={(e) => updateField('billingName', e.target.value)}
+                    className={`w-full px-4 py-2 bg-gray-800 border rounded text-white focus:outline-none ${
+                      validationErrors['billingName'] ? 'border-red-500' : 'border-gray-600 focus:border-orange-500'
+                    }`}
+                    placeholder="株式会社〇〇 御中"
+                  />
+                  {validationErrors['billingName'] && (
+                    <p className="text-red-400 text-sm mt-1">{validationErrors['billingName']}</p>
+                  )}
+                </div>
+
                 {formData.billingTo === 'separate' && (
                   <div className="border-t border-gray-700 pt-6">
                     <label className="block text-gray-300 mb-4">請求先住所</label>
@@ -1082,6 +1104,14 @@ export function FoodPhotoFormClient() {
                     <dl className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                       <div><dt className="text-gray-400">店舗名:</dt><dd className="text-white">{formData.store?.name}</dd></div>
                       <div><dt className="text-gray-400">責任者:</dt><dd className="text-white">{formData.store?.managerName}</dd></div>
+                    </dl>
+                  </div>
+
+                  <div>
+                    <h3 className="text-orange-400 font-semibold mb-3">請求先情報</h3>
+                    <dl className="text-sm">
+                      <div><dt className="text-gray-400">請求先宛名:</dt><dd className="text-white">{formData.billingName}</dd></div>
+                      <div><dt className="text-gray-400">請求先:</dt><dd className="text-white">{formData.billingTo === 'store' ? '店舗と同じ' : '別途入力'}</dd></div>
                     </dl>
                   </div>
 

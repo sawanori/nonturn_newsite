@@ -1032,31 +1032,31 @@ const CasesSection = () => {
   const cases = [
     {
       title: '売上が前年比150%アップ',
-      company: 'イタリアンレストラン Bella Vista',
+      company: 'イタリアンレストラン B.V',
       role: 'オーナーシェフ',
-      name: '山田',
-      comment: '飲食店撮影PhotoStudioの作品は芸術品。お店の格が上がりました。'
+      name: 'Y様',
+      comment: '撮影と併せて、オプションの飲食媒体の編集代行も一緒にお願いしてアクセスと予約が急増しました。'
     },
     {
-      title: 'SNSフォロワー3倍増',
-      company: 'カフェ Morning Glory',
+      title: 'SNS運用が楽になりました',
+      company: 'カフェ M.G',
       role: '店長',
-      name: '佐藤',
-      comment: 'アーティスティックな写真がSNSで大バズりしました。'
+      name: 'S様',
+      comment: '撮影時間内で枚数重視の撮影をお願いして、アップする画像の手札が増えて運用に対しての抵抗が減りました。'
     },
     {
       title: 'デリバリー注文2倍',
-      company: '中華料理 龍門',
+      company: '中華料理 R',
       role: '経営者',
-      name: '李',
+      name: 'L様',
       comment: 'プロの技術で料理の魅力が200%アップしました。'
     },
     {
-      title: 'リピート率30%向上',
-      company: '和食処 さくら',
+      title: '客単価が15%向上しました',
+      company: '和食処 S',
       role: '女将',
-      name: '鈴木',
-      comment: '写真のクオリティが高く、高級店のイメージが定着しました。'
+      name: 'S様',
+      comment: 'オプションも依頼してページの変更をしてもらいブランディングアップに成功して単価がアップしました。'
     }
   ]
 
