@@ -6,9 +6,9 @@
       "destination": "/services/photo/foodphoto"
     },
     {
-      "source": "/:path*",
+      "source": "/form",
       "has": [{ "type": "host", "value": "xn--hxtwsw9j6o7dyca.com" }],
-      "destination": "/services/photo/foodphoto/:path*"
+      "destination": "/services/photo/foodphoto/form"
     },
     {
       "source": "/",
@@ -16,22 +16,34 @@
       "destination": "/services/photo/foodphoto"
     },
     {
-      "source": "/:path*",
+      "source": "/form",
       "has": [{ "type": "host", "value": "www.xn--hxtwsw9j6o7dyca.com" }],
-      "destination": "/services/photo/foodphoto/:path*"
+      "destination": "/services/photo/foodphoto/form"
     }
   ],
   "redirects": [
     {
-      "source": "/services/photo/foodphoto",
-      "has": [{ "type": "host", "value": "non-turn.com" }],
-      "destination": "https://飲食撮影.com/",
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "xn--hxtwsw9j6o7dyca.com" }],
+      "destination": "https://non-turn.com/:path*",
       "permanent": true
     },
     {
-      "source": "/services/photo/foodphoto/:path*",
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.xn--hxtwsw9j6o7dyca.com" }],
+      "destination": "https://non-turn.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/services/photo/foodphoto",
       "has": [{ "type": "host", "value": "non-turn.com" }],
-      "destination": "https://飲食撮影.com/:path*",
+      "destination": "https://xn--hxtwsw9j6o7dyca.com/",
+      "permanent": true
+    },
+    {
+      "source": "/services/photo/foodphoto/form",
+      "has": [{ "type": "host", "value": "non-turn.com" }],
+      "destination": "https://xn--hxtwsw9j6o7dyca.com/form",
       "permanent": true
     }
   ]
