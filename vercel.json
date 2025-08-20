@@ -1,39 +1,5 @@
 {
-  "rewrites": [
-    {
-      "source": "/",
-      "has": [{ "type": "host", "value": "xn--hxtwsw9j6o7dyca.com" }],
-      "destination": "/services/photo/foodphoto"
-    },
-    {
-      "source": "/form",
-      "has": [{ "type": "host", "value": "xn--hxtwsw9j6o7dyca.com" }],
-      "destination": "/services/photo/foodphoto/form"
-    },
-    {
-      "source": "/",
-      "has": [{ "type": "host", "value": "www.xn--hxtwsw9j6o7dyca.com" }],
-      "destination": "/services/photo/foodphoto"
-    },
-    {
-      "source": "/form",
-      "has": [{ "type": "host", "value": "www.xn--hxtwsw9j6o7dyca.com" }],
-      "destination": "/services/photo/foodphoto/form"
-    }
-  ],
   "redirects": [
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "xn--hxtwsw9j6o7dyca.com" }],
-      "destination": "https://non-turn.com/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.xn--hxtwsw9j6o7dyca.com" }],
-      "destination": "https://non-turn.com/:path*",
-      "permanent": true
-    },
     {
       "source": "/services/photo/foodphoto",
       "has": [{ "type": "host", "value": "non-turn.com" }],
