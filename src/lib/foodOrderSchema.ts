@@ -18,8 +18,8 @@ export const dateTimeSchema = z.object({
 
 // セキュリティ強化のための正規表現
 const jpZip = /^\d{3}-\d{4}$/; // ハイフン必須
-const phone = /^0\d{1,4}-\d{1,4}-\d{4}$/; // 日本の電話番号形式
-const katakana = /^[ァ-ヶー]+$/; // カタカナのみ
+const phone = /^\d{10,11}$/; // 10-11桁の数字のみ（ハイフンなし）
+const katakana = /^[ァ-ヶー\s]+$/; // カタカナとスペース
 const safeText = /^[ぁ-んァ-ヶー一-龯a-zA-Z0-9\s\-_,.\u3000-\u303F]+$/; // 安全な文字のみ
 
 export const addressSchema = z.object({
@@ -30,12 +30,12 @@ export const addressSchema = z.object({
 });
 
 export const formSchema = z.object({
-  applicantType: z.enum(ORDER_TYPES),
-  applicantName: z.string().min(1, "申込者名称は必須です").max(100).regex(safeText, "不正な文字が含まれています"),
-  applicantKana: z.string().min(1, "フリガナは必須です").max(100).regex(katakana, "カタカナで入力してください"),
-  applicantAddress: addressSchema,
-  applicantPhone: z.string().regex(phone, "正しい電話番号形式で入力してください（例: 03-1234-5678）"),
-  applicantEmail: z.string().email("メールアドレスの形式が不正です").max(255),
+  applicantType: z.enum(ORDER_TYPES).optional(),
+  applicantName: z.string().min(1, "申込者名称は必須です").max(100).regex(safeText, "不正な文字が含まれています").optional(),
+  applicantKana: z.string().min(1, "フリガナは必須です").max(100).regex(katakana, "カタカナで入力してください").optional(),
+  applicantAddress: addressSchema.optional(),
+  applicantPhone: z.string().regex(phone, "電話番号は10-11桁の数字で入力してください").optional(),
+  applicantEmail: z.string().email("メールアドレスの形式が不正です").max(255).optional(),
 
   corporate: z.object({
     contactName: z.string().min(1, "担当者名は必須です").max(50).regex(safeText, "不正な文字が含まれています"),
@@ -44,13 +44,14 @@ export const formSchema = z.object({
   }).optional(),
 
   store: z.object({
-    name: z.string().min(1, "店舗名は必須です").max(100).regex(safeText, "不正な文字が含まれています"),
+    name: z.string().min(1, "店舗名は必須です").max(100),
     address: addressSchema,
-    phone: z.string().regex(phone, "正しい電話番号形式で入力してください（例: 03-1234-5678）"),
-    managerName: z.string().min(1, "責任者名は必須です").max(50).regex(safeText, "不正な文字が含まれています"),
+    phone: z.string().regex(phone, "電話番号は10-11桁の数字で入力してください"),
+    managerName: z.string().min(1, "責任者名は必須です").max(50),
     managerKana: z.string().min(1, "フリガナは必須です").max(50).regex(katakana, "カタカナで入力してください"),
-    coordinator: z.enum(["applicant", "corporateContact", "storeManager"]),
-    attendees: z.array(z.enum(["applicant", "corporateContact", "storeManager"])).min(1, "同席者を1名以上選択してください"),
+    email: z.string().email("メールアドレスの形式が不正です").max(255),
+    coordinator: z.enum(["storeManager", "other"]),
+    attendees: z.array(z.enum(["storeManager", "staff", "other"])).min(1, "同席者を1名以上選択してください"),
   }),
 
   billingTo: z.enum(BILL_TO),
