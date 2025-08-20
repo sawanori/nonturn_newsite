@@ -1,17 +1,19 @@
+// middleware.ts
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-const IDN_HOSTS = new Set([
-  "xn--hxtwsw9j6o7dyca.com",
+const IDN = new Set([
+  "xn--hxtwsw9j6o7dyca.com",        // 飲食撮影.com
   "www.xn--hxtwsw9j6o7dyca.com",
 ]);
 
 export function middleware(req: NextRequest) {
   const host = req.headers.get("host") || "";
-  if (!IDN_HOSTS.has(host)) return NextResponse.next();
+  if (!IDN.has(host)) return NextResponse.next();
 
   const url = req.nextUrl.clone();
 
+  // IDN では "/" と "/form" だけ LP を表示
   if (url.pathname === "/") {
     url.pathname = "/services/photo/foodphoto";
     return NextResponse.rewrite(url);
@@ -21,6 +23,7 @@ export function middleware(req: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
+  // それ以外は non-turn.com へ 301
   return NextResponse.redirect(
     `https://non-turn.com${url.pathname}${url.search}`,
     301
@@ -28,6 +31,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  // 静的資産を除外しつつ網羅
   matcher: ["/", "/form", "/((?!_next/|favicon.ico|robots.txt|sitemap.xml).*)"],
 };
