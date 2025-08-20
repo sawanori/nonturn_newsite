@@ -8,9 +8,22 @@ const IDN_HOSTS = new Set([
 
 export function middleware(req: NextRequest) {
   const host = req.headers.get("host") || "";
+  const url = req.nextUrl.clone();
+  
+  // non-turn.comからのアクセスで、飲食店撮影ページの場合はIDNドメインへリダイレクト
+  if (host === "non-turn.com" || host === "www.non-turn.com") {
+    if (url.pathname === "/services/photo/foodphoto") {
+      return NextResponse.redirect("https://xn--yfrq8xczdsu2e.com/", 301);
+    }
+    if (url.pathname === "/services/photo/foodphoto/form") {
+      return NextResponse.redirect("https://xn--yfrq8xczdsu2e.com/form", 301);
+    }
+    return NextResponse.next();
+  }
+  
+  // IDNドメインからのアクセスの処理
   if (!IDN_HOSTS.has(host)) return NextResponse.next();
 
-  const url = req.nextUrl.clone();
   const isNav = req.headers.get("sec-fetch-mode") === "navigate";
   const isPrefetch = req.headers.get("next-router-prefetch") === "1";
 
@@ -33,5 +46,11 @@ export function middleware(req: NextRequest) {
 
 // 静的資産を除外しつつ網羅
 export const config = {
-  matcher: ["/", "/form", "/((?!_next/|favicon.ico|robots.txt|sitemap.xml).*)"],
+  matcher: [
+    "/",
+    "/form",
+    "/services/photo/foodphoto",
+    "/services/photo/foodphoto/form",
+    "/((?!_next/|favicon.ico|robots.txt|sitemap.xml).*)"
+  ],
 };

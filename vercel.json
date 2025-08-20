@@ -20,19 +20,5 @@
       "has": [{ "type": "host", "value": "www.xn--yfrq8xczdsu2e.com" }],  
       "destination": "/services/photo/foodphoto/form" 
     }
-  ],
-  "redirects": [
-    { 
-      "source": "/services/photo/foodphoto",      
-      "has": [{ "type": "host", "value": "non-turn.com" }], 
-      "destination": "https://xn--yfrq8xczdsu2e.com/",     
-      "permanent": true 
-    },
-    { 
-      "source": "/services/photo/foodphoto/form", 
-      "has": [{ "type": "host", "value": "non-turn.com" }], 
-      "destination": "https://xn--yfrq8xczdsu2e.com/form", 
-      "permanent": true 
-    }
   ]
 }
