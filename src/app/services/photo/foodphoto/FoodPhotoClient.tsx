@@ -446,7 +446,7 @@ const FeaturesSection = () => {
       icon: '📸',
       title: '協会認定のプロフェッショナル撮影',
       description: '日本フードフォトグラファー協会認定カメラマンによる確かな技術力。',
-      image: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%202.jpg',
+      image: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/fpaicon.png',
       fullDescription: '日本フードフォトグラファー協会認定カメラマンが、長年培った技術と経験を活かしてプロフェッショナルな撮影を行います。料理の美味しさを最大限に引き出す構図、ライティング、スタイリングなど、すべての要素において最高水準のクオリティをお約束します。協会の厳しい基準をクリアした技術力で、お店の魅力を確実に表現します。'
     },
     {
