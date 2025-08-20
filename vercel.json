@@ -1,0 +1,68 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "xn--yfrq8xczdsu2e.com"
+        }
+      ],
+      "destination": "/services/photo/foodphoto"
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "xn--yfrq8xczdsu2e.com"
+        }
+      ],
+      "destination": "/services/photo/foodphoto/:path*"
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.xn--yfrq8xczdsu2e.com"
+        }
+      ],
+      "destination": "/services/photo/foodphoto"
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.xn--yfrq8xczdsu2e.com"
+        }
+      ],
+      "destination": "/services/photo/foodphoto/:path*"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/services/photo/foodphoto",
+      "has": [
+        {
+          "type": "host",
+          "value": "non-turn.com"
+        }
+      ],
+      "destination": "https://飲食店撮影.com/",
+      "permanent": true
+    },
+    {
+      "source": "/services/photo/foodphoto/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "non-turn.com"
+        }
+      ],
+      "destination": "https://飲食店撮影.com/:path*",
+      "permanent": true
+    }
+  ]
+}
