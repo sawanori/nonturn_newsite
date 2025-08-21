@@ -1,37 +1,35 @@
-
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-const ALT_DOMAIN = new Set([
+const LP_HOSTS = new Set([
   "foodphoto-pro.com",
   "www.foodphoto-pro.com",
 ]);
 
 export function middleware(req: NextRequest) {
   const host = req.headers.get("host") || "";
-  if (!ALT_DOMAIN.has(host)) return NextResponse.next();
+  if (!LP_HOSTS.has(host)) return NextResponse.next();
 
   const url = req.nextUrl.clone();
+  const isNav = req.headers.get("sec-fetch-mode") === "navigate";
+  const isPrefetch = req.headers.get("next-router-prefetch") === "1";
 
-  // foodphoto-pro.com では "/" → LP ページ
   if (url.pathname === "/") {
     url.pathname = "/services/photo/foodphoto";
     return NextResponse.rewrite(url);
   }
-
-  // "/form" だけは専用ページ
   if (url.pathname === "/form") {
     url.pathname = "/services/photo/foodphoto/form";
     return NextResponse.rewrite(url);
   }
 
-  // それ以外は non-turn.com へリダイレクト
-  return NextResponse.redirect(
-    `https://non-turn.com${url.pathname}${url.search}`,
-    301
-  );
+  if (isNav) {
+    return NextResponse.redirect(`https://non-turn.com${url.pathname}${url.search}`, 301);
+  }
+  return new Response(null, { status: 204 }); // prefetch は静かに破棄
 }
 
 export const config = {
+  // 静的資産を除外しつつ網羅
   matcher: ["/", "/form", "/((?!_next/|favicon.ico|robots.txt|sitemap.xml).*)"],
 };
