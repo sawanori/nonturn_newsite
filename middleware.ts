@@ -1,51 +1,44 @@
+;
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-const LP_DOMAINS = new Set(["foodphoto-pro.com", "www.foodphoto-pro.com"]);
+const LP_HOSTS = new Set([
+  "foodphoto-pro.com",
+  "www.foodphoto-pro.com",
+]);
 
 export function middleware(req: NextRequest) {
-  // Host を正規化（小文字化・ポート除去）
-  const rawHost = req.headers.get("host") || "";
-  const host = rawHost.toLowerCase().split(":")[0];
+  const host = req.headers.get("host") || "";
+  const url = req.nextUrl.clone();
 
-  if (!LP_DOMAINS.has(host)) {
+  // === Debug logs ===
+  console.log("[MIDDLEWARE] host:", host);
+  console.log("[MIDDLEWARE] pathname:", url.pathname);
+
+  if (!LP_HOSTS.has(host)) {
+    console.log("[MIDDLEWARE] Not LP host → NextResponse.next()");
     return NextResponse.next();
   }
 
-  const url = req.nextUrl.clone();
-  const isNav = req.headers.get("sec-fetch-mode") === "navigate";
-  const isPrefetch = req.headers.get("next-router-prefetch") === "1";
-
-  // "/" を LP 実体へ rewrite
   if (url.pathname === "/") {
+    console.log("[MIDDLEWARE] Rewriting / → /services/photo/foodphoto");
     url.pathname = "/services/photo/foodphoto";
-    const res = NextResponse.rewrite(url);
-    res.headers.set("x-mw-hit", "lp-root");
-    return res;
+    return NextResponse.rewrite(url);
   }
 
-  // "/form" を LP 実体へ rewrite
   if (url.pathname === "/form") {
+    console.log("[MIDDLEWARE] Rewriting /form → /services/photo/foodphoto/form");
     url.pathname = "/services/photo/foodphoto/form";
-    const res = NextResponse.rewrite(url);
-    res.headers.set("x-mw-hit", "lp-form");
-    return res;
+    return NextResponse.rewrite(url);
   }
 
-  // それ以外:
-  // クリック遷移は non-turn.com へ 301、プリフェッチ等は 204 で静かに破棄
-  if (isNav) {
-    const res = NextResponse.redirect(
-      `https://non-turn.com${url.pathname}${url.search}`,
-      301
-    );
-    res.headers.set("x-mw-hit", "lp-redirect");
-    return res;
-  }
-  return new Response(null, { status: 204, headers: { "x-mw-hit": "lp-drop" } });
+  console.log("[MIDDLEWARE] Redirecting to non-turn.com:", url.pathname);
+  return NextResponse.redirect(
+    `https://non-turn.com${url.pathname}${url.search}`,
+    301
+  );
 }
 
-// すべてのパスで適用（まずは確実に効かせる）
 export const config = {
-  matcher: ["/:path*"],
+  matcher: ["/", "/form", "/((?!_next/|favicon.ico|robots.txt|sitemap.xml).*)"],
 };
