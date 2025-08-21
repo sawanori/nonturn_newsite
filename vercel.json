@@ -1,4 +1,3 @@
-
 {
   "rewrites": [
     { "source": "/",     "has": [{ "type": "host", "value": "foodphoto-pro.com" }],     "destination": "/services/photo/foodphoto" },
@@ -7,8 +6,6 @@
     { "source": "/form", "has": [{ "type": "host", "value": "www.foodphoto-pro.com" }], "destination": "/services/photo/foodphoto/form" }
   ],
   "redirects": [
-    { "source": "/:path*", "has": [{ "type": "host", "value": "foodphoto-pro.com" }],      "destination": "https://non-turn.com/:path*", "permanent": true },
-    { "source": "/:path*", "has": [{ "type": "host", "value": "www.foodphoto-pro.com" }],  "destination": "https://non-turn.com/:path*", "permanent": true },
     { "source": "/services/photo/foodphoto",      "has": [{ "type": "host", "value": "non-turn.com" }], "destination": "https://foodphoto-pro.com/",     "permanent": true },
     { "source": "/services/photo/foodphoto/form", "has": [{ "type": "host", "value": "non-turn.com" }], "destination": "https://foodphoto-pro.com/form", "permanent": true }
   ]
