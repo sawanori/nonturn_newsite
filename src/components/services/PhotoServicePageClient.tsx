@@ -306,15 +306,15 @@ export default function PhotoServicePageClient() {
        <p className="text-gray-300 mb-4">
         飲食店専門の撮影サービスもご用意しています
        </p>
-       <Link
-        href="https://xn--yfrq8xczdsu2e.com"
+       <a
+        href="https://foodphoto-pro.com/"
         className="inline-flex items-center bg-gradient-to-r from-orange-400 to-red-500 text-white px-6 py-3 rounded-lg font-medium hover:from-orange-500 hover:to-red-600 transition-all duration-300"
        >
         飲食店の撮影はこちら
         <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
-       </Link>
+       </a>
       </motion.div>
      </div>
     </section>
