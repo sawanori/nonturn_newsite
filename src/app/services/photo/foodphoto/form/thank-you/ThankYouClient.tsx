@@ -14,7 +14,6 @@ export default function ThankYouClient() {
   const steps = [
     { title: '申込受付', icon: '📝', status: 'completed' },
     { title: '内容確認中', icon: '👀', status: 'current' },
-    { title: 'カメラマン選定', icon: '📸', status: 'pending' },
     { title: 'ご連絡', icon: '📞', status: 'pending' },
   ]
 
