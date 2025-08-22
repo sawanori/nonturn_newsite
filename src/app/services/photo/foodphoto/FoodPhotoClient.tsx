@@ -788,11 +788,12 @@ const ParallaxSection = () => {
       >
         <Image
           src="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2010.jpg"
-          alt="Parallax Background"
+          alt="飲食店撮影 料理写真の撮影風景"
           fill
           className="object-cover"
           priority
-          quality={100}
+          quality={90}
+          sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
       </div>
@@ -855,45 +856,45 @@ const SamplesSection = () => {
 
   const images = [
     // 料理写真 (LP_food_)
-    { id: 1, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%201.jpg', alt: '料理写真1' },
-    { id: 2, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%202.jpg', alt: '料理写真2' },
-    { id: 3, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%203.jpg', alt: '料理写真3' },
-    { id: 4, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%204.jpg', alt: '料理写真4' },
-    { id: 5, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%205.jpg', alt: '料理写真5' },
-    { id: 6, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%206.jpg', alt: '料理写真6' },
-    { id: 7, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%207.jpg', alt: '料理写真7' },
-    { id: 8, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%208.jpg', alt: '料理写真8' },
-    { id: 9, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%209.jpg', alt: '料理写真9' },
-    { id: 10, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2010.jpg', alt: '料理写真10' },
-    { id: 11, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2011.jpg', alt: '料理写真11' },
-    { id: 12, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2012.jpg', alt: '料理写真12' },
-    { id: 13, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2013.jpg', alt: '料理写真13' },
-    { id: 14, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2014.jpg', alt: '料理写真14' },
-    { id: 15, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2015.jpg', alt: '料理写真15' },
-    { id: 16, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2016.jpg', alt: '料理写真16' },
-    { id: 17, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2017.jpg', alt: '料理写真17' },
-    { id: 18, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2018.jpg', alt: '料理写真18' },
-    { id: 19, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2019.jpg', alt: '料理写真19' },
-    { id: 20, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2020.jpg', alt: '料理写真20' },
-    { id: 21, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2021.jpg', alt: '料理写真21' },
-    { id: 22, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2012.jpg', alt: '料理写真22' },
-    { id: 23, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2023.jpg', alt: '料理写真23' },
-    { id: 24, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg', alt: '料理写真24' },
-    { id: 25, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2025.jpg', alt: '料理写真25' },
-    { id: 26, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_26.jpg', alt: '料理写真26' },
+    { id: 1, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%201.jpg', alt: '飲食店撮影 前菜の料理撮影事例' },
+    { id: 2, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%202.jpg', alt: '飲食店撮影 メインディッシュの撮影' },
+    { id: 3, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%203.jpg', alt: '飲食店撮影 デザートプレートの撮影' },
+    { id: 4, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%204.jpg', alt: '飲食店撮影 和食料理の撮影事例' },
+    { id: 5, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%205.jpg', alt: '飲食店撮影 洋食メニューの撮影' },
+    { id: 6, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%206.jpg', alt: '飲食店撮影 中華料理の撮影事例' },
+    { id: 7, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%207.jpg', alt: '飲食店撮影 イタリアン料理撮影' },
+    { id: 8, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%208.jpg', alt: '飲食店撮影 フレンチ料理の撮影' },
+    { id: 9, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%209.jpg', alt: '飲食店撮影 創作料理の撮影事例' },
+    { id: 10, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2010.jpg', alt: '飲食店撮影 コース料理の撮影' },
+    { id: 11, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2011.jpg', alt: '飲食店撮影 ランチメニュー撮影' },
+    { id: 12, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2012.jpg', alt: '飲食店撮影 ディナー料理の撮影' },
+    { id: 13, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2013.jpg', alt: '飲食店撮影 季節限定メニュー撮影' },
+    { id: 14, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2014.jpg', alt: '飲食店撮影 看板料理の撮影事例' },
+    { id: 15, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2015.jpg', alt: '飲食店撮影 おすすめ料理の撮影' },
+    { id: 16, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2016.jpg', alt: '飲食店撮影 テイクアウトメニュー撮影' },
+    { id: 17, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2017.jpg', alt: '飲食店撮影 ドリンクメニューの撮影' },
+    { id: 18, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2018.jpg', alt: '飲食店撮影 カクテル・お酒の撮影' },
+    { id: 19, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2019.jpg', alt: '飲食店撮影 スイーツメニュー撮影' },
+    { id: 20, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2020.jpg', alt: '飲食店撮影 カフェメニューの撮影' },
+    { id: 21, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2021.jpg', alt: '飲食店撮影 バーメニューの撮影事例' },
+    { id: 22, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2012.jpg', alt: '飲食店撮影 居酒屋メニュー撮影' },
+    { id: 23, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2023.jpg', alt: '飲食店撮影 ビストロ料理の撮影事例' },
+    { id: 24, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg', alt: '飲食店撮影 会席料理の撮影' },
+    { id: 25, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2025.jpg', alt: '飲食店撮影 鉄板焼き料理の撮影事例' },
+    { id: 26, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_26.jpg', alt: '飲食店撮影 寿司・刺身の撮影' },
     // 外観写真 (LP_out_)
-    { id: 27, category: 'exterior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_out_.png', alt: '外観写真1' },
+    { id: 27, category: 'exterior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_out_.png', alt: '飲食店撮影 店舗外観の撮影事例' },
     // 内観写真 (LP_room_)
-    { id: 28, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%201.jpg', alt: '店内1' },
-    { id: 29, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%202.jpg', alt: '店内2' },
-    { id: 30, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%203.jpg', alt: '店内3' },
-    { id: 31, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%204.jpg', alt: '店内4' },
-    { id: 32, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%205.jpg', alt: '店内5' },
-    { id: 33, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%206.jpg', alt: '店内6' },
-    { id: 34, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%207.jpg', alt: '店内7' },
-    { id: 35, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%208.jpg', alt: '店内8' },
-    { id: 36, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%209.jpg', alt: '店内9' },
-    { id: 37, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_.jpg', alt: '店内10' }
+    { id: 28, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%201.jpg', alt: '飲食店撮影 レストラン内観の撮影' },
+    { id: 29, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%202.jpg', alt: '飲食店撮影 カフェ店内の撮影事例' },
+    { id: 30, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%203.jpg', alt: '飲食店撮影 個室席の撮影' },
+    { id: 31, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%204.jpg', alt: '飲食店撮影 カウンター席の撮影事例' },
+    { id: 32, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%205.jpg', alt: '飲食店撮影 テーブル席の撮影' },
+    { id: 33, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%206.jpg', alt: '飲食店撮影 バーカウンターの撮影事例' },
+    { id: 34, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%207.jpg', alt: '飲食店撮影 ダイニングエリアの撮影' },
+    { id: 35, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%208.jpg', alt: '飲食店撮影 和室の店内撮影事例' },
+    { id: 36, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%209.jpg', alt: '飲食店撮影 テラス席の撮影' },
+    { id: 37, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_.jpg', alt: '飲食店撮影 エントランスの撮影事例' }
   ]
 
   const filteredImages = activeCategory === 'all' 
@@ -981,6 +982,8 @@ const SamplesSection = () => {
                     fill
                     className="object-cover transition-transform duration-300 group-hover:scale-110"
                     sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                    loading="lazy"
+                    quality={85}
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
                 </motion.div>
@@ -1020,6 +1023,8 @@ const SamplesSection = () => {
                   fill
                   className="object-contain"
                   sizes="100vw"
+                  quality={90}
+                  priority
                 />
               </div>
             </motion.div>
