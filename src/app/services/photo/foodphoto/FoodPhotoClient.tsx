@@ -520,16 +520,19 @@ const FeaturesSection = () => {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+              className="bg-white rounded-2xl max-w-3xl w-full overflow-y-auto"
+              style={{ maxHeight: '95vh' }}
               onClick={(e) => e.stopPropagation()}
             >
               {/* モーダルヘッダー画像 */}
-              <div className="relative h-64 md:h-80">
+              <div className="relative h-[400px] md:h-[500px]">
                 <Image
                   src={selectedFeature.image}
                   alt={selectedFeature.title}
                   fill
                   className="object-cover rounded-t-2xl"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  priority
                 />
                 <button
                   onClick={() => setSelectedFeature(null)}
