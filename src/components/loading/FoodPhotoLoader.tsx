@@ -109,6 +109,16 @@ function LogoReveal() {
           }}
         >
           <div className="inline-block">
+            <motion.div
+              className="text-8xl mb-4"
+              animate={{ 
+                rotate: [0, 10, -10, 0],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              🍽️
+            </motion.div>
             <motion.h1 
               className="text-4xl md:text-6xl font-bold"
               initial={{ opacity: 0, y: 20 }}
