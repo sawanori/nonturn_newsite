@@ -25,6 +25,13 @@ export function middleware(req: NextRequest) {
     return res;
   }
 
+  // API routes should be handled normally (no redirect)
+  if (url.pathname.startsWith("/api/")) {
+    const res = NextResponse.next();
+    res.headers.set("x-mw", "api-pass");
+    return res;
+  }
+
   // LP ドメイン: "/" と "/form" は実体へ rewrite
   if (url.pathname === "/") {
     url.pathname = "/services/photo/foodphoto";

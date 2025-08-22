@@ -109,15 +109,27 @@ export function FoodPhotoFormClient() {
         setSubmitResult({ success: false, message: result.message || '送信に失敗しました' })
       }
     } catch (error: any) {
-      console.error('Validation error:', error)
+      console.error('Submission error:', error)
       console.error('Form data at submission:', formData)
-      // Log specific validation errors for debugging
-      if (error.errors) {
+      
+      // Check if it's a network error (CORS, fetch failed, etc)
+      if (error.message && error.message.includes('fetch')) {
+        setSubmitResult({ 
+          success: false, 
+          message: '送信エラーが発生しました。しばらく待ってから再度お試しください。' 
+        })
+      } else if (error.errors) {
+        // Validation error
         console.error('Validation errors detail:', error.errors)
+        const message = 'フォームの入力内容に不備があります。前のステップに戻って確認してください。'
+        setSubmitResult({ success: false, message })
+      } else {
+        // Other errors
+        setSubmitResult({ 
+          success: false, 
+          message: 'エラーが発生しました。もう一度お試しください。' 
+        })
       }
-      // Don't show detailed validation errors at confirmation step
-      const message = 'フォームの入力内容に不備があります。前のステップに戻って確認してください。'
-      setSubmitResult({ success: false, message })
     } finally {
       setIsSubmitting(false)
     }
