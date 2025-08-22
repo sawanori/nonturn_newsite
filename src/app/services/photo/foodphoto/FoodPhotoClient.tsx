@@ -379,12 +379,16 @@ const IntroSection = () => {
                 />
                 <div className="relative">
                   <h1 className="relative inline-block">
+                    {/* SEO用の完全なH1テキスト（スクリーンリーダー用） */}
+                    <span className="sr-only">飲食店撮影PhotoStudio｜プロカメラマンによる料理・店舗撮影サービス</span>
+                    {/* 視覚的な表示用（SEOには影響しない） */}
                     <span 
                       className="block text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-tight"
                       style={{ 
                         fontFamily: '"Playfair Display", "Noto Serif JP", serif',
                         letterSpacing: '-0.02em'
                       }}
+                      aria-hidden="true"
                     >
                       飲食店撮影
                     </span>
@@ -399,6 +403,7 @@ const IntroSection = () => {
                         transform: 'rotate(-2deg)',
                         transformOrigin: 'bottom right'
                       }}
+                      aria-hidden="true"
                     >
                       PhotoStudio
                     </span>
