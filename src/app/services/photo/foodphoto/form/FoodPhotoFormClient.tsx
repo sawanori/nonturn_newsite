@@ -101,10 +101,10 @@ export function FoodPhotoFormClient() {
       
       if (result.ok) {
         setSubmitResult({ success: true, message: 'お申し込みを受け付けました。確認メールをお送りしました。' })
-        // Reset form
+        // Redirect to thank you page
         setTimeout(() => {
-          window.location.href = '/services/photo/foodphoto'
-        }, 3000)
+          window.location.href = '/services/photo/foodphoto/form/thank-you'
+        }, 1000)
       } else {
         setSubmitResult({ success: false, message: result.message || '送信に失敗しました' })
       }
