@@ -108,53 +108,90 @@ const CaseCard = ({ title, company, role, name, comment }: any) => (
 )
 
 // Organisms
-const Header = () => (
-  <header className="sticky top-0 z-50 shadow-sm" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
-    <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-      <Link href="/" className="flex items-center gap-2">
-        <Image
-          src="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/cameralogo.svg"
-          alt="飲食店撮影PhotoStudio"
-          width={40}
-          height={40}
-          className="w-8 h-8 md:w-10 md:h-10"
-        />
-        <span className="text-base md:text-xl font-bold text-white">飲食店撮影PhotoStudio</span>
-      </Link>
-      
-      <nav className="hidden md:flex items-center gap-6">
-        <Link href="#features" className="text-gray-300 hover:text-orange-500 transition-colors">
-          サービスの特徴
+const Header = () => {
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault()
+    const element = document.querySelector(targetId)
+    if (element) {
+      const offset = 80 // Header height offset
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+      const offsetPosition = elementPosition - offset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+    }
+  }
+
+  return (
+    <header className="sticky top-0 z-50 shadow-sm" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
+      <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/cameralogo.svg"
+            alt="飲食店撮影PhotoStudio"
+            width={40}
+            height={40}
+            className="w-8 h-8 md:w-10 md:h-10"
+          />
+          <span className="text-base md:text-xl font-bold text-white">飲食店撮影PhotoStudio</span>
         </Link>
-        <Link href="#pricing" className="text-gray-300 hover:text-orange-500 transition-colors">
-          料金
-        </Link>
-        <Link href="#samples" className="text-gray-300 hover:text-orange-500 transition-colors">
-          撮影事例
-        </Link>
-        <Link href="#flow" className="text-gray-300 hover:text-orange-500 transition-colors">
-          撮影の流れ
-        </Link>
-        <Link href="#cases" className="text-gray-300 hover:text-orange-500 transition-colors">
-          導入事例
-        </Link>
-      </nav>
-      
-      <div className="hidden md:flex items-center gap-3">
-        <Link href="/services/photo/foodphoto/form">
-          <Button variant="primary">
-            申し込む
-          </Button>
-        </Link>
-        <Link href="/contact">
-          <Button variant="secondary">
-            問い合わせる
-          </Button>
-        </Link>
+        
+        <nav className="hidden md:flex items-center gap-6">
+          <a 
+            href="#features" 
+            onClick={(e) => handleSmoothScroll(e, '#features')}
+            className="text-gray-300 hover:text-orange-500 transition-colors cursor-pointer"
+          >
+            サービスの特徴
+          </a>
+          <a 
+            href="#pricing"
+            onClick={(e) => handleSmoothScroll(e, '#pricing')}
+            className="text-gray-300 hover:text-orange-500 transition-colors cursor-pointer"
+          >
+            料金
+          </a>
+          <a 
+            href="#samples"
+            onClick={(e) => handleSmoothScroll(e, '#samples')}
+            className="text-gray-300 hover:text-orange-500 transition-colors cursor-pointer"
+          >
+            撮影事例
+          </a>
+          <a 
+            href="#flow"
+            onClick={(e) => handleSmoothScroll(e, '#flow')}
+            className="text-gray-300 hover:text-orange-500 transition-colors cursor-pointer"
+          >
+            撮影の流れ
+          </a>
+          <a 
+            href="#cases"
+            onClick={(e) => handleSmoothScroll(e, '#cases')}
+            className="text-gray-300 hover:text-orange-500 transition-colors cursor-pointer"
+          >
+            導入事例
+          </a>
+        </nav>
+        
+        <div className="hidden md:flex items-center gap-3">
+          <Link href="/services/photo/foodphoto/form">
+            <Button variant="primary">
+              申し込む
+            </Button>
+          </Link>
+          <Link href="/contact">
+            <Button variant="secondary">
+              問い合わせる
+            </Button>
+          </Link>
+        </div>
       </div>
-    </div>
-  </header>
-)
+    </header>
+  )
+}
 
 const IntroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0)
