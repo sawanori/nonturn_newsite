@@ -174,6 +174,13 @@ const Header = () => {
           >
             導入事例
           </a>
+          <a 
+            href="#faq"
+            onClick={(e) => handleSmoothScroll(e, '#faq')}
+            className="text-gray-300 hover:text-orange-500 transition-colors cursor-pointer"
+          >
+            よくあるご質問
+          </a>
         </nav>
         
         <div className="hidden md:flex items-center gap-3">
