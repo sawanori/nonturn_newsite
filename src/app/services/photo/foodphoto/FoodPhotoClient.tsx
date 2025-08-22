@@ -1,9 +1,10 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
+import FoodPhotoLoader from '@/components/loading/FoodPhotoLoader'
 
 // Atoms
 const Button = ({ variant = 'primary', children, onClick, className = '' }: any) => {
@@ -1354,36 +1355,62 @@ const Footer = () => (
 
 // Main Component
 export default function FoodPhotoClient() {
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    console.log('FoodPhotoClient mounted, isLoading:', true)
+    // Simply keep loading state true, it's already initialized as true
+  }, [])
+
+  const handleLoaderComplete = () => {
+    console.log('Loader complete, setting isLoading to false')
+    setIsLoading(false)
+  }
+
   return (
-    <div className="min-h-screen" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
-      <Header />
-      <IntroSection />
-      <NewsSection />
-      <FeaturesSection />
-      <PricingSection />
-      <ParallaxSection />
-      <SamplesSection />
-      <FlowSection />
-      <CasesSection />
-      <FAQSection />
-      <BottomCTA />
-      <Footer />
+    <>
+      <AnimatePresence>
+        {isLoading && (
+          <FoodPhotoLoader onComplete={handleLoaderComplete} />
+        )}
+      </AnimatePresence>
       
-      {/* Mobile Fixed Bottom Buttons */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t border-gray-200 p-3">
-        <div className="flex gap-2">
-          <Link href="/services/photo/foodphoto/form" className="flex-1">
-            <button className="w-full bg-gradient-to-r from-orange-400 to-red-500 text-white py-3 px-4 rounded-lg font-bold text-sm">
-              申し込む
-            </button>
-          </Link>
-          <Link href="/contact" className="flex-1">
-            <button className="w-full bg-white border-2 border-orange-400 text-orange-400 py-3 px-4 rounded-lg font-bold text-sm">
-              問い合わせる
-            </button>
-          </Link>
+      <motion.div 
+        className="min-h-screen" 
+        style={{ backgroundColor: 'rgb(36, 35, 35)' }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isLoading ? 0 : 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Header />
+        <IntroSection />
+        <NewsSection />
+        <FeaturesSection />
+        <PricingSection />
+        <ParallaxSection />
+        <SamplesSection />
+        <FlowSection />
+        <CasesSection />
+        <FAQSection />
+        <BottomCTA />
+        <Footer />
+        
+        {/* Mobile Fixed Bottom Buttons */}
+        <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t border-gray-200 p-3">
+          <div className="flex gap-2">
+            <Link href="/services/photo/foodphoto/form" className="flex-1">
+              <button className="w-full bg-gradient-to-r from-orange-400 to-red-500 text-white py-3 px-4 rounded-lg font-bold text-sm">
+                申し込む
+              </button>
+            </Link>
+            <Link href="/contact" className="flex-1">
+              <button className="w-full bg-white border-2 border-orange-400 text-orange-400 py-3 px-4 rounded-lg font-bold text-sm">
+                問い合わせる
+              </button>
+            </Link>
+          </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </>
   )
 }
