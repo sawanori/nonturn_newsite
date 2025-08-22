@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 const services = [
   { name: '映像制作', href: '/services/movie' },
   { name: '写真撮影', href: '/services/photo' },
+  { name: '飲食店撮影', href: '/services/photo/foodphoto', highlight: true },
   { name: 'Web制作', href: '/services/web' }
 ]
 const company = ['会社概要', 'プライバシーポリシー', '利用規約']
@@ -108,10 +109,12 @@ export function Footer() {
         >
          <motion.a 
           href={service.href} 
-          className="hover:text-yellow-400 transition-colors duration-300 relative group"
+          className={`${service.highlight ? 'text-orange-400 font-semibold' : ''} hover:text-yellow-400 transition-colors duration-300 relative group flex items-center`}
           whileHover={{ x: 5 }}
          >
+          {service.highlight && <span className="mr-2">🍽️</span>}
           {service.name}
+          {service.highlight && <span className="ml-2 text-xs bg-orange-400/20 text-orange-400 px-2 py-1 rounded-full">NEW</span>}
           <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full"></span>
          </motion.a>
         </motion.li>

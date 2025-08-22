@@ -274,6 +274,52 @@ export function TokyoClient({ isHeroButtons = false }: TokyoClientProps) {
         </div>
       </section>
 
+      {/* Food Photography Service for Tokyo */}
+      <section className="py-16 bg-gradient-to-r from-gray-900 via-black to-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="bg-gradient-to-r from-orange-500/10 to-red-500/10 border-2 border-orange-400/30 rounded-3xl p-12 text-center hover:border-orange-400/50 transition-all duration-300"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+              🍽️ 東京の飲食店様向け<span className="bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">専門撮影サービス</span>
+            </h2>
+            <p className="text-xl text-gray-200 mb-4">
+              港区・渋谷区・新宿区・品川区など東京23区全域で飲食店撮影に対応
+            </p>
+            <p className="text-lg text-gray-300 mb-8">
+              料理写真・店舗内観・外観撮影 | 東京エリア出張無料 | プロカメラマンによる撮影
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 mb-8">
+              <span className="px-4 py-2 bg-orange-400/20 text-orange-400 rounded-full text-sm">
+                銀座・六本木の高級レストラン
+              </span>
+              <span className="px-4 py-2 bg-orange-400/20 text-orange-400 rounded-full text-sm">
+                渋谷・新宿のカフェ
+              </span>
+              <span className="px-4 py-2 bg-orange-400/20 text-orange-400 rounded-full text-sm">
+                浅草・上野の和食店
+              </span>
+            </div>
+            <Link href="/services/photo/foodphoto">
+              <motion.button
+                className="inline-flex items-center bg-gradient-to-r from-orange-400 to-red-500 text-white px-10 py-5 rounded-xl font-bold text-xl hover:from-orange-500 hover:to-red-600 transition-all duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                東京の飲食店撮影サービス詳細
+                <svg className="w-7 h-7 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </motion.button>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Why Choose Us for Tokyo */}
       <section className="py-24 bg-gradient-to-b from-gray-900 to-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

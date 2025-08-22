@@ -301,20 +301,29 @@ export default function PhotoServicePageClient() {
        whileInView={{ opacity: 1, y: 0 }}
        viewport={{ once: true }}
        transition={{ duration: 0.5 }}
-       className="mt-12 text-center bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-400/30 rounded-2xl p-8"
+       className="mt-12 text-center bg-gradient-to-r from-orange-500/20 to-red-500/20 border-2 border-orange-400/50 rounded-2xl p-10 hover:border-orange-400 transition-all duration-300"
       >
-       <p className="text-gray-300 mb-4">
-        飲食店専門の撮影サービスもご用意しています
+       <h3 className="text-2xl font-bold text-white mb-3">
+        🍽️ 飲食店撮影PhotoStudio
+       </h3>
+       <p className="text-gray-200 mb-6 text-lg">
+        飲食店専門のプロカメラマンによる料理・店舗撮影サービス
        </p>
-       <a
-        href="https://foodphoto-pro.com/"
-        className="inline-flex items-center bg-gradient-to-r from-orange-400 to-red-500 text-white px-6 py-3 rounded-lg font-medium hover:from-orange-500 hover:to-red-600 transition-all duration-300"
-       >
-        飲食店の撮影はこちら
-        <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-       </a>
+       <p className="text-gray-300 mb-2">
+        東京・横浜・千葉エリア出張無料 | 撮影実績500店舗以上
+       </p>
+       <Link href="/services/photo/foodphoto">
+        <motion.button
+         className="inline-flex items-center bg-gradient-to-r from-orange-400 to-red-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:from-orange-500 hover:to-red-600 transition-all duration-300 mt-4"
+         whileHover={{ scale: 1.05 }}
+         whileTap={{ scale: 0.95 }}
+        >
+         飲食店撮影の詳細を見る
+         <svg className="w-6 h-6 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+         </svg>
+        </motion.button>
+       </Link>
       </motion.div>
      </div>
     </section>

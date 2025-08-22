@@ -242,6 +242,15 @@ export const siteLinks = {
       keywords: ['写真撮影', '商品撮影', 'イベント撮影']
     },
     {
+      href: '/services/photo/foodphoto',
+      label: '飲食店撮影PhotoStudio',
+      description: 'プロカメラマンによる飲食店専門の料理・店舗撮影',
+      category: '特別サービス',
+      priority: 'high' as const,
+      keywords: ['飲食店撮影', '料理撮影', 'メニュー撮影', 'レストラン撮影', 'フードフォト'],
+      isExternal: false
+    },
+    {
       href: '/services/web',
       label: 'Web制作',
       description: 'Webサイト・LP・ECサイト制作',
