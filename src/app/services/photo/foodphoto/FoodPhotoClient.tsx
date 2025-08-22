@@ -130,7 +130,7 @@ const Header = () => {
         <Link href="/" className="flex items-center gap-2">
           <Image
             src="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/cameralogo.svg"
-            alt="飲食店撮影PhotoStudio"
+            alt="飲食店撮影PhotoStudio - プロカメラマンによる料理撮影サービス"
             width={40}
             height={40}
             className="w-8 h-8 md:w-10 md:h-10"
@@ -201,27 +201,27 @@ const IntroSection = () => {
   const mobileImages = [
     {
       src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%209.jpg',
-      alt: '美味しそうな料理写真1'
+      alt: '飲食店の料理撮影例 - 美味しそうな料理写真'
     },
     {
       src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%206.jpg',
-      alt: '美味しそうな料理写真2'
+      alt: '飲食店のメニュー撮影 - プロによる料理写真'
     },
     {
       src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%205.jpg',
-      alt: '美味しそうな料理写真3'
+      alt: '飲食店撮影サービス - 料理の魅力を引き出す写真'
     },
     {
       src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2023.jpg',
-      alt: '美味しそうな料理写真4'
+      alt: 'レストラン料理撮影 - 飲食店専門カメラマンによる撮影'
     },
     {
       src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2019.jpg',
-      alt: '美味しそうな料理写真5'
+      alt: '飲食店メニュー撮影例 - プロフェッショナル料理写真'
     },
     {
       src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_26.jpg',
-      alt: '美味しそうな料理写真6'
+      alt: '飲食店の撮影実績 - 料理写真で集客アップ'
     }
   ]
   
@@ -229,15 +229,15 @@ const IntroSection = () => {
   const pcImages = [
     {
       src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg',
-      alt: '美味しそうな料理写真1'
+      alt: '飲食店撮影事例 - プロカメラマンによる料理撮影'
     },
     {
       src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2021.jpg',
-      alt: '美味しそうな料理写真2'
+      alt: '飲食店向け撮影サービス - メニュー撮影実績'
     },
     {
       src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2022.jpg',
-      alt: '美味しそうな料理写真3'
+      alt: 'レストラン撮影サービス - 飲食店専門料理写真'
     },
     {
       src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_.jpg',
@@ -365,7 +365,7 @@ const IntroSection = () => {
               <div className="flex items-center justify-center gap-4 md:gap-6 mb-4">
                 <Image
                   src="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/cameralogo.svg"
-                  alt="Logo"
+                  alt="飲食店撮影PhotoStudioロゴ - プロの料理撮影サービス"
                   width={80}
                   height={80}
                   className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24"
@@ -1067,6 +1067,126 @@ const FlowSection = () => {
   )
 }
 
+const FAQSection = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
+  
+  const faqs = [
+    {
+      question: "飲食店撮影の料金はいくらですか？",
+      answer: "飲食店撮影の料金は、ライトプラン33,000円（1時間）、スタンダードプラン44,000円（2時間）、プレミアムプラン88,000円（4時間）の3プランをご用意しています。東京23区内、横浜市内、千葉（船橋）エリアは出張費込みです。"
+    },
+    {
+      question: "撮影時間はどのくらいかかりますか？",
+      answer: "プランにより1時間〜4時間の撮影時間を設定しています。料理のボリュームや撮影内容により最適なプランをご提案いたします。追加時間のオプション（60分11,000円〜）もございます。"
+    },
+    {
+      question: "撮影エリアはどこまで対応していますか？",
+      answer: "東京23区内、横浜市内、千葉（船橋）エリアは基本料金内で出張いたします。その他の地域についても対応可能ですので、お気軽にご相談ください。"
+    },
+    {
+      question: "どのような写真を撮影してもらえますか？",
+      answer: "料理写真、店舗内観・外観、スタッフ写真など、飲食店の魅力を伝えるあらゆる写真を撮影いたします。Web・SNS用、メニュー用、看板用など用途に合わせた撮影が可能です。"
+    },
+    {
+      question: "撮影した写真の著作権はどうなりますか？",
+      answer: "撮影した写真の著作権は原則としてお客様に帰属します。商用利用、二次利用、SNS投稿など自由にご使用いただけます。"
+    },
+    {
+      question: "撮影前の準備は必要ですか？",
+      answer: "特別な準備は不要ですが、撮影したい料理のリストアップや、撮影イメージの共有があるとスムーズです。事前にヒアリングシートをお送りしますので、ご記入いただければ十分です。"
+    },
+    {
+      question: "納品形式と納期を教えてください",
+      answer: "撮影データは高解像度のJPEG形式で、撮影日から5営業日以内にクラウドストレージ経由で納品いたします。即日納品オプションもご用意しています。"
+    },
+    {
+      question: "キャンセル料はかかりますか？",
+      answer: "撮影日2営業日前：20%、1営業日前：50%、当日：100%のキャンセル料が発生します。日程変更は可能な限り対応いたしますので、お早めにご相談ください。"
+    }
+  ]
+  
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  }
+  
+  return (
+    <section id="faq" className="py-16" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
+      <div className="max-w-4xl mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <SectionTitle>よくあるご質問</SectionTitle>
+          <p className="text-gray-400 mt-4">
+            飲食店撮影に関するよくあるご質問をまとめました
+          </p>
+        </motion.div>
+        
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+        
+        <div className="space-y-4">
+          {faqs.map((faq, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="bg-gray-800 rounded-lg overflow-hidden"
+            >
+              <button
+                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-700 transition-colors"
+              >
+                <span className="text-white font-medium">{faq.question}</span>
+                <svg
+                  className={`w-5 h-5 text-orange-400 transition-transform ${
+                    openIndex === index ? 'rotate-180' : ''
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <AnimatePresence>
+                {openIndex === index && (
+                  <motion.div
+                    initial={{ height: 0 }}
+                    animate={{ height: 'auto' }}
+                    exit={{ height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-6 pb-4 text-gray-300">
+                      {faq.answer}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 const CasesSection = () => {
   const cases = [
     {
@@ -1228,6 +1348,7 @@ export default function FoodPhotoClient() {
       <SamplesSection />
       <FlowSection />
       <CasesSection />
+      <FAQSection />
       <BottomCTA />
       <Footer />
       

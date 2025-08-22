@@ -1,85 +1,58 @@
-import { Metadata } from 'next'
 import FoodPhotoClient from './FoodPhotoClient'
 import Script from 'next/script'
-
-export const metadata: Metadata = {
-  title: '飲食店撮影PhotoStudio | プロフェッショナルフードフォトグラフィー',
-  description: '飲食店撮影PhotoStudioは、アートの視点から料理を撮影するプロフェッショナルスタジオ。メニュー撮影、フードアート、店舗空間撮影まで、芸術的な表現でお店の魅力を引き出します。',
-  keywords: '飲食店撮影,PhotoStudio,フードフォトグラフィー,アート撮影,料理写真,メニュー撮影,フードアート,レストラン撮影,カフェ撮影,プロカメラマン',
-  openGraph: {
-    title: '飲食店撮影PhotoStudio | プロフェッショナルフードフォトグラフィー',
-    description: 'アートの視点から料理を撮影するプロフェッショナルスタジオ。芸術的な表現でお店の魅力を最大化。',
-    url: 'https://non-turn.com/services/photo/foodphoto',
-    siteName: 'NonTurn.LLC',
-    locale: 'ja_JP',
-    type: 'website',
-    images: [
-      {
-        url: 'https://non-turn.com/ogp/foodphoto.jpg',
-        width: 1200,
-        height: 630,
-        alt: '飲食店撮影PhotoStudio - プロフェッショナルフードフォトグラフィー',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: '飲食店撮影PhotoStudio | プロフェッショナルフードフォトグラフィー',
-    description: 'アートの視点から料理を撮影。全国対応、年間5,000件の実績。',
-    images: ['https://non-turn.com/ogp/foodphoto.jpg'],
-  },
-  alternates: {
-    canonical: '/services/photo/foodphoto',
-  },
-}
+export { metadata } from './metadata'
 
 export default function FoodPhotoPage() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Service",
     "name": "飲食店撮影PhotoStudio",
-    "description": "プロフェッショナルフードフォトグラフィースタジオ。アートの視点から料理を撮影し、お店の魅力を最大限に引き出します。",
+    "description": "飲食店専門の撮影サービス。料理写真、店舗内観・外観撮影まで対応。東京・横浜・千葉エリア出張無料。日本フードフォトグラファー協会認定カメラマン。",
     "provider": {
       "@type": "Organization",
       "name": "NonTurn合同会社",
-      "url": "https://non-turn.com"
+      "url": "https://foodphoto-pro.com"
     },
-    "serviceType": "フードフォトグラフィー・アート撮影サービス",
-    "areaServed": {
-      "@type": "Country",
-      "name": "日本"
-    },
+    "serviceType": "飲食店撮影・料理撮影・メニュー撮影サービス",
+    "areaServed": [
+      {
+        "@type": "City",
+        "name": "東京"
+      },
+      {
+        "@type": "City",
+        "name": "横浜"
+      },
+      {
+        "@type": "City",
+        "name": "千葉"
+      }
+    ],
+    "priceRange": "¥33,000 - ¥88,000",
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
-      "name": "料金プラン",
+      "name": "飲食店撮影料金プラン",
       "itemListElement": [
         {
           "@type": "Offer",
-          "name": "お試しプラン",
+          "name": "ライトプラン",
           "price": "33000",
           "priceCurrency": "JPY",
-          "description": "1時間撮影、3-5カット"
+          "description": "1時間撮影、3-5カット納品、飲食店撮影入門プラン"
         },
         {
           "@type": "Offer",
-          "name": "お手軽プラン",
+          "name": "スタンダードプラン",
           "price": "44000",
           "priceCurrency": "JPY",
-          "description": "2時間撮影、5-10カット"
+          "description": "2時間撮影、10-15カット納品目安、飲食店撮影人気プラン"
         },
         {
           "@type": "Offer",
-          "name": "充実プラン",
-          "price": "55000",
+          "name": "プレミアムプラン",
+          "price": "88000",
           "priceCurrency": "JPY",
-          "description": "3時間撮影、15-20カット"
-        },
-        {
-          "@type": "Offer",
-          "name": "たっぷりプラン",
-          "price": "66000",
-          "priceCurrency": "JPY",
-          "description": "4時間撮影、25-30カット"
+          "description": "4時間撮影、30-40カット納品目安、飲食店撮影充実プラン"
         }
       ]
     }
