@@ -75,6 +75,15 @@ export function FoodPhotoFormClient() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
+    // Check if user agreed to terms first
+    if (!formData.agree) {
+      setSubmitResult({
+        success: false,
+        message: '利用規約への同意が必要です'
+      })
+      return
+    }
+    
     // Validate form
     try {
       const validatedData = formSchema.parse(formData)
@@ -101,7 +110,8 @@ export function FoodPhotoFormClient() {
       }
     } catch (error: any) {
       console.error('Validation error:', error)
-      const message = error.issues?.[0]?.message || '入力内容をご確認ください'
+      // Don't show detailed validation errors at confirmation step
+      const message = 'フォームの入力内容に不備があります。前のステップに戻って確認してください。'
       setSubmitResult({ success: false, message })
     } finally {
       setIsSubmitting(false)
