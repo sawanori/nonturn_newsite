@@ -110,14 +110,41 @@ function LogoReveal() {
         >
           <div className="inline-block">
             <motion.div
-              className="text-8xl mb-4"
+              className="mb-4"
               animate={{ 
                 rotate: [0, 10, -10, 0],
                 scale: [1, 1.1, 1]
               }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              🍽️
+              <svg
+                width="120"
+                height="120"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="mx-auto"
+              >
+                {/* Plate */}
+                <ellipse cx="12" cy="17" rx="9" ry="2" fill="#FFB366" opacity="0.3"/>
+                <ellipse cx="12" cy="16" rx="9" ry="2" fill="#FF8C42"/>
+                
+                {/* Fork */}
+                <rect x="4" y="8" width="0.8" height="7" rx="0.4" fill="#C0C0C0" transform="rotate(-15 4 8)"/>
+                <rect x="3.5" y="6" width="0.5" height="2" rx="0.25" fill="#C0C0C0" transform="rotate(-15 3.5 6)"/>
+                <rect x="4.2" y="6" width="0.5" height="2" rx="0.25" fill="#C0C0C0" transform="rotate(-15 4.2 6)"/>
+                <rect x="4.9" y="6" width="0.5" height="2" rx="0.25" fill="#C0C0C0" transform="rotate(-15 4.9 6)"/>
+                
+                {/* Knife */}
+                <rect x="20" y="8" width="0.8" height="7" rx="0.4" fill="#C0C0C0" transform="rotate(15 20 8)"/>
+                <path d="M 19.5 6 L 20.5 6 L 20.3 8 L 19.7 8 Z" fill="#C0C0C0" transform="rotate(15 20 7)"/>
+                
+                {/* Food on plate */}
+                <circle cx="12" cy="15" r="3" fill="#8B4513"/>
+                <circle cx="11" cy="14.5" r="0.5" fill="#FFD700"/>
+                <circle cx="13" cy="14.5" r="0.5" fill="#FF6347"/>
+                <path d="M 10 15.5 Q 12 16.5 14 15.5" stroke="#90EE90" strokeWidth="0.5" fill="none"/>
+              </svg>
             </motion.div>
             <motion.h1 
               className="text-4xl md:text-6xl font-bold"
