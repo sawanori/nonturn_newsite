@@ -391,12 +391,12 @@ const IntroSection = () => {
               transition={{ delay: 0.8 }}
             >
               <Link href="/services/photo/foodphoto/form">
-                <Button variant="primary" className="min-w-[200px]">
+                <Button variant="primary" className="min-w-[200px] px-6 py-3">
                   今すぐ申し込む
                 </Button>
               </Link>
               <Link href="/contact">
-                <Button variant="secondary" className="min-w-[200px] !border-white !text-white hover:!bg-white hover:!text-orange-500">
+                <Button variant="secondary" className="min-w-[200px] px-6 py-3 !border-white !text-white hover:!bg-white hover:!text-orange-500">
                   まずは問い合わせる
                 </Button>
               </Link>
