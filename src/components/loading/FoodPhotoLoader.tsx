@@ -100,7 +100,6 @@ function LogoReveal() {
       <div className="relative text-center">
         {/* Logo */}
         <motion.div
-          className="mb-8"
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ 
@@ -110,16 +109,6 @@ function LogoReveal() {
           }}
         >
           <div className="inline-block">
-            <motion.div
-              className="text-8xl mb-4"
-              animate={{ 
-                rotate: [0, 10, -10, 0],
-                scale: [1, 1.1, 1]
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              🍽️
-            </motion.div>
             <motion.h1 
               className="text-4xl md:text-6xl font-bold"
               initial={{ opacity: 0, y: 20 }}
@@ -140,42 +129,6 @@ function LogoReveal() {
             </motion.p>
           </div>
         </motion.div>
-
-        {/* Tagline */}
-        <motion.p
-          className="text-gray-300 text-lg"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-        >
-          プロカメラマンが、あなたの料理を輝かせます
-        </motion.p>
-
-        {/* Simple Sparkles - reduced */}
-        {[...Array(3)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute text-2xl"
-            style={{
-              top: `${30 + i * 20}%`,
-              left: `${20 + i * 30}%`,
-            }}
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ 
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0],
-              rotate: [0, 180, 360]
-            }}
-            transition={{ 
-              duration: 2,
-              delay: 0.5 + i * 0.2,
-              repeat: Infinity,
-              repeatDelay: 1
-            }}
-          >
-            ✨
-          </motion.div>
-        ))}
       </div>
     </motion.div>
   )
