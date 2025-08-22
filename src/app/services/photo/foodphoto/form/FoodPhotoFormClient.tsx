@@ -101,12 +101,21 @@ export function FoodPhotoFormClient() {
       
       if (result.ok) {
         setSubmitResult({ success: true, message: 'お申し込みを受け付けました。確認メールをお送りしました。' })
+        // Keep button disabled after success
+        // Don't set isSubmitting to false on success
         // Redirect to thank you page
         setTimeout(() => {
-          window.location.href = '/services/photo/foodphoto/form/thank-you'
+          // For foodphoto-pro.com domain, use short path (will be rewritten by middleware)
+          const thankYouUrl = window.location.hostname.includes('foodphoto-pro.com') 
+            ? '/form/thank-you'
+            : '/services/photo/foodphoto/form/thank-you'
+          window.location.href = thankYouUrl
         }, 1000)
+        // Important: Don't set isSubmitting to false here, leave it true
+        return
       } else {
         setSubmitResult({ success: false, message: result.message || '送信に失敗しました' })
+        setIsSubmitting(false)
       }
     } catch (error: any) {
       console.error('Submission error:', error)
@@ -130,7 +139,6 @@ export function FoodPhotoFormClient() {
           message: 'エラーが発生しました。もう一度お試しください。' 
         })
       }
-    } finally {
       setIsSubmitting(false)
     }
   }
