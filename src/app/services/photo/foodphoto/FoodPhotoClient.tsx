@@ -1147,7 +1147,7 @@ const Footer = () => (
               </Link>
             </li>
             <li>
-              <Link href="/terms" className="text-gray-400 hover:text-white transition-colors">
+              <Link href="/services/photo/foodphoto/terms" className="text-gray-400 hover:text-white transition-colors">
                 サービス規約
               </Link>
             </li>
