@@ -1174,7 +1174,7 @@ const Footer = () => (
           <h3 className="font-bold mb-4">リンク</h3>
           <ul className="space-y-2 text-sm">
             <li>
-              <Link href="/" className="text-gray-400 hover:text-white transition-colors">
+              <Link href="/about" className="text-gray-400 hover:text-white transition-colors">
                 会社概要
               </Link>
             </li>
