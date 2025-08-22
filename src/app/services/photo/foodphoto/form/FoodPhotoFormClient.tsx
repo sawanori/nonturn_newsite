@@ -30,10 +30,10 @@ export function FoodPhotoFormClient() {
   
   // Form state
   const [formData, setFormData] = useState<Partial<FoodOrder>>({
-    applicantType: 'individual',
     plan: 'standard',
     extraMinutes: '0',
     billingTo: 'store',
+    billingName: '', // Initialize billingName
     store: {
       name: '',
       address: { postal: '', prefecture: '', city: '', address1: '' },
@@ -110,6 +110,11 @@ export function FoodPhotoFormClient() {
       }
     } catch (error: any) {
       console.error('Validation error:', error)
+      console.error('Form data at submission:', formData)
+      // Log specific validation errors for debugging
+      if (error.errors) {
+        console.error('Validation errors detail:', error.errors)
+      }
       // Don't show detailed validation errors at confirmation step
       const message = 'フォームの入力内容に不備があります。前のステップに戻って確認してください。'
       setSubmitResult({ success: false, message })
