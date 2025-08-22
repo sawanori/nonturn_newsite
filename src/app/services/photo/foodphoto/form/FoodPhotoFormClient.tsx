@@ -1166,7 +1166,7 @@ export function FoodPhotoFormClient() {
                     <div>
                       <span className="text-white">利用規約に同意する *</span>
                       <p className="text-gray-400 text-sm mt-1">
-                        <a href="/terms" target="_blank" className="text-orange-400 hover:text-orange-300 underline">利用規約</a>および
+                        <a href="/services/photo/foodphoto/terms" target="_blank" className="text-orange-400 hover:text-orange-300 underline">利用規約</a>および
                         <a href="/privacy" target="_blank" className="text-orange-400 hover:text-orange-300 underline">プライバシーポリシー</a>に同意の上、お申し込みください。
                       </p>
                     </div>
