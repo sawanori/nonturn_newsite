@@ -362,7 +362,7 @@ const IntroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              日本フードフォトグラファー協会認定の<br />プロカメラマンによる出張撮影
+              飲食店WEBサイト運用代行基準で整える<br />集客フォト出張撮影サービス
             </motion.p>
             <motion.div 
               className="mb-6"
