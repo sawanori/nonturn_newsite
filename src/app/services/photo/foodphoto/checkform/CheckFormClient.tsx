@@ -42,25 +42,25 @@ export default function CheckFormClient() {
     const newErrors: Record<string, string> = {}
     
     if (!formData.name.trim()) {
-      newErrors.name = 'お名前を入力してください'
+      newErrors.name = 'お名前を入力してください / Please enter your name'
     }
     
     if (!formData.email.trim()) {
-      newErrors.email = 'メールアドレスを入力してください'
+      newErrors.email = 'メールアドレスを入力してください / Please enter your email'
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = '正しいメールアドレスを入力してください'
+      newErrors.email = '正しいメールアドレスを入力してください / Please enter a valid email'
     }
     
     if (!formData.company.trim()) {
-      newErrors.company = '会社名を入力してください'
+      newErrors.company = '会社名を入力してください / Please enter your company name'
     }
     
     if (!formData.check1) {
-      newErrors.check1 = '「データは2枚のみ」にチェックしてください'
+      newErrors.check1 = '「データは2枚のみ」にチェックしてください / Please check "Only 2 photos"'
     }
     
     if (!formData.check2) {
-      newErrors.check2 = '「宣材利用許可」にチェックしてください'
+      newErrors.check2 = '「宣材利用許可」にチェックしてください / Please check "Promotional use permission"'
     }
     
     setErrors(newErrors)
@@ -109,7 +109,7 @@ export default function CheckFormClient() {
       const result = await response.json()
 
       if (result.ok) {
-        setSubmitResult({ success: true, message: 'お申し込みを受け付けました。確認メールをお送りしました。' })
+        setSubmitResult({ success: true, message: 'お申し込みを受け付けました。確認メールをお送りしました。 / Application received. Confirmation email sent.' })
         // Redirect to thank you page
         const thankYouUrl = window.location.hostname.includes('foodphoto-pro.com') 
           ? '/checkform/thank-you'
@@ -117,12 +117,12 @@ export default function CheckFormClient() {
         window.location.href = thankYouUrl
         return // Don't set isSubmitting to false
       } else {
-        setSubmitResult({ success: false, message: result.error || '送信に失敗しました。再度お試しください。' })
+        setSubmitResult({ success: false, message: result.error || '送信に失敗しました。再度お試しください。 / Failed to send. Please try again.' })
         setIsSubmitting(false)
       }
     } catch (error) {
       console.error('Submission error:', error)
-      setSubmitResult({ success: false, message: 'ネットワークエラーが発生しました。再度お試しください。' })
+      setSubmitResult({ success: false, message: 'ネットワークエラーが発生しました。再度お試しください。 / Network error. Please try again.' })
       setIsSubmitting(false)
     }
   }
