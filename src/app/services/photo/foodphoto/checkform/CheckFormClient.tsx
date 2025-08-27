@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/navigation'  // Commented out - not needed as we use window.location.href
 
 // Form data type
 interface CheckFormData {
@@ -16,7 +16,7 @@ interface CheckFormData {
 }
 
 export default function CheckFormClient() {
-  const router = useRouter()
+  // const router = useRouter()  // Not needed - using window.location.href
   const [formData, setFormData] = useState<CheckFormData>({
     name: '',
     email: '',
@@ -136,35 +136,42 @@ export default function CheckFormClient() {
             animate={{ opacity: 1, y: 0 }}
             className="bg-gray-800 rounded-2xl p-8 shadow-xl"
           >
-            <h2 className="text-3xl font-bold mb-8 text-center text-white">入力内容の確認</h2>
+            <h2 className="text-3xl font-bold mb-2 text-center text-white">入力内容の確認</h2>
+            <p className="text-lg text-center text-gray-400 mb-8">Confirmation</p>
             
             <div className="space-y-6 mb-8">
               <div>
-                <label className="block text-sm font-semibold text-gray-400 mb-2">お名前</label>
+                <label className="block text-sm font-semibold text-gray-400 mb-2">お名前 / Name</label>
                 <p className="text-white text-lg">{formData.name}</p>
               </div>
               
               <div>
-                <label className="block text-sm font-semibold text-gray-400 mb-2">メールアドレス</label>
+                <label className="block text-sm font-semibold text-gray-400 mb-2">メールアドレス / Email</label>
                 <p className="text-white text-lg">{formData.email}</p>
               </div>
               
               <div>
-                <label className="block text-sm font-semibold text-gray-400 mb-2">会社名</label>
+                <label className="block text-sm font-semibold text-gray-400 mb-2">会社名 / Company</label>
                 <p className="text-white text-lg">{formData.company}</p>
               </div>
               
               <div>
-                <label className="block text-sm font-semibold text-gray-400 mb-2">確認事項</label>
+                <label className="block text-sm font-semibold text-gray-400 mb-2">確認事項 / Confirmation</label>
                 <div className="space-y-2">
-                  <p className="text-white flex items-center">
-                    <span className="text-green-400 mr-2">✓</span>
-                    データは2枚のみ
-                  </p>
-                  <p className="text-white flex items-center">
-                    <span className="text-green-400 mr-2">✓</span>
-                    当社NonTurn合同会社の宣材としてデータを利用する可能性がある
-                  </p>
+                  <div className="text-white flex items-start">
+                    <span className="text-green-400 mr-2 mt-1">✓</span>
+                    <div>
+                      <div>データは2枚のみ</div>
+                      <div className="text-sm text-gray-400">Only 2 photos will be provided</div>
+                    </div>
+                  </div>
+                  <div className="text-white flex items-start">
+                    <span className="text-green-400 mr-2 mt-1">✓</span>
+                    <div>
+                      <div>当社NonTurn合同会社の宣材としてデータを利用する可能性がある</div>
+                      <div className="text-sm text-gray-400">Photos may be used for NonTurn LLC&apos;s promotional materials</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -183,7 +190,7 @@ export default function CheckFormClient() {
                 disabled={isSubmitting}
                 className="flex-1 py-3 px-6 bg-gray-600 text-white rounded-lg hover:bg-gray-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                修正する
+                修正する / Edit
               </button>
               <button
                 onClick={handleSubmit}
@@ -196,10 +203,10 @@ export default function CheckFormClient() {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    送信中...
+                    送信中... / Sending...
                   </>
                 ) : (
-                  '送信する'
+                  '送信する / Submit'
                 )}
               </button>
             </div>
@@ -230,12 +237,13 @@ export default function CheckFormClient() {
             </Link>
           </div>
 
-          <h1 className="text-3xl font-bold mb-8 text-center text-white">無料撮影サンプル申し込み</h1>
+          <h1 className="text-3xl font-bold mb-2 text-center text-white">無料撮影サンプル申し込み</h1>
+          <p className="text-lg text-center text-gray-400 mb-8">Free Photography Sample Application</p>
           
           <form onSubmit={handleConfirm} className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm font-semibold text-gray-300 mb-2">
-                お名前 <span className="text-red-400">*</span>
+                お名前 / Name <span className="text-red-400">*</span>
               </label>
               <input
                 type="text"
@@ -244,7 +252,7 @@ export default function CheckFormClient() {
                 value={formData.name}
                 onChange={handleChange}
                 className="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
-                placeholder="山田 太郎"
+                placeholder="山田 太郎 / Taro Yamada"
               />
               {errors.name && (
                 <p className="mt-2 text-sm text-red-400">{errors.name}</p>
@@ -253,7 +261,7 @@ export default function CheckFormClient() {
 
             <div>
               <label htmlFor="email" className="block text-sm font-semibold text-gray-300 mb-2">
-                メールアドレス <span className="text-red-400">*</span>
+                メールアドレス / Email <span className="text-red-400">*</span>
               </label>
               <input
                 type="email"
@@ -271,7 +279,7 @@ export default function CheckFormClient() {
 
             <div>
               <label htmlFor="company" className="block text-sm font-semibold text-gray-300 mb-2">
-                会社名 <span className="text-red-400">*</span>
+                会社名 / Company <span className="text-red-400">*</span>
               </label>
               <input
                 type="text"
@@ -280,7 +288,7 @@ export default function CheckFormClient() {
                 value={formData.company}
                 onChange={handleChange}
                 className="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
-                placeholder="株式会社〇〇"
+                placeholder="株式会社〇〇 / Company Name"
               />
               {errors.company && (
                 <p className="mt-2 text-sm text-red-400">{errors.company}</p>
@@ -289,7 +297,7 @@ export default function CheckFormClient() {
 
             <div>
               <label className="block text-sm font-semibold text-gray-300 mb-4">
-                確認事項 <span className="text-red-400">*</span>
+                確認事項 / Confirmation <span className="text-red-400">*</span>
               </label>
               <div className="space-y-3">
                 <div>
@@ -301,7 +309,10 @@ export default function CheckFormClient() {
                       onChange={handleChange}
                       className="mt-1 mr-3 w-5 h-5 text-orange-400 bg-gray-700 border-gray-600 rounded focus:ring-orange-400"
                     />
-                    <span className="text-gray-300">データは2枚のみ</span>
+                    <div className="text-gray-300">
+                      <div>データは2枚のみ</div>
+                      <div className="text-sm text-gray-400">Only 2 photos will be provided</div>
+                    </div>
                   </label>
                   {errors.check1 && (
                     <p className="mt-1 ml-8 text-sm text-red-400">{errors.check1}</p>
@@ -316,7 +327,10 @@ export default function CheckFormClient() {
                       onChange={handleChange}
                       className="mt-1 mr-3 w-5 h-5 text-orange-400 bg-gray-700 border-gray-600 rounded focus:ring-orange-400"
                     />
-                    <span className="text-gray-300">当社NonTurn合同会社の宣材としてデータを利用する可能性がある</span>
+                    <div className="text-gray-300">
+                      <div>当社NonTurn合同会社の宣材としてデータを利用する可能性がある</div>
+                      <div className="text-sm text-gray-400">Photos may be used for NonTurn LLC&apos;s promotional materials</div>
+                    </div>
                   </label>
                   {errors.check2 && (
                     <p className="mt-1 ml-8 text-sm text-red-400">{errors.check2}</p>
@@ -329,7 +343,7 @@ export default function CheckFormClient() {
               type="submit"
               className="w-full py-4 px-6 bg-gradient-to-r from-orange-400 to-red-500 text-white text-lg font-semibold rounded-lg hover:from-red-500 hover:to-pink-500 transition-all"
             >
-              確認画面へ
+              確認画面へ / Proceed to Confirmation
             </button>
           </form>
 
@@ -338,7 +352,7 @@ export default function CheckFormClient() {
               href="/services/photo/foodphoto"
               className="text-orange-400 hover:underline"
             >
-              ← サービスページに戻る
+              ← サービスページに戻る / Back to Service Page
             </Link>
           </div>
         </motion.div>
