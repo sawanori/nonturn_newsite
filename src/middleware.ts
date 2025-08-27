@@ -32,7 +32,7 @@ export function middleware(req: NextRequest) {
     return res;
   }
 
-  // LP ドメイン: "/" と "/form" と "/form/thank-you" と "/terms" は実体へ rewrite
+  // LP ドメイン: "/" と "/form" と "/form/thank-you" と "/terms" と "/checkform" と "/checkform/thank-you" は実体へ rewrite
   if (url.pathname === "/") {
     url.pathname = "/services/photo/foodphoto";
     const res = NextResponse.rewrite(url);
@@ -51,6 +51,20 @@ export function middleware(req: NextRequest) {
     url.pathname = "/services/photo/foodphoto/form/thank-you";
     const res = NextResponse.rewrite(url);
     res.headers.set("x-mw", "rewrite:/form/thank-you -> /services/photo/foodphoto/form/thank-you");
+    return res;
+  }
+
+  if (url.pathname === "/checkform") {
+    url.pathname = "/services/photo/foodphoto/checkform";
+    const res = NextResponse.rewrite(url);
+    res.headers.set("x-mw", "rewrite:/checkform -> /services/photo/foodphoto/checkform");
+    return res;
+  }
+
+  if (url.pathname === "/checkform/thank-you") {
+    url.pathname = "/services/photo/foodphoto/checkform/thank-you";
+    const res = NextResponse.rewrite(url);
+    res.headers.set("x-mw", "rewrite:/checkform/thank-you -> /services/photo/foodphoto/checkform/thank-you");
     return res;
   }
 
