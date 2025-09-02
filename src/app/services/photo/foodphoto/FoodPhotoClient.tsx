@@ -5,6 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import FoodPhotoLoader from '@/components/loading/FoodPhotoLoader'
+import { initWebVitals, preloadCriticalResources, preventLayoutShifts } from './web-vitals'
+import { throttle, debounce, addPassiveEventListener } from './performance-utils'
+import './core-web-vitals.css'
 
 // Lazy load heavy modal component
 const SpecialOfferModal = lazy(() => import('@/components/modals/SpecialOfferModal'))
@@ -1555,8 +1558,18 @@ export default function FoodPhotoClient() {
   const [showOfferModal, setShowOfferModal] = useState(false)
   const [hasShownModal, setHasShownModal] = useState(false)
 
+  // Initialize Core Web Vitals monitoring and optimizations
   useEffect(() => {
     console.log('FoodPhotoClient mounted, isLoading:', true)
+    
+    // Initialize web vitals tracking
+    initWebVitals()
+    
+    // Preload critical resources for better LCP
+    preloadCriticalResources()
+    
+    // Prevent layout shifts for better CLS
+    preventLayoutShifts()
   }, [])
 
   // Optimized scroll trigger for modal with useCallback
