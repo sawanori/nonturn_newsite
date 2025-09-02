@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import FoodPhotoLoader from '@/components/loading/FoodPhotoLoader'
+import SpecialOfferModal from '@/components/modals/SpecialOfferModal'
 
 // Atoms
 const Button = ({ variant = 'primary', children, onClick, className = '' }: any) => {
@@ -1356,15 +1357,66 @@ const Footer = () => (
 // Main Component
 export default function FoodPhotoClient() {
   const [isLoading, setIsLoading] = useState(true)
+  const [showOfferModal, setShowOfferModal] = useState(false)
+  const [hasShownModal, setHasShownModal] = useState(false)
 
   useEffect(() => {
     console.log('FoodPhotoClient mounted, isLoading:', true)
     // Simply keep loading state true, it's already initialized as true
   }, [])
 
+  // Scroll trigger for modal
+  useEffect(() => {
+    const handleScroll = () => {
+      console.log('Scroll event:', window.scrollY, 'hasShownModal:', hasShownModal, 'isLoading:', isLoading)
+      // Show modal after scrolling 300px and only once
+      if (window.scrollY > 300 && !hasShownModal && !isLoading) {
+        console.log('Showing modal!')
+        setShowOfferModal(true)
+        setHasShownModal(true)
+        // Save to sessionStorage to prevent showing again in the same session
+        sessionStorage.setItem('foodphoto-offer-shown', 'true')
+      }
+    }
+
+    // Check if modal was already shown in this session
+    const wasShown = sessionStorage.getItem('foodphoto-offer-shown')
+    console.log('Was shown in session:', wasShown)
+    
+    // Development: Clear sessionStorage with URL parameter
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search)
+      if (urlParams.get('reset') === 'true') {
+        sessionStorage.removeItem('foodphoto-offer-shown')
+        console.log('SessionStorage cleared')
+      }
+    }
+    
+    if (wasShown && !window.location.search.includes('reset=true')) {
+      setHasShownModal(true)
+    }
+
+    // Add scroll listener after a delay to ensure page is loaded
+    const timer = setTimeout(() => {
+      console.log('Adding scroll listener')
+      window.addEventListener('scroll', handleScroll)
+      // Trigger once to check current scroll position
+      handleScroll()
+    }, 2000) // Increased delay to ensure loading is complete
+
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [hasShownModal, isLoading])
+
   const handleLoaderComplete = () => {
     console.log('Loader complete, setting isLoading to false')
     setIsLoading(false)
+  }
+
+  const handleCloseModal = () => {
+    setShowOfferModal(false)
   }
 
   return (
@@ -1394,6 +1446,12 @@ export default function FoodPhotoClient() {
         <FAQSection />
         <BottomCTA />
         <Footer />
+        
+        {/* Special Offer Modal */}
+        <SpecialOfferModal 
+          isOpen={showOfferModal} 
+          onClose={handleCloseModal} 
+        />
         
         {/* Mobile Fixed Bottom Buttons */}
         <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t border-gray-200 p-3">
