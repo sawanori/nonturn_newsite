@@ -613,7 +613,7 @@ const FeaturesSection = () => {
   )
 }
 
-const PricingSection = () => {
+const PricingSection = ({ onOpenModal }: { onOpenModal?: () => void }) => {
   const plans = [
     {
       name: 'ライトプラン',
@@ -747,9 +747,16 @@ const PricingSection = () => {
           <p className="text-gray-300 mb-4">
             その他のご要望にも柔軟に対応いたします
           </p>
-          <Link href="/contact" className="text-orange-500 hover:text-orange-600 font-semibold text-lg">
-            カスタムプランのご相談はこちら →
-          </Link>
+          <button 
+            onClick={onOpenModal}
+            className="text-orange-500 hover:text-orange-600 font-semibold text-lg transition-colors inline-flex items-center gap-2 group"
+          >
+            <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-2 py-1 rounded-full text-xs font-bold animate-pulse">
+              🎉 限定
+            </span>
+            9月申し込み特典はこちら
+            <span className="group-hover:translate-x-1 transition-transform">→</span>
+          </button>
         </motion.div>
       </div>
     </section>
@@ -1419,6 +1426,10 @@ export default function FoodPhotoClient() {
     setShowOfferModal(false)
   }
 
+  const handleOpenModal = () => {
+    setShowOfferModal(true)
+  }
+
   return (
     <>
       <AnimatePresence>
@@ -1438,7 +1449,7 @@ export default function FoodPhotoClient() {
         <IntroSection />
         <NewsSection />
         <FeaturesSection />
-        <PricingSection />
+        <PricingSection onOpenModal={handleOpenModal} />
         <ParallaxSection />
         <SamplesSection />
         <FlowSection />
