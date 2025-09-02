@@ -5,12 +5,16 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import FoodPhotoLoader from '@/components/loading/FoodPhotoLoader'
+import OptimizedImage from '@/components/ui/OptimizedImage'
+import { optimizeAltText, getOptimizedSizes, shouldPreloadImage, generateFoodPhotoMetadata } from '@/utils/image-optimization'
 import { initWebVitals, preloadCriticalResources, preventLayoutShifts } from './web-vitals'
 import { throttle, debounce, addPassiveEventListener } from './performance-utils'
 import './core-web-vitals.css'
 
 // Lazy load heavy modal component
 const SpecialOfferModal = lazy(() => import('@/components/modals/SpecialOfferModal'))
+// Lazy load Voice Search FAQ component
+const VoiceSearchFAQ = lazy(() => import('@/components/ui/VoiceSearchFAQ'))
 
 // Fallback components for Suspense
 const ComponentFallback = memo(() => (
@@ -74,13 +78,13 @@ const FeatureCard = memo(({ title, description, icon, image, onClick }: any) => 
       {/* 上部画像エリア */}
       <div className="relative h-2/3 bg-gradient-to-br from-orange-100 to-red-100 overflow-hidden">
         {image ? (
-          <Image
+          <OptimizedImage
             src={image}
-            alt={title}
-            fill
-            className="object-cover group-hover:scale-110 transition-transform duration-500"
+            alt={optimizeAltText(title, '飲食店撮影')}
+            width={400}
+            height={300}
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
             sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            loading="lazy"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
@@ -419,11 +423,12 @@ const IntroSection = memo(() => {
             key={index}
             className={`absolute inset-0 ${index === currentSlide ? 'z-10' : 'z-0'}`}
           >
-            <Image
+            <OptimizedImage
               src={image.src}
-              alt={image.alt}
-              fill
-              className="object-cover"
+              alt={optimizeAltText(image.alt, '飲食店撮影のヒーロー画像')}
+              width={1920}
+              height={1080}
+              className="absolute inset-0 w-full h-full object-cover"
               priority={index === 0}
               sizes="100vw"
               quality={index === 0 ? 95 : 75}
@@ -442,15 +447,15 @@ const IntroSection = memo(() => {
               transition={{ duration: 0.8 }}
               className="absolute inset-0 z-20"
             >
-              <Image
+              <OptimizedImage
                 src={heroImages[currentSlide].src}
-                alt={heroImages[currentSlide].alt}
-                fill
-                className="object-cover"
+                alt={optimizeAltText(heroImages[currentSlide].alt, '飲食店撮影のメインビジュアル')}
+                width={1920}
+                height={1080}
+                className="absolute inset-0 w-full h-full object-cover"
                 priority
                 sizes="100vw"
                 quality={95}
-                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
               />
               {/* Dark overlay for text readability */}
               <div className="absolute inset-0 bg-black/50" />
@@ -721,11 +726,12 @@ const FeaturesSection = memo(() => {
               >
                 {/* Modal header image */}
                 <div className="relative h-[400px] md:h-[500px]">
-                  <Image
+                  <OptimizedImage
                     src={selectedFeature.image}
-                    alt={selectedFeature.title}
-                    fill
-                    className="object-cover rounded-t-2xl"
+                    alt={optimizeAltText(selectedFeature.title, '飲食店撮影の特徴')}
+                    width={800}
+                    height={500}
+                    className="absolute inset-0 w-full h-full object-cover rounded-t-2xl"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     quality={90}
                   />
@@ -952,14 +958,14 @@ const ParallaxSection = memo(() => {
           willChange: 'transform'
         }}
       >
-        <Image
+        <OptimizedImage
           src="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2010.jpg"
-          alt="飲食店撮影 料理写真の撮影風景"
-          fill
-          className="object-cover"
+          alt={optimizeAltText('LP_food_10.jpg', '料理写真の撮影風景')}
+          width={1920}
+          height={1280}
+          className="absolute inset-0 w-full h-full object-cover"
           sizes="100vw"
           quality={85}
-          loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
       </div>
@@ -1152,13 +1158,13 @@ const SamplesSection = memo(() => {
                     whileHover={{ scale: 1.03 }}
                     onClick={() => setSelectedImage(image)}
                   >
-                    <Image 
+                    <OptimizedImage 
                       src={image.src} 
-                      alt={image.alt}
-                      fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-110"
+                      alt={optimizeAltText(image.alt, '飲食店撮影のギャラリー')}
+                      width={400}
+                      height={300}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                       sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
-                      loading="lazy"
                       quality={80}
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
@@ -1196,11 +1202,12 @@ const SamplesSection = memo(() => {
                   <span className="text-2xl md:text-3xl">✕</span>
                 </button>
                 <div className="relative w-full h-[70vh] md:h-[80vh]">
-                  <Image
+                  <OptimizedImage
                     src={selectedImage.src}
-                    alt={selectedImage.alt}
-                    fill
-                    className="object-contain"
+                    alt={optimizeAltText(selectedImage.alt, '飲食店撮影の拡大表示')}
+                    width={1920}
+                    height={1280}
+                    className="absolute inset-0 w-full h-full object-contain"
                     sizes="100vw"
                     quality={95}
                     priority
@@ -1333,6 +1340,9 @@ const FAQSection = memo(() => {
             <p className="text-gray-400 mt-4">
               飲食店撮影に関するよくあるご質問をまとめました
             </p>
+            <p className="text-sm text-yellow-400 mt-2">
+              🎤 音声検索対応 - 「OK Google」や「Hey Siri」でも検索できます
+            </p>
           </motion.div>
         </Suspense>
         
@@ -1390,6 +1400,16 @@ const FAQSection = memo(() => {
             </Suspense>
           ))}
         </div>
+        
+        {/* 音声検索最適化されたFAQセクション */}
+        <Suspense fallback={<div className="mt-12 p-8 bg-gray-800 rounded-xl animate-pulse">
+          <div className="h-12 bg-gray-700 rounded mb-4"></div>
+          <div className="h-96 bg-gray-700 rounded"></div>
+        </div>}>
+          <div className="mt-12">
+            <VoiceSearchFAQ className="mt-8" />
+          </div>
+        </Suspense>
       </div>
     </section>
   )

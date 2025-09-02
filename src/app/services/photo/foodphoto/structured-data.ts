@@ -1,6 +1,8 @@
 // Structured Data for foodphoto-pro.com
 // Schema.org JSON-LD implementation for SEO
 
+import { generateVoiceSearchSchema, generateSpeakableSchema } from './voice-search-faq'
+
 export const getStructuredData = () => {
   const domain = 'https://foodphoto-pro.com'
   
@@ -292,6 +294,12 @@ export const getStructuredData = () => {
     }
   }
 
+  // 8. Voice Search FAQs Schema
+  const voiceSearchSchema = generateVoiceSearchSchema()
+  
+  // 9. Speakable Schema for voice assistants
+  const speakableSchema = generateSpeakableSchema()
+
   return [
     localBusinessSchema,
     serviceSchema,
@@ -299,7 +307,9 @@ export const getStructuredData = () => {
     breadcrumbSchema,
     websiteSchema,
     imageObjectSchema,
-    specialOfferSchema
+    specialOfferSchema,
+    voiceSearchSchema,
+    speakableSchema
   ]
 }
 
