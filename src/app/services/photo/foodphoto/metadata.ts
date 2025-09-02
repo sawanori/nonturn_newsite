@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 export const metadata: Metadata = {
   title: "飲食店撮影 | プロカメラマンによる料理・店舗撮影 - PhotoStudio",
@@ -28,6 +28,9 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://foodphoto-pro.com/",
+    types: {
+      "application/rss+xml": "https://foodphoto-pro.com/rss",
+    },
   },
   robots: {
     index: true,
@@ -40,16 +43,17 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-  },
   other: {
     "format-detection": "telephone=no",
     "mobile-web-app-capable": "yes",
     "apple-mobile-web-app-capable": "yes",
     "apple-mobile-web-app-status-bar-style": "black-translucent",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
 };

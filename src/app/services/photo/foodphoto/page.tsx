@@ -1,7 +1,7 @@
 import FoodPhotoClient from './FoodPhotoClient'
 import Script from 'next/script'
 import { getAllStructuredData } from './structured-data'
-export { metadata } from './metadata'
+export { metadata, viewport } from './metadata'
 
 export default function FoodPhotoPage() {
   const structuredData = getAllStructuredData()
