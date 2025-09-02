@@ -40,7 +40,16 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
   other: {
     "format-detection": "telephone=no",
+    "mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "black-translucent",
   },
 };

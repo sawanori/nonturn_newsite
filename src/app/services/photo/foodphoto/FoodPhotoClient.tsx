@@ -141,6 +141,8 @@ CaseCard.displayName = 'CaseCard'
 
 // Optimized Header component with useCallback for scroll handler
 const Header = memo(() => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  
   const handleSmoothScroll = useCallback((e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault()
     const element = document.querySelector(targetId)
@@ -153,6 +155,9 @@ const Header = memo(() => {
         top: offsetPosition,
         behavior: 'smooth'
       })
+      
+      // Close mobile menu after navigation
+      setMobileMenuOpen(false)
     }
   }, [])
 
@@ -170,6 +175,17 @@ const Header = memo(() => {
           />
           <span className="text-base md:text-xl font-bold text-white">飲食店撮影PhotoStudio</span>
         </Link>
+        
+        {/* Mobile menu button */}
+        <button 
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="md:hidden p-2 text-white"
+          aria-label="メニューを開く"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={mobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+          </svg>
+        </button>
         
         <nav className="hidden md:flex items-center gap-6">
           <a 
@@ -229,6 +245,75 @@ const Header = memo(() => {
           </Link>
         </div>
       </div>
+      
+      {/* Mobile Navigation Menu */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-gray-900 border-t border-gray-700"
+          >
+            <nav className="flex flex-col p-4 space-y-3">
+              <a 
+                href="#features" 
+                onClick={(e) => handleSmoothScroll(e, '#features')}
+                className="text-gray-300 hover:text-orange-500 py-2 transition-colors"
+              >
+                サービスの特徴
+              </a>
+              <a 
+                href="#pricing"
+                onClick={(e) => handleSmoothScroll(e, '#pricing')}
+                className="text-gray-300 hover:text-orange-500 py-2 transition-colors"
+              >
+                料金
+              </a>
+              <a 
+                href="#samples"
+                onClick={(e) => handleSmoothScroll(e, '#samples')}
+                className="text-gray-300 hover:text-orange-500 py-2 transition-colors"
+              >
+                撮影事例
+              </a>
+              <a 
+                href="#flow"
+                onClick={(e) => handleSmoothScroll(e, '#flow')}
+                className="text-gray-300 hover:text-orange-500 py-2 transition-colors"
+              >
+                撮影の流れ
+              </a>
+              <a 
+                href="#cases"
+                onClick={(e) => handleSmoothScroll(e, '#cases')}
+                className="text-gray-300 hover:text-orange-500 py-2 transition-colors"
+              >
+                導入事例
+              </a>
+              <a 
+                href="#faq"
+                onClick={(e) => handleSmoothScroll(e, '#faq')}
+                className="text-gray-300 hover:text-orange-500 py-2 transition-colors"
+              >
+                よくあるご質問
+              </a>
+              <div className="pt-4 space-y-3 border-t border-gray-700">
+                <Link href="/services/photo/foodphoto/form" className="block">
+                  <button className="w-full bg-gradient-to-r from-orange-400 to-red-500 text-white py-3 px-4 rounded-lg font-bold">
+                    申し込む
+                  </button>
+                </Link>
+                <Link href="/contact" className="block">
+                  <button className="w-full bg-transparent border-2 border-orange-400 text-orange-400 py-3 px-4 rounded-lg font-bold">
+                    問い合わせる
+                  </button>
+                </Link>
+              </div>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   )
 })
@@ -743,7 +828,7 @@ const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
             </p>
           </motion.div>
         </Suspense>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
           {plans.map((plan, index) => (
             <Suspense key={index} fallback={<ComponentFallback />}>
               <motion.div
@@ -751,9 +836,9 @@ const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2 }}
-                className={`rounded-3xl p-8 ${
+                className={`rounded-2xl md:rounded-3xl p-6 md:p-8 ${
                   plan.isPopular 
-                    ? 'bg-gradient-to-br from-orange-50 via-white to-red-50 border-2 border-orange-400 shadow-2xl scale-105' 
+                    ? 'bg-gradient-to-br from-orange-50 via-white to-red-50 border-2 border-orange-400 shadow-2xl md:scale-105' 
                     : 'bg-white border border-gray-200 shadow-xl'
                 } hover:shadow-2xl transition-all relative`}
                 whileHover={{ y: -10 }}
@@ -1052,7 +1137,7 @@ const SamplesSection = memo(() => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+                className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4"
               >
                 {filteredImages.map((image, index) => (
                   <motion.div
@@ -1097,16 +1182,17 @@ const SamplesSection = memo(() => {
                 initial={{ scale: 0.8 }}
                 animate={{ scale: 1 }}
                 exit={{ scale: 0.8 }}
-                className="relative max-w-5xl w-full max-h-[90vh]"
+                className="relative max-w-5xl w-full max-h-[90vh] mx-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 <button
                   onClick={() => setSelectedImage(null)}
-                  className="absolute -top-12 right-0 text-white hover:text-orange-400 transition-colors"
+                  className="absolute -top-10 md:-top-12 right-2 md:right-0 text-white hover:text-orange-400 transition-colors z-10 p-2"
+                  aria-label="画像を閉じる"
                 >
-                  <span className="text-3xl">×</span>
+                  <span className="text-2xl md:text-3xl">✕</span>
                 </button>
-                <div className="relative w-full h-[80vh]">
+                <div className="relative w-full h-[70vh] md:h-[80vh]">
                   <Image
                     src={selectedImage.src}
                     alt={selectedImage.alt}
@@ -1264,11 +1350,13 @@ const FAQSection = memo(() => {
               >
                 <button
                   onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-700 transition-colors"
+                  className="w-full px-4 md:px-6 py-5 md:py-4 text-left flex items-center justify-between hover:bg-gray-700 transition-colors min-h-[60px]"
+                  aria-expanded={openIndex === index}
+                  aria-controls={`faq-answer-${index}`}
                 >
-                  <span className="text-white font-medium">{faq.question}</span>
+                  <span className="text-sm md:text-base text-white font-medium pr-3">{faq.question}</span>
                   <svg
-                    className={`w-5 h-5 text-orange-400 transition-transform ${
+                    className={`w-5 h-5 md:w-6 md:h-6 text-orange-400 transition-transform flex-shrink-0 ${
                       openIndex === index ? 'rotate-180' : ''
                     }`}
                     fill="none"
