@@ -1,14 +1,31 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense, lazy, memo, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import FoodPhotoLoader from '@/components/loading/FoodPhotoLoader'
-import SpecialOfferModal from '@/components/modals/SpecialOfferModal'
 
-// Atoms
-const Button = ({ variant = 'primary', children, onClick, className = '' }: any) => {
+// Lazy load heavy modal component
+const SpecialOfferModal = lazy(() => import('@/components/modals/SpecialOfferModal'))
+
+// Fallback components for Suspense
+const ComponentFallback = memo(() => (
+  <div className="h-32 flex items-center justify-center">
+    <div className="w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
+  </div>
+))
+ComponentFallback.displayName = 'ComponentFallback'
+
+const SectionFallback = memo(() => (
+  <div className="h-64 flex items-center justify-center" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
+    <div className="w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
+  </div>
+))
+SectionFallback.displayName = 'SectionFallback'
+
+// Optimized atomic components with React.memo
+const Button = memo(({ variant = 'primary', children, onClick, className = '' }: any) => {
   const baseClass = 'px-8 py-4 font-bold text-lg rounded-2xl transition-all duration-300'
   const variants: Record<string, string> = {
     primary: 'bg-gradient-to-r from-orange-400 to-red-500 text-white hover:from-red-500 hover:to-pink-500',
@@ -25,97 +42,110 @@ const Button = ({ variant = 'primary', children, onClick, className = '' }: any)
       {children}
     </motion.button>
   )
-}
+})
+Button.displayName = 'Button'
 
-const SectionTitle = ({ children }: any) => (
+const SectionTitle = memo(({ children }: any) => (
   <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
     {children}
   </h2>
-)
+))
+SectionTitle.displayName = 'SectionTitle'
 
-const SubTitle = ({ children }: any) => (
+const SubTitle = memo(({ children }: any) => (
   <h3 className="text-2xl md:text-3xl font-semibold mb-3 text-gray-200">
     {children}
   </h3>
-)
+))
+SubTitle.displayName = 'SubTitle'
 
-// Molecules
-const FeatureCard = ({ title, description, icon, image, onClick }: any) => (
-  <motion.div
-    className="aspect-square bg-white shadow-lg hover:shadow-2xl transition-all cursor-pointer overflow-hidden group"
-    whileHover={{ scale: 1.02 }}
-    whileTap={{ scale: 0.98 }}
-    onClick={onClick}
-  >
-    {/* 上部画像エリア */}
-    <div className="relative h-2/3 bg-gradient-to-br from-orange-100 to-red-100 overflow-hidden">
-      {image ? (
-        <Image
-          src={image}
-          alt={title}
-          fill
-          className="object-cover group-hover:scale-110 transition-transform duration-500"
-        />
-      ) : (
-        <div className="w-full h-full flex items-center justify-center">
-          <span className="text-6xl opacity-50">{icon}</span>
-        </div>
-      )}
-      {/* オーバーレイ */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-    </div>
-    
-    {/* 下部テキストエリア */}
-    <div className="h-1/3 p-6 flex flex-col justify-center">
-      <h3 className="text-xl font-bold mb-2 text-gray-800 group-hover:text-orange-500 transition-colors">
-        {title}
-      </h3>
-      <p className="text-base text-gray-700 line-clamp-2">{description}</p>
-      <p className="text-sm text-orange-500 mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
-        クリックして詳細を見る →
-      </p>
-    </div>
-  </motion.div>
-)
+// Optimized molecular components with React.memo
+const FeatureCard = memo(({ title, description, icon, image, onClick }: any) => (
+  <Suspense fallback={<ComponentFallback />}>
+    <motion.div
+      className="aspect-square bg-white shadow-lg hover:shadow-2xl transition-all cursor-pointer overflow-hidden group"
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      onClick={onClick}
+    >
+      {/* 上部画像エリア */}
+      <div className="relative h-2/3 bg-gradient-to-br from-orange-100 to-red-100 overflow-hidden">
+        {image ? (
+          <Image
+            src={image}
+            alt={title}
+            fill
+            className="object-cover group-hover:scale-110 transition-transform duration-500"
+            sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            loading="lazy"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <span className="text-6xl opacity-50">{icon}</span>
+          </div>
+        )}
+        {/* オーバーレイ */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      </div>
+      
+      {/* 下部テキストエリア */}
+      <div className="h-1/3 p-6 flex flex-col justify-center">
+        <h3 className="text-xl font-bold mb-2 text-gray-800 group-hover:text-orange-500 transition-colors">
+          {title}
+        </h3>
+        <p className="text-base text-gray-700 line-clamp-2">{description}</p>
+        <p className="text-sm text-orange-500 mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
+          クリックして詳細を見る →
+        </p>
+      </div>
+    </motion.div>
+  </Suspense>
+))
+FeatureCard.displayName = 'FeatureCard'
 
+const FlowStep = memo(({ number, title, description }: any) => (
+  <Suspense fallback={<ComponentFallback />}>
+    <motion.div
+      className="rounded-2xl p-6 shadow-lg relative" style={{ backgroundColor: 'rgb(77, 76, 76)' }}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: number * 0.1 }}
+    >
+      <div className="absolute -top-4 -left-4 w-12 h-12 bg-gradient-to-r from-orange-400 to-red-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
+        {number}
+      </div>
+      <h3 className="text-xl font-bold text-white mb-2 mt-2">{title}</h3>
+      <p className="text-gray-300">{description}</p>
+    </motion.div>
+  </Suspense>
+))
+FlowStep.displayName = 'FlowStep'
 
-const FlowStep = ({ number, title, description }: any) => (
-  <motion.div
-    className="rounded-2xl p-6 shadow-lg relative" style={{ backgroundColor: 'rgb(77, 76, 76)' }}
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.6, delay: number * 0.1 }}
-  >
-    <div className="absolute -top-4 -left-4 w-12 h-12 bg-gradient-to-r from-orange-400 to-red-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
-      {number}
-    </div>
-    <h3 className="text-xl font-bold text-white mb-2 mt-2">{title}</h3>
-    <p className="text-gray-300">{description}</p>
-  </motion.div>
-)
+const CaseCard = memo(({ title, company, role, name, comment }: any) => (
+  <Suspense fallback={<ComponentFallback />}>
+    <motion.article
+      className="rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow" style={{ backgroundColor: 'rgb(77, 76, 76)' }}
+      whileHover={{ y: -5 }}
+    >
+      <h3 className="text-xl font-bold text-white mb-3">{title}</h3>
+      <p className="text-gray-300 mb-4 italic">&ldquo;{comment}&rdquo;</p>
+      <div className="text-sm text-gray-500">
+        <p>{company}</p>
+        <p>{role} {name}様</p>
+      </div>
+    </motion.article>
+  </Suspense>
+))
+CaseCard.displayName = 'CaseCard'
 
-const CaseCard = ({ title, company, role, name, comment }: any) => (
-  <motion.article
-    className="rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow" style={{ backgroundColor: 'rgb(77, 76, 76)' }}
-    whileHover={{ y: -5 }}
-  >
-    <h3 className="text-xl font-bold text-white mb-3">{title}</h3>
-    <p className="text-gray-300 mb-4 italic">&ldquo;{comment}&rdquo;</p>
-    <div className="text-sm text-gray-500">
-      <p>{company}</p>
-      <p>{role} {name}様</p>
-    </div>
-  </motion.article>
-)
-
-// Organisms
-const Header = () => {
-  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+// Optimized Header component with useCallback for scroll handler
+const Header = memo(() => {
+  const handleSmoothScroll = useCallback((e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault()
     const element = document.querySelector(targetId)
     if (element) {
-      const offset = 80 // Header height offset
+      const offset = 80
       const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
       const offsetPosition = elementPosition - offset
 
@@ -124,7 +154,7 @@ const Header = () => {
         behavior: 'smooth'
       })
     }
-  }
+  }, [])
 
   return (
     <header className="sticky top-0 z-50 shadow-sm" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
@@ -136,6 +166,7 @@ const Header = () => {
             width={40}
             height={40}
             className="w-8 h-8 md:w-10 md:h-10"
+            priority
           />
           <span className="text-base md:text-xl font-bold text-white">飲食店撮影PhotoStudio</span>
         </Link>
@@ -200,9 +231,11 @@ const Header = () => {
       </div>
     </header>
   )
-}
+})
+Header.displayName = 'Header'
 
-const IntroSection = () => {
+// Optimized IntroSection with priority image loading and better performance
+const IntroSection = memo(() => {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
   
@@ -261,29 +294,30 @@ const IntroSection = () => {
   // Select images based on screen size
   const heroImages = isMobile ? mobileImages : pcImages
   
-  // Detect screen size
-  React.useEffect(() => {
+  // Optimized screen size detection
+  useEffect(() => {
     const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 1024) // Use lg breakpoint (1024px)
+      setIsMobile(window.innerWidth < 1024)
     }
     
     checkScreenSize()
-    window.addEventListener('resize', checkScreenSize)
+    const handleResize = () => checkScreenSize()
+    window.addEventListener('resize', handleResize)
     
-    return () => window.removeEventListener('resize', checkScreenSize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  // Auto-advance slideshow
-  React.useEffect(() => {
+  // Auto-advance slideshow with cleanup
+  useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroImages.length)
-    }, 4000) // Change slide every 4 seconds
+    }, 4000)
     
     return () => clearInterval(interval)
   }, [heroImages.length])
   
   // Reset slide when switching between mobile and PC
-  React.useEffect(() => {
+  useEffect(() => {
     setCurrentSlide(0)
   }, [isMobile])
 
@@ -291,7 +325,7 @@ const IntroSection = () => {
     <section className="relative h-screen overflow-hidden bg-black">
       {/* Background Slideshow */}
       <div className="absolute inset-0">
-        {/* Preload all images in background */}
+        {/* Preload all images in background with optimized quality */}
         {heroImages.map((image, index) => (
           <div
             key={index}
@@ -304,33 +338,37 @@ const IntroSection = () => {
               className="object-cover"
               priority={index === 0}
               sizes="100vw"
+              quality={index === 0 ? 95 : 75}
             />
           </div>
         ))}
         
         {/* Animated overlay for transition effect */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentSlide}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8 }}
-            className="absolute inset-0 z-20"
-          >
-            <Image
-              src={heroImages[currentSlide].src}
-              alt={heroImages[currentSlide].alt}
-              fill
-              className="object-cover"
-              priority
-              sizes="100vw"
-              style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-            />
-            {/* Dark overlay for text readability */}
-            <div className="absolute inset-0 bg-black/50" />
-          </motion.div>
-        </AnimatePresence>
+        <Suspense fallback={<div className="absolute inset-0 bg-black/50" />}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSlide}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.8 }}
+              className="absolute inset-0 z-20"
+            >
+              <Image
+                src={heroImages[currentSlide].src}
+                alt={heroImages[currentSlide].alt}
+                fill
+                className="object-cover"
+                priority
+                sizes="100vw"
+                quality={95}
+                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+              />
+              {/* Dark overlay for text readability */}
+              <div className="absolute inset-0 bg-black/50" />
+            </motion.div>
+          </AnimatePresence>
+        </Suspense>
       </div>
 
       {/* Slide indicators */}
@@ -352,144 +390,158 @@ const IntroSection = () => {
       {/* Content overlay */}
       <div className="relative z-30 h-full flex items-center justify-center">
         <div className="max-w-5xl mx-auto px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <motion.p 
-              className="text-white/90 font-semibold mb-4 text-lg"
-              initial={{ opacity: 0, y: 20 }}
+          <Suspense fallback={
+            <div className="text-center">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6">飲食店撮影PhotoStudio</h1>
+            </div>
+          }>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+              transition={{ duration: 0.8 }}
             >
-              飲食店WEBサイト運用代行基準で整える<br />集客フォト出張撮影サービス
-            </motion.p>
-            <motion.div 
-              className="mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-            >
-              <div className="flex items-center justify-center gap-4 md:gap-6 mb-4">
-                <Image
-                  src="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/cameralogo.svg"
-                  alt="飲食店撮影PhotoStudioロゴ - プロの料理撮影サービス"
-                  width={80}
-                  height={80}
-                  className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24"
-                />
-                <div className="relative">
-                  <h1 className="relative inline-block">
-                    {/* SEO用の完全なH1テキスト（スクリーンリーダー用） */}
-                    <span className="sr-only">飲食店撮影PhotoStudio｜プロカメラマンによる料理・店舗撮影サービス</span>
-                    {/* 視覚的な表示用（SEOには影響しない） */}
-                    <span 
-                      className="block text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-tight"
-                      style={{ 
-                        fontFamily: '"Playfair Display", "Noto Serif JP", serif',
-                        letterSpacing: '-0.02em'
-                      }}
-                      aria-hidden="true"
-                    >
-                      飲食店撮影
-                    </span>
-                    <span 
-                      className="absolute -bottom-1 md:-bottom-2 right-0 text-xl md:text-2xl lg:text-3xl font-light italic opacity-90 tracking-[0.2em]"
-                      style={{ 
-                        fontFamily: '"Dancing Script", "Caveat", cursive',
-                        background: 'linear-gradient(135deg, #F25C00 0%, #F9A603 100%)',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
-                        backgroundClip: 'text',
-                        transform: 'rotate(-2deg)',
-                        transformOrigin: 'bottom right'
-                      }}
-                      aria-hidden="true"
-                    >
-                      PhotoStudio
-                    </span>
-                  </h1>
+              <motion.p 
+                className="text-white/90 font-semibold mb-4 text-lg"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                飲食店WEBサイト運用代行基準で整える<br />集客フォト出張撮影サービス
+              </motion.p>
+              <motion.div 
+                className="mb-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+              >
+                <div className="flex items-center justify-center gap-4 md:gap-6 mb-4">
+                  <Image
+                    src="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/cameralogo.svg"
+                    alt="飲食店撮影PhotoStudioロゴ - プロの料理撮影サービス"
+                    width={80}
+                    height={80}
+                    className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24"
+                    priority
+                  />
+                  <div className="relative">
+                    <h1 className="relative inline-block">
+                      {/* SEO用の完全なH1テキスト（スクリーンリーダー用） */}
+                      <span className="sr-only">飲食店撮影PhotoStudio｜プロカメラマンによる料理・店舗撮影サービス</span>
+                      {/* 視覚的な表示用（SEOには影響しない） */}
+                      <span 
+                        className="block text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-tight"
+                        style={{ 
+                          fontFamily: '"Playfair Display", "Noto Serif JP", serif',
+                          letterSpacing: '-0.02em'
+                        }}
+                        aria-hidden="true"
+                      >
+                        飲食店撮影
+                      </span>
+                      <span 
+                        className="absolute -bottom-1 md:-bottom-2 right-0 text-xl md:text-2xl lg:text-3xl font-light italic opacity-90 tracking-[0.2em]"
+                        style={{ 
+                          fontFamily: '"Dancing Script", "Caveat", cursive',
+                          background: 'linear-gradient(135deg, #F25C00 0%, #F9A603 100%)',
+                          WebkitBackgroundClip: 'text',
+                          WebkitTextFillColor: 'transparent',
+                          backgroundClip: 'text',
+                          transform: 'rotate(-2deg)',
+                          transformOrigin: 'bottom right'
+                        }}
+                        aria-hidden="true"
+                      >
+                        PhotoStudio
+                      </span>
+                    </h1>
+                  </div>
                 </div>
-              </div>
-              <p className="text-xl md:text-2xl font-light text-white mt-2 text-center">
-                飲食店専門出張撮影サービス
-              </p>
+                <p className="text-xl md:text-2xl font-light text-white mt-2 text-center">
+                  飲食店専門出張撮影サービス
+                </p>
+              </motion.div>
+              <motion.div 
+                className="flex flex-col items-center gap-3 mb-8 text-sm md:text-lg text-white/90"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                <span className="flex items-center justify-center gap-2 bg-black/30 px-4 md:px-6 py-2 rounded-full w-full md:min-w-[600px] max-w-[600px]">
+                  <span className="text-green-400">✓</span>
+                  日本フードフォトグラファー協会認定カメラマンが撮影
+                </span>
+                <span className="flex items-center justify-center gap-2 bg-black/30 px-4 md:px-6 py-2 rounded-full w-full md:min-w-[600px] max-w-[600px]">
+                  <span className="text-green-400">✓</span>
+                  撮影枚数時間内無制限(一部プラン対象外)
+                </span>
+                <span className="flex items-center justify-center gap-2 bg-black/30 px-4 md:px-6 py-2 rounded-full w-full md:min-w-[600px] max-w-[600px]">
+                  <span className="text-green-400">✓</span>
+                  飲食媒体で効果の出やすい撮影素材
+                </span>
+              </motion.div>
+              <motion.div 
+                className="flex flex-col sm:flex-row gap-4 justify-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+              >
+                <Link href="/services/photo/foodphoto/form">
+                  <Button variant="primary" className="min-w-[200px] px-6 py-3">
+                    今すぐ申し込む
+                  </Button>
+                </Link>
+                <Link href="/contact">
+                  <Button variant="secondary" className="min-w-[200px] px-6 py-3 !border-white !text-white hover:!bg-white hover:!text-orange-500">
+                    まずは問い合わせる
+                  </Button>
+                </Link>
+              </motion.div>
             </motion.div>
-            <motion.div 
-              className="flex flex-col items-center gap-3 mb-8 text-sm md:text-lg text-white/90"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-            >
-              <span className="flex items-center justify-center gap-2 bg-black/30 px-4 md:px-6 py-2 rounded-full w-full md:min-w-[600px] max-w-[600px]">
-                <span className="text-green-400">✓</span>
-                日本フードフォトグラファー協会認定カメラマンが撮影
-              </span>
-              <span className="flex items-center justify-center gap-2 bg-black/30 px-4 md:px-6 py-2 rounded-full w-full md:min-w-[600px] max-w-[600px]">
-                <span className="text-green-400">✓</span>
-                撮影枚数時間内無制限(一部プラン対象外)
-              </span>
-              <span className="flex items-center justify-center gap-2 bg-black/30 px-4 md:px-6 py-2 rounded-full w-full md:min-w-[600px] max-w-[600px]">
-                <span className="text-green-400">✓</span>
-                飲食媒体で効果の出やすい撮影素材
-              </span>
-            </motion.div>
-            <motion.div 
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-            >
-              <Link href="/services/photo/foodphoto/form">
-                <Button variant="primary" className="min-w-[200px] px-6 py-3">
-                  今すぐ申し込む
-                </Button>
-              </Link>
-              <Link href="/contact">
-                <Button variant="secondary" className="min-w-[200px] px-6 py-3 !border-white !text-white hover:!bg-white hover:!text-orange-500">
-                  まずは問い合わせる
-                </Button>
-              </Link>
-            </motion.div>
-          </motion.div>
+          </Suspense>
         </div>
       </div>
 
       {/* Scroll indicator */}
-      <motion.div 
-        className="absolute bottom-20 left-1/2 transform -translate-x-1/2 text-white/70 z-30"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 1.5, repeat: Infinity }}
-      >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-        </svg>
-      </motion.div>
+      <Suspense fallback={null}>
+        <motion.div 
+          className="absolute bottom-20 left-1/2 transform -translate-x-1/2 text-white/70 z-30"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </motion.div>
+      </Suspense>
     </section>
   )
-}
+})
+IntroSection.displayName = 'IntroSection'
 
-const NewsSection = () => (
+const NewsSection = memo(() => (
   <section className="py-12" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
     <div className="max-w-5xl mx-auto px-4">
       <h2 className="text-sm font-semibold text-white mb-4">お知らせ</h2>
       <div className="space-y-3">
-        <motion.div
-          className="flex flex-col md:flex-row md:items-center gap-3 p-4 rounded-lg" style={{ backgroundColor: 'rgb(77, 76, 76)' }}
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-        >
-          <span className="text-sm text-gray-300">2025.8.19</span>
-          <span className="text-white">飲食店撮影PhotoStudioサイトオープン</span>
-        </motion.div>
+        <Suspense fallback={<ComponentFallback />}>
+          <motion.div
+            className="flex flex-col md:flex-row md:items-center gap-3 p-4 rounded-lg" style={{ backgroundColor: 'rgb(77, 76, 76)' }}
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <span className="text-sm text-gray-300">2025.8.19</span>
+            <span className="text-white">飲食店撮影PhotoStudioサイトオープン</span>
+          </motion.div>
+        </Suspense>
       </div>
     </div>
   </section>
-)
+))
+NewsSection.displayName = 'NewsSection'
 
-const FeaturesSection = () => {
+// Lazy loaded FeaturesSection with proper optimization
+const FeaturesSection = memo(() => {
   const [selectedFeature, setSelectedFeature] = useState<any>(null)
   
   const features = [
@@ -527,93 +579,99 @@ const FeaturesSection = () => {
     <>
       <section id="features" className="py-16" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
         <div className="max-w-5xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <SectionTitle>
-              <span className="inline md:hidden">飲食店撮影<br />PhotoStudioの特徴</span>
-              <span className="hidden md:inline">飲食店撮影PhotoStudioの特徴</span>
-            </SectionTitle>
-          </motion.div>
+          <Suspense fallback={<SectionFallback />}>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <SectionTitle>
+                <span className="inline md:hidden">飲食店撮影<br />PhotoStudioの特徴</span>
+                <span className="hidden md:inline">飲食店撮影PhotoStudioの特徴</span>
+              </SectionTitle>
+            </motion.div>
+          </Suspense>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <FeatureCard 
-                  {...feature} 
-                  onClick={() => setSelectedFeature(feature)}
-                />
-              </motion.div>
+              <Suspense key={index} fallback={<ComponentFallback />}>
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <FeatureCard 
+                    {...feature} 
+                    onClick={() => setSelectedFeature(feature)}
+                  />
+                </motion.div>
+              </Suspense>
             ))}
           </div>
         </div>
       </section>
 
-      {/* モーダルウィンドウ */}
-      <AnimatePresence>
-        {selectedFeature && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70"
-            onClick={() => setSelectedFeature(null)}
-          >
+      {/* Modal Window */}
+      <Suspense fallback={null}>
+        <AnimatePresence>
+          {selectedFeature && (
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white rounded-2xl max-w-3xl w-full overflow-y-auto"
-              style={{ maxHeight: '95vh' }}
-              onClick={(e) => e.stopPropagation()}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70"
+              onClick={() => setSelectedFeature(null)}
             >
-              {/* モーダルヘッダー画像 */}
-              <div className="relative h-[400px] md:h-[500px]">
-                <Image
-                  src={selectedFeature.image}
-                  alt={selectedFeature.title}
-                  fill
-                  className="object-cover rounded-t-2xl"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  priority
-                />
-                <button
-                  onClick={() => setSelectedFeature(null)}
-                  className="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors"
-                >
-                  <span className="text-2xl">×</span>
-                </button>
-              </div>
-              
-              {/* モーダルコンテンツ */}
-              <div className="p-8">
-                <div className="flex items-center gap-4 mb-4">
-                  <span className="text-4xl">{selectedFeature.icon}</span>
-                  <h2 className="text-3xl font-bold text-gray-800">
-                    {selectedFeature.title}
-                  </h2>
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                className="bg-white rounded-2xl max-w-3xl w-full overflow-y-auto"
+                style={{ maxHeight: '95vh' }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Modal header image */}
+                <div className="relative h-[400px] md:h-[500px]">
+                  <Image
+                    src={selectedFeature.image}
+                    alt={selectedFeature.title}
+                    fill
+                    className="object-cover rounded-t-2xl"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    quality={90}
+                  />
+                  <button
+                    onClick={() => setSelectedFeature(null)}
+                    className="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors"
+                  >
+                    <span className="text-2xl">×</span>
+                  </button>
                 </div>
-                <p className="text-gray-700 leading-relaxed">
-                  {selectedFeature.fullDescription}
-                </p>
-              </div>
+                
+                {/* Modal content */}
+                <div className="p-8">
+                  <div className="flex items-center gap-4 mb-4">
+                    <span className="text-4xl">{selectedFeature.icon}</span>
+                    <h2 className="text-3xl font-bold text-gray-800">
+                      {selectedFeature.title}
+                    </h2>
+                  </div>
+                  <p className="text-gray-700 leading-relaxed">
+                    {selectedFeature.fullDescription}
+                  </p>
+                </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>
+      </Suspense>
     </>
   )
-}
+})
+FeaturesSection.displayName = 'FeaturesSection'
 
-const PricingSection = ({ onOpenModal }: { onOpenModal?: () => void }) => {
+const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
   const plans = [
     {
       name: 'ライトプラン',
@@ -671,103 +729,110 @@ const PricingSection = ({ onOpenModal }: { onOpenModal?: () => void }) => {
   return (
     <section id="pricing" className="py-16" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
       <div className="max-w-5xl mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <SectionTitle>料金プラン</SectionTitle>
-          <p className="text-gray-300 text-lg">
-            <span className="inline md:hidden">シンプルで分かりやすい3つのプラン。<br />全て込みの明朗会計です。</span>
-            <span className="hidden md:inline">シンプルで分かりやすい3つのプラン。全て込みの明朗会計です。</span>
-          </p>
-        </motion.div>
+        <Suspense fallback={<SectionFallback />}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <SectionTitle>料金プラン</SectionTitle>
+            <p className="text-gray-300 text-lg">
+              <span className="inline md:hidden">シンプルで分かりやすい3つのプラン。<br />全て込みの明朗会計です。</span>
+              <span className="hidden md:inline">シンプルで分かりやすい3つのプラン。全て込みの明朗会計です。</span>
+            </p>
+          </motion.div>
+        </Suspense>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {plans.map((plan, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.2 }}
-              className={`rounded-3xl p-8 ${
-                plan.isPopular 
-                  ? 'bg-gradient-to-br from-orange-50 via-white to-red-50 border-2 border-orange-400 shadow-2xl scale-105' 
-                  : 'bg-white border border-gray-200 shadow-xl'
-              } hover:shadow-2xl transition-all relative`}
-              whileHover={{ y: -10 }}
-            >
-              {plan.isPopular && (
-                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <div className="bg-gradient-to-r from-orange-400 to-red-500 text-white text-sm font-bold px-4 py-2 rounded-full">
-                    🌟 人気No.1
+            <Suspense key={index} fallback={<ComponentFallback />}>
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.2 }}
+                className={`rounded-3xl p-8 ${
+                  plan.isPopular 
+                    ? 'bg-gradient-to-br from-orange-50 via-white to-red-50 border-2 border-orange-400 shadow-2xl scale-105' 
+                    : 'bg-white border border-gray-200 shadow-xl'
+                } hover:shadow-2xl transition-all relative`}
+                whileHover={{ y: -10 }}
+              >
+                {plan.isPopular && (
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                    <div className="bg-gradient-to-r from-orange-400 to-red-500 text-white text-sm font-bold px-4 py-2 rounded-full">
+                      🌟 人気No.1
+                    </div>
                   </div>
+                )}
+                <h3 className="text-xl md:text-2xl lg:text-2xl font-bold text-black mb-2 mt-2">{plan.name}</h3>
+                <div className="flex items-baseline mb-4">
+                  <span className="text-3xl md:text-4xl lg:text-5xl font-bold text-orange-500">¥{plan.price.toLocaleString()}</span>
+                  <span className="text-sm md:text-base text-gray-600 ml-2">/ {plan.time}H</span>
                 </div>
-              )}
-              <h3 className="text-xl md:text-2xl lg:text-2xl font-bold text-black mb-2 mt-2">{plan.name}</h3>
-              <div className="flex items-baseline mb-4">
-                <span className="text-3xl md:text-4xl lg:text-5xl font-bold text-orange-500">¥{plan.price.toLocaleString()}</span>
-                <span className="text-sm md:text-base text-gray-600 ml-2">/ {plan.time}H</span>
-              </div>
-              <div className="mb-6">
-                <p className="text-base md:text-lg lg:text-xl text-gray-700 font-semibold">
-                  {plan.cuts}
-                </p>
-                <p className="text-xs md:text-sm text-gray-500 mt-1">
-                  {plan.cutsGuide}
-                </p>
-              </div>
-              <ul className="space-y-3 mb-8">
-                {plan.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start text-gray-700 text-sm md:text-base">
-                    <span className="text-green-500 mr-3 mt-1">✓</span>
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-              <Link href="/services/photo/foodphoto/form" className="block">
-                <Button 
-                  variant={plan.isPopular ? "primary" : "secondary"} 
-                  className="w-full text-lg py-4"
-                >
-                  {plan.isPopular ? '今すぐ申し込む' : 'プランを選択'}
-                </Button>
-              </Link>
-            </motion.div>
+                <div className="mb-6">
+                  <p className="text-base md:text-lg lg:text-xl text-gray-700 font-semibold">
+                    {plan.cuts}
+                  </p>
+                  <p className="text-xs md:text-sm text-gray-500 mt-1">
+                    {plan.cutsGuide}
+                  </p>
+                </div>
+                <ul className="space-y-3 mb-8">
+                  {plan.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start text-gray-700 text-sm md:text-base">
+                      <span className="text-green-500 mr-3 mt-1">✓</span>
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link href="/services/photo/foodphoto/form" className="block">
+                  <Button 
+                    variant={plan.isPopular ? "primary" : "secondary"} 
+                    className="w-full text-lg py-4"
+                  >
+                    {plan.isPopular ? '今すぐ申し込む' : 'プランを選択'}
+                  </Button>
+                </Link>
+              </motion.div>
+            </Suspense>
           ))}
         </div>
-        <motion.div 
-          className="text-center mt-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-        >
-          <p className="text-gray-300 mb-4">
-            その他のご要望にも柔軟に対応いたします
-          </p>
-          <button 
-            onClick={onOpenModal}
-            className="text-orange-500 hover:text-orange-600 font-semibold text-lg transition-colors inline-flex items-center gap-2 group"
+        <Suspense fallback={null}>
+          <motion.div 
+            className="text-center mt-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
           >
-            <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-2 py-1 rounded-full text-xs font-bold animate-pulse">
-              🎉 限定
-            </span>
-            9月申し込み特典はこちら
-            <span className="group-hover:translate-x-1 transition-transform">→</span>
-          </button>
-        </motion.div>
+            <p className="text-gray-300 mb-4">
+              その他のご要望にも柔軟に対応いたします
+            </p>
+            <button 
+              onClick={onOpenModal}
+              className="text-orange-500 hover:text-orange-600 font-semibold text-lg transition-colors inline-flex items-center gap-2 group"
+            >
+              <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-2 py-1 rounded-full text-xs font-bold animate-pulse">
+                🎉 限定
+              </span>
+              9月申し込み特典はこちら
+              <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </button>
+          </motion.div>
+        </Suspense>
       </div>
     </section>
   )
-}
+})
+PricingSection.displayName = 'PricingSection'
 
-const ParallaxSection = () => {
+// Lazy loaded ParallaxSection with performance optimization
+const ParallaxSection = memo(() => {
   const [scrollY, setScrollY] = useState(0)
   const [offsetY, setOffsetY] = useState(0)
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleScroll = () => {
       const scrolled = window.scrollY
       const sectionElement = document.getElementById('parallax-section')
@@ -780,14 +845,18 @@ const ParallaxSection = () => {
       setScrollY(scrolled)
     }
     
-    window.addEventListener('scroll', handleScroll)
+    const throttledScroll = () => {
+      requestAnimationFrame(handleScroll)
+    }
+    
+    window.addEventListener('scroll', throttledScroll, { passive: true })
     handleScroll() // Initial call
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', throttledScroll)
   }, [])
 
   return (
     <section id="parallax-section" className="relative h-[80vh] overflow-hidden">
-      {/* パララックス背景画像 */}
+      {/* Parallax background image */}
       <div 
         className="absolute inset-0 w-full h-[130%] -top-[15%]"
         style={{
@@ -800,59 +869,63 @@ const ParallaxSection = () => {
           alt="飲食店撮影 料理写真の撮影風景"
           fill
           className="object-cover"
-          priority
-          quality={90}
           sizes="100vw"
+          quality={85}
+          loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
       </div>
 
-      {/* コンテンツ */}
+      {/* Content */}
       <div className="relative z-10 h-full flex items-center justify-center">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1 }}
-          className="text-center px-4"
-        >
-          <motion.h2 
-            className="text-4xl md:text-6xl font-bold text-white mb-6"
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            写真は、<span className="text-orange-400">売上を変える</span>チカラになる
-          </motion.h2>
-          <motion.p 
-            className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            料理の一瞬の輝きを捉え、集客につながる魅力的なビジュアルに。<br />
-            飲食店専門PhotoStudioが、売上アップを後押しする&ldquo;集客できる料理写真&rdquo;を創り出します。
-          </motion.p>
-          
-          {/* スクロールインジケーター */}
+        <Suspense fallback={<SectionFallback />}>
           <motion.div
-            className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1 }}
+            className="text-center px-4"
           >
-            <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-              <div className="w-1 h-3 bg-white/50 rounded-full mt-2" />
-            </div>
+            <motion.h2 
+              className="text-4xl md:text-6xl font-bold text-white mb-6"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              写真は、<span className="text-orange-400">売上を変える</span>チカラになる
+            </motion.h2>
+            <motion.p 
+              className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              料理の一瞬の輝きを捉え、集客につながる魅力的なビジュアルに。<br />
+              飲食店専門PhotoStudioが、売上アップを後押しする&ldquo;集客できる料理写真&rdquo;を創り出します。
+            </motion.p>
+            
+            {/* Scroll indicator */}
+            <motion.div
+              className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+                <div className="w-1 h-3 bg-white/50 rounded-full mt-2" />
+              </div>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </Suspense>
       </div>
     </section>
   )
-}
+})
+ParallaxSection.displayName = 'ParallaxSection'
 
-const SamplesSection = () => {
+// Lazy loaded and optimized SamplesSection
+const SamplesSection = memo(() => {
   const [activeCategory, setActiveCategory] = useState('all')
   const [selectedImage, setSelectedImage] = useState<any>(null)
 
@@ -864,7 +937,7 @@ const SamplesSection = () => {
   ]
 
   const images = [
-    // 料理写真 (LP_food_)
+    // Food photos (LP_food_)
     { id: 1, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%201.jpg', alt: '飲食店撮影 前菜の料理撮影事例' },
     { id: 2, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%202.jpg', alt: '飲食店撮影 メインディッシュの撮影' },
     { id: 3, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%203.jpg', alt: '飲食店撮影 デザートプレートの撮影' },
@@ -891,9 +964,9 @@ const SamplesSection = () => {
     { id: 24, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg', alt: '飲食店撮影 会席料理の撮影' },
     { id: 25, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2025.jpg', alt: '飲食店撮影 鉄板焼き料理の撮影事例' },
     { id: 26, category: 'food', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_26.jpg', alt: '飲食店撮影 寿司・刺身の撮影' },
-    // 外観写真 (LP_out_)
+    // Exterior photos (LP_out_)
     { id: 27, category: 'exterior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_out_.png', alt: '飲食店撮影 店舗外観の撮影事例' },
-    // 内観写真 (LP_room_)
+    // Interior photos (LP_room_)
     { id: 28, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%201.jpg', alt: '飲食店撮影 レストラン内観の撮影' },
     { id: 29, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%202.jpg', alt: '飲食店撮影 カフェ店内の撮影事例' },
     { id: 30, category: 'interior', src: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%203.jpg', alt: '飲食店撮影 個室席の撮影' },
@@ -914,137 +987,147 @@ const SamplesSection = () => {
     <>
       <section id="samples" className="py-16" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
         <div className="max-w-6xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <SectionTitle>撮影事例</SectionTitle>
-            <p className="text-gray-300 text-lg max-w-3xl mx-auto mb-8">
-              飲食店撮影PhotoStudioが手掛けた作品の一部をご紹介。
-              単なる写真ではなく、芸術作品としてのフードフォトグラフィーをご覧ください。
-            </p>
-            
-            {/* カテゴリーフィルター */}
-            <div className="flex flex-col md:flex-row md:flex-wrap justify-center gap-3">
-              {/* Mobile: 全て button on its own row */}
-              <div className="flex justify-center md:contents">
-                <motion.button
-                  onClick={() => setActiveCategory('all')}
-                  className={`px-8 py-3 font-semibold text-base transition-all duration-300 rounded-full w-full md:w-auto max-w-xs ${
-                    activeCategory === 'all'
-                      ? 'bg-orange-500 text-white shadow-lg'
-                      : 'bg-white border-2 border-orange-400 text-orange-500 hover:bg-orange-50'
-                  }`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  全て ({categories.find(c => c.id === 'all')?.count})
-                </motion.button>
-              </div>
-              
-              {/* Mobile: Other buttons in a row */}
-              <div className="flex justify-center gap-3 md:contents">
-                {categories.filter(category => category.id !== 'all').map((category) => (
-                  <motion.button
-                    key={category.id}
-                    onClick={() => setActiveCategory(category.id)}
-                    className={`px-6 md:px-8 py-3 font-semibold text-base transition-all duration-300 rounded-full flex-1 md:flex-initial ${
-                      activeCategory === category.id
-                        ? 'bg-orange-500 text-white shadow-lg'
-                        : 'bg-white border-2 border-orange-400 text-orange-500 hover:bg-orange-50'
-                    }`}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    {category.name} ({category.count})
-                  </motion.button>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* 画像グリッド */}
-          <AnimatePresence mode="wait">
-            <motion.div 
-              key={activeCategory}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+          <Suspense fallback={<SectionFallback />}>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
             >
-              {filteredImages.map((image, index) => (
-                <motion.div
-                  key={image.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.05 }}
-                  className="relative aspect-square overflow-hidden rounded-lg cursor-pointer group"
-                  whileHover={{ scale: 1.03 }}
-                  onClick={() => setSelectedImage(image)}
-                >
-                  <Image 
-                    src={image.src} 
-                    alt={image.alt}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-110"
-                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
-                    loading="lazy"
-                    quality={85}
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
-                </motion.div>
-              ))}
+              <SectionTitle>撮影事例</SectionTitle>
+              <p className="text-gray-300 text-lg max-w-3xl mx-auto mb-8">
+                飲食店撮影PhotoStudioが手掛けた作品の一部をご紹介。
+                単なる写真ではなく、芸術作品としてのフードフォトグラフィーをご覧ください。
+              </p>
+              
+              {/* Category filters */}
+              <div className="flex flex-col md:flex-row md:flex-wrap justify-center gap-3">
+                {/* Mobile: All button on its own row */}
+                <div className="flex justify-center md:contents">
+                  <Suspense fallback={null}>
+                    <motion.button
+                      onClick={() => setActiveCategory('all')}
+                      className={`px-8 py-3 font-semibold text-base transition-all duration-300 rounded-full w-full md:w-auto max-w-xs ${
+                        activeCategory === 'all'
+                          ? 'bg-orange-500 text-white shadow-lg'
+                          : 'bg-white border-2 border-orange-400 text-orange-500 hover:bg-orange-50'
+                      }`}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      全て ({categories.find(c => c.id === 'all')?.count})
+                    </motion.button>
+                  </Suspense>
+                </div>
+                
+                {/* Mobile: Other buttons in a row */}
+                <div className="flex justify-center gap-3 md:contents">
+                  {categories.filter(category => category.id !== 'all').map((category) => (
+                    <Suspense key={category.id} fallback={null}>
+                      <motion.button
+                        onClick={() => setActiveCategory(category.id)}
+                        className={`px-6 md:px-8 py-3 font-semibold text-base transition-all duration-300 rounded-full flex-1 md:flex-initial ${
+                          activeCategory === category.id
+                            ? 'bg-orange-500 text-white shadow-lg'
+                            : 'bg-white border-2 border-orange-400 text-orange-500 hover:bg-orange-50'
+                        }`}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        {category.name} ({category.count})
+                      </motion.button>
+                    </Suspense>
+                  ))}
+                </div>
+              </div>
             </motion.div>
-          </AnimatePresence>
+          </Suspense>
+
+          {/* Image grid */}
+          <Suspense fallback={<SectionFallback />}>
+            <AnimatePresence mode="wait">
+              <motion.div 
+                key={activeCategory}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+              >
+                {filteredImages.map((image, index) => (
+                  <motion.div
+                    key={image.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: index * 0.05 }}
+                    className="relative aspect-square overflow-hidden rounded-lg cursor-pointer group"
+                    whileHover={{ scale: 1.03 }}
+                    onClick={() => setSelectedImage(image)}
+                  >
+                    <Image 
+                      src={image.src} 
+                      alt={image.alt}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-110"
+                      sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                      loading="lazy"
+                      quality={80}
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                  </motion.div>
+                ))}
+              </motion.div>
+            </AnimatePresence>
+          </Suspense>
         </div>
       </section>
 
-      {/* 拡大表示モーダル */}
-      <AnimatePresence>
-        {selectedImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90"
-            onClick={() => setSelectedImage(null)}
-          >
+      {/* Enlarged modal */}
+      <Suspense fallback={null}>
+        <AnimatePresence>
+          {selectedImage && (
             <motion.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-              className="relative max-w-5xl w-full max-h-[90vh]"
-              onClick={(e) => e.stopPropagation()}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90"
+              onClick={() => setSelectedImage(null)}
             >
-              <button
-                onClick={() => setSelectedImage(null)}
-                className="absolute -top-12 right-0 text-white hover:text-orange-400 transition-colors"
+              <motion.div
+                initial={{ scale: 0.8 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0.8 }}
+                className="relative max-w-5xl w-full max-h-[90vh]"
+                onClick={(e) => e.stopPropagation()}
               >
-                <span className="text-3xl">×</span>
-              </button>
-              <div className="relative w-full h-[80vh]">
-                <Image
-                  src={selectedImage.src}
-                  alt={selectedImage.alt}
-                  fill
-                  className="object-contain"
-                  sizes="100vw"
-                  quality={90}
-                  priority
-                />
-              </div>
+                <button
+                  onClick={() => setSelectedImage(null)}
+                  className="absolute -top-12 right-0 text-white hover:text-orange-400 transition-colors"
+                >
+                  <span className="text-3xl">×</span>
+                </button>
+                <div className="relative w-full h-[80vh]">
+                  <Image
+                    src={selectedImage.src}
+                    alt={selectedImage.alt}
+                    fill
+                    className="object-contain"
+                    sizes="100vw"
+                    quality={95}
+                    priority
+                  />
+                </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>
+      </Suspense>
     </>
   )
-}
+})
+SamplesSection.displayName = 'SamplesSection'
 
-const FlowSection = () => {
+const FlowSection = memo(() => {
   const steps = [
     {
       number: 1,
@@ -1071,18 +1154,20 @@ const FlowSection = () => {
   return (
     <section id="flow" className="py-16" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
       <div className="max-w-5xl mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <SectionTitle>納品までの流れ</SectionTitle>
-          <p className="text-gray-300 text-lg">
-            撮影から撮影画像納品まで最長で7営業日となります。<br />
-            <span className="text-sm">場合によってはご希望に添えない可能性があります。</span>
-          </p>
-        </motion.div>
+        <Suspense fallback={<SectionFallback />}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <SectionTitle>納品までの流れ</SectionTitle>
+            <p className="text-gray-300 text-lg">
+              撮影から撮影画像納品まで最長で7営業日となります。<br />
+              <span className="text-sm">場合によってはご希望に添えない可能性があります。</span>
+            </p>
+          </motion.div>
+        </Suspense>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((step) => (
             <FlowStep key={step.number} {...step} />
@@ -1091,9 +1176,10 @@ const FlowSection = () => {
       </div>
     </section>
   )
-}
+})
+FlowSection.displayName = 'FlowSection'
 
-const FAQSection = () => {
+const FAQSection = memo(() => {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
   
   const faqs = [
@@ -1147,17 +1233,19 @@ const FAQSection = () => {
   return (
     <section id="faq" className="py-16" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
       <div className="max-w-4xl mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <SectionTitle>よくあるご質問</SectionTitle>
-          <p className="text-gray-400 mt-4">
-            飲食店撮影に関するよくあるご質問をまとめました
-          </p>
-        </motion.div>
+        <Suspense fallback={<SectionFallback />}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <SectionTitle>よくあるご質問</SectionTitle>
+            <p className="text-gray-400 mt-4">
+              飲食店撮影に関するよくあるご質問をまとめました
+            </p>
+          </motion.div>
+        </Suspense>
         
         <script
           type="application/ld+json"
@@ -1166,54 +1254,58 @@ const FAQSection = () => {
         
         <div className="space-y-4">
           {faqs.map((faq, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-gray-800 rounded-lg overflow-hidden"
-            >
-              <button
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-700 transition-colors"
+            <Suspense key={index} fallback={<ComponentFallback />}>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-gray-800 rounded-lg overflow-hidden"
               >
-                <span className="text-white font-medium">{faq.question}</span>
-                <svg
-                  className={`w-5 h-5 text-orange-400 transition-transform ${
-                    openIndex === index ? 'rotate-180' : ''
-                  }`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+                <button
+                  onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-700 transition-colors"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              <AnimatePresence>
-                {openIndex === index && (
-                  <motion.div
-                    initial={{ height: 0 }}
-                    animate={{ height: 'auto' }}
-                    exit={{ height: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
+                  <span className="text-white font-medium">{faq.question}</span>
+                  <svg
+                    className={`w-5 h-5 text-orange-400 transition-transform ${
+                      openIndex === index ? 'rotate-180' : ''
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
                   >
-                    <div className="px-6 pb-4 text-gray-300">
-                      {faq.answer}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                <Suspense fallback={null}>
+                  <AnimatePresence>
+                    {openIndex === index && (
+                      <motion.div
+                        initial={{ height: 0 }}
+                        animate={{ height: 'auto' }}
+                        exit={{ height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-6 pb-4 text-gray-300">
+                          {faq.answer}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </Suspense>
+              </motion.div>
+            </Suspense>
           ))}
         </div>
       </div>
     </section>
   )
-}
+})
+FAQSection.displayName = 'FAQSection'
 
-const CasesSection = () => {
+const CasesSection = memo(() => {
   const cases = [
     {
       title: '売上が前年比150%アップ',
@@ -1248,65 +1340,72 @@ const CasesSection = () => {
   return (
     <section id="cases" className="py-16" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
       <div className="max-w-5xl mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <SectionTitle>クライアントの声</SectionTitle>
-          <p className="text-gray-300 text-lg max-w-3xl mx-auto">
-            飲食店撮影PhotoStudioでブランドイメージを一新されたお客様の声
-          </p>
-        </motion.div>
+        <Suspense fallback={<SectionFallback />}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <SectionTitle>クライアントの声</SectionTitle>
+            <p className="text-gray-300 text-lg max-w-3xl mx-auto">
+              飲食店撮影PhotoStudioでブランドイメージを一新されたお客様の声
+            </p>
+          </motion.div>
+        </Suspense>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {cases.map((caseItem, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <CaseCard {...caseItem} />
-            </motion.div>
+            <Suspense key={index} fallback={<ComponentFallback />}>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <CaseCard {...caseItem} />
+              </motion.div>
+            </Suspense>
           ))}
         </div>
       </div>
     </section>
   )
-}
+})
+CasesSection.displayName = 'CasesSection'
 
-const BottomCTA = () => (
+const BottomCTA = memo(() => (
   <section className="hidden md:block py-16" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
     <div className="max-w-5xl mx-auto px-4">
-      <motion.div
-        className="rounded-3xl p-12 text-center"
-        style={{ backgroundColor: 'rgb(77, 76, 76)' }}
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-      >
-        <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-          webで今すぐお申し込みいただけます。
-        </h2>
-        <p className="text-white text-lg mb-8">
-          飲食店撮影PhotoStudioで、料理の新しい表現を発見してください。
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/services/photo/foodphoto/form">
-            <Button variant="primary">今すぐ申し込む</Button>
-          </Link>
-          <Link href="/contact">
-            <Button variant="secondary">まずは問い合わせる</Button>
-          </Link>
-        </div>
-      </motion.div>
+      <Suspense fallback={<SectionFallback />}>
+        <motion.div
+          className="rounded-3xl p-12 text-center"
+          style={{ backgroundColor: 'rgb(77, 76, 76)' }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+            webで今すぐお申し込みいただけます。
+          </h2>
+          <p className="text-white text-lg mb-8">
+            飲食店撮影PhotoStudioで、料理の新しい表現を発見してください。
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/services/photo/foodphoto/form">
+              <Button variant="primary">今すぐ申し込む</Button>
+            </Link>
+            <Link href="/contact">
+              <Button variant="secondary">まずは問い合わせる</Button>
+            </Link>
+          </div>
+        </motion.div>
+      </Suspense>
     </div>
   </section>
-)
+))
+BottomCTA.displayName = 'BottomCTA'
 
-const Footer = () => (
+const Footer = memo(() => (
   <footer className="bg-gray-900 text-white py-12 pb-24 md:pb-12">
     <div className="max-w-5xl mx-auto px-4">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
@@ -1359,9 +1458,10 @@ const Footer = () => (
       </div>
     </div>
   </footer>
-)
+))
+Footer.displayName = 'Footer'
 
-// Main Component
+// Main Component with optimized performance
 export default function FoodPhotoClient() {
   const [isLoading, setIsLoading] = useState(true)
   const [showOfferModal, setShowOfferModal] = useState(false)
@@ -1369,40 +1469,33 @@ export default function FoodPhotoClient() {
 
   useEffect(() => {
     console.log('FoodPhotoClient mounted, isLoading:', true)
-    // Simply keep loading state true, it's already initialized as true
   }, [])
+
+  // Optimized scroll trigger for modal with useCallback
+  const handleScroll = useCallback(() => {
+    const pricingSection = document.getElementById('pricing')
+    if (!pricingSection) return
+    
+    const pricingRect = pricingSection.getBoundingClientRect()
+    const pricingBottom = pricingRect.bottom
+    
+    console.log('Pricing bottom:', pricingBottom, 'hasShownModal:', hasShownModal, 'isLoading:', isLoading)
+    
+    const triggerPoint = window.innerWidth < 768 ? -100 : -200
+    
+    if (pricingBottom < triggerPoint && !hasShownModal && !isLoading) {
+      console.log('Showing modal! Pricing section scrolled past')
+      setShowOfferModal(true)
+      setHasShownModal(true)
+      sessionStorage.setItem('foodphoto-offer-shown', 'true')
+    }
+  }, [hasShownModal, isLoading])
 
   // Scroll trigger for modal
   useEffect(() => {
-    const handleScroll = () => {
-      // Get pricing section element
-      const pricingSection = document.getElementById('pricing')
-      if (!pricingSection) return
-      
-      // Get the bottom position of pricing section
-      const pricingRect = pricingSection.getBoundingClientRect()
-      const pricingBottom = pricingRect.bottom
-      
-      console.log('Pricing bottom:', pricingBottom, 'hasShownModal:', hasShownModal, 'isLoading:', isLoading)
-      
-      // Show modal when pricing section is scrolled out of view (mobile-first approach)
-      // On mobile, trigger when premium plan card is about to disappear
-      const triggerPoint = window.innerWidth < 768 ? -100 : -200 // More aggressive on mobile
-      
-      if (pricingBottom < triggerPoint && !hasShownModal && !isLoading) {
-        console.log('Showing modal! Pricing section scrolled past')
-        setShowOfferModal(true)
-        setHasShownModal(true)
-        // Save to sessionStorage to prevent showing again in the same session
-        sessionStorage.setItem('foodphoto-offer-shown', 'true')
-      }
-    }
-
-    // Check if modal was already shown in this session
     const wasShown = sessionStorage.getItem('foodphoto-offer-shown')
     console.log('Was shown in session:', wasShown)
     
-    // Development: Clear sessionStorage with URL parameter
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search)
       if (urlParams.get('reset') === 'true') {
@@ -1415,83 +1508,87 @@ export default function FoodPhotoClient() {
       setHasShownModal(true)
     }
 
-    // Add scroll listener after a delay to ensure page is loaded
     const timer = setTimeout(() => {
       console.log('Adding scroll listener')
-      window.addEventListener('scroll', handleScroll)
-      // Trigger once to check current scroll position
+      window.addEventListener('scroll', handleScroll, { passive: true })
       handleScroll()
-    }, 2000) // Increased delay to ensure loading is complete
+    }, 2000)
 
     return () => {
       clearTimeout(timer)
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [hasShownModal, isLoading])
+  }, [handleScroll])
 
-  const handleLoaderComplete = () => {
+  const handleLoaderComplete = useCallback(() => {
     console.log('Loader complete, setting isLoading to false')
     setIsLoading(false)
-  }
+  }, [])
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setShowOfferModal(false)
-  }
+  }, [])
 
-  const handleOpenModal = () => {
+  const handleOpenModal = useCallback(() => {
     setShowOfferModal(true)
-  }
+  }, [])
 
   return (
     <>
-      <AnimatePresence>
-        {isLoading && (
-          <FoodPhotoLoader onComplete={handleLoaderComplete} />
-        )}
-      </AnimatePresence>
+      <Suspense fallback={null}>
+        <AnimatePresence>
+          {isLoading && (
+            <FoodPhotoLoader onComplete={handleLoaderComplete} />
+          )}
+        </AnimatePresence>
+      </Suspense>
       
-      <motion.div 
-        className="min-h-screen" 
-        style={{ backgroundColor: 'rgb(36, 35, 35)' }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isLoading ? 0 : 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <Header />
-        <IntroSection />
-        <NewsSection />
-        <FeaturesSection />
-        <PricingSection onOpenModal={handleOpenModal} />
-        <ParallaxSection />
-        <SamplesSection />
-        <FlowSection />
-        <CasesSection />
-        <FAQSection />
-        <BottomCTA />
-        <Footer />
-        
-        {/* Special Offer Modal */}
-        <SpecialOfferModal 
-          isOpen={showOfferModal} 
-          onClose={handleCloseModal} 
-        />
-        
-        {/* Mobile Fixed Bottom Buttons */}
-        <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t border-gray-200 p-3">
-          <div className="flex gap-2">
-            <Link href="/services/photo/foodphoto/form" className="flex-1">
-              <button className="w-full bg-gradient-to-r from-orange-400 to-red-500 text-white py-3 px-4 rounded-lg font-bold text-sm">
-                申し込む
-              </button>
-            </Link>
-            <Link href="/contact" className="flex-1">
-              <button className="w-full bg-white border-2 border-orange-400 text-orange-400 py-3 px-4 rounded-lg font-bold text-sm">
-                問い合わせる
-              </button>
-            </Link>
+      <Suspense fallback={<div className="min-h-screen bg-gray-900" />}>
+        <motion.div 
+          className="min-h-screen" 
+          style={{ backgroundColor: 'rgb(36, 35, 35)' }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isLoading ? 0 : 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Header />
+          <IntroSection />
+          <NewsSection />
+          <FeaturesSection />
+          <PricingSection onOpenModal={handleOpenModal} />
+          <ParallaxSection />
+          <SamplesSection />
+          <FlowSection />
+          <CasesSection />
+          <FAQSection />
+          <BottomCTA />
+          <Footer />
+          
+          {/* Special Offer Modal */}
+          <Suspense fallback={null}>
+            <SpecialOfferModal 
+              isOpen={showOfferModal} 
+              onClose={handleCloseModal} 
+            />
+          </Suspense>
+          
+          {/* Mobile Fixed Bottom Buttons */}
+          <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t border-gray-200 p-3">
+            <div className="flex gap-2">
+              <Link href="/services/photo/foodphoto/form" className="flex-1">
+                <button className="w-full bg-gradient-to-r from-orange-400 to-red-500 text-white py-3 px-4 rounded-lg font-bold text-sm">
+                  申し込む
+                </button>
+              </Link>
+              <Link href="/contact" className="flex-1">
+                <button className="w-full bg-white border-2 border-orange-400 text-orange-400 py-3 px-4 rounded-lg font-bold text-sm">
+                  問い合わせる
+                </button>
+              </Link>
+            </div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      </Suspense>
     </>
   )
 }
