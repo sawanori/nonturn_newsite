@@ -1375,10 +1375,22 @@ export default function FoodPhotoClient() {
   // Scroll trigger for modal
   useEffect(() => {
     const handleScroll = () => {
-      console.log('Scroll event:', window.scrollY, 'hasShownModal:', hasShownModal, 'isLoading:', isLoading)
-      // Show modal after scrolling 300px and only once
-      if (window.scrollY > 300 && !hasShownModal && !isLoading) {
-        console.log('Showing modal!')
+      // Get pricing section element
+      const pricingSection = document.getElementById('pricing')
+      if (!pricingSection) return
+      
+      // Get the bottom position of pricing section
+      const pricingRect = pricingSection.getBoundingClientRect()
+      const pricingBottom = pricingRect.bottom
+      
+      console.log('Pricing bottom:', pricingBottom, 'hasShownModal:', hasShownModal, 'isLoading:', isLoading)
+      
+      // Show modal when pricing section is scrolled out of view (mobile-first approach)
+      // On mobile, trigger when premium plan card is about to disappear
+      const triggerPoint = window.innerWidth < 768 ? -100 : -200 // More aggressive on mobile
+      
+      if (pricingBottom < triggerPoint && !hasShownModal && !isLoading) {
+        console.log('Showing modal! Pricing section scrolled past')
         setShowOfferModal(true)
         setHasShownModal(true)
         // Save to sessionStorage to prevent showing again in the same session
