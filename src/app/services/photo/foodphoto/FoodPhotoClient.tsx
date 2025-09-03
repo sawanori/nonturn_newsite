@@ -18,6 +18,8 @@ const SpecialOfferModal = lazy(() => import('@/components/modals/SpecialOfferMod
 const VoiceSearchFAQ = lazy(() => import('@/components/ui/VoiceSearchFAQ'))
 // Lazy load PWA Installer component
 const PWAInstaller = lazy(() => import('@/components/PWAInstaller'))
+// Lazy load Review Section component
+const ReviewSection = lazy(() => import('@/components/ui/ReviewSection'))
 
 // Fallback components for Suspense
 const ComponentFallback = memo(() => (
@@ -1596,6 +1598,9 @@ export default function FoodPhotoClient() {
           <SamplesSection />
           <FlowSection />
           <CasesSection />
+          <Suspense fallback={<SectionFallback />}>
+            <ReviewSection />
+          </Suspense>
           <FAQSection />
           <BottomCTA />
           <Footer />

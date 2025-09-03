@@ -2,6 +2,7 @@
 // Schema.org JSON-LD implementation for SEO
 
 import { generateVoiceSearchSchema, generateSpeakableSchema } from './voice-search-faq'
+import { generateReviewSchema, generateIndividualReviewSchema } from '@/data/foodphoto-reviews'
 
 export const getStructuredData = () => {
   const domain = 'https://foodphoto-pro.com'
@@ -21,7 +22,6 @@ export const getStructuredData = () => {
       'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2022.jpg'
     ],
     description: 'プロカメラマンによる飲食店専門の料理・店舗撮影サービス。メニュー撮影、店内撮影、フードフォトなど、飲食店の集客に特化した出張撮影を提供。東京・横浜エリア対応。',
-    telephone: '+81-50-5532-2405',
     email: 'info@non-turn.com',
     address: {
       '@type': 'PostalAddress',
@@ -300,6 +300,12 @@ export const getStructuredData = () => {
   // 9. Speakable Schema for voice assistants
   const speakableSchema = generateSpeakableSchema()
 
+  // 10. AggregateRating Schema for reviews
+  const aggregateRatingSchema = generateReviewSchema()
+
+  // 11. Individual Review Schemas
+  const individualReviewSchemas = generateIndividualReviewSchema()
+
   return [
     localBusinessSchema,
     serviceSchema,
@@ -309,7 +315,9 @@ export const getStructuredData = () => {
     imageObjectSchema,
     specialOfferSchema,
     voiceSearchSchema,
-    speakableSchema
+    speakableSchema,
+    aggregateRatingSchema,
+    ...individualReviewSchemas
   ]
 }
 
