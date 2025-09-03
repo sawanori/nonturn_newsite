@@ -10,6 +10,8 @@ import Breadcrumb from '@/components/ui/Breadcrumb'
 import { optimizeAltText, getOptimizedSizes, shouldPreloadImage, generateFoodPhotoMetadata } from '@/utils/image-optimization'
 import { initWebVitals, preloadCriticalResources, preventLayoutShifts } from './web-vitals'
 import { throttle, debounce, addPassiveEventListener } from './performance-utils'
+import { initImageOptimizations } from './image-optimization'
+import { initFontOptimizations } from './font-optimization'
 import './core-web-vitals.css'
 import './hero-mobile.css'
 
@@ -1542,6 +1544,12 @@ export default function FoodPhotoClient() {
     
     // Prevent layout shifts for better CLS
     preventLayoutShifts()
+    
+    // Initialize advanced image optimizations
+    initImageOptimizations()
+    
+    // Initialize font optimizations for better performance
+    initFontOptimizations()
   }, [])
 
   // Optimized scroll trigger for modal with useCallback
