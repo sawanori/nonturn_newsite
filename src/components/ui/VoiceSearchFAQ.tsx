@@ -216,38 +216,6 @@ export default function VoiceSearchFAQ({ className = '' }: VoiceSearchFAQProps) 
           </motion.div>
         )}
       </div>
-
-      {/* 音声検索の説明 */}
-      <div className="mt-12 p-6 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl">
-        <h3 className="text-lg font-semibold text-gray-800 mb-3">
-          🎤 音声検索に対応しています
-        </h3>
-        <p className="text-gray-700 mb-4">
-          Google アシスタントやSiriなどの音声アシスタントからも、自然な言葉で質問できます。
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div className="bg-white p-3 rounded-lg">
-            <p className="text-sm text-gray-600">
-              <span className="font-semibold">例1:</span> 「OK Google、飲食店撮影の料金を教えて」
-            </p>
-          </div>
-          <div className="bg-white p-3 rounded-lg">
-            <p className="text-sm text-gray-600">
-              <span className="font-semibold">例2:</span> 「Hey Siri、横浜で料理撮影できるカメラマン」
-            </p>
-          </div>
-          <div className="bg-white p-3 rounded-lg">
-            <p className="text-sm text-gray-600">
-              <span className="font-semibold">例3:</span> 「Alexa、レストランの写真撮影の相場は？」
-            </p>
-          </div>
-          <div className="bg-white p-3 rounded-lg">
-            <p className="text-sm text-gray-600">
-              <span className="font-semibold">例4:</span> 「明日撮影してもらえるか聞いて」
-            </p>
-          </div>
-        </div>
-      </div>
     </div>
   )
 }
