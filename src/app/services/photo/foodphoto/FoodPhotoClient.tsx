@@ -10,6 +10,7 @@ import { optimizeAltText, getOptimizedSizes, shouldPreloadImage, generateFoodPho
 import { initWebVitals, preloadCriticalResources, preventLayoutShifts } from './web-vitals'
 import { throttle, debounce, addPassiveEventListener } from './performance-utils'
 import './core-web-vitals.css'
+import './hero-mobile.css'
 
 // Lazy load heavy modal component
 const SpecialOfferModal = lazy(() => import('@/components/modals/SpecialOfferModal'))
@@ -414,7 +415,7 @@ const IntroSection = memo(() => {
   }, [isMobile])
 
   return (
-    <section className="relative h-screen overflow-hidden bg-black">
+    <section className="relative h-screen hero-section-mobile overflow-hidden bg-black">
       {/* Background Slideshow */}
       <div className="absolute inset-0">
         {/* Preload all images in background with optimized quality */}
@@ -428,7 +429,7 @@ const IntroSection = memo(() => {
               alt={optimizeAltText(image.alt, '飲食店撮影のヒーロー画像')}
               width={1920}
               height={1080}
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-cover hero-image-mobile"
               priority={index === 0}
               sizes="100vw"
               quality={index === 0 ? 95 : 75}
@@ -452,7 +453,7 @@ const IntroSection = memo(() => {
                 alt={optimizeAltText(heroImages[currentSlide].alt, '飲食店撮影のメインビジュアル')}
                 width={1920}
                 height={1080}
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover hero-image-mobile"
                 priority
                 sizes="100vw"
                 quality={95}
@@ -464,21 +465,7 @@ const IntroSection = memo(() => {
         </Suspense>
       </div>
 
-      {/* Slide indicators - 控えめなデザイン */}
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-1.5 z-30">
-        {heroImages.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className={`rounded-full transition-all duration-500 ${
-              index === currentSlide 
-                ? 'w-6 h-1.5 bg-white/40' 
-                : 'w-1.5 h-1.5 bg-white/20 hover:bg-white/30'
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
+      {/* ページネーション削除 - SEOには不要 */}
 
       {/* Content overlay */}
       <div className="relative z-30 h-full flex items-center justify-center">
