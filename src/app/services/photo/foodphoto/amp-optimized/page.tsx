@@ -297,7 +297,6 @@ export default function FoodPhotoAMPOptimizedPage() {
           <Link href="/services/photo/foodphoto/form" className="btn">
             無料相談・お見積もり
           </Link>
-          <p className="mt-4">お電話: 050-5532-2405</p>
         </div>
       </section>
 

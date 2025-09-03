@@ -118,20 +118,9 @@ export default function VoiceSearchFAQ({ className = '' }: VoiceSearchFAQProps) 
                 aria-controls={`faq-answer-${faq.id}`}
               >
                 <div className="flex-1 pr-4">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                  <h3 className="text-lg font-semibold text-gray-800">
                     {faq.question}
                   </h3>
-                  {/* 音声検索キーワードのプレビュー */}
-                  <div className="flex flex-wrap gap-1">
-                    {faq.voiceVariations.slice(0, 2).map((variation, idx) => (
-                      <span
-                        key={idx}
-                        className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded"
-                      >
-                        🎤 {variation}
-                      </span>
-                    ))}
-                  </div>
                 </div>
                 <div className="flex-shrink-0">
                   <motion.span
@@ -155,43 +144,9 @@ export default function VoiceSearchFAQ({ className = '' }: VoiceSearchFAQProps) 
                     className="border-t border-gray-100"
                   >
                     <div className="px-6 py-5 faq-answer">
-                      <p className="text-gray-700 leading-relaxed mb-4">
+                      <p className="text-gray-700 leading-relaxed">
                         {faq.answer}
                       </p>
-
-                      {/* 関連する音声検索フレーズ */}
-                      <div className="mb-4">
-                        <p className="text-sm font-semibold text-gray-600 mb-2">
-                          🎤 こんな聞き方でも検索できます：
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {faq.voiceVariations.map((variation, idx) => (
-                            <span
-                              key={idx}
-                              className="text-xs bg-yellow-50 text-gray-700 px-3 py-1 rounded-full border border-yellow-200"
-                            >
-                              &ldquo;{variation}&rdquo;
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* 関連キーワード */}
-                      <div>
-                        <p className="text-sm font-semibold text-gray-600 mb-2">
-                          🔍 関連キーワード：
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {faq.longTailKeywords.map((keyword, idx) => (
-                            <span
-                              key={idx}
-                              className="text-xs bg-gray-50 text-gray-600 px-2 py-1 rounded"
-                            >
-                              {keyword}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
                     </div>
                   </motion.div>
                 )}

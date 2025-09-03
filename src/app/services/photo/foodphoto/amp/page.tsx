@@ -308,9 +308,6 @@ export default function FoodPhotoAMPPage() {
           <a href="/services/photo/foodphoto/form" className="cta-button">
             無料相談・お見積もり
           </a>
-          <p style={{ marginTop: '20px' }}>
-            お電話でのお問い合わせ: 050-5532-2405
-          </p>
         </div>
       </section>
 
