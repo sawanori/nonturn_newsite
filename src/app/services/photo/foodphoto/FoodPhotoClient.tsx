@@ -19,8 +19,6 @@ import './accessibility.css'
 
 // Lazy load heavy modal component
 const SpecialOfferModal = lazy(() => import('@/components/modals/SpecialOfferModal'))
-// Lazy load Voice Search FAQ component
-const VoiceSearchFAQ = lazy(() => import('@/components/ui/VoiceSearchFAQ'))
 // Lazy load PWA Installer component
 const PWAInstaller = lazy(() => import('@/components/PWAInstaller'))
 
@@ -1301,6 +1299,35 @@ const FlowSection = memo(() => {
 FlowSection.displayName = 'FlowSection'
 
 const FAQSection = memo(() => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
+  
+  const faqs = [
+    {
+      question: "撮影料金に出張費は含まれていますか？",
+      answer: "東京23区内、横浜市内、千葉（船橋）エリアは基本料金に出張費が含まれています。その他の地域についても対応可能ですので、お気軽にご相談ください。"
+    },
+    {
+      question: "撮影した写真の著作権はどうなりますか？",
+      answer: "撮影した全ての写真は著作権フリーでお渡しします。SNS、Webサイト、印刷物など、あらゆる用途で追加料金なしでご自由にお使いいただけます。"
+    },
+    {
+      question: "撮影当日までに準備することはありますか？",
+      answer: "特別な準備は不要ですが、撮影したいメニューのリストアップと、可能であれば店内の清掃をお願いしています。詳細は事前の打ち合わせでご案内いたします。"
+    },
+    {
+      question: "悪天候の場合はどうなりますか？",
+      answer: "室内撮影が中心のため、基本的に天候の影響は受けません。ただし、外観撮影をご希望の場合は、天候により日程変更をご提案する場合があります。"
+    },
+    {
+      question: "撮影データはいつ頂けますか？",
+      answer: "基本的に撮影当日〜翌営業日にデータ納品いたします。お急ぎの場合は即日納品も対応可能です。"
+    },
+    {
+      question: "キャンセル料はかかりますか？",
+      answer: "撮影日の3日前までは無料でキャンセル可能です。それ以降のキャンセルについては、キャンセル料が発生する場合があります。"
+    }
+  ]
+
   return (
     <section id="faq" className="py-16" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
       <div className="max-w-4xl mx-auto px-4">
@@ -1318,13 +1345,42 @@ const FAQSection = memo(() => {
           </motion.div>
         </Suspense>
         
-        {/* 検索・フィルター機能付きの詳細FAQ */}
-        <Suspense fallback={<div className="p-8 bg-gray-800 rounded-xl animate-pulse">
-          <div className="h-12 bg-gray-700 rounded mb-4"></div>
-          <div className="h-96 bg-gray-700 rounded"></div>
-        </div>}>
-          <VoiceSearchFAQ className="" />
-        </Suspense>
+        {/* シンプルなアコーディオンFAQ */}
+        <div className="space-y-4">
+          {faqs.map((faq, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="bg-white rounded-xl overflow-hidden shadow-lg"
+            >
+              <button
+                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                aria-expanded={openIndex === index}
+              >
+                <h3 className="text-lg font-semibold text-gray-800 pr-4">
+                  {faq.question}
+                </h3>
+                <span className={`text-2xl text-orange-500 transition-transform ${openIndex === index ? 'rotate-180' : ''}`}>
+                  ⌄
+                </span>
+              </button>
+              {openIndex === index && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                  className="px-6 pb-4"
+                >
+                  <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                </motion.div>
+              )}
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   )
