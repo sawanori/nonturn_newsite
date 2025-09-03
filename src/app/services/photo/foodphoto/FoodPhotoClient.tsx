@@ -18,8 +18,6 @@ const SpecialOfferModal = lazy(() => import('@/components/modals/SpecialOfferMod
 const VoiceSearchFAQ = lazy(() => import('@/components/ui/VoiceSearchFAQ'))
 // Lazy load PWA Installer component
 const PWAInstaller = lazy(() => import('@/components/PWAInstaller'))
-// Lazy load Review Section component
-const ReviewSection = lazy(() => import('@/components/ui/ReviewSection'))
 
 // Fallback components for Suspense
 const ComponentFallback = memo(() => (
@@ -1362,6 +1360,42 @@ const CasesSection = memo(() => {
       role: '女将',
       name: 'S様',
       comment: 'オプションも依頼してページの変更をしてもらいブランディングアップに成功して単価がアップしました。'
+    },
+    // 新規追加レビュー
+    {
+      title: '急な依頼にも対応',
+      company: 'カフェレストラン',
+      role: 'オーナー',
+      name: 'K.T様',
+      comment: '今回は急な撮影依頼にご対応いただきありがとうございます。またの機会でもご相談させていただく際は何卒よろしくお願いいたします。'
+    },
+    {
+      title: 'スピード感が最高',
+      company: '創作和食店',
+      role: '店主',
+      name: 'M.S様',
+      comment: '日程調整も迅速に対応いただき、当日も状況を見ながら要望に応えていただき助かりました！また、納品も翌日到着と大変早くスピード感も気に入りました。'
+    },
+    {
+      title: 'リピート確定の品質',
+      company: 'イタリアン',
+      role: 'シェフ',
+      name: 'A.N様',
+      comment: '前回、依頼させていただいて大変すばらしかったので再度リピートさせていただきました。ストロボを使った料理写真はすばらしい仕上がりでした。質と納品の速さはトップクラスです。'
+    },
+    {
+      title: 'プロフェッショナルな仕上がり',
+      company: 'ワインビストロ',
+      role: 'マネージャー',
+      name: 'H.Y様',
+      comment: '今回はホームページ用の写真を撮って頂きました。本当にプロフェッショナルな素晴らしい写真が撮れました。リピート確定です。知り合いにも紹介する予定です。'
+    },
+    {
+      title: '安心感が凄い',
+      company: 'フレンチレストラン',
+      role: 'オーナー',
+      name: 'T.M様',
+      comment: '時間厳守で、仕事が早く、写真もとても綺麗に撮ってくださったり、段取りも素晴らしく進めてくださるので、安心感が凄かったです。料理や店内とても綺麗に撮って頂きました。'
     }
   ]
 
@@ -1381,7 +1415,7 @@ const CasesSection = memo(() => {
             </p>
           </motion.div>
         </Suspense>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {cases.map((caseItem, index) => (
             <Suspense key={index} fallback={<ComponentFallback />}>
               <motion.div
@@ -1598,9 +1632,6 @@ export default function FoodPhotoClient() {
           <SamplesSection />
           <FlowSection />
           <CasesSection />
-          <Suspense fallback={<SectionFallback />}>
-            <ReviewSection />
-          </Suspense>
           <FAQSection />
           <BottomCTA />
           <Footer />
