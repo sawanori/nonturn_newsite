@@ -464,16 +464,16 @@ const IntroSection = memo(() => {
         </Suspense>
       </div>
 
-      {/* Slide indicators */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2 z-30">
+      {/* Slide indicators - 控えめなデザイン */}
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-1.5 z-30">
         {heroImages.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+            className={`rounded-full transition-all duration-500 ${
               index === currentSlide 
-                ? 'w-8 bg-white' 
-                : 'bg-white/50 hover:bg-white/70'
+                ? 'w-6 h-1.5 bg-white/40' 
+                : 'w-1.5 h-1.5 bg-white/20 hover:bg-white/30'
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
