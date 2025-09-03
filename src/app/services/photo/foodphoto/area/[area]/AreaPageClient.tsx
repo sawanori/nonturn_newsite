@@ -228,6 +228,26 @@ export default function AreaPageClient({ areaData }: AreaPageClientProps) {
                   横浜エリア
                 </Link>
               )}
+              {areaData.id !== 'ikebukuro' && (
+                <Link href="/services/photo/foodphoto/area/ikebukuro" className="px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition-shadow">
+                  池袋エリア
+                </Link>
+              )}
+              {areaData.id !== 'shinagawa' && (
+                <Link href="/services/photo/foodphoto/area/shinagawa" className="px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition-shadow">
+                  品川エリア
+                </Link>
+              )}
+              {areaData.id !== 'ginza' && (
+                <Link href="/services/photo/foodphoto/area/ginza" className="px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition-shadow">
+                  銀座エリア
+                </Link>
+              )}
+              {areaData.id !== 'roppongi' && (
+                <Link href="/services/photo/foodphoto/area/roppongi" className="px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition-shadow">
+                  六本木エリア
+                </Link>
+              )}
               <Link href="/services/photo/foodphoto" className="px-4 py-2 bg-orange-500 text-white rounded-lg shadow hover:bg-orange-600 transition-colors">
                 全エリア対応サービス
               </Link>
