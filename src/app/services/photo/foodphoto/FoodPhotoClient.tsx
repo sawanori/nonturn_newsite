@@ -764,9 +764,9 @@ const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
     {
       name: 'ライトプラン',
       time: 1,
-      originalPrice: 43000,
+      originalPrice: 44000,
       price: 33000,
-      discount: 10000,
+      discount: 11000,
       cuts: '撮影枚数限定',
       cutsGuide: '（3-5カット納品）',
       isPopular: false,
@@ -783,9 +783,9 @@ const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
     {
       name: 'スタンダードプラン',
       time: 2,
-      originalPrice: 54000,
+      originalPrice: 55000,
       price: 44000,
-      discount: 10000,
+      discount: 11000,
       cuts: '撮影枚数無制限',
       cutsGuide: '（10-15カット納品目安）',
       isPopular: true,
@@ -802,9 +802,9 @@ const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
     {
       name: 'プレミアムプラン',
       time: 4,
-      originalPrice: 98000,
+      originalPrice: 99000,
       price: 88000,
-      discount: 10000,
+      discount: 11000,
       cuts: '撮影枚数無制限',
       cutsGuide: '（30-40カット納品目安）',
       isPopular: false,
@@ -841,7 +841,7 @@ const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
               <span className="hidden md:inline">シンプルで分かりやすい3つのプラン。全て込みの明朗会計です。</span>
             </p>
             <p className="text-orange-400 font-bold text-lg">
-              🎉 期間限定キャンペーン：全プラン¥10,000 OFF！
+              🎉 期間限定キャンペーン：全プラン¥11,000 OFF！（税込）
             </p>
           </motion.div>
         </Suspense>

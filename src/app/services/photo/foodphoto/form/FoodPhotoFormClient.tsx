@@ -707,7 +707,7 @@ export function FoodPhotoFormClient() {
                       onClick={() => updateField('plan', 'premium')}
                     >
                       <h3 className="text-white font-semibold mb-2">プレミアムプラン</h3>
-                      <p className="text-2xl font-bold text-orange-400 mb-2">¥66,000</p>
+                      <p className="text-2xl font-bold text-orange-400 mb-2">¥88,000</p>
                       <p className="text-gray-300 text-sm">4時間撮影</p>
                       <p className="text-gray-300 text-sm">30-40カット納品目安</p>
                     </div>

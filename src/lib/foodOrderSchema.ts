@@ -105,7 +105,7 @@ export function calcTotalJPY(payload: FoodOrder): { total: number; breakdown: st
   const planPrice: Record<FoodOrder["plan"], number> = {
     light: 33000,
     standard: 44000,
-    premium: 66000,
+    premium: 88000,
   };
   
   const extraPrice: Record<string, number> = { 
