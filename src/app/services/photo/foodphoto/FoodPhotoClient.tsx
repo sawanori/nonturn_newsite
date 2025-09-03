@@ -1263,9 +1263,38 @@ const FlowSection = memo(() => {
 FlowSection.displayName = 'FlowSection'
 
 const FAQSection = memo(() => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null)
-  
-  const faqs = [
+  return (
+    <section id="faq" className="py-16" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
+      <div className="max-w-4xl mx-auto px-4">
+        <Suspense fallback={<SectionFallback />}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <SectionTitle>よくあるご質問</SectionTitle>
+            <p className="text-gray-400 mt-4">
+              飲食店撮影に関するよくあるご質問をまとめました
+            </p>
+          </motion.div>
+        </Suspense>
+        
+        {/* 検索・フィルター機能付きの詳細FAQ */}
+        <Suspense fallback={<div className="p-8 bg-gray-800 rounded-xl animate-pulse">
+          <div className="h-12 bg-gray-700 rounded mb-4"></div>
+          <div className="h-96 bg-gray-700 rounded"></div>
+        </div>}>
+          <VoiceSearchFAQ className="" />
+        </Suspense>
+      </div>
+    </section>
+  )
+})
+FAQSection.displayName = 'FAQSection'
+
+// Delete old FAQ data
+const __DELETE_faqs = [
     {
       question: "飲食店撮影の料金はいくらですか？",
       answer: "飲食店撮影の料金は、ライトプラン33,000円（1時間）、スタンダードプラン44,000円（2時間）、プレミアムプラン88,000円（4時間）の3プランをご用意しています。東京23区内、横浜市内、千葉（船橋）エリアは出張費込みです。"
@@ -1299,106 +1328,6 @@ const FAQSection = memo(() => {
       answer: "撮影日2営業日前：20%、1営業日前：50%、当日：100%のキャンセル料が発生します。日程変更は可能な限り対応いたしますので、お早めにご相談ください。"
     }
   ]
-  
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": faqs.map(faq => ({
-      "@type": "Question",
-      "name": faq.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.answer
-      }
-    }))
-  }
-  
-  return (
-    <section id="faq" className="py-16" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
-      <div className="max-w-4xl mx-auto px-4">
-        <Suspense fallback={<SectionFallback />}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <SectionTitle>よくあるご質問</SectionTitle>
-            <p className="text-gray-400 mt-4">
-              飲食店撮影に関するよくあるご質問をまとめました
-            </p>
-          </motion.div>
-        </Suspense>
-        
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-        />
-        
-        <div className="space-y-4">
-          {faqs.map((faq, index) => (
-            <Suspense key={index} fallback={<ComponentFallback />}>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-gray-800 rounded-lg overflow-hidden"
-              >
-                <button
-                  onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                  className="w-full px-4 md:px-6 py-5 md:py-4 text-left flex items-center justify-between hover:bg-gray-700 transition-colors min-h-[60px]"
-                  aria-expanded={openIndex === index}
-                  aria-controls={`faq-answer-${index}`}
-                >
-                  <span className="text-sm md:text-base text-white font-medium pr-3">{faq.question}</span>
-                  <svg
-                    className={`w-5 h-5 md:w-6 md:h-6 text-orange-400 transition-transform flex-shrink-0 ${
-                      openIndex === index ? 'rotate-180' : ''
-                    }`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                <Suspense fallback={null}>
-                  <AnimatePresence>
-                    {openIndex === index && (
-                      <motion.div
-                        initial={{ height: 0 }}
-                        animate={{ height: 'auto' }}
-                        exit={{ height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="px-6 pb-4 text-gray-300">
-                          {faq.answer}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </Suspense>
-              </motion.div>
-            </Suspense>
-          ))}
-        </div>
-        
-        {/* 音声検索最適化されたFAQセクション */}
-        <Suspense fallback={<div className="mt-12 p-8 bg-gray-800 rounded-xl animate-pulse">
-          <div className="h-12 bg-gray-700 rounded mb-4"></div>
-          <div className="h-96 bg-gray-700 rounded"></div>
-        </div>}>
-          <div className="mt-12">
-            <VoiceSearchFAQ className="mt-8" />
-          </div>
-        </Suspense>
-      </div>
-    </section>
-  )
-})
-FAQSection.displayName = 'FAQSection'
 
 const CasesSection = memo(() => {
   const cases = [
