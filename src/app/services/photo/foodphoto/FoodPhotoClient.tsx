@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import FoodPhotoLoader from '@/components/loading/FoodPhotoLoader'
 import OptimizedImage from '@/components/ui/OptimizedImage'
+import Breadcrumb from '@/components/ui/Breadcrumb'
 import { optimizeAltText, getOptimizedSizes, shouldPreloadImage, generateFoodPhotoMetadata } from '@/utils/image-optimization'
 import { initWebVitals, preloadCriticalResources, preventLayoutShifts } from './web-vitals'
 import { throttle, debounce, addPassiveEventListener } from './performance-utils'
@@ -1623,6 +1624,12 @@ export default function FoodPhotoClient() {
           animate={{ opacity: isLoading ? 0 : 1 }}
           transition={{ duration: 0.5 }}
         >
+          {/* パンくずナビゲーション */}
+          <Breadcrumb 
+            items={[
+              { label: '飲食店撮影PhotoStudio' }
+            ]}
+          />
           <Header />
           <IntroSection />
           <NewsSection />

@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { FoodPhotoFormClient } from './FoodPhotoFormClient'
+import FormPageClient from './FormPageClient'
 
 export const metadata: Metadata = {
   title: '撮影お申し込み | 飲食店撮影PhotoStudio',
@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 }
 
 export default function FoodPhotoFormPage() {
-  return <FoodPhotoFormClient />
+  return <FormPageClient />
 }
