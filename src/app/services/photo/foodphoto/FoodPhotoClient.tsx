@@ -764,7 +764,9 @@ const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
     {
       name: 'ライトプラン',
       time: 1,
+      originalPrice: 43000,
       price: 33000,
+      discount: 10000,
       cuts: '撮影枚数限定',
       cutsGuide: '（3-5カット納品）',
       isPopular: false,
@@ -781,7 +783,9 @@ const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
     {
       name: 'スタンダードプラン',
       time: 2,
+      originalPrice: 54000,
       price: 44000,
+      discount: 10000,
       cuts: '撮影枚数無制限',
       cutsGuide: '（10-15カット納品目安）',
       isPopular: true,
@@ -798,7 +802,9 @@ const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
     {
       name: 'プレミアムプラン',
       time: 4,
+      originalPrice: 98000,
       price: 88000,
+      discount: 10000,
       cuts: '撮影枚数無制限',
       cutsGuide: '（30-40カット納品目安）',
       isPopular: false,
@@ -824,10 +830,18 @@ const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <SectionTitle>料金プラン</SectionTitle>
-            <p className="text-gray-300 text-lg">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <SectionTitle>料金プラン</SectionTitle>
+              <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold animate-pulse">
+                今だけ特別価格
+              </div>
+            </div>
+            <p className="text-gray-300 text-lg mb-2">
               <span className="inline md:hidden">シンプルで分かりやすい3つのプラン。<br />全て込みの明朗会計です。</span>
               <span className="hidden md:inline">シンプルで分かりやすい3つのプラン。全て込みの明朗会計です。</span>
+            </p>
+            <p className="text-orange-400 font-bold text-lg">
+              🎉 期間限定キャンペーン：全プラン¥10,000 OFF！
             </p>
           </motion.div>
         </Suspense>
@@ -854,9 +868,26 @@ const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
                   </div>
                 )}
                 <h3 className="text-xl md:text-2xl lg:text-2xl font-bold text-black mb-2 mt-2">{plan.name}</h3>
-                <div className="flex items-baseline mb-4">
-                  <span className="text-3xl md:text-4xl lg:text-5xl font-bold text-orange-500">¥{plan.price.toLocaleString()}</span>
-                  <span className="text-sm md:text-base text-gray-600 ml-2">/ {plan.time}H</span>
+                
+                {/* 値引き表示 */}
+                <div className="mb-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="inline-block bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+                      期間限定
+                    </span>
+                    <span className="inline-block bg-gradient-to-r from-orange-400 to-red-500 text-white text-sm font-bold px-3 py-1 rounded-full">
+                      ¥{plan.discount.toLocaleString()} OFF
+                    </span>
+                  </div>
+                  <div className="flex items-baseline gap-3">
+                    <span className="text-gray-400 line-through text-xl md:text-2xl">
+                      ¥{plan.originalPrice.toLocaleString()}
+                    </span>
+                    <span className="text-3xl md:text-4xl lg:text-5xl font-bold text-orange-500">
+                      ¥{plan.price.toLocaleString()}
+                    </span>
+                    <span className="text-sm md:text-base text-gray-600">/ {plan.time}H</span>
+                  </div>
                 </div>
                 <div className="mb-6">
                   <p className="text-base md:text-lg lg:text-xl text-gray-700 font-semibold">
