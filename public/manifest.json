@@ -1,135 +1,136 @@
 {
-  "name": "NonTurn.LLC - Video Production & Creative Solutions",
-  "short_name": "NonTurn",
-  "description": "Professional video production, photography, and web development services in Yokohama Minato Mirai",
-  "start_url": "/",
+  "name": "飲食店撮影PhotoStudio",
+  "short_name": "PhotoStudio",
+  "description": "飲食店専門の撮影サービス。プロカメラマンによる料理・店舗撮影",
+  "start_url": "/services/photo/foodphoto",
   "display": "standalone",
-  "background_color": "#000000",
+  "background_color": "#ffffff",
   "theme_color": "#fbbf24",
-  "orientation": "portrait-primary",
+  "orientation": "portrait",
   "scope": "/",
   "lang": "ja",
-  "categories": ["business", "productivity", "entertainment"],
-  "dir": "auto",
+  "dir": "ltr",
+  "categories": ["business", "photography", "food"],
+  "iarc_rating_id": "e58c174a-81d2-5c3c-32cc-34b8de4a52e9",
   "icons": [
     {
-      "src": "/icons/icon-72x72.svg",
+      "src": "/icon-72x72.png",
       "sizes": "72x72",
-      "type": "image/svg+xml",
-      "purpose": "maskable any"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/icons/icon-96x96.svg",
+      "src": "/icon-96x96.png",
       "sizes": "96x96",
-      "type": "image/svg+xml",
-      "purpose": "maskable any"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/icons/icon-128x128.svg",
+      "src": "/icon-128x128.png",
       "sizes": "128x128",
-      "type": "image/svg+xml",
-      "purpose": "maskable any"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/icons/icon-144x144.svg",
+      "src": "/icon-144x144.png",
       "sizes": "144x144",
-      "type": "image/svg+xml",
-      "purpose": "maskable any"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/icons/icon-152x152.svg",
+      "src": "/icon-152x152.png",
       "sizes": "152x152",
-      "type": "image/svg+xml",
-      "purpose": "maskable any"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/icons/icon-192x192.svg",
+      "src": "/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
-      "purpose": "maskable any"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "/icons/icon-384x384.svg",
+      "src": "/icon-384x384.png",
       "sizes": "384x384",
-      "type": "image/svg+xml",
-      "purpose": "maskable any"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/icons/icon-512x512.svg",
+      "src": "/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "maskable any"
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-1.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "label": "飲食店撮影サービスのトップページ"
+    },
+    {
+      "src": "/screenshot-2.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "label": "料金プランページ"
     }
   ],
   "shortcuts": [
     {
-      "name": "映像制作",
-      "short_name": "Movie",
-      "description": "映像制作サービスページへ",
-      "url": "/services/movie",
+      "name": "料金プラン",
+      "short_name": "料金",
+      "description": "撮影プランと料金を確認",
+      "url": "/services/photo/foodphoto#pricing",
       "icons": [
         {
-          "src": "/icons/shortcut-movie.svg",
-          "sizes": "96x96",
-          "type": "image/svg+xml"
-        }
-      ]
-    },
-    {
-      "name": "写真撮影",
-      "short_name": "Photo",
-      "description": "写真撮影サービスページへ",
-      "url": "/services/photo",
-      "icons": [
-        {
-          "src": "/icons/shortcut-photo.svg",
-          "sizes": "96x96",
-          "type": "image/svg+xml"
+          "src": "/icon-96x96.png",
+          "sizes": "96x96"
         }
       ]
     },
     {
       "name": "お問い合わせ",
-      "short_name": "Contact",
-      "description": "お問い合わせフォームへ",
-      "url": "/contact",
+      "short_name": "問合せ",
+      "description": "撮影のご相談・お見積もり",
+      "url": "/services/photo/foodphoto/form",
       "icons": [
         {
-          "src": "/icons/shortcut-contact.svg",
-          "sizes": "96x96",
-          "type": "image/svg+xml"
+          "src": "/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "撮影事例",
+      "short_name": "事例",
+      "description": "撮影事例ギャラリー",
+      "url": "/services/photo/foodphoto#gallery",
+      "icons": [
+        {
+          "src": "/icon-96x96.png",
+          "sizes": "96x96"
         }
       ]
     }
   ],
-  "screenshots": [
-    {
-      "src": "/screenshots/desktop-home.svg",
-      "sizes": "1280x720",
-      "type": "image/svg+xml",
-      "platform": "wide",
-      "label": "Desktop Home Screen"
-    },
-    {
-      "src": "/screenshots/mobile-home.svg",
-      "sizes": "390x844",
-      "type": "image/svg+xml",
-      "platform": "narrow",
-      "label": "Mobile Home Screen"
-    }
-  ],
-  "related_applications": [
-    {
-      "platform": "webapp",
-      "url": "https://non-turn.com/manifest.json"
-    }
-  ],
   "prefer_related_applications": false,
-  "edge_side_panel": {
-    "preferred_width": 400
-  },
-  "handle_links": "preferred",
-  "launch_handler": {
-    "client_mode": ["navigate-existing", "auto"]
+  "related_applications": [],
+  "protocol_handlers": [],
+  "share_target": {
+    "action": "/services/photo/foodphoto/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [
+        {
+          "name": "image",
+          "accept": ["image/*"]
+        }
+      ]
+    }
   }
 }

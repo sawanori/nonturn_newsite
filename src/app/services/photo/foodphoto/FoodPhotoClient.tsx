@@ -16,6 +16,8 @@ import './hero-mobile.css'
 const SpecialOfferModal = lazy(() => import('@/components/modals/SpecialOfferModal'))
 // Lazy load Voice Search FAQ component
 const VoiceSearchFAQ = lazy(() => import('@/components/ui/VoiceSearchFAQ'))
+// Lazy load PWA Installer component
+const PWAInstaller = lazy(() => import('@/components/PWAInstaller'))
 
 // Fallback components for Suspense
 const ComponentFallback = memo(() => (
@@ -1622,6 +1624,11 @@ export default function FoodPhotoClient() {
             </div>
           </div>
         </motion.div>
+      </Suspense>
+
+      {/* PWA Installer */}
+      <Suspense fallback={null}>
+        <PWAInstaller />
       </Suspense>
     </>
   )
