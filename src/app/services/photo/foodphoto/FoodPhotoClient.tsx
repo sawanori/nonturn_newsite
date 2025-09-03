@@ -12,8 +12,10 @@ import { initWebVitals, preloadCriticalResources, preventLayoutShifts } from './
 import { throttle, debounce, addPassiveEventListener } from './performance-utils'
 import { initImageOptimizations } from './image-optimization'
 import { initFontOptimizations } from './font-optimization'
+import { initAccessibility, FocusManager, LiveRegionAnnouncer, enhanceFormAccessibility } from './accessibility'
 import './core-web-vitals.css'
 import './hero-mobile.css'
+import './accessibility.css'
 
 // Lazy load heavy modal component
 const SpecialOfferModal = lazy(() => import('@/components/modals/SpecialOfferModal'))
@@ -42,7 +44,7 @@ const Button = memo(({ variant = 'primary', children, onClick, className = '' }:
   const baseClass = 'px-8 py-4 font-bold text-lg rounded-2xl transition-all duration-300'
   const variants: Record<string, string> = {
     primary: 'bg-gradient-to-r from-orange-400 to-red-500 text-white hover:from-red-500 hover:to-pink-500',
-    secondary: 'bg-transparent border-2 border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-white'
+    secondary: 'bg-orange-100 border-2 border-orange-400 text-orange-600 hover:bg-orange-400 hover:text-white'
   }
   
   return (
@@ -318,7 +320,7 @@ const Header = memo(() => {
                   </button>
                 </Link>
                 <Link href="/contact" className="block">
-                  <button className="w-full bg-transparent border-2 border-orange-400 text-orange-400 py-3 px-4 rounded-lg font-bold">
+                  <button className="w-full bg-orange-100 border-2 border-orange-400 text-orange-600 py-3 px-4 rounded-lg font-bold hover:bg-orange-400 hover:text-white transition-colors">
                     問い合わせる
                   </button>
                 </Link>
@@ -576,7 +578,7 @@ const IntroSection = memo(() => {
                   </Button>
                 </Link>
                 <Link href="/contact">
-                  <Button variant="secondary" className="min-w-[200px] px-6 py-3 !border-white !text-white hover:!bg-white hover:!text-orange-500">
+                  <Button variant="secondary" className="min-w-[200px] px-6 py-3 !bg-white/20 !border-white !text-white hover:!bg-white hover:!text-orange-500">
                     まずは問い合わせる
                   </Button>
                 </Link>
@@ -1550,6 +1552,9 @@ export default function FoodPhotoClient() {
     
     // Initialize font optimizations for better performance
     initFontOptimizations()
+    
+    // Initialize accessibility enhancements
+    initAccessibility()
   }, [])
 
   // Optimized scroll trigger for modal with useCallback
@@ -1625,12 +1630,14 @@ export default function FoodPhotoClient() {
       </Suspense>
       
       <Suspense fallback={<div className="min-h-screen bg-gray-900" />}>
-        <motion.div 
+        <motion.main 
+          id="main-content"
           className="min-h-screen" 
           style={{ backgroundColor: 'rgb(36, 35, 35)' }}
           initial={{ opacity: 0 }}
           animate={{ opacity: isLoading ? 0 : 1 }}
           transition={{ duration: 0.5 }}
+          role="main"
         >
           {/* パンくずナビゲーション */}
           <Breadcrumb 
@@ -1660,7 +1667,7 @@ export default function FoodPhotoClient() {
           </Suspense>
           
           {/* Mobile Fixed Bottom Buttons */}
-          <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t border-gray-200 p-3">
+          <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t border-gray-200 p-3" role="navigation" aria-label="モバイルアクションボタン">
             <div className="flex gap-2">
               <Link href="/services/photo/foodphoto/form" className="flex-1">
                 <button className="w-full bg-gradient-to-r from-orange-400 to-red-500 text-white py-3 px-4 rounded-lg font-bold text-sm">
@@ -1668,13 +1675,13 @@ export default function FoodPhotoClient() {
                 </button>
               </Link>
               <Link href="/contact" className="flex-1">
-                <button className="w-full bg-white border-2 border-orange-400 text-orange-400 py-3 px-4 rounded-lg font-bold text-sm">
+                <button className="w-full bg-orange-100 border-2 border-orange-400 text-orange-600 py-3 px-4 rounded-lg font-bold text-sm hover:bg-orange-400 hover:text-white transition-colors">
                   問い合わせる
                 </button>
               </Link>
             </div>
-          </div>
-        </motion.div>
+          </nav>
+        </motion.main>
       </Suspense>
 
       {/* PWA Installer */}

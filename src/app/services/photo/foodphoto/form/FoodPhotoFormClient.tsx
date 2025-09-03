@@ -1,10 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { formSchema, ORDER_TYPES, calcTotalJPY } from '@/lib/foodOrderSchema'
 import type { FoodOrder } from '@/lib/foodOrderSchema'
+import { LiveRegionAnnouncer, enhanceFormAccessibility } from '../accessibility'
 
 // Prefecture list
 const PREFECTURES = [
@@ -27,6 +28,27 @@ export function FoodPhotoFormClient() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitResult, setSubmitResult] = useState<{ success: boolean; message: string } | null>(null)
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({})
+  const formRef = useRef<HTMLFormElement>(null)
+  const announcerRef = useRef<LiveRegionAnnouncer | null>(null)
+  
+  // Initialize accessibility features
+  useEffect(() => {
+    announcerRef.current = new LiveRegionAnnouncer()
+    if (formRef.current) {
+      enhanceFormAccessibility(formRef.current)
+    }
+  }, [])
+  
+  // Announce errors to screen readers
+  useEffect(() => {
+    const errorCount = Object.keys(validationErrors).length
+    if (errorCount > 0 && announcerRef.current) {
+      announcerRef.current.announce(
+        `フォームに${errorCount}個のエラーがあります。修正してください。`,
+        'assertive'
+      )
+    }
+  }, [validationErrors])
   
   // Form state
   const [formData, setFormData] = useState<Partial<FoodOrder>>({
