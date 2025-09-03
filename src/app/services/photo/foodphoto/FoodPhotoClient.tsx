@@ -1327,9 +1327,6 @@ const FAQSection = memo(() => {
             <p className="text-gray-400 mt-4">
               飲食店撮影に関するよくあるご質問をまとめました
             </p>
-            <p className="text-sm text-yellow-400 mt-2">
-              🎤 音声検索対応 - 「OK Google」や「Hey Siri」でも検索できます
-            </p>
           </motion.div>
         </Suspense>
         
