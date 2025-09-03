@@ -1149,7 +1149,7 @@ const SamplesSection = memo(() => {
                       src={image.src} 
                       alt={optimizeAltText(image.alt, '飲食店撮影のギャラリー')}
                       width={400}
-                      height={300}
+                      height={400}
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                       sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
                       quality={80}
