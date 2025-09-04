@@ -8,7 +8,7 @@ const services = [
   { name: '飲食店撮影', href: '/services/photo/foodphoto', highlight: true },
   { name: 'Web制作', href: '/services/web' }
 ]
-const company = ['会社概要', 'プライバシーポリシー', '利用規約']
+const company = ['会社概要', 'プライバシーポリシー', '利用規約', 'サイトマップ']
 const socialLinks = [
  { name: 'Instagram', icon: 'I', color: 'from-pink-500 to-yellow-500', href: 'https://www.instagram.com/nonturn2022', isEnglish: true }
 ]
@@ -140,7 +140,7 @@ export function Footer() {
          transition={{ duration: 0.5, delay: index * 0.1 }}
         >
          <motion.a 
-          href={info === 'プライバシーポリシー' ? '/privacy' : info === '会社概要' ? '/about' : info === '利用規約' ? '/terms' : '#'} 
+          href={info === 'プライバシーポリシー' ? '/privacy' : info === '会社概要' ? '/about' : info === '利用規約' ? '/terms' : info === 'サイトマップ' ? '/sitemap' : '#'} 
           className="hover:text-yellow-400 transition-colors duration-300 relative group"
           whileHover={{ x: 5 }}
          >

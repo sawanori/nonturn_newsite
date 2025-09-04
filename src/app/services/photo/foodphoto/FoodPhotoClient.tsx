@@ -1587,6 +1587,11 @@ const Footer = memo(() => (
                 サービス規約
               </Link>
             </li>
+            <li>
+              <Link href="/services/photo/foodphoto/sitemap" className="text-gray-400 hover:text-white transition-colors">
+                サイトマップ
+              </Link>
+            </li>
           </ul>
         </div>
         <div>
