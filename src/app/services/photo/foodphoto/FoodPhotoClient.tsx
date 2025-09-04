@@ -39,7 +39,7 @@ SectionFallback.displayName = 'SectionFallback'
 
 // Optimized atomic components with React.memo
 const Button = memo(({ variant = 'primary', children, onClick, className = '' }: any) => {
-  const baseClass = 'px-8 py-4 font-bold text-lg rounded-2xl transition-all duration-300'
+  const baseClass = 'px-4 md:px-6 lg:px-8 py-2 md:py-3 lg:py-4 font-bold text-sm md:text-base lg:text-lg rounded-2xl transition-all duration-300'
   const variants: Record<string, string> = {
     primary: 'bg-gradient-to-r from-orange-400 to-red-500 text-white hover:from-red-500 hover:to-pink-500',
     secondary: 'bg-orange-100 border-2 border-orange-400 text-orange-600 hover:bg-orange-400 hover:text-white'
@@ -200,59 +200,59 @@ const Header = memo(() => {
           </svg>
         </button>
         
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-2 lg:gap-4 xl:gap-6">
           <a 
             href="#features" 
             onClick={(e) => handleSmoothScroll(e, '#features')}
-            className="text-gray-300 hover:text-orange-500 transition-colors cursor-pointer"
+            className="text-gray-300 hover:text-orange-500 transition-colors cursor-pointer text-xs lg:text-sm xl:text-base whitespace-nowrap"
           >
             サービスの特徴
           </a>
           <a 
             href="#pricing"
             onClick={(e) => handleSmoothScroll(e, '#pricing')}
-            className="text-gray-300 hover:text-orange-500 transition-colors cursor-pointer"
+            className="text-gray-300 hover:text-orange-500 transition-colors cursor-pointer text-xs lg:text-sm xl:text-base whitespace-nowrap"
           >
             料金
           </a>
           <a 
             href="#samples"
             onClick={(e) => handleSmoothScroll(e, '#samples')}
-            className="text-gray-300 hover:text-orange-500 transition-colors cursor-pointer"
+            className="text-gray-300 hover:text-orange-500 transition-colors cursor-pointer text-xs lg:text-sm xl:text-base whitespace-nowrap"
           >
             撮影事例
           </a>
           <a 
             href="#flow"
             onClick={(e) => handleSmoothScroll(e, '#flow')}
-            className="text-gray-300 hover:text-orange-500 transition-colors cursor-pointer"
+            className="text-gray-300 hover:text-orange-500 transition-colors cursor-pointer text-xs lg:text-sm xl:text-base whitespace-nowrap"
           >
             撮影の流れ
           </a>
           <a 
             href="#cases"
             onClick={(e) => handleSmoothScroll(e, '#cases')}
-            className="text-gray-300 hover:text-orange-500 transition-colors cursor-pointer"
+            className="text-gray-300 hover:text-orange-500 transition-colors cursor-pointer text-xs lg:text-sm xl:text-base whitespace-nowrap"
           >
             導入事例
           </a>
           <a 
             href="#faq"
             onClick={(e) => handleSmoothScroll(e, '#faq')}
-            className="text-gray-300 hover:text-orange-500 transition-colors cursor-pointer"
+            className="text-gray-300 hover:text-orange-500 transition-colors cursor-pointer text-xs lg:text-sm xl:text-base whitespace-nowrap"
           >
             よくあるご質問
           </a>
         </nav>
         
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-2 lg:gap-3">
           <Link href="/services/photo/foodphoto/form">
-            <Button variant="primary">
+            <Button variant="primary" className="text-xs lg:text-sm xl:text-base px-3 lg:px-4 py-2">
               申し込む
             </Button>
           </Link>
           <Link href="/contact">
-            <Button variant="secondary">
+            <Button variant="secondary" className="text-xs lg:text-sm xl:text-base px-3 lg:px-4 py-2">
               問い合わせる
             </Button>
           </Link>
@@ -843,7 +843,7 @@ const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
             </p>
           </motion.div>
         </Suspense>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-4 lg:gap-6 xl:gap-8 max-w-6xl mx-auto">
           {plans.map((plan, index) => (
             <Suspense key={index} fallback={<ComponentFallback />}>
               <motion.div
@@ -851,7 +851,7 @@ const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2 }}
-                className={`rounded-2xl md:rounded-3xl p-6 md:p-8 ${
+                className={`rounded-2xl md:rounded-3xl p-4 md:p-5 lg:p-6 xl:p-8 ${
                   plan.isPopular 
                     ? 'bg-gradient-to-br from-orange-50 via-white to-red-50 border-2 border-orange-400 shadow-2xl md:scale-105' 
                     : 'bg-white border border-gray-200 shadow-xl'
@@ -869,22 +869,24 @@ const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
                 
                 {/* 値引き表示 */}
                 <div className="mb-4">
-                  <div className="flex items-center gap-2 mb-2">
+                  <div className="flex flex-wrap items-center gap-2 mb-2">
                     <span className="inline-block bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
                       期間限定
                     </span>
-                    <span className="inline-block bg-gradient-to-r from-orange-400 to-red-500 text-white text-sm font-bold px-3 py-1 rounded-full">
+                    <span className="inline-block bg-gradient-to-r from-orange-400 to-red-500 text-white text-xs md:text-sm font-bold px-2 md:px-3 py-1 rounded-full">
                       ¥{plan.discount.toLocaleString()} OFF
                     </span>
                   </div>
-                  <div className="flex items-baseline gap-3">
-                    <span className="text-gray-400 line-through text-xl md:text-2xl">
+                  <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3">
+                    <span className="text-gray-400 line-through text-lg md:text-xl lg:text-2xl">
                       ¥{plan.originalPrice.toLocaleString()}
                     </span>
-                    <span className="text-3xl md:text-4xl lg:text-5xl font-bold text-orange-500">
-                      ¥{plan.price.toLocaleString()}
-                    </span>
-                    <span className="text-sm md:text-base text-gray-600">/ {plan.time}H</span>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-orange-500">
+                        ¥{plan.price.toLocaleString()}
+                      </span>
+                      <span className="text-xs sm:text-sm md:text-sm lg:text-base text-gray-600">/ {plan.time}H</span>
+                    </div>
                   </div>
                 </div>
                 <div className="mb-6">
@@ -1320,7 +1322,7 @@ const FAQSection = memo(() => {
     },
     {
       question: "撮影データはいつ頂けますか？",
-      answer: "基本的に撮影当日〜翌営業日にデータ納品いたします。お急ぎの場合は即日納品も対応可能です。"
+      answer: "基本的に撮影日から１週間以内にデータ納品いたします。お急ぎの場合はフレキシブルな対応も可能です。"
     },
     {
       question: "キャンセル料はかかりますか？",
