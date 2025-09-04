@@ -880,15 +880,15 @@ const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
                       ¥{plan.discount.toLocaleString()} OFF
                     </span>
                   </div>
-                  <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3">
-                    <span className="text-gray-400 line-through text-lg md:text-xl lg:text-2xl">
+                  <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-2">
+                    <span className="text-gray-400 line-through text-base md:text-lg lg:text-xl">
                       ¥{plan.originalPrice.toLocaleString()}
                     </span>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-orange-500">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-2xl sm:text-2xl md:text-3xl lg:text-3xl xl:text-4xl font-bold text-orange-500">
                         ¥{plan.price.toLocaleString()}
                       </span>
-                      <span className="text-xs sm:text-sm md:text-sm lg:text-base text-gray-600">/ {plan.time}H</span>
+                      <span className="text-xs sm:text-sm md:text-sm lg:text-sm text-gray-600">/ {plan.time}H</span>
                     </div>
                   </div>
                 </div>
