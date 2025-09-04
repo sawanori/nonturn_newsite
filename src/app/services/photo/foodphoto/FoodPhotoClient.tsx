@@ -189,10 +189,10 @@ const Header = memo(() => {
           <span className="text-base md:text-xl font-bold text-white">飲食店撮影PhotoStudio</span>
         </Link>
         
-        {/* Mobile menu button */}
+        {/* Mobile and Tablet menu button */}
         <button 
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 text-white"
+          className="lg:hidden p-2 text-white"
           aria-label="メニューを開く"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -200,7 +200,7 @@ const Header = memo(() => {
           </svg>
         </button>
         
-        <nav className="hidden md:flex items-center gap-2 lg:gap-4 xl:gap-6">
+        <nav className="hidden lg:flex items-center gap-2 lg:gap-4 xl:gap-6">
           <a 
             href="#features" 
             onClick={(e) => handleSmoothScroll(e, '#features')}
@@ -245,7 +245,7 @@ const Header = memo(() => {
           </a>
         </nav>
         
-        <div className="hidden md:flex items-center gap-2 lg:gap-3">
+        <div className="hidden lg:flex items-center gap-2 lg:gap-3">
           <Link href="/services/photo/foodphoto/form">
             <Button variant="primary" className="text-xs lg:text-sm xl:text-base px-3 lg:px-4 py-2">
               申し込む
@@ -259,14 +259,14 @@ const Header = memo(() => {
         </div>
       </div>
       
-      {/* Mobile Navigation Menu */}
+      {/* Mobile and Tablet Navigation Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-gray-900 border-t border-gray-700"
+            className="lg:hidden bg-gray-900 border-t border-gray-700"
           >
             <nav className="flex flex-col p-4 space-y-3">
               <a 
