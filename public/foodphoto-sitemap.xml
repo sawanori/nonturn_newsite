@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- メインページ -->
+  <url>
+    <loc>https://foodphoto-pro.com/</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg</image:loc>
+      <image:title>飲食店撮影PhotoStudio メインビジュアル</image:title>
+      <image:caption>プロカメラマンによる料理・店舗撮影サービス</image:caption>
+    </image:image>
+  </url>
+
+  <!-- 申し込みフォーム -->
+  <url>
+    <loc>https://foodphoto-pro.com/form</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- エリアページ -->
+  <url>
+    <loc>https://foodphoto-pro.com/area/shibuya</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://foodphoto-pro.com/area/shinjuku</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://foodphoto-pro.com/area/yokohama</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://foodphoto-pro.com/area/ikebukuro</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://foodphoto-pro.com/area/shinagawa</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://foodphoto-pro.com/area/ginza</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://foodphoto-pro.com/area/roppongi</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- サンクスページ -->
+  <url>
+    <loc>https://foodphoto-pro.com/form/thank-you</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- チェックフォーム -->
+  <url>
+    <loc>https://foodphoto-pro.com/checkform</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- 利用規約 -->
+  <url>
+    <loc>https://foodphoto-pro.com/terms</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>
