@@ -133,22 +133,37 @@ export const services = {
       {
         name: '商品撮影',
         description: 'EC・カタログ用の商品撮影',
-        examples: ['白背景撮影', 'ライフスタイル撮影', '360度撮影']
+        examples: ['白背景撮影', 'ライフスタイル撮影', '360度撮影'],
+        icon: '🛍️',
+        image: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/4-XoQ2KJrHwhwWFyCx1xhUsArWI6BuwB.jpg'
       },
       {
         name: 'イベント撮影',
         description: '企業イベント・セミナーの撮影',
-        examples: ['セミナー撮影', '懇親会撮影', '記念撮影']
+        examples: ['セミナー撮影', '懇親会撮影', '記念撮影'],
+        icon: '🎪',
+        image: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/7-mJKwnJ1MV7rgCTVH2W7YH58O16jhJM.jpg'
       },
       {
         name: 'ポートレート',
         description: '人物撮影・プロフィール写真',
-        examples: ['プロフィール撮影', 'チーム撮影', '宣材写真']
+        examples: ['プロフィール撮影', 'チーム撮影', '宣材写真'],
+        icon: '👤',
+        image: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/9-HS8CW5NXVIyjfZI7IBnbIAamIM35If.jpg'
       },
       {
         name: '建築・空間',
         description: 'オフィス・店舗・建築物の撮影',
-        examples: ['オフィス撮影', '店舗撮影', '建築写真']
+        examples: ['オフィス撮影', '店舗撮影', '建築写真'],
+        icon: '🏢',
+        image: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/6-lBfVjkw1GyFlaswiLfy0XVr7Y2iBjC.jpg'
+      },
+      {
+        name: '料理撮影',
+        description: '飲食店メニュー・料理撮影',
+        examples: ['メニュー撮影', 'シズル撮影', '盛り付け撮影'],
+        icon: '🍽️',
+        image: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2023.jpg'
       }
     ]
   },
