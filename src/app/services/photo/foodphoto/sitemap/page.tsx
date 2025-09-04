@@ -31,7 +31,7 @@ export default function FoodPhotoSitemap() {
           </h2>
           <ul className="space-y-3">
             <li>
-              <Link href="/services/photo/foodphoto" className="text-blue-600 hover:text-orange-500 text-lg">
+              <Link href="/" className="text-blue-600 hover:text-orange-500 text-lg">
                 🏠 トップページ - 飲食店撮影サービス
               </Link>
             </li>
@@ -48,12 +48,12 @@ export default function FoodPhotoSitemap() {
               <h3 className="text-lg font-semibold text-gray-600 mb-3">申し込み・お問い合わせ</h3>
               <ul className="space-y-2 ml-4">
                 <li>
-                  <Link href="/services/photo/foodphoto/form" className="text-blue-600 hover:text-orange-500">
+                  <Link href="/form" className="text-blue-600 hover:text-orange-500">
                     📝 撮影申し込みフォーム
                   </Link>
                 </li>
                 <li>
-                  <Link href="/services/photo/foodphoto/checkform" className="text-blue-600 hover:text-orange-500">
+                  <Link href="/checkform" className="text-blue-600 hover:text-orange-500">
                     ✅ 事前チェックフォーム
                   </Link>
                 </li>
@@ -64,12 +64,12 @@ export default function FoodPhotoSitemap() {
               <h3 className="text-lg font-semibold text-gray-600 mb-3">料金・プラン</h3>
               <ul className="space-y-2 ml-4">
                 <li>
-                  <Link href="/services/photo/foodphoto#pricing" className="text-blue-600 hover:text-orange-500">
+                  <Link href="/#pricing" className="text-blue-600 hover:text-orange-500">
                     💰 料金プラン一覧
                   </Link>
                 </li>
                 <li>
-                  <Link href="/services/photo/foodphoto#features" className="text-blue-600 hover:text-orange-500">
+                  <Link href="/#features" className="text-blue-600 hover:text-orange-500">
                     ⭐ サービスの特徴
                   </Link>
                 </li>
@@ -94,7 +94,7 @@ export default function FoodPhotoSitemap() {
               { area: 'roppongi', name: '六本木', description: '国際色豊かなエリア' }
             ].map((item) => (
               <div key={item.area} className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                <Link href={`/services/photo/foodphoto/area/${item.area}`} className="block">
+                <Link href={`/area/${item.area}`} className="block">
                   <h3 className="font-bold text-gray-800 mb-1">📍 {item.name}エリア</h3>
                   <p className="text-sm text-gray-600">{item.description}</p>
                 </Link>
@@ -110,27 +110,27 @@ export default function FoodPhotoSitemap() {
           </h2>
           <ul className="space-y-3">
             <li>
-              <Link href="/services/photo/foodphoto#samples" className="text-blue-600 hover:text-orange-500">
+              <Link href="/#samples" className="text-blue-600 hover:text-orange-500">
                 📸 撮影事例・ポートフォリオ
               </Link>
             </li>
             <li>
-              <Link href="/services/photo/foodphoto#flow" className="text-blue-600 hover:text-orange-500">
+              <Link href="/#flow" className="text-blue-600 hover:text-orange-500">
                 🔄 撮影の流れ
               </Link>
             </li>
             <li>
-              <Link href="/services/photo/foodphoto#cases" className="text-blue-600 hover:text-orange-500">
+              <Link href="/#cases" className="text-blue-600 hover:text-orange-500">
                 💬 お客様の声・導入事例
               </Link>
             </li>
             <li>
-              <Link href="/services/photo/foodphoto#faq" className="text-blue-600 hover:text-orange-500">
+              <Link href="/#faq" className="text-blue-600 hover:text-orange-500">
                 ❓ よくあるご質問
               </Link>
             </li>
             <li>
-              <Link href="/services/photo/foodphoto/terms" className="text-blue-600 hover:text-orange-500">
+              <Link href="/terms" className="text-blue-600 hover:text-orange-500">
                 📋 利用規約
               </Link>
             </li>
@@ -144,11 +144,11 @@ export default function FoodPhotoSitemap() {
               飲食店撮影PhotoStudio - プロカメラマンによる料理・店舗撮影サービス
             </p>
             <div className="flex justify-center gap-6 text-sm">
-              <Link href="/services/photo/foodphoto" className="hover:text-orange-500">
+              <Link href="/" className="hover:text-orange-500">
                 トップページに戻る
               </Link>
               <span className="text-gray-400">|</span>
-              <Link href="/services/photo/foodphoto/form" className="hover:text-orange-500">
+              <Link href="/form" className="hover:text-orange-500">
                 今すぐ申し込む
               </Link>
             </div>

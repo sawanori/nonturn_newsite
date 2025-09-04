@@ -31,6 +31,22 @@ export function middleware(req: NextRequest) {
     res.headers.set("x-mw", "api-pass");
     return res;
   }
+  
+  // robots.txt for foodphoto-pro.com
+  if (LP.has(host) && url.pathname === "/robots.txt") {
+    url.pathname = "/foodphoto-robots.txt";
+    const res = NextResponse.rewrite(url);
+    res.headers.set("x-mw", "rewrite:/robots.txt -> /foodphoto-robots.txt");
+    return res;
+  }
+  
+  // sitemap.xml for foodphoto-pro.com
+  if (LP.has(host) && url.pathname === "/sitemap.xml") {
+    url.pathname = "/foodphoto-sitemap.xml";
+    const res = NextResponse.rewrite(url);
+    res.headers.set("x-mw", "rewrite:/sitemap.xml -> /foodphoto-sitemap.xml");
+    return res;
+  }
 
   // LP ドメイン: "/" と "/form" と "/form/thank-you" と "/terms" と "/checkform" と "/checkform/thank-you" は実体へ rewrite
   if (url.pathname === "/") {
@@ -72,6 +88,22 @@ export function middleware(req: NextRequest) {
     url.pathname = "/services/photo/foodphoto/terms";
     const res = NextResponse.rewrite(url);
     res.headers.set("x-mw", "rewrite:/terms -> /services/photo/foodphoto/terms");
+    return res;
+  }
+
+  if (url.pathname === "/sitemap") {
+    url.pathname = "/services/photo/foodphoto/sitemap";
+    const res = NextResponse.rewrite(url);
+    res.headers.set("x-mw", "rewrite:/sitemap -> /services/photo/foodphoto/sitemap");
+    return res;
+  }
+
+  // エリアページのルーティング
+  if (url.pathname.startsWith("/area/")) {
+    const newPath = url.pathname.replace("/area/", "/services/photo/foodphoto/area/");
+    url.pathname = newPath;
+    const res = NextResponse.rewrite(url);
+    res.headers.set("x-mw", `rewrite:${url.pathname} -> ${newPath}`);
     return res;
   }
 
