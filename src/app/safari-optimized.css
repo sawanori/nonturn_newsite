@@ -1,0 +1,153 @@
+/* Safari最適化用CSS */
+
+/* GPU アクセラレーションの最適化 */
+@supports (-webkit-appearance: none) {
+  /* Safari検出 */
+  
+  /* will-changeの適切な使用 */
+  .safari-optimized {
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+  }
+  
+  /* アニメーション要素の最適化 */
+  .animate-element {
+    transform: translate3d(0, 0, 0);
+    will-change: auto; /* Safariではwill-changeを控えめに */
+  }
+  
+  /* Canvas要素の最適化 */
+  canvas {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+  
+  /* スクロールパフォーマンスの改善 */
+  body {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* フォントレンダリングの最適化 */
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Flexboxの最適化 */
+  .flex {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+  }
+  
+  /* 重いアニメーションの軽量化 */
+  @media (prefers-reduced-motion: no-preference) {
+    .motion-safe\:animate-* {
+      animation-duration: 1.5s !important; /* アニメーション時間を延長 */
+      animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+  }
+  
+  /* backdrop-filterの代替 */
+  .glass-effect {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+  
+  /* 影のパフォーマンス最適化 */
+  .shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05) !important;
+  }
+  
+  /* グラデーションの最適化 */
+  .gradient-bg {
+    background-image: linear-gradient(180deg, var(--color1), var(--color2));
+    background-attachment: fixed;
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
+  }
+}
+
+/* メディアクエリでモバイルSafariの最適化 */
+@media only screen and (max-width: 768px) {
+  @supports (-webkit-appearance: none) {
+    /* パーティクルや複雑なアニメーションを無効化 */
+    .particle-container,
+    .complex-animation {
+      display: none !important;
+    }
+    
+    /* シンプルなフォールバック表示 */
+    .mobile-safari-fallback {
+      display: block !important;
+    }
+    
+    /* タッチイベントの最適化 */
+    button, a, [role="button"] {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    
+    /* 固定要素の最適化 */
+    .fixed {
+      -webkit-transform: translateZ(0);
+    }
+  }
+}
+
+/* CSS アニメーションの最適化 */
+@keyframes optimized-fade-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes optimized-scale {
+  from {
+    transform: scale3d(0.95, 0.95, 1);
+  }
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* Safari向けのアニメーションクラス */
+.safari-fade-in {
+  animation: optimized-fade-in 0.6s ease-out;
+}
+
+.safari-scale {
+  animation: optimized-scale 0.4s ease-out;
+}
+
+/* レイヤーの合成最適化 */
+.optimize-layers {
+  isolation: isolate;
+  contain: layout style paint;
+}
+
+/* 画像の最適化 */
+img {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ビューポート単位の修正 */
+@supports (-webkit-appearance: none) {
+  .h-screen {
+    height: 100vh;
+    height: -webkit-fill-available;
+  }
+  
+  .min-h-screen {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
+}

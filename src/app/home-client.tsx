@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { MainLayout } from '@/components/layout/MainLayout'
-import { Scene3DWrapper } from '@/components/3d/Scene3DFallback'
+import { DynamicOptimizedScene3D } from '@/components/3d/DynamicOptimizedScene3D'
 import { VisuallyHidden } from '@/components/accessibility/AccessibilityEnhancements'
 import Image from 'next/image'
 
@@ -78,7 +78,7 @@ export default function HomeClient() {
     role="banner"
    >
     {/* 3D WebGL Background */}
-    <Scene3DWrapper />
+    <DynamicOptimizedScene3D />
     
     {/* Hero Content */}
     <motion.div 

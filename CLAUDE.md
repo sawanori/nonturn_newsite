@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Next.js 15 corporate landing page for NonTurn.LLC, a video production company. The site features advanced 3D animations, portfolio showcase, multi-location service pages, and specialized service offerings including food photography (飲食店撮影PhotoStudio).
+This is a Next.js 15 corporate landing page for NonTurn.LLC, a video production company. The site features advanced 3D animations, portfolio showcase, multi-location service pages, and specialized service offerings including food photography (飲食店撮影PhotoStudio). Configured for dual-domain deployment (non-turn.com and foodphoto-pro.com).
 
 ## Common Development Commands
 
@@ -12,7 +12,7 @@ This is a Next.js 15 corporate landing page for NonTurn.LLC, a video production 
 # Development
 npm run dev          # Start development server on http://localhost:3000
 
-# Production Build
+# Production Build & Deploy
 npm run build        # Build for production (also generates sitemap via postbuild)
 npm start            # Start production server
 
@@ -42,60 +42,76 @@ npm run analyze      # Analyze bundle size with webpack-bundle-analyzer
 1. **App Router Structure**: All pages use Next.js App Router in `src/app/`. Each route has its own `page.tsx` and optional `metadata.ts`.
 
 2. **Component Organization**:
-   - `src/components/3d/`: Three.js components (Sphere, Cubes, Particles)
-   - `src/components/layout/`: Header, Footer, Navigation
-   - `src/components/ui/`: Reusable UI components
+   - `src/components/3d/`: Three.js components (AnimatedSphere, FloatingCubes, ParticleField, Scene3D with DynamicScene3D lazy loading)
+   - `src/components/layout/`: MainLayout, Navigation
+   - `src/components/ui/`: Reusable UI components (HeroSection, AnimatedSection, GoogleMap, etc.)
    - `src/components/services/`: Service-specific page components
+   - `src/components/portfolio/`: Portfolio showcase components
    - Components use client/server separation with `"use client"` directive
 
 3. **Data Layer**: Static data in `src/data/` files for services, portfolio, and company information.
 
 4. **API Routes**: Located in `src/app/api/` handling:
    - `/api/contact`: Contact form submission with SendGrid
-   - `/api/send-email`: Email sending endpoint
-   - `/api/csrf`: CSRF token management
+   - `/api/send-email`: General email sending endpoint  
+   - `/api/csrf`: CSRF token generation and validation
    - `/api/foodphoto-order`: Food photography order form submission
+   - `/api/checkform`: Check form submission endpoint
    - `/api/test-sendgrid`: SendGrid testing endpoint
    - `/api/debug-env`: Environment debugging (dev only)
 
-5. **Type Safety**: Comprehensive TypeScript types in `src/types/` directory and schema validation with Zod in `src/lib/`.
+5. **Type Safety**: Comprehensive TypeScript types in `src/types/` directory and Zod schema validation in `src/lib/validation.ts`.
 
 ### Critical Implementation Details
 
-1. **3D Animations**: The site uses WebGL-based 3D graphics. When modifying 3D components:
-   - Check browser console for WebGL errors
+1. **3D Animations**: WebGL-based 3D graphics with performance considerations:
+   - DynamicScene3D uses lazy loading for performance
+   - ConditionalScene3D provides device-based rendering
+   - Scene3DFallback for non-WebGL browsers
    - Test performance on mobile devices
-   - Ensure fallbacks for non-WebGL browsers
 
-2. **Email Integration**: SendGrid requires `SENDGRID_API_KEY` environment variable. Contact forms include CSRF protection.
+2. **Email Integration**: 
+   - SendGrid requires `SENDGRID_API_KEY` environment variable
+   - Contact forms include CSRF protection via `src/lib/csrf.ts`
+   - Rate limiting implemented in `src/lib/rate-limit.ts`
 
-3. **SEO Configuration**: 
-   - Metadata is managed per-page using Next.js metadata API
+3. **SEO & Sitemap**: 
+   - Metadata managed per-page using Next.js metadata API
    - Sitemap auto-generated on build via next-sitemap
-   - Custom sitemap routes for videos and images
-   - Robots.txt configuration included
+   - Custom sitemap routes: `/sitemap-videos.xml`, `/sitemap-images.xml`
+   - Dual-domain configuration in `next-sitemap.config.js`
    - URL redirects and rewrites for clean URLs
 
-4. **Security**: 
-   - CSP headers configured (currently relaxed for www.non-turn.com)
-   - HSTS with preload
-   - XSS protection, frame options, and referrer policy
-   - CSRF protection on forms
+4. **Security Configuration**: 
+   - CSP headers (currently relaxed for www.non-turn.com compatibility)
+   - HSTS with preload enabled
+   - XSS protection, frame options, referrer policy
+   - CSRF protection on all forms
    - Permissions policy restricting camera/microphone/geolocation
+
+5. **Performance Optimizations**:
+   - Image optimization with WebP/AVIF formats
+   - Bundle optimization via optimizePackageImports
+   - Service Worker support (PWA)
+   - LRU cache for rate limiting
+   - Lazy loading for heavy components
 
 ## Environment Variables Required
 
 ```
-# Email Service
+# Email Service (Required)
 SENDGRID_API_KEY=                     # SendGrid API key for email functionality
 
 # Analytics
 NEXT_PUBLIC_GA_ID=                    # Google Analytics tracking ID
 
-# Maps (from .env.example)
+# Maps  
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=      # Google Maps API key
 
-# Legacy/Optional (from .env.example)
+# Site Configuration
+NEXT_PUBLIC_SITE_DOMAIN=               # Domain setting (non-turn.com or foodphoto-pro.com)
+
+# Optional/Legacy
 MICROCMS_SERVICE_DOMAIN=               # microCMS service domain (if used)
 MICROCMS_API_KEY=                      # microCMS API key (if used)
 NEXTAUTH_URL=                          # NextAuth URL (optional)
@@ -106,42 +122,52 @@ NEXTAUTH_SECRET=                       # NextAuth secret (optional)
 
 1. **Adding New Pages**: Create directory in `src/app/` with `page.tsx` and optionally `metadata.ts`.
 
-2. **Modifying 3D Components**: Test thoroughly as WebGL can behave differently across browsers. Components located in `src/components/3d/`.
+2. **Modifying 3D Components**: Test thoroughly as WebGL can behave differently across browsers. Always use DynamicScene3D for lazy loading.
 
-3. **Contact Form Changes**: Ensure CSRF protection remains intact and test email delivery.
+3. **Form Handling**: 
+   - Always implement CSRF protection using `useCSRFToken` hook
+   - Use Zod schemas from `src/lib/validation.ts`
+   - Test email delivery with SendGrid
 
-4. **Performance**: 
+4. **Performance Best Practices**: 
    - Use Next.js Image component for all images
-   - Implement lazy loading for heavy components
-   - Leverage optimizePackageImports in next.config.js
-   - Use bundle analyzer to monitor size
+   - Implement lazy loading with LazyLoader component
+   - Monitor bundle size with `npm run analyze`
+   - Use optimizePackageImports for heavy dependencies
 
-5. **TypeScript**: 
-   - Strict mode enabled
-   - Always define proper types, avoid `any`
+5. **TypeScript Guidelines**: 
+   - Strict mode enabled - no `any` types
    - Check existing types in `src/types/`
    - Path alias `@/*` maps to `./src/*`
 
-6. **Form Validation**: Use Zod schemas in `src/lib/` for form validation with security patterns (regex for phone, postal codes, etc.)
+6. **Multi-Location Pages**: Tokyo (`/tokyo`) and Yokohama (`/yokohama`) pages use client components (TokyoClient, YokohamaClient) for interactive features.
 
 ## Configuration Details
 
 - **Output**: Standalone deployment mode
 - **Compression**: Enabled with Brotli/Gzip
-- **Image Optimization**: WebP/AVIF formats, multiple device sizes
-- **Image Remote Patterns**: Configured for Vercel blob storage (rpk6snz1bj3dcdnk.public.blob.vercel-storage.com)
+- **Image Optimization**: 
+  - Formats: WebP, AVIF
+  - Device sizes: 640, 750, 828, 1080, 1200, 1920, 2048, 3840
+  - Remote patterns configured for Vercel blob storage, YouTube, and Unsplash
 - **Cache Strategy**: 
   - Static assets: 1 year cache
-  - Service worker: 12 hours cache
+  - Service worker: 12 hours cache (dev: no-cache)
   - Sitemap: 1 hour cache
-- **URL Rewrites**: Clean URLs for services (e.g., /video-production → /services/movie)
+- **URL Rewrites**: 
+  - `/video-production` → `/services/movie`
+  - `/photography` → `/services/photo`
+  - `/web-development` → `/services/web`
+  - Category-specific rewrites for video types
 
 ## Testing Approach
 
-Currently no automated testing framework is configured. Manual testing is required for:
-- Form submissions
-- 3D animation rendering
+Currently no automated testing framework is configured. Manual testing required for:
+- Form submissions (contact, food photography order, check form)
+- 3D animation rendering across browsers
 - Responsive design breakpoints
 - Cross-browser compatibility
 - WebGL fallbacks
-- Email delivery
+- Email delivery via SendGrid
+- CSRF token validation
+- Rate limiting functionality

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./safari-optimized.css";
 
 @font-face {
   font-family: 'PixeloidMono';
