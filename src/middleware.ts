@@ -32,6 +32,26 @@ export function middleware(req: NextRequest) {
     return res;
   }
   
+  // Google Search Console verification files - ONLY for foodphoto-pro.com
+  if (url.pathname === "/google26fa748b2feb7d00.html") {
+    // foodphoto-pro.comドメインのみ許可
+    if (LP.has(host)) {
+      const res = NextResponse.next();
+      res.headers.set("x-mw", "pass:google-verification-foodphoto");
+      return res;
+    } else {
+      // non-turn.comからのアクセスは404を返す
+      return new Response('Not Found', { status: 404 });
+    }
+  }
+  
+  // Other Google verification files for non-turn.com (if any)
+  if (!LP.has(host) && url.pathname.startsWith("/google") && url.pathname.endsWith(".html")) {
+    const res = NextResponse.next();
+    res.headers.set("x-mw", "pass:google-verification-nonturn");
+    return res;
+  }
+  
   // robots.txt for foodphoto-pro.com
   if (LP.has(host) && url.pathname === "/robots.txt") {
     url.pathname = "/foodphoto-robots.txt";
