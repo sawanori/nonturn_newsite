@@ -1182,7 +1182,7 @@ const SamplesSection = memo(() => {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: index * 0.05 }}
-                    className="relative aspect-square overflow-hidden rounded-lg cursor-pointer group"
+                    className="relative aspect-square overflow-hidden rounded-lg cursor-pointer group bg-gray-100"
                     whileHover={{ scale: 1.03 }}
                     onClick={() => setSelectedImage(image)}
                   >
@@ -1229,13 +1229,13 @@ const SamplesSection = memo(() => {
                 >
                   <span className="text-2xl md:text-3xl">✕</span>
                 </button>
-                <div className="relative w-full h-[70vh] md:h-[80vh]">
+                <div className="relative w-full h-[70vh] md:h-[80vh] flex items-center justify-center">
                   <OptimizedImage
                     src={selectedImage.src}
                     alt={optimizeAltText(selectedImage.alt, '飲食店撮影の拡大表示')}
                     width={1920}
                     height={1280}
-                    className="absolute inset-0 w-full h-full object-contain"
+                    className="w-full h-full object-contain"
                     sizes="100vw"
                     quality={95}
                     priority
