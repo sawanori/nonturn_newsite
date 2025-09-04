@@ -775,6 +775,7 @@ const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
         '商用利用OK',
         '現像のみ',
         '出張費込み（東京23区内、横浜市内、千葉※船橋）',
+        '※間接照明の持参はございません',
         'お試し撮影に最適'
       ]
     },
@@ -794,6 +795,7 @@ const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
         '商用利用OK',
         '標準的なレタッチ込み',
         '出張費込み（東京23区内、横浜市内、千葉※船橋）',
+        '店内撮影用間接照明持参（※弊社所有×１）',
         '人気メニュー重点撮影'
       ]
     },
@@ -813,6 +815,7 @@ const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
         '商用利用OK',
         '標準的なレタッチ込み',
         '出張費込み（東京23区内、横浜市内、千葉※船橋）',
+        '店内撮影用間接照明持参（※弊社所有×１）',
         '撮影ディレクション付き'
       ]
     }
