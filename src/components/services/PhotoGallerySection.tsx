@@ -127,6 +127,32 @@ export function PhotoGallerySection({ images, categories = [] }: PhotoGallerySec
           ))}
         </div>
 
+        {/* Food Photography Link for Food Category */}
+        {selectedCategory === '料理撮影' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-8 text-center"
+          >
+            <a
+              href="https://foodphoto-pro.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center bg-gradient-to-r from-orange-400 to-red-500 text-white px-6 py-3 rounded-xl font-bold hover:from-orange-500 hover:to-red-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+            >
+              <span className="text-xl mr-2">🍽️</span>
+              飲食店撮影PhotoStudio
+              <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+            <p className="text-gray-400 text-sm mt-2">
+              飲食店専門の撮影サービスサイトはこちら
+            </p>
+          </motion.div>
+        )}
+
         {/* Gallery Grid */}
         <motion.div 
           className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
