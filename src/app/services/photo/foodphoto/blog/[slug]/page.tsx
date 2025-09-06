@@ -68,7 +68,7 @@ export default async function BlogDetail({ params }: Props) {
               飲食店撮影PhotoStudio
             </Link>
             <span className="mx-2">/</span>
-            <Link href="/blog" className="hover:underline">
+            <Link href="/services/photo/foodphoto/blog" className="hover:underline">
               ブログ
             </Link>
             <span className="mx-2">/</span>
