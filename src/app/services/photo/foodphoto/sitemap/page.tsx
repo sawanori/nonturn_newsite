@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import { getAllPosts } from '@/lib/mock'
 
 export const metadata: Metadata = {
   title: 'サイトマップ | 飲食店撮影PhotoStudio',
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
 }
 
 export default function FoodPhotoSitemap() {
+  const posts = getAllPosts()
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 py-12">
@@ -73,6 +75,44 @@ export default function FoodPhotoSitemap() {
                     ⭐ サービスの特徴
                   </Link>
                 </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* ブログ記事セクション - 新規追加 */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-bold text-gray-700 mb-6 border-b-2 border-orange-400 pb-2">
+            ブログ・お役立ち記事
+          </h2>
+          <div className="mb-4">
+            <Link href="/blog" className="text-blue-600 hover:text-orange-500 font-semibold">
+              📚 ブログトップページ
+            </Link>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-600 mb-3">撮影ノウハウ</h3>
+              <ul className="space-y-2 ml-4">
+                {posts.filter(p => p.category?.slug === 'howto').map(post => (
+                  <li key={post.slug}>
+                    <Link href={`/blog/${post.slug}`} className="text-blue-600 hover:text-orange-500 text-sm">
+                      • {post.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-gray-600 mb-3">媒体運用</h3>
+              <ul className="space-y-2 ml-4">
+                {posts.filter(p => p.category?.slug === 'media').map(post => (
+                  <li key={post.slug}>
+                    <Link href={`/blog/${post.slug}`} className="text-blue-600 hover:text-orange-500 text-sm">
+                      • {post.title}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
