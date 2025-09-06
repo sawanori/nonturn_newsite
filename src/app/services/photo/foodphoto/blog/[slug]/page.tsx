@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
+import Script from 'next/script'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -14,6 +15,8 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await Promise.resolve(params)
   const post = getPostBySlug(resolvedParams.slug)
+  const base = 'https://foodphoto-pro.com'
+  const url = `${base}/blog/${resolvedParams.slug}`
   
   if (!post) {
     return {
@@ -27,15 +30,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
+    alternates: {
+      canonical: url,
+    },
     openGraph: {
+      type: 'article',
+      url,
       title: post.title,
       description,
       images: post.cover_image_url ? [{ url: post.cover_image_url }] : undefined,
-      type: 'article',
       publishedTime: post.published_at,
+      modifiedTime: post.updated_at || post.published_at,
+      authors: [post.author_name || 'PhotoStudio'],
     },
-    alternates: {
-      canonical: `https://foodphoto-pro.com/blog/${post.slug}`,
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description,
+      images: post.cover_image_url ? [post.cover_image_url] : undefined,
     },
   }
 }
@@ -47,9 +59,72 @@ export async function generateStaticParams() {
   }))
 }
 
+// JSON-LD用ユーティリティ関数（nullを出さない安全整形）
+function articleJsonLd(post: any, url: string) {
+  const obj: Record<string, any> = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    datePublished: post.published_at,
+    dateModified: post.updated_at || post.published_at,
+    author: [{ 
+      "@type": "Person", 
+      name: post.author_name || "PhotoStudio" 
+    }],
+    mainEntityOfPage: url,
+    publisher: {
+      "@type": "Organization",
+      name: "飲食店撮影PhotoStudio",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://foodphoto-pro.com/logo.png"
+      }
+    }
+  }
+  if (post.cover_image_url) {
+    obj.image = [post.cover_image_url]
+  }
+  if (post.category?.name) {
+    obj.articleSection = post.category.name
+  }
+  if (post.excerpt) {
+    obj.description = post.excerpt
+  }
+  return obj
+}
+
+function breadcrumbJsonLd(post: any, url: string, base: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { 
+        "@type": "ListItem", 
+        position: 1, 
+        name: "ホーム", 
+        item: base 
+      },
+      { 
+        "@type": "ListItem", 
+        position: 2, 
+        name: "ブログ", 
+        item: `${base}/blog` 
+      },
+      { 
+        "@type": "ListItem", 
+        position: 3, 
+        name: post.title, 
+        item: url 
+      }
+    ]
+  }
+}
+
 export default async function BlogDetail({ params }: Props) {
   const resolvedParams = await Promise.resolve(params)
   const post = getPostBySlug(resolvedParams.slug)
+  const base = 'https://foodphoto-pro.com'
+  const url = `${base}/blog/${resolvedParams.slug}`
   
   if (!post) {
     notFound()
@@ -60,6 +135,24 @@ export default async function BlogDetail({ params }: Props) {
 
   return (
     <article className="min-h-screen bg-white">
+      {/* 構造化データ：Article */}
+      <Script 
+        id="ld-article" 
+        type="application/ld+json" 
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(articleJsonLd(post, url))
+        }}
+      />
+      {/* 構造化データ：BreadcrumbList */}
+      <Script 
+        id="ld-breadcrumb" 
+        type="application/ld+json" 
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd(post, url, base))
+        }}
+      />
       {/* Header with breadcrumb */}
       <div className="bg-gradient-to-r from-orange-500 to-red-600 text-white py-8">
         <div className="mx-auto max-w-4xl px-4">

@@ -7,6 +7,8 @@ export type MockPost = {
   cover_image_url?: string;
   category?: { slug: string; name: string };
   published_at: string;
+  updated_at?: string;
+  author_name?: string;
 };
 
 const POSTS: MockPost[] = [
@@ -42,6 +44,8 @@ const POSTS: MockPost[] = [
       <p>これらの要素を意識することで、CVR（コンバージョン率）の向上が期待できます。実際に弊社のクライアント様では、写真の改善により予約率が平均23%向上しました。</p>
     `,
     published_at: "2025-09-06T12:00:00.000Z",
+    updated_at: "2025-09-06T15:00:00.000Z",
+    author_name: "PhotoStudio編集部",
   },
   {
     id: 2,
@@ -91,6 +95,8 @@ const POSTS: MockPost[] = [
       <p>これらの指標を参考に、料理の特性に合わせたレンズ選定を行うことで、食べログでのクリック率向上が期待できます。</p>
     `,
     published_at: "2025-09-05T12:00:00.000Z",
+    updated_at: "2025-09-05T14:00:00.000Z",
+    author_name: "PhotoStudio編集部",
   },
   {
     id: 3,
@@ -175,6 +181,8 @@ const POSTS: MockPost[] = [
       <p>実際の成功事例：渋谷のイタリアンレストランでは、週1回のリール投稿により、3ヶ月で予約数が45%増加しました。</p>
     `,
     published_at: "2025-09-04T12:00:00.000Z",
+    updated_at: "2025-09-04T14:00:00.000Z",
+    author_name: "PhotoStudio編集部",
   },
   {
     id: 5,
@@ -216,6 +224,8 @@ const POSTS: MockPost[] = [
       <p>これらの施策により、「地域名＋料理ジャンル」検索で上位3位以内の表示率が平均67%向上した実績があります。</p>
     `,
     published_at: "2025-09-03T12:00:00.000Z",
+    updated_at: "2025-09-03T18:00:00.000Z",
+    author_name: "PhotoStudio編集部",
   },
   {
     id: 6,
@@ -292,6 +302,8 @@ const POSTS: MockPost[] = [
       <p>季節感のある写真は、SNSでのシェア率が通常の2.3倍になるというデータもあります。ぜひ積極的に取り入れてみてください。</p>
     `,
     published_at: "2024-12-10T12:00:00.000Z",
+    updated_at: "2024-12-10T15:00:00.000Z",
+    author_name: "PhotoStudio編集部",
   }
 ];
 
