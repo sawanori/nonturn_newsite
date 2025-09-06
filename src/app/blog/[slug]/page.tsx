@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       publishedTime: post.published_at,
     },
     alternates: {
-      canonical: `https://foodphoto-pro.com/services/photo/foodphoto/blog/${post.slug}`,
+      canonical: `https://foodphoto-pro.com/blog/${post.slug}`,
     },
   }
 }
@@ -68,7 +68,7 @@ export default async function BlogDetail({ params }: Props) {
               飲食店撮影PhotoStudio
             </Link>
             <span className="mx-2">/</span>
-            <Link href="/services/photo/foodphoto/blog" className="hover:underline">
+            <Link href="/blog" className="hover:underline">
               ブログ
             </Link>
             <span className="mx-2">/</span>
@@ -129,7 +129,7 @@ export default async function BlogDetail({ params }: Props) {
           <p className="text-sm text-gray-600 mb-3">この記事をシェア</p>
           <div className="flex gap-3">
             <a
-              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`https://foodphoto-pro.com/services/photo/foodphoto/blog/${post.slug}`)}`}
+              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`https://foodphoto-pro.com/blog/${post.slug}`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
@@ -137,7 +137,7 @@ export default async function BlogDetail({ params }: Props) {
               X (Twitter)
             </a>
             <a
-              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://foodphoto-pro.com/services/photo/foodphoto/blog/${post.slug}`)}`}
+              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://foodphoto-pro.com/blog/${post.slug}`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
@@ -145,7 +145,7 @@ export default async function BlogDetail({ params }: Props) {
               Facebook
             </a>
             <a
-              href={`https://line.me/R/msg/text/?${encodeURIComponent(post.title + ' https://foodphoto-pro.com/services/photo/foodphoto/blog/' + post.slug)}`}
+              href={`https://line.me/R/msg/text/?${encodeURIComponent(post.title + ' https://foodphoto-pro.com/blog/' + post.slug)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors text-sm font-medium"

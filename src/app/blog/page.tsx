@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     title: 'ブログ｜飲食店撮影PhotoStudio',
     description: '飲食店の売上向上に役立つ撮影ノウハウ、媒体運用、エリア別の撮影テクニックなど、プロのカメラマンが実践知を発信しています。',
     type: 'website',
-    url: 'https://foodphoto-pro.com/services/photo/foodphoto/blog',
+    url: 'https://foodphoto-pro.com/blog',
   },
 }
 
