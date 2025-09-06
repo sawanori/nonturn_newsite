@@ -195,12 +195,12 @@ const structuredData = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const h = headers();
+  const h = await headers();
   const host = h.get("host")?.toLowerCase() || "";
   const isFoodPhoto = host === "foodphoto-pro.com" || host.endsWith(".foodphoto-pro.com");
   const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
