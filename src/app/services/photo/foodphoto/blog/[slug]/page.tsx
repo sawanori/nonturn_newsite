@@ -64,11 +64,11 @@ export default async function BlogDetail({ params }: Props) {
       <div className="bg-gradient-to-r from-orange-500 to-red-600 text-white py-8">
         <div className="mx-auto max-w-4xl px-4">
           <div className="flex items-center text-sm mb-4 opacity-90">
-            <Link href="/services/photo/foodphoto" className="hover:underline">
+            <Link href="https://foodphoto-pro.com" className="hover:underline">
               飲食店撮影PhotoStudio
             </Link>
             <span className="mx-2">/</span>
-            <Link href="/services/photo/foodphoto/blog" className="hover:underline">
+            <Link href="https://foodphoto-pro.com/blog" className="hover:underline">
               ブログ
             </Link>
             <span className="mx-2">/</span>
@@ -165,13 +165,13 @@ export default async function BlogDetail({ params }: Props) {
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
             <Link
-              href="/services/photo/foodphoto/form"
+              href="https://foodphoto-pro.com/form"
               className="inline-block px-6 py-3 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-xl font-bold hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 text-center"
             >
               撮影日程を打診する
             </Link>
             <Link
-              href="/services/photo/foodphoto#pricing"
+              href="https://foodphoto-pro.com#pricing"
               className="inline-block px-6 py-3 bg-white border-2 border-orange-500 text-orange-600 rounded-xl font-bold hover:bg-orange-50 transition-colors text-center"
             >
               料金プランを見る
