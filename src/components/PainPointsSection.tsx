@@ -111,7 +111,9 @@ export default function PainPointsSection() {
               transition={{ delay: 0.3 }}
               className="block text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500"
             >
-              こんな悩みや不満ありませんか？
+              <span className="block md:hidden">こんな悩みや不満</span>
+              <span className="block md:hidden">ありませんか？</span>
+              <span className="hidden md:block">こんな悩みや不満ありませんか？</span>
             </motion.span>
           </h2>
           
