@@ -7,9 +7,9 @@
       "permanent": true
     },
     {
-      "source": "/services/photo/foodphoto/form",
+      "source": "/services/photo/foodphoto/:path*",
       "has": [{ "type": "host", "value": "non-turn.com" }],
-      "destination": "https://foodphoto-pro.com/form",
+      "destination": "https://foodphoto-pro.com/:path*",
       "permanent": true
     }
   ]
