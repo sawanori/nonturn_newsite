@@ -127,6 +127,23 @@ export function middleware(req: NextRequest) {
     return res;
   }
 
+  // ブログページのルーティング
+  if (url.pathname === "/blog") {
+    url.pathname = "/services/photo/foodphoto/blog";
+    const res = NextResponse.rewrite(url);
+    res.headers.set("x-mw", "rewrite:/blog -> /services/photo/foodphoto/blog");
+    return res;
+  }
+
+  // ブログ記事詳細ページのルーティング
+  if (url.pathname.startsWith("/blog/")) {
+    const newPath = url.pathname.replace("/blog/", "/services/photo/foodphoto/blog/");
+    url.pathname = newPath;
+    const res = NextResponse.rewrite(url);
+    res.headers.set("x-mw", `rewrite:${url.pathname} -> ${newPath}`);
+    return res;
+  }
+
   // その他は 301 で non-turn.com へ
   const res = NextResponse.redirect(
     `https://non-turn.com${url.pathname}${url.search}`,
