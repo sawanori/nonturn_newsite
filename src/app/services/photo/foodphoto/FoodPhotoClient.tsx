@@ -13,6 +13,8 @@ import { throttle, debounce, addPassiveEventListener } from './performance-utils
 import { initImageOptimizations } from './image-optimization'
 import { initFontOptimizations } from './font-optimization'
 import { initAccessibility, FocusManager, LiveRegionAnnouncer, enhanceFormAccessibility } from './accessibility'
+import { getLatestPosts } from '@/lib/mock'
+import PostCard from '@/components/PostCard'
 import './core-web-vitals.css'
 import './hero-mobile.css'
 import './accessibility.css'
@@ -1251,6 +1253,67 @@ const SamplesSection = memo(() => {
 })
 SamplesSection.displayName = 'SamplesSection'
 
+// Blog Section - Latest articles
+const BlogSection = memo(() => {
+  const latestPosts = getLatestPosts(3)
+  
+  return (
+    <section id="blog" className="py-16" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
+      <div className="max-w-6xl mx-auto px-4">
+        <Suspense fallback={<SectionFallback />}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <SectionTitle>最新コンテンツ</SectionTitle>
+            <p className="text-gray-300 text-lg max-w-3xl mx-auto mb-8">
+              飲食店の売上向上に役立つ撮影ノウハウ、媒体運用のコツなど、
+              プロカメラマンが実践知を発信しています。
+            </p>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {latestPosts.map((post, index) => (
+              <motion.div
+                key={post.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <PostCard post={post} />
+              </motion.div>
+            ))}
+          </div>
+          
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <Link href="/services/photo/foodphoto/blog">
+              <motion.button
+                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-full font-bold text-lg hover:shadow-xl transform transition-all duration-300"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                すべての記事を見る
+                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </motion.button>
+            </Link>
+          </motion.div>
+        </Suspense>
+      </div>
+    </section>
+  )
+})
+BlogSection.displayName = 'BlogSection'
+
 const FlowSection = memo(() => {
   const steps = [
     {
@@ -1749,6 +1812,7 @@ export default function FoodPhotoClient() {
           <PricingSection onOpenModal={handleOpenModal} />
           <ParallaxSection />
           <SamplesSection />
+          <BlogSection />
           <FlowSection />
           <CasesSection />
           <FAQSection />
