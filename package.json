@@ -24,6 +24,7 @@
     "framer-motion": "^12.18.1",
     "jose": "^6.0.11",
     "lru-cache": "^11.1.0",
+    "lucide-react": "^0.542.0",
     "next": "15.3.4",
     "next-sitemap": "^4.2.3",
     "react": "^19.0.0",

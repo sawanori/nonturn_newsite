@@ -15,6 +15,7 @@ import { initFontOptimizations } from './font-optimization'
 import { initAccessibility, FocusManager, LiveRegionAnnouncer, enhanceFormAccessibility } from './accessibility'
 import { getLatestPosts } from '@/lib/mock'
 import PostCard from '@/components/PostCard'
+import PainPointsSection from '@/components/PainPointsSection'
 import './core-web-vitals.css'
 import './hero-mobile.css'
 import './accessibility.css'
@@ -1808,6 +1809,7 @@ export default function FoodPhotoClient() {
           <Header />
           <IntroSection />
           <NewsSection />
+          <PainPointsSection />
           <FeaturesSection />
           <PricingSection onOpenModal={handleOpenModal} />
           <ParallaxSection />
