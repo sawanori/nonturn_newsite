@@ -235,6 +235,7 @@ export default function PainPointsSection() {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <motion.a
+              id="cta-painpoints-apply"
               href="https://foodphoto-pro.com/form"
               className="px-8 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-2xl font-bold text-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
               whileHover={{ y: -2 }}
@@ -244,6 +245,7 @@ export default function PainPointsSection() {
             </motion.a>
             
             <motion.a
+              id="cta-painpoints-inquiry"
               href="https://foodphoto-pro.com/form"
               className="px-8 py-4 bg-white border-2 border-gray-300 text-gray-800 rounded-2xl font-bold text-lg hover:bg-gray-50 hover:border-gray-400 transition-all duration-300"
               whileHover={{ y: -2 }}

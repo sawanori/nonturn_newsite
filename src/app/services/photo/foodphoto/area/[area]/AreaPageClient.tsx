@@ -46,6 +46,7 @@ export default function AreaPageClient({ areaData }: AreaPageClientProps) {
             </p>
             <div className="flex flex-wrap gap-4">
               <Link
+                id="cta-area-hero-apply"
                 href="/services/photo/foodphoto/form"
                 className="inline-block bg-white text-orange-500 px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition-colors"
               >
@@ -368,6 +369,7 @@ export default function AreaPageClient({ areaData }: AreaPageClientProps) {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
+                id="cta-area-bottom-apply"
                 href="/services/photo/foodphoto/form"
                 className="inline-block bg-white text-orange-500 px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition-colors"
               >

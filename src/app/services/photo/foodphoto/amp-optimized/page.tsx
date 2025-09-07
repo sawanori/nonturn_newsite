@@ -213,7 +213,7 @@ export default function FoodPhotoAMPOptimizedPage() {
           <h1>飲食店撮影PhotoStudio</h1>
           <p>プロカメラマンによる飲食店専門の撮影サービス</p>
           <p>料理の美味しさを最大限に引き出す写真で集客力アップ</p>
-          <Link href="/services/photo/foodphoto/form" className="btn">
+          <Link href="/services/photo/foodphoto/form" className="btn" id="cta-ampopt-apply1">
             無料相談・お見積もり
           </Link>
         </div>
@@ -245,7 +245,7 @@ export default function FoodPhotoAMPOptimizedPage() {
                 <div className="price">¥{plan.price}</div>
                 <p>{plan.time}撮影</p>
                 <p>{plan.cuts}納品</p>
-                <Link href="/services/photo/foodphoto/form" className="btn mt-4">
+                <Link href="/services/photo/foodphoto/form" className="btn mt-4" id="cta-ampopt-apply2">
                   申し込む
                 </Link>
               </div>
@@ -294,7 +294,7 @@ export default function FoodPhotoAMPOptimizedPage() {
         <div className="container">
           <h2 className="section-title">今すぐお問い合わせください</h2>
           <p className="mb-4">プロの撮影で飲食店の魅力を最大限に引き出します</p>
-          <Link href="/services/photo/foodphoto/form" className="btn">
+          <Link href="/services/photo/foodphoto/form" className="btn" id="cta-ampopt-apply3">
             無料相談・お見積もり
           </Link>
         </div>

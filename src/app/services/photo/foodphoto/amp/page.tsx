@@ -140,7 +140,7 @@ export default function FoodPhotoAMPPage() {
           <h1>飲食店撮影PhotoStudio</h1>
           <p>プロカメラマンによる飲食店専門の撮影サービス</p>
           <p>料理の美味しさを最大限に引き出す写真で集客力アップ</p>
-          <a href="/services/photo/foodphoto/form" className="cta-button">
+          <a href="/services/photo/foodphoto/form" className="cta-button" id="cta-amp-apply1">
             無料相談・お見積もり
           </a>
         </div>
@@ -190,7 +190,7 @@ export default function FoodPhotoAMPPage() {
               <p>1時間撮影</p>
               <p>3-5カット納品</p>
               <p>お試し撮影に最適</p>
-              <a href="/services/photo/foodphoto/form" className="cta-button">
+              <a href="/services/photo/foodphoto/form" className="cta-button" id="cta-amp-apply2">
                 申し込む
               </a>
             </div>
@@ -200,7 +200,7 @@ export default function FoodPhotoAMPPage() {
               <p>2時間撮影</p>
               <p>10-15カット納品目安</p>
               <p>人気No.1プラン</p>
-              <a href="/services/photo/foodphoto/form" className="cta-button">
+              <a href="/services/photo/foodphoto/form" className="cta-button" id="cta-amp-apply3">
                 申し込む
               </a>
             </div>
@@ -210,7 +210,7 @@ export default function FoodPhotoAMPPage() {
               <p>4時間撮影</p>
               <p>30-40カット納品目安</p>
               <p>充実の撮影内容</p>
-              <a href="/services/photo/foodphoto/form" className="cta-button">
+              <a href="/services/photo/foodphoto/form" className="cta-button" id="cta-amp-apply4">
                 申し込む
               </a>
             </div>
@@ -305,7 +305,7 @@ export default function FoodPhotoAMPPage() {
           <p style={{ fontSize: '1.2rem', marginBottom: '30px' }}>
             プロの撮影で飲食店の魅力を最大限に引き出します
           </p>
-          <a href="/services/photo/foodphoto/form" className="cta-button">
+          <a href="/services/photo/foodphoto/form" className="cta-button" id="cta-amp-apply5">
             無料相談・お見積もり
           </a>
         </div>

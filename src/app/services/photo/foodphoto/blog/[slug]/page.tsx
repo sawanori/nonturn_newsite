@@ -247,6 +247,7 @@ export default async function BlogDetail({ params }: Props) {
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link 
+                  id="cta-blogsidebar-apply"
                   href="https://foodphoto-pro.com/form"
                   className="inline-block px-5 py-2.5 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-xl font-medium hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 text-center text-sm"
                 >
@@ -355,6 +356,7 @@ export default async function BlogDetail({ params }: Props) {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
+                  id="cta-blogbottom-apply"
                   href="https://foodphoto-pro.com/form"
                   className="inline-block px-8 py-4 bg-white text-orange-600 rounded-xl font-bold hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 text-center"
                 >

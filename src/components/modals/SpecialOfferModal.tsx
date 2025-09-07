@@ -182,7 +182,7 @@ export default function SpecialOfferModal({ isOpen, onClose }: SpecialOfferModal
                       className="md:hidden"
                     >
                       <Link href="/services/photo/foodphoto/form">
-                        <button className="w-full py-3 px-6 bg-gradient-to-r from-orange-400 to-red-500 text-white text-base font-bold rounded-xl shadow-xl">
+                        <button id="cta-offer-modal-apply1" className="w-full py-3 px-6 bg-gradient-to-r from-orange-400 to-red-500 text-white text-base font-bold rounded-xl shadow-xl">
                           今すぐ申し込む
                         </button>
                       </Link>
@@ -283,6 +283,7 @@ export default function SpecialOfferModal({ isOpen, onClose }: SpecialOfferModal
                         <motion.button
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
+                          id="cta-offer-modal-apply2"
                           className="w-full py-4 px-8 bg-gradient-to-r from-orange-400 to-red-500 text-white text-xl font-bold rounded-2xl shadow-2xl"
                         >
                           今すぐ申し込む

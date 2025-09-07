@@ -250,7 +250,7 @@ const Header = memo(() => {
         
         <div className="hidden lg:flex items-center gap-2 lg:gap-3">
           <Link href="/services/photo/foodphoto/form">
-            <Button variant="primary" className="text-xs lg:text-sm xl:text-base px-3 lg:px-4 py-2">
+            <Button variant="primary" className="text-xs lg:text-sm xl:text-base px-3 lg:px-4 py-2" id="cta-header-apply">
               申し込む
             </Button>
           </Link>
@@ -316,7 +316,7 @@ const Header = memo(() => {
               </a>
               <div className="pt-4 space-y-3 border-t border-gray-700">
                 <Link href="/services/photo/foodphoto/form" className="block">
-                  <button className="w-full bg-gradient-to-r from-orange-400 to-red-500 text-white py-3 px-4 rounded-lg font-bold">
+                  <button className="w-full bg-gradient-to-r from-orange-400 to-red-500 text-white py-3 px-4 rounded-lg font-bold" id="cta-hero-apply">
                     申し込む
                   </button>
                 </Link>
@@ -574,7 +574,7 @@ const IntroSection = memo(() => {
                 transition={{ delay: 0.8 }}
               >
                 <Link href="/services/photo/foodphoto/form">
-                  <Button variant="primary" className="min-w-[200px] px-6 py-3">
+                  <Button variant="primary" className="min-w-[200px] px-6 py-3" id="cta-intro-apply">
                     今すぐ申し込む
                   </Button>
                 </Link>
@@ -915,6 +915,7 @@ const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
                   <Button 
                     variant={plan.isPopular ? "primary" : "secondary"} 
                     className="w-full text-lg py-4"
+                    id={plan.isPopular ? 'cta-pricing-popular-apply' : `cta-pricing-${plan.name.replace('プラン', '').toLowerCase()}-select`}
                   >
                     {plan.isPopular ? '今すぐ申し込む' : 'プランを選択'}
                   </Button>
@@ -1615,7 +1616,7 @@ const BottomCTA = memo(() => (
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/services/photo/foodphoto/form">
-              <Button variant="primary">今すぐ申し込む</Button>
+              <Button variant="primary" id="cta-faq-apply">今すぐ申し込む</Button>
             </Link>
             <Link href="/contact">
               <Button variant="secondary">まずは問い合わせる</Button>
@@ -1833,7 +1834,7 @@ export default function FoodPhotoClient() {
           <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t border-gray-200 p-3" role="navigation" aria-label="モバイルアクションボタン">
             <div className="flex gap-2">
               <Link href="/services/photo/foodphoto/form" className="flex-1">
-                <button className="w-full bg-gradient-to-r from-orange-400 to-red-500 text-white py-3 px-4 rounded-lg font-bold text-sm">
+                <button className="w-full bg-gradient-to-r from-orange-400 to-red-500 text-white py-3 px-4 rounded-lg font-bold text-sm" id="cta-bottom-apply">
                   申し込む
                 </button>
               </Link>

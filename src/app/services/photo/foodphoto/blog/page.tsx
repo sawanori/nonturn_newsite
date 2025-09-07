@@ -81,6 +81,7 @@ export default function BlogList() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
+              id="cta-bloglist-apply"
               href="https://foodphoto-pro.com/form"
               className="inline-block px-8 py-4 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-xl font-bold hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
             >

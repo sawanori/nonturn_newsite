@@ -205,6 +205,7 @@ export default function ReviewSection() {
             多くの飲食店様から高評価をいただいています
           </p>
           <a
+            id="cta-review-apply"
             href="/services/photo/foodphoto/form"
             className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full transition-colors"
           >
