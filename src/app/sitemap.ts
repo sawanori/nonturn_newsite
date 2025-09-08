@@ -13,7 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const areas = getAreaList()
     
     const areaUrls: MetadataRoute.Sitemap = areas.map(area => ({
-      url: `${baseUrl}/services/photo/foodphoto/area/${area.id}`,
+      url: `${baseUrl}/area/${area.id}`,  // ミドルウェアでリライトされる短縮URL
       lastModified,
       changeFrequency: 'weekly',
       priority: area.id === 'shibuya' || area.id === 'shinjuku' ? 0.85 : 
@@ -32,7 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ]
     
     const blogUrls: MetadataRoute.Sitemap = blogSlugs.map(slug => ({
-      url: `${baseUrl}/services/photo/foodphoto/blog/${slug}`,
+      url: `${baseUrl}/blog/${slug}`,  // ミドルウェアでリライトされる短縮URL
       lastModified,
       changeFrequency: 'monthly',
       priority: 0.6,
@@ -46,31 +46,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 1.0,
       },
       {
-        url: `${baseUrl}/services/photo/foodphoto`,
-        lastModified,
-        changeFrequency: 'weekly',
-        priority: 0.95,
-      },
-      {
-        url: `${baseUrl}/services/photo/foodphoto/form`,
+        url: `${baseUrl}/form`,
         lastModified,
         changeFrequency: 'monthly',
         priority: 0.9,
       },
       {
-        url: `${baseUrl}/services/photo/foodphoto/checkform`,
+        url: `${baseUrl}/checkform`,
         lastModified,
         changeFrequency: 'monthly',
         priority: 0.8,
       },
       {
-        url: `${baseUrl}/services/photo/foodphoto/contact`,
-        lastModified,
-        changeFrequency: 'monthly',
-        priority: 0.75,
-      },
-      {
-        url: `${baseUrl}/services/photo/foodphoto/blog`,
+        url: `${baseUrl}/blog`,
         lastModified,
         changeFrequency: 'weekly',
         priority: 0.7,
