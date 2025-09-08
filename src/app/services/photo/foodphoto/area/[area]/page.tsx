@@ -27,7 +27,7 @@ export async function generateMetadata({
     }
   }
 
-  const canonicalUrl = `https://foodphoto-pro.com/services/photo/foodphoto/area/${areaData.id}`
+  const canonicalUrl = `https://foodphoto-pro.com/area/${areaData.id}`
 
   return {
     title: `${areaData.title} | 飲食店撮影PhotoStudio`,
@@ -76,7 +76,7 @@ function generateStructuredData(areaData: any) {
     '@graph': [
       {
         '@type': 'Service',
-        '@id': `https://foodphoto-pro.com/services/photo/foodphoto/area/${areaData.id}#service`,
+        '@id': `https://foodphoto-pro.com/area/${areaData.id}#service`,
         name: areaData.title,
         description: areaData.description,
         provider: {
@@ -111,7 +111,7 @@ function generateStructuredData(areaData: any) {
           latitude: areaData.coordinates.latitude,
           longitude: areaData.coordinates.longitude,
         },
-        url: `https://foodphoto-pro.com/services/photo/foodphoto/area/${areaData.id}`,
+        url: `https://foodphoto-pro.com/area/${areaData.id}`,
       },
       {
         '@type': 'FAQPage',

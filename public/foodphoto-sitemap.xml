@@ -5,7 +5,7 @@
   <!-- メインページ -->
   <url>
     <loc>https://foodphoto-pro.com/</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -18,7 +18,7 @@
   <!-- 申し込みフォーム -->
   <url>
     <loc>https://foodphoto-pro.com/form</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -26,7 +26,7 @@
   <!-- 料金・プラン -->
   <url>
     <loc>https://foodphoto-pro.com/pricing</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -34,84 +34,84 @@
   <!-- エリアページ -->
   <url>
     <loc>https://foodphoto-pro.com/area/shibuya</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://foodphoto-pro.com/area/shinjuku</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://foodphoto-pro.com/area/yokohama</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://foodphoto-pro.com/area/ikebukuro</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://foodphoto-pro.com/area/shinagawa</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://foodphoto-pro.com/area/ginza</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://foodphoto-pro.com/area/roppongi</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://foodphoto-pro.com/area/ebisu</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://foodphoto-pro.com/area/omotesando</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://foodphoto-pro.com/area/asakusa</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
   
   <url>
     <loc>https://foodphoto-pro.com/area/kichijoji</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>https://foodphoto-pro.com/area/akasaka</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -119,7 +119,7 @@
   <!-- サンクスページ -->
   <url>
     <loc>https://foodphoto-pro.com/form/thank-you</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
@@ -127,7 +127,7 @@
   <!-- チェックフォーム -->
   <url>
     <loc>https://foodphoto-pro.com/checkform</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -135,7 +135,7 @@
   <!-- ブログトップ -->
   <url>
     <loc>https://foodphoto-pro.com/blog</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -143,42 +143,42 @@
   <!-- ブログ記事 -->
   <url>
     <loc>https://foodphoto-pro.com/blog/menu-photo-pricing</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://foodphoto-pro.com/blog/tabelog-top-image</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://foodphoto-pro.com/blog/steam-effect-hot-dishes</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://foodphoto-pro.com/blog/restaurant-photo-beginner</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://foodphoto-pro.com/blog/smartphone-food-photo-tips</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://foodphoto-pro.com/blog/light-adjustment-restaurant</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -186,7 +186,7 @@
   <!-- 利用規約 -->
   <url>
     <loc>https://foodphoto-pro.com/terms</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2025-09-08</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
