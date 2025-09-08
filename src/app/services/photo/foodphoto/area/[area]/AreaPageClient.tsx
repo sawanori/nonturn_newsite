@@ -422,14 +422,15 @@ export default function AreaPageClient({ areaData }: AreaPageClientProps) {
               {[
                 {
                   name: 'ライトプラン',
-                  price: '29,800',
-                  description: 'SNS投稿用の基本撮影',
+                  originalPrice: '44,000',
+                  price: '33,000',
+                  description: '短時間でサクッと撮影',
                   features: [
-                    '料理10品まで撮影',
-                    '撮影時間 2時間',
-                    '画像納品 30枚',
+                    '撮影時間 1時間',
+                    '3〜5カット撮影',
+                    '即日データ納品',
+                    '商用利用可能',
                     '基本レタッチ込み',
-                    'データ納品 3営業日',
                   ],
                   badge: null,
                   color: 'from-gray-50 to-gray-100',
@@ -437,15 +438,16 @@ export default function AreaPageClient({ areaData }: AreaPageClientProps) {
                 },
                 {
                   name: 'スタンダードプラン',
-                  price: '59,800',
+                  originalPrice: '55,000',
+                  price: '44,000',
                   description: 'メニュー・Web用の本格撮影',
                   features: [
-                    '料理20品まで撮影',
-                    '撮影時間 4時間',
-                    '画像納品 60枚',
-                    'プロレタッチ込み',
-                    'データ納品 2営業日',
-                    '店内・外観撮影込み',
+                    '撮影時間 2時間',
+                    '時間内撮り放題',
+                    '10〜15カット程度',
+                    '即日データ納品',
+                    '商用利用可能',
+                    '標準レタッチ込み',
                   ],
                   badge: '人気No.1',
                   color: 'from-orange-50 to-orange-100',
@@ -453,16 +455,17 @@ export default function AreaPageClient({ areaData }: AreaPageClientProps) {
                 },
                 {
                   name: 'プレミアムプラン',
-                  price: '98,000',
+                  originalPrice: '99,000',
+                  price: '88,000',
                   description: '広告・ブランディング撮影',
                   features: [
-                    '料理無制限撮影',
-                    '撮影時間 終日',
-                    '画像納品 100枚以上',
-                    'ハイエンドレタッチ',
-                    'データ納品 翌営業日',
-                    '動画撮影オプション',
-                    'スタイリング込み',
+                    '撮影時間 4時間',
+                    '時間内撮り放題',
+                    '30〜40カット程度',
+                    '即日データ納品',
+                    '商用利用可能',
+                    '標準レタッチ込み',
+                    '撮影ディレクション付き',
                   ],
                   badge: 'おすすめ',
                   color: 'from-purple-50 to-purple-100',
@@ -491,7 +494,13 @@ export default function AreaPageClient({ areaData }: AreaPageClientProps) {
                   <p className="text-gray-600 mb-6">{plan.description}</p>
                   
                   <div className="mb-8">
-                    <span className="text-4xl font-black">¥{plan.price}</span>
+                    {plan.originalPrice && (
+                      <div className="mb-2">
+                        <span className="text-xl text-gray-400 line-through">¥{plan.originalPrice}</span>
+                        <span className="ml-2 text-sm text-red-500 font-bold">キャンペーン価格</span>
+                      </div>
+                    )}
+                    <span className="text-4xl font-black text-orange-600">¥{plan.price}</span>
                     <span className="text-gray-500 ml-2">/ 回</span>
                   </div>
 
@@ -520,12 +529,16 @@ export default function AreaPageClient({ areaData }: AreaPageClientProps) {
               viewport={{ once: true }}
               className="mt-12 text-center"
             >
-              <p className="text-gray-600 mb-4">
-                ※ {areaData.name}エリア内は出張費無料
-              </p>
+              <div className="bg-orange-50 rounded-xl p-6 max-w-2xl mx-auto">
+                <p className="text-orange-600 font-bold mb-2">🎉 全プラン共通特典</p>
+                <p className="text-gray-700 text-sm">
+                  東京23区・横浜市・千葉（船橋）エリア内は出張費無料！<br />
+                  商用利用可能・即日データ納品
+                </p>
+              </div>
               <Link
                 href="/services/photo/foodphoto/contact"
-                className="inline-flex items-center gap-2 text-orange-500 hover:text-orange-600 font-bold"
+                className="inline-flex items-center gap-2 text-orange-500 hover:text-orange-600 font-bold mt-6"
               >
                 問い合わせる
                 <ChevronRight className="w-5 h-5" />
