@@ -889,36 +889,6 @@ export default function AreaPageClient({ areaData }: AreaPageClientProps) {
               </motion.div>
             </motion.div>
 
-            {/* 連絡先情報 */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6 }}
-              className="mt-16 pt-12 border-t border-white/20"
-            >
-              <p className="text-white/80 mb-4">お電話でのお問い合わせも受け付けています</p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                <a
-                  href="tel:0120-123-456"
-                  className="inline-flex items-center gap-2 text-white text-2xl font-bold hover:text-yellow-300 transition-colors"
-                >
-                  <Phone className="w-6 h-6" />
-                  0120-123-456
-                </a>
-                <span className="text-white/60 hidden sm:block">|</span>
-                <a
-                  href="mailto:info@foodphoto-pro.com"
-                  className="inline-flex items-center gap-2 text-white text-lg hover:text-yellow-300 transition-colors"
-                >
-                  <Mail className="w-5 h-5" />
-                  info@foodphoto-pro.com
-                </a>
-              </div>
-              <p className="text-white/60 text-sm mt-4">
-                受付時間: 9:00〜18:00（土日祝も対応）
-              </p>
-            </motion.div>
           </motion.div>
         </div>
       </section>
