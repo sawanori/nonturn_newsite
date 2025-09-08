@@ -911,7 +911,7 @@ const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
                     </li>
                   ))}
                 </ul>
-                <Link href="/services/photo/foodphoto/form" className="block">
+                <Link href="/services/photo/foodphoto/pricing" className="block">
                   <Button 
                     variant={plan.isPopular ? "primary" : "secondary"} 
                     className="w-full text-lg py-4"

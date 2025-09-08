@@ -54,6 +54,7 @@ module.exports = {
         '/services/photo/foodphoto/checkform',
         '/services/photo/foodphoto/checkform/thank-you',
         '/services/photo/foodphoto/contact',
+        '/services/photo/foodphoto/pricing',
         '/terms',
         '/sitemap',
       ];
@@ -85,6 +86,7 @@ module.exports = {
         '/': 1.0,
         '/services/photo/foodphoto': 0.95,
         '/services/photo/foodphoto/form': 0.9,
+        '/services/photo/foodphoto/pricing': 0.85,
         '/services/photo/foodphoto/checkform': 0.8,
         '/services/photo/foodphoto/contact': 0.75,
         '/sitemap': 0.5,

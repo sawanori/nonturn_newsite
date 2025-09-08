@@ -118,6 +118,13 @@ export function middleware(req: NextRequest) {
     return res;
   }
 
+  if (url.pathname === "/pricing") {
+    url.pathname = "/services/photo/foodphoto/pricing";
+    const res = NextResponse.rewrite(url);
+    res.headers.set("x-mw", "rewrite:/pricing -> /services/photo/foodphoto/pricing");
+    return res;
+  }
+
   // エリアページのルーティング
   if (url.pathname.startsWith("/area/")) {
     const newPath = url.pathname.replace("/area/", "/services/photo/foodphoto/area/");
