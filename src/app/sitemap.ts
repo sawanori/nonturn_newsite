@@ -1,9 +1,90 @@
 import { MetadataRoute } from 'next'
+import { getAreaList } from '@/data/area-data'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://non-turn.com'
+  // 環境変数でドメインを判定
+  const isFoodPhotoSite = process.env.NEXT_PUBLIC_SITE_DOMAIN === 'foodphoto-pro.com'
+  const baseUrl = isFoodPhotoSite ? 'https://foodphoto-pro.com' : 'https://non-turn.com'
   const now = new Date()
   const lastModified = now.toISOString()
+  
+  // foodphoto-pro.com用のサイトマップ
+  if (isFoodPhotoSite) {
+    const areas = getAreaList()
+    
+    const areaUrls: MetadataRoute.Sitemap = areas.map(area => ({
+      url: `${baseUrl}/services/photo/foodphoto/area/${area.id}`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: area.id === 'shibuya' || area.id === 'shinjuku' ? 0.85 : 
+                area.id === 'yokohama' || area.id === 'ginza' || area.id === 'ebisu' || area.id === 'omotesando' ? 0.8 :
+                area.id === 'kichijoji' ? 0.7 : 0.75,
+    }))
+    
+    // ブログ記事は静的に定義
+    const blogSlugs = [
+      'menu-photo-pricing',
+      'tabelog-top-image',
+      'steam-effect-hot-dishes',
+      'restaurant-photo-beginner',
+      'smartphone-food-photo-tips',
+      'light-adjustment-restaurant'
+    ]
+    
+    const blogUrls: MetadataRoute.Sitemap = blogSlugs.map(slug => ({
+      url: `${baseUrl}/services/photo/foodphoto/blog/${slug}`,
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    }))
+    
+    return [
+      {
+        url: baseUrl,
+        lastModified,
+        changeFrequency: 'weekly',
+        priority: 1.0,
+      },
+      {
+        url: `${baseUrl}/services/photo/foodphoto`,
+        lastModified,
+        changeFrequency: 'weekly',
+        priority: 0.95,
+      },
+      {
+        url: `${baseUrl}/services/photo/foodphoto/form`,
+        lastModified,
+        changeFrequency: 'monthly',
+        priority: 0.9,
+      },
+      {
+        url: `${baseUrl}/services/photo/foodphoto/checkform`,
+        lastModified,
+        changeFrequency: 'monthly',
+        priority: 0.8,
+      },
+      {
+        url: `${baseUrl}/services/photo/foodphoto/contact`,
+        lastModified,
+        changeFrequency: 'monthly',
+        priority: 0.75,
+      },
+      {
+        url: `${baseUrl}/services/photo/foodphoto/blog`,
+        lastModified,
+        changeFrequency: 'weekly',
+        priority: 0.7,
+      },
+      ...areaUrls,
+      ...blogUrls,
+      {
+        url: `${baseUrl}/terms`,
+        lastModified,
+        changeFrequency: 'yearly',
+        priority: 0.3,
+      },
+    ]
+  }
 
   // Static pages with high priority
   const staticPages = [

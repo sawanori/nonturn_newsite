@@ -48,23 +48,30 @@ module.exports = {
       // foodphoto-pro.com専用のパスのみを含める
       const validPaths = [
         '/',
-        '/form',
-        '/form/thank-you',
-        '/checkform',
-        '/checkform/thank-you',
+        '/services/photo/foodphoto',
+        '/services/photo/foodphoto/form',
+        '/services/photo/foodphoto/form/thank-you',
+        '/services/photo/foodphoto/checkform',
+        '/services/photo/foodphoto/checkform/thank-you',
+        '/services/photo/foodphoto/contact',
         '/terms',
         '/sitemap',
       ];
       
-      // エリアページ
+      // エリアページ（フルパスで記載）
       const areaPaths = [
-        '/area/shibuya',
-        '/area/shinjuku',
-        '/area/yokohama',
-        '/area/ikebukuro',
-        '/area/shinagawa',
-        '/area/ginza',
-        '/area/roppongi',
+        '/services/photo/foodphoto/area/shibuya',
+        '/services/photo/foodphoto/area/shinjuku',
+        '/services/photo/foodphoto/area/yokohama',
+        '/services/photo/foodphoto/area/ikebukuro',
+        '/services/photo/foodphoto/area/shinagawa',
+        '/services/photo/foodphoto/area/ginza',
+        '/services/photo/foodphoto/area/roppongi',
+        '/services/photo/foodphoto/area/ebisu',
+        '/services/photo/foodphoto/area/omotesando',
+        '/services/photo/foodphoto/area/asakusa',
+        '/services/photo/foodphoto/area/kichijoji',
+        '/services/photo/foodphoto/area/akasaka',
       ];
       
       const allValidPaths = [...validPaths, ...areaPaths];
@@ -76,16 +83,31 @@ module.exports = {
       
       const priorityMap = {
         '/': 1.0,
-        '/form': 0.9,
-        '/checkform': 0.8,
+        '/services/photo/foodphoto': 0.95,
+        '/services/photo/foodphoto/form': 0.9,
+        '/services/photo/foodphoto/checkform': 0.8,
+        '/services/photo/foodphoto/contact': 0.75,
         '/sitemap': 0.5,
         '/terms': 0.3,
       };
       
-      // エリアページの優先度
-      areaPaths.forEach(areaPath => {
-        priorityMap[areaPath] = 0.7;
-      });
+      // エリアページの優先度（SEO重要度に応じて設定）
+      const areaPagePriorities = {
+        '/services/photo/foodphoto/area/shibuya': 0.85,
+        '/services/photo/foodphoto/area/shinjuku': 0.85,
+        '/services/photo/foodphoto/area/yokohama': 0.8,
+        '/services/photo/foodphoto/area/ikebukuro': 0.75,
+        '/services/photo/foodphoto/area/shinagawa': 0.75,
+        '/services/photo/foodphoto/area/ginza': 0.8,
+        '/services/photo/foodphoto/area/roppongi': 0.75,
+        '/services/photo/foodphoto/area/ebisu': 0.8,
+        '/services/photo/foodphoto/area/omotesando': 0.8,
+        '/services/photo/foodphoto/area/asakusa': 0.75,
+        '/services/photo/foodphoto/area/kichijoji': 0.7,
+        '/services/photo/foodphoto/area/akasaka': 0.75,
+      };
+      
+      Object.assign(priorityMap, areaPagePriorities);
       
       return {
         loc: path,

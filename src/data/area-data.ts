@@ -671,6 +671,421 @@ export const areaData: Record<string, AreaData> = {
         'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%201.jpg'
       ]
     }
+  },
+
+  ebisu: {
+    id: 'ebisu',
+    name: '恵比寿',
+    nameEn: 'Ebisu',
+    title: '恵比寿エリアの飲食店撮影サービス',
+    description: 'グルメ激戦区恵比寿で、お店の個性を最大限に引き出す撮影を提供します。',
+    metaDescription: '恵比寿エリアの飲食店撮影なら飲食店撮影PhotoStudio。高級レストランからカジュアルビストロまで幅広く対応。恵比寿ガーデンプレイス周辺も出張費無料。',
+    coordinates: {
+      latitude: 35.6465,
+      longitude: 139.7100
+    },
+    serviceRadius: 2,
+    features: [
+      'おしゃれな店舗に合わせた演出',
+      'SNS映えする構図提案',
+      'デート向けメニュー撮影が得意',
+      'ワインとのペアリング撮影'
+    ],
+    popularCuisines: [
+      'イタリアン',
+      'フレンチビストロ',
+      'モダン和食',
+      'ワインバー',
+      'カフェ・スイーツ'
+    ],
+    shootingStats: {
+      totalShops: '恵比寿エリアで60店舗以上',
+      popularPlan: 'スタンダードプラン',
+      bestTime: '15:00-17:00'
+    },
+    localInfo: {
+      access: '恵比寿駅から徒歩圏内は出張費無料',
+      parking: 'コインパーキング多数',
+      specialNotes: 'ガーデンプレイス内も対応可能'
+    },
+    cases: [
+      {
+        shopType: 'イタリアンレストラン',
+        area: '恵比寿西',
+        result: 'Instagram経由の予約が3倍に',
+        comment: '料理の色彩と盛り付けの美しさを完璧に表現していただきました。若い女性客が増えました。'
+      },
+      {
+        shopType: 'ワインビストロ',
+        area: '恵比寿南',
+        result: 'コース予約が50%増加',
+        comment: 'ワインと料理のペアリング写真が素晴らしく、高単価のお客様が増えました。'
+      },
+      {
+        shopType: 'カフェ',
+        area: '恵比寿ガーデンプレイス',
+        result: 'SNSフォロワー2000人増',
+        comment: 'インスタ映えする写真のおかげで、連日行列ができるようになりました。'
+      }
+    ],
+    faqs: [
+      {
+        question: '恵比寿の狭い店舗でも撮影可能ですか？',
+        answer: 'はい、コンパクトな機材も用意しており、カウンター席のみの店舗でも対応可能です。'
+      },
+      {
+        question: 'おしゃれな雰囲気を活かした撮影はできますか？',
+        answer: '店舗の内装やコンセプトに合わせて、自然光を活かした撮影など、雰囲気を大切にした撮影を行います。'
+      }
+    ],
+    nearbyStations: ['恵比寿駅', '代官山駅', '中目黒駅', '広尾駅'],
+    coveredAreas: ['恵比寿西', '恵比寿南', '恵比寿', '恵比寿ガーデンプレイス', '代官山'],
+    seoKeywords: ['恵比寿 飲食店撮影', '恵比寿 レストラン撮影', '恵比寿 料理写真', '恵比寿ガーデンプレイス 撮影'],
+    images: {
+      hero: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2021.jpg',
+      gallery: [
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%202.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%201.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2022.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%201.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%203.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%202.jpg'
+      ]
+    }
+  },
+
+  omotesando: {
+    id: 'omotesando',
+    name: '表参道・原宿',
+    nameEn: 'Omotesando-Harajuku',
+    title: '表参道・原宿エリアの飲食店撮影サービス',
+    description: 'トレンド発信地でインスタ映えする魅力的な料理写真を撮影します。',
+    metaDescription: '表参道・原宿エリアの飲食店撮影は飲食店撮影PhotoStudioへ。カフェ・スイーツ店のSNS向け撮影が得意。若者に響く写真を提供。',
+    coordinates: {
+      latitude: 35.6652,
+      longitude: 139.7106
+    },
+    serviceRadius: 2,
+    features: [
+      'トレンドを押さえた撮影',
+      'SNS拡散を意識した構図',
+      'カラフルな料理演出',
+      '若者向けメニュー撮影'
+    ],
+    popularCuisines: [
+      'パンケーキ・スイーツ',
+      'カフェ',
+      'ハンバーガー',
+      'エスニック料理',
+      'ヘルシーフード'
+    ],
+    shootingStats: {
+      totalShops: '表参道・原宿で70店舗以上',
+      popularPlan: 'ライトプラン',
+      bestTime: '10:00-12:00'
+    },
+    localInfo: {
+      access: '表参道駅・原宿駅から徒歩圏内は出張費無料',
+      parking: '時間制限あり、要確認',
+      specialNotes: '土日は混雑のため平日撮影推奨'
+    },
+    cases: [
+      {
+        shopType: 'パンケーキ専門店',
+        area: '表参道',
+        result: 'Instagram投稿のいいね数5倍',
+        comment: 'カラフルでポップな写真が若い女性に大好評。週末は予約でいっぱいです。'
+      },
+      {
+        shopType: 'ヴィーガンカフェ',
+        area: '原宿',
+        result: '新規客が月200人増',
+        comment: 'ヘルシーさと美味しさが伝わる写真で、健康志向の方が増えました。'
+      },
+      {
+        shopType: 'タピオカ店',
+        area: '竹下通り',
+        result: '売上が前年比180%',
+        comment: 'インスタ映え写真のおかげで、行列が絶えない人気店になりました。'
+      }
+    ],
+    faqs: [
+      {
+        question: '週末の混雑時でも撮影できますか？',
+        answer: '開店前の時間帯での撮影を推奨しています。混雑を避けて質の高い撮影が可能です。'
+      },
+      {
+        question: 'SNS用の正方形写真も撮影できますか？',
+        answer: 'もちろん可能です。Instagram、TikTok等、各SNSに最適化した構図で撮影します。'
+      }
+    ],
+    nearbyStations: ['表参道駅', '原宿駅', '明治神宮前駅', '渋谷駅'],
+    coveredAreas: ['表参道', '原宿', '神宮前', '竹下通り', '裏原宿', '青山'],
+    seoKeywords: ['表参道 飲食店撮影', '原宿 カフェ撮影', '表参道 スイーツ撮影', '原宿 インスタ映え撮影'],
+    images: {
+      hero: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%203.jpg',
+      gallery: [
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2022.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%201.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2021.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%202.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%202.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%201.jpg'
+      ]
+    }
+  },
+
+  asakusa: {
+    id: 'asakusa',
+    name: '浅草',
+    nameEn: 'Asakusa',
+    title: '浅草エリアの飲食店撮影サービス',
+    description: '下町情緒あふれる浅草で、伝統と革新を表現する料理撮影を提供します。',
+    metaDescription: '浅草エリアの飲食店撮影なら飲食店撮影PhotoStudio。老舗の和食から観光客向けメニューまで幅広く対応。外国人観光客へのアピール写真も得意。',
+    coordinates: {
+      latitude: 35.7118,
+      longitude: 139.7967
+    },
+    serviceRadius: 3,
+    features: [
+      '伝統的な和食の美しさを表現',
+      '外国人向けメニュー撮影',
+      '老舗の雰囲気を活かした撮影',
+      '観光地らしい華やかな演出'
+    ],
+    popularCuisines: [
+      '天ぷら',
+      '寿司',
+      'うなぎ',
+      'もんじゃ焼き',
+      '和菓子・甘味'
+    ],
+    shootingStats: {
+      totalShops: '浅草エリアで50店舗以上',
+      popularPlan: 'スタンダードプラン',
+      bestTime: '14:00-16:00'
+    },
+    localInfo: {
+      access: '浅草駅から徒歩圏内は出張費無料',
+      parking: '雷門周辺は駐車困難',
+      specialNotes: '仲見世通り周辺も対応'
+    },
+    cases: [
+      {
+        shopType: '老舗天ぷら店',
+        area: '浅草',
+        result: '外国人客が60%増加',
+        comment: '天ぷらの繊細さと職人技が伝わる写真で、海外からの予約が急増しました。'
+      },
+      {
+        shopType: 'もんじゃ焼き店',
+        area: '浅草六区',
+        result: '若い観光客が倍増',
+        comment: 'シズル感あふれる写真のおかげで、SNSで話題になりました。'
+      },
+      {
+        shopType: '和菓子店',
+        area: '仲見世通り',
+        result: 'オンライン売上3倍',
+        comment: '季節の和菓子の美しさを表現した写真で、通販の注文が増えました。'
+      }
+    ],
+    faqs: [
+      {
+        question: '外国語メニュー用の撮影はできますか？',
+        answer: 'はい、外国人観光客向けのメニュー撮影も得意としています。料理名の英語表記もサポートします。'
+      },
+      {
+        question: '歴史ある店舗の雰囲気を大切にした撮影は可能ですか？',
+        answer: '老舗の趣を活かした撮影を心がけています。伝統と格式を表現する構図をご提案します。'
+      }
+    ],
+    nearbyStations: ['浅草駅', '田原町駅', '浅草橋駅', '蔵前駅', '本所吾妻橋駅'],
+    coveredAreas: ['浅草', '雷門', '仲見世', '浅草寺周辺', '浅草橋', '蔵前'],
+    seoKeywords: ['浅草 飲食店撮影', '浅草 和食撮影', '浅草 観光地撮影', '仲見世 料理写真'],
+    images: {
+      hero: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%201.jpg',
+      gallery: [
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%202.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2021.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2022.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%203.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%201.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%202.jpg'
+      ]
+    }
+  },
+
+  kichijoji: {
+    id: 'kichijoji',
+    name: '吉祥寺',
+    nameEn: 'Kichijoji',
+    title: '吉祥寺エリアの飲食店撮影サービス',
+    description: '住みたい街No.1吉祥寺で、地域に愛される飲食店の魅力を撮影します。',
+    metaDescription: '吉祥寺エリアの飲食店撮影は飲食店撮影PhotoStudioへ。ハモニカ横丁から井の頭公園周辺まで出張費無料。地域密着型の撮影が得意。',
+    coordinates: {
+      latitude: 35.7031,
+      longitude: 139.5797
+    },
+    serviceRadius: 3,
+    features: [
+      '地域密着型の親しみやすい撮影',
+      'ファミリー向けメニュー撮影',
+      'こだわりの個人店向け撮影',
+      'テイクアウトメニュー撮影'
+    ],
+    popularCuisines: [
+      'カフェ',
+      'ハンバーグ',
+      'ラーメン',
+      '焼き鳥',
+      'パン・ベーカリー'
+    ],
+    shootingStats: {
+      totalShops: '吉祥寺エリアで40店舗以上',
+      popularPlan: 'スタンダードプラン',
+      bestTime: '14:00-16:00'
+    },
+    localInfo: {
+      access: '吉祥寺駅から徒歩圏内は出張費無料',
+      parking: 'パーキング多数あり',
+      specialNotes: 'ハモニカ横丁も対応可能'
+    },
+    cases: [
+      {
+        shopType: 'ハンバーグレストラン',
+        area: '吉祥寺本町',
+        result: 'ランチ売上30%アップ',
+        comment: 'ジューシーなハンバーグの写真で、ファミリー層の来店が増えました。'
+      },
+      {
+        shopType: 'カフェ',
+        area: '井の頭公園前',
+        result: 'リピーター率40%向上',
+        comment: '温かみのある写真で、常連さんが友人を連れてきてくれるようになりました。'
+      },
+      {
+        shopType: '焼き鳥店',
+        area: 'ハモニカ横丁',
+        result: '予約が2週間先まで満席',
+        comment: '炭火の臨場感が伝わる写真で、サラリーマンの予約が殺到しています。'
+      }
+    ],
+    faqs: [
+      {
+        question: 'ハモニカ横丁の狭い店舗でも撮影できますか？',
+        answer: 'はい、コンパクトな機材で対応可能です。狭い空間でも魅力的な写真を撮影します。'
+      },
+      {
+        question: 'テイクアウトメニューの撮影も可能ですか？',
+        answer: 'もちろん可能です。パッケージの見栄えも考慮した撮影を行います。'
+      }
+    ],
+    nearbyStations: ['吉祥寺駅', '井の頭公園駅', '三鷹駅'],
+    coveredAreas: ['吉祥寺本町', '吉祥寺南町', '吉祥寺北町', '井の頭', 'ハモニカ横丁'],
+    seoKeywords: ['吉祥寺 飲食店撮影', '吉祥寺 カフェ撮影', 'ハモニカ横丁 撮影', '吉祥寺 料理写真'],
+    images: {
+      hero: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%202.jpg',
+      gallery: [
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%203.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2021.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%201.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%202.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2022.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%201.jpg'
+      ]
+    }
+  },
+
+  akasaka: {
+    id: 'akasaka',
+    name: '赤坂',
+    nameEn: 'Akasaka',
+    title: '赤坂エリアの飲食店撮影サービス',
+    description: 'ビジネスと文化が交差する赤坂で、格式高い料理撮影を提供します。',
+    metaDescription: '赤坂エリアの飲食店撮影なら飲食店撮影PhotoStudio。高級料亭から接待向けレストランまで対応。政財界の要人も満足する品質。',
+    coordinates: {
+      latitude: 35.6762,
+      longitude: 139.7347
+    },
+    serviceRadius: 2,
+    features: [
+      '高級感ある格調高い撮影',
+      '接待・会食向けメニュー撮影',
+      '個室の雰囲気を活かした撮影',
+      'コース料理の流れを表現'
+    ],
+    popularCuisines: [
+      '高級和食・料亭',
+      '鉄板焼き',
+      'フレンチ',
+      '中華料理',
+      '高級焼肉'
+    ],
+    shootingStats: {
+      totalShops: '赤坂エリアで45店舗以上',
+      popularPlan: 'プレミアムプラン',
+      bestTime: '15:00-17:00'
+    },
+    localInfo: {
+      access: '赤坂駅・赤坂見附駅から徒歩圏内は出張費無料',
+      parking: 'ビル内駐車場利用可',
+      specialNotes: '高級ホテル内レストランも対応'
+    },
+    cases: [
+      {
+        shopType: '高級料亭',
+        area: '赤坂',
+        result: '接待利用が50%増加',
+        comment: '品格ある写真で、企業の接待需要が大幅に増えました。'
+      },
+      {
+        shopType: '鉄板焼きレストラン',
+        area: '赤坂見附',
+        result: '記念日予約が3倍に',
+        comment: '特別感のある写真で、アニバーサリー利用が増加しました。'
+      },
+      {
+        shopType: 'フレンチレストラン',
+        area: '赤坂サカス',
+        result: 'ミシュラン掲載後も満席継続',
+        comment: '料理の芸術性を表現した写真で、グルメ客の注目を集めています。'
+      }
+    ],
+    faqs: [
+      {
+        question: '個室での撮影は可能ですか？',
+        answer: 'はい、個室の落ち着いた雰囲気を大切にした撮影を行います。照明も適切に調整します。'
+      },
+      {
+        question: 'コース料理全体の撮影はできますか？',
+        answer: '前菜からデザートまで、コースの流れを美しく表現する撮影が可能です。'
+      }
+    ],
+    nearbyStations: ['赤坂駅', '赤坂見附駅', '溜池山王駅', '永田町駅', '青山一丁目駅'],
+    coveredAreas: ['赤坂', '赤坂見附', '溜池山王', '永田町', '赤坂サカス周辺'],
+    seoKeywords: ['赤坂 高級レストラン撮影', '赤坂 料亭撮影', '赤坂 接待向け撮影', '赤坂 料理写真'],
+    images: {
+      hero: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%201.jpg',
+      gallery: [
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%201.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2021.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2022.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%202.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%203.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%202.jpg'
+      ]
+    }
   }
 }
 
