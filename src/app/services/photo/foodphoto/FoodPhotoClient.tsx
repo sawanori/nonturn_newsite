@@ -1,6 +1,8 @@
 'use client'
 
 import React, { useState, useEffect, Suspense, lazy, memo, useCallback } from 'react'
+import { LocalBusinessSchema, FAQSchema, HowToSchema } from '@/components/StructuredData'
+import AccessibilityEnhancer from '@/components/AccessibilityEnhancer'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -1692,6 +1694,30 @@ Footer.displayName = 'Footer'
 
 // Main Component with optimized performance
 export default function FoodPhotoClient() {
+  // FAQ data for schema
+  const faqData = [
+    {
+      question: "飲食店撮影の料金はいくらですか？",
+      answer: "ライトプラン33,000円（1時間）、スタンダードプラン44,000円（2時間）、プレミアムプラン88,000円（4時間）の3プランをご用意しています。"
+    },
+    {
+      question: "撮影エリアはどこまで対応していますか？",
+      answer: "東京23区内、横浜市内、千葉（船橋）エリアは基本料金内で出張いたします。その他の地域についても対応可能です。"
+    },
+    {
+      question: "撮影した写真の著作権はどうなりますか？",
+      answer: "撮影した写真の著作権は原則としてお客様に帰属します。商用利用、二次利用、SNS投稿など自由にご使用いただけます。"
+    }
+  ]
+
+  // HowTo data for schema
+  const howToSteps = [
+    { name: "お問い合わせ", text: "フォームまたは電話でお問い合わせください" },
+    { name: "ヒアリング", text: "撮影内容・希望日時を確認します" },
+    { name: "撮影当日", text: "プロカメラマンが出張撮影を行います" },
+    { name: "レタッチ", text: "撮影データを編集・調整します" },
+    { name: "納品", text: "5営業日以内にデータ納品します" }
+  ]
   const [isLoading, setIsLoading] = useState(true)
   const [showOfferModal, setShowOfferModal] = useState(false)
   const [hasShownModal, setHasShownModal] = useState(false)
@@ -1783,6 +1809,21 @@ export default function FoodPhotoClient() {
 
   return (
     <>
+      {/* Structured Data */}
+      <LocalBusinessSchema 
+        aggregateRating={{ ratingValue: 4.8, reviewCount: 50 }}
+      />
+      <FAQSchema questions={faqData} />
+      <HowToSchema 
+        name="飲食店撮影の流れ"
+        description="プロカメラマンによる飲食店撮影の流れ"
+        steps={howToSteps}
+        totalTime="PT5D"
+      />
+      
+      {/* Accessibility Enhancements */}
+      <AccessibilityEnhancer />
+      
       <Suspense fallback={null}>
         <AnimatePresence>
           {isLoading && (

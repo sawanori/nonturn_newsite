@@ -7,10 +7,12 @@ const siteUrl = isFoodPhotoSite ? 'https://foodphoto-pro.com' : 'https://non-tur
 module.exports = {
   siteUrl: siteUrl,
   generateRobotsTxt: true,
+  generateIndexSitemap: true,
   sitemapSize: 7000,
   changefreq: 'weekly',
   priority: 0.7,
   trailingSlash: false,
+  autoLastmod: true,
   exclude: [
     '/api/*',
     '/admin/*',
@@ -18,12 +20,16 @@ module.exports = {
     '/500',
     '/_error',
     '/server-sitemap.xml',
+    '*/thank-you',
+    '/services/photo/foodphoto/checkform/thank-you',
+    '/services/photo/foodphoto/form/thank-you',
   ],
   robotsTxtOptions: {
     policies: [
       {
         userAgent: '*',
         allow: '/',
+        crawlDelay: 1,
         disallow: [
           '/api/',
           '/admin/',
@@ -38,8 +44,10 @@ module.exports = {
     ],
     additionalSitemaps: isFoodPhotoSite ? [
       'https://foodphoto-pro.com/foodphoto-sitemap.xml',
+      'https://foodphoto-pro.com/image-sitemap.xml',
     ] : [
       'https://non-turn.com/sitemap.xml',
+      'https://non-turn.com/image-sitemap.xml',
     ],
   },
   transform: async (config, path) => {

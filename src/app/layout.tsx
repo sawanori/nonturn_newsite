@@ -204,10 +204,14 @@ export default async function RootLayout({
   const host = h.get("host")?.toLowerCase() || "";
   const isFoodPhoto = host === "foodphoto-pro.com" || host.endsWith(".foodphoto-pro.com");
   const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+  const siteUrl = isFoodPhoto ? "https://foodphoto-pro.com" : "https://non-turn.com";
 
   return (
     <html lang="ja">
       <head>
+        <meta httpEquiv="content-language" content="ja" />
+        <link rel="alternate" hrefLang="ja" href={siteUrl} />
+        <link rel="alternate" hrefLang="x-default" href={siteUrl} />
         <Script
           id="structured-data"
           type="application/ld+json"

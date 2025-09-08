@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, ChevronDown, ChevronUp, MapPin, Clock, Camera, Sparkles, Users, ArrowRight, Star, Award, TrendingUp, Zap, Home, ChevronRight } from 'lucide-react'
 import Script from 'next/script'
+import { ProductSchema } from '@/components/StructuredData'
 
 const plans = [
   {
@@ -218,6 +219,26 @@ export default function PricingClient() {
         id="pricing-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      
+      {/* Product Schema for each plan */}
+      <ProductSchema 
+        name="ライトプラン"
+        description="1時間の飲食店撮影プラン。メニュー撮引20カットまで、基本レタッチ付き。"
+        price={33000}
+        image="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2019.jpg"
+      />
+      <ProductSchema 
+        name="スタンダードプラン"
+        description="2時間の飲食店撮影プラン。時間内撮影枚数無制限、基本レタッチ付き。"
+        price={44000}
+        image="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2019.jpg"
+      />
+      <ProductSchema 
+        name="プレミアムプラン"
+        description="4時間の飲食店撮影プラン。時間内撮影枚数無制限、間接照明持参、スタッフ撮影対応。"
+        price={88000}
+        image="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2019.jpg"
       />
 
       {/* Breadcrumb Navigation */}
