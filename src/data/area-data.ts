@@ -40,6 +40,10 @@ export interface AreaData {
   nearbyStations: string[]
   coveredAreas: string[]
   seoKeywords: string[]
+  images: {
+    hero: string
+    gallery: string[]
+  }
 }
 
 export const areaData: Record<string, AreaData> = {
@@ -133,7 +137,20 @@ export const areaData: Record<string, AreaData> = {
       '渋谷 レストラン 写真',
       'センター街 飲食店 撮影',
       '道玄坂 料理写真'
-    ]
+    ],
+    images: {
+      hero: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg',
+      gallery: [
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%201.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%202.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%203.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2021.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2022.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%201.jpg'
+      ]
+    }
   },
   
   shinjuku: {
@@ -226,7 +243,20 @@ export const areaData: Record<string, AreaData> = {
       '歌舞伎町 レストラン 写真',
       '西新宿 飲食店 カメラマン',
       '新宿三丁目 料理写真'
-    ]
+    ],
+    images: {
+      hero: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2021.jpg',
+      gallery: [
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2022.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%201.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%202.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%203.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%202.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%201.jpg'
+      ]
+    }
   },
   
   yokohama: {
@@ -319,7 +349,20 @@ export const areaData: Record<string, AreaData> = {
       'みなとみらい レストラン 写真',
       '中華街 飲食店 撮影',
       '関内 料理写真'
-    ]
+    ],
+    images: {
+      hero: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2022.jpg',
+      gallery: [
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%203.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%201.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%202.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2021.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%201.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%202.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_.jpg'
+      ]
+    }
   },
 
   ikebukuro: {
@@ -383,7 +426,20 @@ export const areaData: Record<string, AreaData> = {
     ],
     nearbyStations: ['池袋駅', '東池袋駅', '要町駅', '雑司が谷駅', '目白駅'],
     coveredAreas: ['西池袋', '東池袋', '南池袋', '池袋本町', '上池袋', '要町', '高田', '雑司が谷'],
-    seoKeywords: ['池袋 飲食店撮影', '池袋 ラーメン撮影', '池袋 料理写真', '池袋 メニュー撮影']
+    seoKeywords: ['池袋 飲食店撮影', '池袋 ラーメン撮影', '池袋 料理写真', '池袋 メニュー撮影'],
+    images: {
+      hero: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%203.jpg',
+      gallery: [
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2021.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2022.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%201.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%202.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%201.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%202.jpg'
+      ]
+    }
   },
 
   shinagawa: {
@@ -447,7 +503,20 @@ export const areaData: Record<string, AreaData> = {
     ],
     nearbyStations: ['品川駅', '北品川駅', '新馬場駅', '大崎駅', '五反田駅'],
     coveredAreas: ['港南', '高輪', '北品川', '東品川', '南品川', '大崎', '西五反田', '東五反田'],
-    seoKeywords: ['品川 飲食店撮影', '品川 ビジネスランチ撮影', '品川 レストラン撮影', '港南 料理写真']
+    seoKeywords: ['品川 飲食店撮影', '品川 ビジネスランチ撮影', '品川 レストラン撮影', '港南 料理写真'],
+    images: {
+      hero: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_.jpg',
+      gallery: [
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%202.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%203.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2021.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2022.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%201.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%201.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%202.jpg'
+      ]
+    }
   },
 
   ginza: {
@@ -511,7 +580,20 @@ export const areaData: Record<string, AreaData> = {
     ],
     nearbyStations: ['銀座駅', '有楽町駅', '銀座一丁目駅', '東銀座駅', '新橋駅'],
     coveredAreas: ['銀座1〜8丁目', '有楽町', '新橋', '築地', '京橋', '日比谷'],
-    seoKeywords: ['銀座 高級レストラン撮影', '銀座 料理撮影', '銀座 飲食店カメラマン', '銀座 メニュー写真']
+    seoKeywords: ['銀座 高級レストラン撮影', '銀座 料理撮影', '銀座 飲食店カメラマン', '銀座 メニュー写真'],
+    images: {
+      hero: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%201.jpg',
+      gallery: [
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%201.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2021.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2022.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%202.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%203.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%202.jpg'
+      ]
+    }
   },
 
   roppongi: {
@@ -575,7 +657,20 @@ export const areaData: Record<string, AreaData> = {
     ],
     nearbyStations: ['六本木駅', '乃木坂駅', '六本木一丁目駅', '麻布十番駅', '神谷町駅'],
     coveredAreas: ['六本木', '西麻布', '麻布十番', '赤坂', '虎ノ門', '神谷町', '乃木坂'],
-    seoKeywords: ['六本木 飲食店撮影', '六本木 バー撮影', '六本木 レストラン写真', '六本木 料理カメラマン']
+    seoKeywords: ['六本木 飲食店撮影', '六本木 バー撮影', '六本木 レストラン写真', '六本木 料理カメラマン'],
+    images: {
+      hero: 'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%202.jpg',
+      gallery: [
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%202.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%201.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2021.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2022.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%203.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_.jpg',
+        'https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_room_%201.jpg'
+      ]
+    }
   }
 }
 

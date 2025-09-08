@@ -6,6 +6,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a Next.js 15 corporate landing page for NonTurn.LLC, a video production company. The site features advanced 3D animations, portfolio showcase, multi-location service pages, and specialized service offerings including food photography (飲食店撮影PhotoStudio). Configured for dual-domain deployment (non-turn.com and foodphoto-pro.com).
 
+## Dual-Domain Architecture
+
+The project serves two distinct brands from a single codebase:
+- **non-turn.com**: Main corporate video production site
+- **foodphoto-pro.com**: Specialized food photography service
+
+Domain routing is handled via:
+1. **Middleware** (`src/middleware.ts`): Rewrites URLs based on host header
+2. **Root Layout** (`src/app/layout.tsx`): Conditionally injects GTM for foodphoto-pro.com only
+3. **Host-based conditional rendering**: Components can detect domain and adjust content
+
 ## Common Development Commands
 
 ```bash
@@ -102,8 +113,9 @@ npm run analyze      # Analyze bundle size with webpack-bundle-analyzer
 # Email Service (Required)
 SENDGRID_API_KEY=                     # SendGrid API key for email functionality
 
-# Analytics
-NEXT_PUBLIC_GA_ID=                    # Google Analytics tracking ID
+# Analytics & Tracking
+NEXT_PUBLIC_GTM_ID=                   # Google Tag Manager ID (GTM-KCXJ8G5Q for foodphoto)
+NEXT_PUBLIC_GA_ID=                    # Google Analytics GA4 ID (G-P9TFCN1658)
 
 # Maps  
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=      # Google Maps API key
@@ -171,3 +183,19 @@ Currently no automated testing framework is configured. Manual testing required 
 - Email delivery via SendGrid
 - CSRF token validation
 - Rate limiting functionality
+
+## Analytics & Tracking
+
+### GTM Integration
+- GTM is conditionally loaded only for foodphoto-pro.com domain
+- All CTAs leading to `/form` have unique IDs following pattern: `cta-[section]-[action]`
+- IDs enable precise conversion tracking in GTM/GA4
+
+### CTA Tracking IDs
+Key CTAs are tagged with IDs for analytics:
+- Header: `cta-header-apply`
+- Hero: `cta-hero-apply`
+- Pricing: `cta-pricing-{plan}-apply`
+- Pain Points: `cta-painpoints-apply`, `cta-painpoints-inquiry`
+- Blog: `cta-blogsidebar-apply`, `cta-blogbottom-apply`
+- Area pages: `cta-area-hero-apply`, `cta-area-bottom-apply`
