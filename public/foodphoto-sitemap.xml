@@ -72,6 +72,41 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  
+  <url>
+    <loc>https://foodphoto-pro.com/area/ebisu</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://foodphoto-pro.com/area/omotesando</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://foodphoto-pro.com/area/asakusa</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  
+  <url>
+    <loc>https://foodphoto-pro.com/area/kichijoji</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://foodphoto-pro.com/area/akasaka</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
 
   <!-- サンクスページ -->
   <url>
@@ -87,6 +122,57 @@
     <lastmod>2025-01-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+
+  <!-- ブログトップ -->
+  <url>
+    <loc>https://foodphoto-pro.com/blog</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ブログ記事 -->
+  <url>
+    <loc>https://foodphoto-pro.com/blog/menu-photo-pricing</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://foodphoto-pro.com/blog/tabelog-top-image</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://foodphoto-pro.com/blog/steam-effect-hot-dishes</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://foodphoto-pro.com/blog/restaurant-photo-beginner</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://foodphoto-pro.com/blog/smartphone-food-photo-tips</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://foodphoto-pro.com/blog/light-adjustment-restaurant</loc>
+    <lastmod>2025-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 
   <!-- 利用規約 -->

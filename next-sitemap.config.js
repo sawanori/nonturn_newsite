@@ -58,20 +58,20 @@ module.exports = {
         '/sitemap',
       ];
       
-      // エリアページ（フルパスで記載）
+      // エリアページ（ミドルウェアでリライトされるパス）
       const areaPaths = [
-        '/services/photo/foodphoto/area/shibuya',
-        '/services/photo/foodphoto/area/shinjuku',
-        '/services/photo/foodphoto/area/yokohama',
-        '/services/photo/foodphoto/area/ikebukuro',
-        '/services/photo/foodphoto/area/shinagawa',
-        '/services/photo/foodphoto/area/ginza',
-        '/services/photo/foodphoto/area/roppongi',
-        '/services/photo/foodphoto/area/ebisu',
-        '/services/photo/foodphoto/area/omotesando',
-        '/services/photo/foodphoto/area/asakusa',
-        '/services/photo/foodphoto/area/kichijoji',
-        '/services/photo/foodphoto/area/akasaka',
+        '/area/shibuya',
+        '/area/shinjuku',
+        '/area/yokohama',
+        '/area/ikebukuro',
+        '/area/shinagawa',
+        '/area/ginza',
+        '/area/roppongi',
+        '/area/ebisu',
+        '/area/omotesando',
+        '/area/asakusa',
+        '/area/kichijoji',
+        '/area/akasaka',
       ];
       
       const allValidPaths = [...validPaths, ...areaPaths];
