@@ -1193,7 +1193,7 @@ const SamplesSection = memo(() => {
                     onClick={() => setSelectedImage(image)}
                   >
                     <OptimizedImage 
-                      src={`${image.src}?v=2`} 
+                      src={`${image.src}?v=3`} 
                       alt={optimizeAltText(image.alt, '飲食店撮影のギャラリー')}
                       width={400}
                       height={400}
@@ -1237,7 +1237,7 @@ const SamplesSection = memo(() => {
                 </button>
                 <div className="relative w-full h-[70vh] md:h-[80vh] flex items-center justify-center">
                   <OptimizedImage
-                    src={selectedImage.src}
+                    src={`${selectedImage.src}?v=3`}
                     alt={optimizeAltText(selectedImage.alt, '飲食店撮影の拡大表示')}
                     width={1920}
                     height={1280}
