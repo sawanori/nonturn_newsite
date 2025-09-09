@@ -56,7 +56,7 @@ export default function OptimizedImage({
   }
 
   return (
-    <div className={`relative ${className}`}>
+    <>
       {isLoading && (
         <div 
           className="absolute inset-0 bg-gray-100 animate-pulse"
@@ -86,6 +86,6 @@ export default function OptimizedImage({
         // Next.js 画像最適化の設定
         unoptimized={false}
       />
-    </div>
+    </>
   )
 }
