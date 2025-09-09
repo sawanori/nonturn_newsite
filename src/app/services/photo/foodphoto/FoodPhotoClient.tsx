@@ -1193,7 +1193,7 @@ const SamplesSection = memo(() => {
                     onClick={() => setSelectedImage(image)}
                   >
                     <OptimizedImage 
-                      src={image.src} 
+                      src={`${image.src}?v=${Date.now()}`} 
                       alt={optimizeAltText(image.alt, '飲食店撮影のギャラリー')}
                       width={400}
                       height={400}
