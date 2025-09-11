@@ -550,11 +550,63 @@ const IntroSection = memo(() => {
                   飲食店専門の出張撮影で、集客を加速。
                 </p>
               </motion.div>
+              
+              {/* 数値バッジ */}
+              <motion.div 
+                className="flex flex-wrap justify-center gap-3 mb-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                <div className="bg-white/95 text-gray-900 px-4 py-2 rounded-full flex items-center gap-2 font-bold shadow-lg">
+                  <span className="text-orange-500">⚡</span>
+                  <span>最短1週間納品</span>
+                </div>
+                <div className="bg-white/95 text-gray-900 px-4 py-2 rounded-full flex items-center gap-2 font-bold shadow-lg">
+                  <span className="text-orange-500">∞</span>
+                  <span>時間内無制限<span className="text-xs font-normal">(目安300-500カット)</span></span>
+                </div>
+                <div className="bg-white/95 text-gray-900 px-4 py-2 rounded-full flex items-center gap-2 font-bold shadow-lg">
+                  <span className="text-orange-500">📍</span>
+                  <span>東京・関東対応</span>
+                </div>
+              </motion.div>
+
+              {/* 信頼実績カウンター */}
+              <motion.div 
+                className="mb-6 text-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.65 }}
+              >
+                <div className="flex flex-wrap justify-center gap-6 mb-4">
+                  <div className="text-white">
+                    <span className="text-3xl font-bold">500+</span>
+                    <span className="text-sm ml-1">店舗撮影</span>
+                  </div>
+                  <div className="text-white">
+                    <span className="text-3xl font-bold">年間100</span>
+                    <span className="text-sm ml-1">案件以上</span>
+                  </div>
+                  <div className="text-white">
+                    <span className="text-3xl font-bold">95%</span>
+                    <span className="text-sm ml-1">再依頼率</span>
+                  </div>
+                </div>
+                <div className="flex flex-wrap justify-center items-center gap-4 opacity-70">
+                  <span className="text-white text-xs">掲載実績:</span>
+                  <span className="text-white font-bold">食べログ</span>
+                  <span className="text-white font-bold">ぐるなび</span>
+                  <span className="text-white font-bold">ホットペッパー</span>
+                  <span className="text-white font-bold">Instagram</span>
+                </div>
+              </motion.div>
+
               <motion.div 
                 className="flex flex-col items-center gap-3 mb-8 text-sm md:text-lg text-white/90"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
+                transition={{ delay: 0.7 }}
               >
                 <span className="flex items-center justify-center gap-2 bg-black/30 px-4 md:px-6 py-2 rounded-full w-full md:min-w-[600px] max-w-[600px]">
                   <span className="text-green-400">✓</span>
@@ -580,9 +632,9 @@ const IntroSection = memo(() => {
                     今すぐ申し込む
                   </Button>
                 </Link>
-                <Link href="/contact">
+                <Link href="/services/photo/foodphoto/pricing">
                   <Button variant="secondary" className="min-w-[200px] px-6 py-3 !bg-white/20 !border-white !text-white hover:!bg-white hover:!text-orange-500">
-                    まずは問い合わせる
+                    料金を見る
                   </Button>
                 </Link>
               </motion.div>
@@ -1871,20 +1923,14 @@ export default function FoodPhotoClient() {
             />
           </Suspense>
           
-          {/* Mobile Fixed Bottom Buttons */}
-          <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t border-gray-200 p-3" role="navigation" aria-label="モバイルアクションボタン">
-            <div className="flex gap-2">
-              <Link href="/services/photo/foodphoto/form" className="flex-1">
-                <button className="w-full bg-gradient-to-r from-orange-400 to-red-500 text-white py-3 px-4 rounded-lg font-bold text-sm" id="cta-bottom-apply">
-                  申し込む
-                </button>
-              </Link>
-              <Link href="/contact" className="flex-1">
-                <button className="w-full bg-orange-100 border-2 border-orange-400 text-orange-600 py-3 px-4 rounded-lg font-bold text-sm hover:bg-orange-400 hover:text-white transition-colors">
-                  問い合わせる
-                </button>
-              </Link>
-            </div>
+          {/* Mobile Fixed Bottom CTA Bar */}
+          <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-gradient-to-r from-orange-500 to-red-500 shadow-lg" role="navigation" aria-label="モバイルCTA">
+            <Link href="/services/photo/foodphoto/form">
+              <button className="w-full text-white py-4 px-4 font-bold text-base flex items-center justify-center gap-2" id="cta-mobile-fixed">
+                <span>📞</span>
+                <span>無料相談・お申し込みはこちら</span>
+              </button>
+            </Link>
           </nav>
         </motion.main>
       </Suspense>
