@@ -564,7 +564,7 @@ const IntroSection = memo(() => {
                 </div>
                 <div className="bg-white/95 text-gray-900 px-4 py-2 rounded-full flex items-center gap-2 font-bold shadow-lg">
                   <span className="text-orange-500">∞</span>
-                  <span>時間内無制限<span className="text-xs font-normal">(目安300-500カット)</span></span>
+                  <span>時間内無制限</span>
                 </div>
                 <div className="bg-white/95 text-gray-900 px-4 py-2 rounded-full flex items-center gap-2 font-bold shadow-lg">
                   <span className="text-orange-500">📍</span>
