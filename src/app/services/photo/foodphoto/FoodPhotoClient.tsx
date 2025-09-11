@@ -548,52 +548,52 @@ const IntroSection = memo(() => {
               
               {/* 数値バッジ */}
               <motion.div 
-                className="flex flex-col md:flex-row justify-center gap-3 mb-6 w-full px-4 md:px-0"
+                className="flex flex-row justify-center gap-2 md:gap-3 mb-6 w-full px-2 md:px-0"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
               >
-                <div className="bg-white/95 text-gray-900 px-4 py-2 rounded-full flex items-center justify-center gap-2 font-bold shadow-lg w-full md:w-auto">
-                  <span className="text-orange-500">⚡</span>
-                  <span>最短1週間納品</span>
+                <div className="bg-white/95 text-gray-900 px-2 md:px-4 py-2 rounded-full flex items-center justify-center gap-1 md:gap-2 font-bold shadow-lg flex-1 md:flex-initial">
+                  <span className="text-orange-500 text-sm md:text-base">⚡</span>
+                  <span className="text-xs md:text-base">最短1週間納品</span>
                 </div>
-                <div className="bg-white/95 text-gray-900 px-4 py-2 rounded-full flex items-center justify-center gap-2 font-bold shadow-lg w-full md:w-auto">
-                  <span className="text-orange-500">∞</span>
-                  <span>時間内無制限</span>
+                <div className="bg-white/95 text-gray-900 px-2 md:px-4 py-2 rounded-full flex items-center justify-center gap-1 md:gap-2 font-bold shadow-lg flex-1 md:flex-initial">
+                  <span className="text-orange-500 text-sm md:text-base">∞</span>
+                  <span className="text-xs md:text-base">時間内無制限</span>
                 </div>
-                <div className="bg-white/95 text-gray-900 px-4 py-2 rounded-full flex items-center justify-center gap-2 font-bold shadow-lg w-full md:w-auto">
-                  <span className="text-orange-500">📍</span>
-                  <span>東京・関東対応</span>
+                <div className="bg-white/95 text-gray-900 px-2 md:px-4 py-2 rounded-full flex items-center justify-center gap-1 md:gap-2 font-bold shadow-lg flex-1 md:flex-initial">
+                  <span className="text-orange-500 text-sm md:text-base">📍</span>
+                  <span className="text-xs md:text-base">東京・関東対応</span>
                 </div>
               </motion.div>
 
               {/* 信頼実績カウンター */}
               <motion.div 
-                className="mb-6 text-center px-4 md:px-0"
+                className="mb-6 text-center px-2 md:px-0"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.65 }}
               >
-                <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-6 mb-4">
+                <div className="flex flex-row justify-center gap-3 md:gap-6 mb-4">
                   <div className="text-white">
-                    <span className="text-3xl font-bold block md:inline">500+</span>
-                    <span className="text-sm md:ml-1 block md:inline">店舗撮影</span>
+                    <span className="text-xl md:text-3xl font-bold block">500+</span>
+                    <span className="text-xs md:text-sm">店舗撮影</span>
                   </div>
                   <div className="text-white">
-                    <span className="text-3xl font-bold block md:inline">年間100件以上</span>
+                    <span className="text-xl md:text-3xl font-bold block">年間100件以上</span>
                   </div>
                   <div className="text-white">
-                    <span className="text-3xl font-bold block md:inline">95%</span>
-                    <span className="text-sm md:ml-1 block md:inline">再依頼率</span>
+                    <span className="text-xl md:text-3xl font-bold block">95%</span>
+                    <span className="text-xs md:text-sm">再依頼率</span>
                   </div>
                 </div>
                 <div className="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-4 opacity-70">
-                  <span className="text-white text-xs">掲載実績:<br className="md:hidden" /></span>
+                  <span className="text-white text-xs">掲載実績:<br className="block md:hidden" /></span>
                   <div className="flex flex-wrap justify-center gap-2 md:gap-4">
-                    <span className="text-white font-bold">食べログ</span>
-                    <span className="text-white font-bold">ぐるなび</span>
-                    <span className="text-white font-bold">ホットペッパー</span>
-                    <span className="text-white font-bold">Instagram</span>
+                    <span className="text-white font-bold text-xs md:text-base">食べログ</span>
+                    <span className="text-white font-bold text-xs md:text-base">ぐるなび</span>
+                    <span className="text-white font-bold text-xs md:text-base">ホットペッパー</span>
+                    <span className="text-white font-bold text-xs md:text-base">Instagram</span>
                   </div>
                 </div>
               </motion.div>
