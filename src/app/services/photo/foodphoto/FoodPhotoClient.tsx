@@ -555,15 +555,15 @@ const IntroSection = memo(() => {
               >
                 <div className="bg-white/95 text-gray-900 px-2 md:px-4 py-2 rounded-full flex items-center justify-center gap-1 md:gap-2 font-bold shadow-lg flex-1 md:flex-initial">
                   <span className="text-orange-500 text-sm md:text-base">⚡</span>
-                  <span className="text-xs md:text-base">最短1週間納品</span>
+                  <span className="text-xs md:text-base whitespace-nowrap">最短1週間納品</span>
                 </div>
                 <div className="bg-white/95 text-gray-900 px-2 md:px-4 py-2 rounded-full flex items-center justify-center gap-1 md:gap-2 font-bold shadow-lg flex-1 md:flex-initial">
                   <span className="text-orange-500 text-sm md:text-base">∞</span>
-                  <span className="text-xs md:text-base">時間内無制限</span>
+                  <span className="text-xs md:text-base whitespace-nowrap">時間内無制限</span>
                 </div>
                 <div className="bg-white/95 text-gray-900 px-2 md:px-4 py-2 rounded-full flex items-center justify-center gap-1 md:gap-2 font-bold shadow-lg flex-1 md:flex-initial">
                   <span className="text-orange-500 text-sm md:text-base">📍</span>
-                  <span className="text-xs md:text-base">東京・関東対応</span>
+                  <span className="text-xs md:text-base whitespace-nowrap">東京・関東対応</span>
                 </div>
               </motion.div>
 
@@ -575,16 +575,16 @@ const IntroSection = memo(() => {
                 transition={{ delay: 0.65 }}
               >
                 <div className="flex flex-row justify-center gap-3 md:gap-6 mb-4">
-                  <div className="text-white">
-                    <span className="text-xl md:text-3xl font-bold block">500+</span>
-                    <span className="text-xs md:text-sm">店舗撮影</span>
+                  <div className="text-white relative">
+                    <span className="text-[8px] md:text-xs absolute -top-1 left-0">店舗撮影</span>
+                    <span className="text-xl md:text-3xl font-bold block pl-8 md:pl-12">500+</span>
                   </div>
                   <div className="text-white">
                     <span className="text-xl md:text-3xl font-bold block">年間100件以上</span>
                   </div>
-                  <div className="text-white">
-                    <span className="text-xl md:text-3xl font-bold block">95%</span>
-                    <span className="text-xs md:text-sm">再依頼率</span>
+                  <div className="text-white relative">
+                    <span className="text-[8px] md:text-xs absolute -top-1 left-0">再依頼率</span>
+                    <span className="text-xl md:text-3xl font-bold block pl-8 md:pl-12">95%</span>
                   </div>
                 </div>
                 <div className="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-4 opacity-70">
