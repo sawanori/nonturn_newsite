@@ -496,7 +496,7 @@ const IntroSection = memo(() => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
               >
-                飲食店WEBサイト運用代行基準で整える<br />集客フォト出張撮影サービス
+                WEBサイト運用の基準で&ldquo;使える&rdquo;写真を。
               </motion.p>
               <motion.div 
                 className="mb-6"
@@ -547,7 +547,7 @@ const IntroSection = memo(() => {
                   </div>
                 </div>
                 <p className="text-xl md:text-2xl font-light text-white mt-2 text-center">
-                  飲食店専門出張撮影サービス
+                  飲食店専門の出張撮影で、集客を加速。
                 </p>
               </motion.div>
               <motion.div 
