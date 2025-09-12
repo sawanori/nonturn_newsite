@@ -35,6 +35,7 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const lastMessageCountRef = useRef(0);
   
   // Use controlled state if provided, otherwise use internal state
   const isOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen;
@@ -51,6 +52,32 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
   useEffect(() => {
     if (isOpen && !conversationId) {
       initializeChat();
+    }
+    
+    // Start polling for new messages when chat is open and has conversationId
+    if (isOpen && conversationId) {
+      // Clear any existing interval
+      if (pollingIntervalRef.current) {
+        clearInterval(pollingIntervalRef.current);
+      }
+      
+      // Poll every 3 seconds for new messages
+      pollingIntervalRef.current = setInterval(async () => {
+        try {
+          const latestMessages = await api.getMessages(conversationId);
+          console.log('Polling: Got messages:', latestMessages?.length, 'Last count:', lastMessageCountRef.current);
+          
+          // Only update if there are new messages
+          if (latestMessages && latestMessages.length !== lastMessageCountRef.current) {
+            lastMessageCountRef.current = latestMessages.length;
+            setMessages([...(latestMessages || [])]);
+            setForceUpdate(prev => prev + 1);
+            console.log('New messages detected, updating UI');
+          }
+        } catch (error) {
+          console.error('Failed to poll messages:', error);
+        }
+      }, 3000); // Poll every 3 seconds
     }
     
     // Cleanup polling when widget closes
@@ -119,6 +146,7 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
         console.log('Type of messages:', typeof msgs, Array.isArray(msgs));
         // Force a new array reference to ensure React detects the change
         setMessages([...(msgs || [])]);
+        lastMessageCountRef.current = msgs?.length || 0;
         setForceUpdate(prev => prev + 1); // Force re-render
       } else {
         // Create new conversation only if none exists
@@ -130,6 +158,7 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
         console.log('Got messages for new conversation:', msgs);
         // Force a new array reference to ensure React detects the change
         setMessages([...(msgs || [])]);
+        lastMessageCountRef.current = msgs?.length || 0;
         setForceUpdate(prev => prev + 1); // Force re-render
       }
     } catch (error) {
@@ -154,6 +183,7 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
       console.log('Setting messages in state:', updatedMessages);
       // Force a new array reference to ensure React detects the change
       setMessages([...(updatedMessages || [])]);
+      lastMessageCountRef.current = updatedMessages?.length || 0;
       setForceUpdate(prev => prev + 1); // Force re-render
       
       // Wait for auto-reply and fetch messages again after 2 seconds
@@ -162,6 +192,7 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
           const messagesWithReply = await api.getMessages(conversationId);
           console.log('Got messages with auto-reply:', messagesWithReply);
           setMessages([...(messagesWithReply || [])]);
+          lastMessageCountRef.current = messagesWithReply?.length || 0;
           setForceUpdate(prev => prev + 1); // Force re-render
         } catch (error) {
           console.error('Failed to fetch messages with reply:', error);
