@@ -7,13 +7,13 @@
 ### 1. Supabase関連（最重要）
 
 ```
-NEXT_PUBLIC_SUPABASE_URL=https://saeakxyazamxgmwpriqo.supabase.co
+NEXT_PUBLIC_SUPABASE_URL=[あなたのSupabase URL]
 ```
 - 説明: SupabaseプロジェクトのURL
 - 環境: Production, Preview, Development
 
 ```
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZWFreHlhemFteGdtd3ByaXFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc2MzE3NzksImV4cCI6MjA3MzIwNzc3OX0.n_kMeKDdHMeOAp6VOXxE54gsQW5q6HjDPlLEQSc9csk
+NEXT_PUBLIC_SUPABASE_ANON_KEY=[あなたのSupabase Anon Key]
 ```
 - 説明: Supabase公開用APIキー
 - 環境: Production, Preview, Development
@@ -68,25 +68,25 @@ SENDGRID_FROM_EMAIL=info@non-turn.com
 - 環境: Production, Preview, Development
 
 ```
-MICROCMS_API_KEY=fuUsF171CIGxQJZiwgDFkkWZDD4kceBUDhsi
+MICROCMS_API_KEY=[あなたのMicroCMS APIキー]
 ```
 - 説明: MicroCMS APIキー
 - 環境: Production, Preview, Development
 
 ```
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=AIzaSyBMqwGRLrMeIxoPqoW8X_iYxdO0saoRTT8
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=[あなたのGoogle Maps APIキー]
 ```
 - 説明: Google Maps APIキー
 - 環境: Production, Preview, Development
 
 ```
-NEXT_PUBLIC_GTM_ID=GTM-KCXJ8G5Q
+NEXT_PUBLIC_GTM_ID=[あなたのGTM ID]
 ```
 - 説明: Google Tag Manager ID
 - 環境: Production
 
 ```
-NEXT_PUBLIC_GA_ID=G-P9TFCN1658
+NEXT_PUBLIC_GA_ID=[あなたのGA ID]
 ```
 - 説明: Google Analytics ID
 - 環境: Production
