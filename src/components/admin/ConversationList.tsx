@@ -19,8 +19,8 @@ export function ConversationList({ onSelect, activeId }: ConversationListProps) 
   const searchParams = useSearchParams();
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [filter, setFilter] = useState<'all' | 'open' | 'closed'>(
-    (searchParams.get('filter') as 'all' | 'open' | 'closed') || 'open'
+  const [filter, setFilter] = useState<'all' | 'active' | 'closed'>(
+    (searchParams.get('filter') as 'all' | 'active' | 'closed') || 'active'
   );
   const [sortBy, setSortBy] = useState<SortOption>(
     (searchParams.get('sort') as SortOption) || 'recent'
@@ -77,8 +77,10 @@ export function ConversationList({ onSelect, activeId }: ConversationListProps) 
         .order('last_message_at', { ascending: false })
         .limit(50);
 
-      if (filter !== 'all') {
-        query = query.eq('status', filter);
+      if (filter === 'active') {
+        query = query.in('status', ['new', 'active']);
+      } else if (filter === 'closed') {
+        query = query.eq('status', 'closed');
       }
 
       const { data, error } = await query;
@@ -88,7 +90,7 @@ export function ConversationList({ onSelect, activeId }: ConversationListProps) 
       } else {
         // Fall back to mock data
         const mockConversations = await MockChatApi.listConversations({
-          status: filter === 'all' ? undefined : filter as 'open' | 'closed',
+          status: filter === 'all' ? undefined : (filter === 'active' ? 'new' : 'closed') as any,
           limit: 50
         });
         setConversations(sortConversations(filterBySearch(mockConversations)));
@@ -97,7 +99,7 @@ export function ConversationList({ onSelect, activeId }: ConversationListProps) 
       console.error('Error fetching conversations:', error);
       // Use mock data as fallback
       const mockConversations = await MockChatApi.listConversations({
-        status: filter === 'all' ? undefined : filter as 'open' | 'closed',
+        status: filter === 'all' ? undefined : (filter === 'active' ? 'new' : 'closed') as any,
         limit: 50
       });
       setConversations(sortConversations(filterBySearch(mockConversations)));
@@ -206,11 +208,11 @@ export function ConversationList({ onSelect, activeId }: ConversationListProps) 
           <div className="flex gap-2">
             <button
               onClick={() => {
-                setFilter('open');
-                updateUrl('open');
+                setFilter('active');
+                updateUrl('active');
               }}
             className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
-              filter === 'open'
+              filter === 'active'
                 ? 'bg-orange-500 text-white'
                 : 'bg-white text-gray-700 hover:bg-gray-100'
             }`}
@@ -294,11 +296,11 @@ export function ConversationList({ onSelect, activeId }: ConversationListProps) 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
                       <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
-                        conv.status === 'open'
+                        conv.status === 'new' || conv.status === 'active'
                           ? 'bg-green-100 text-green-800'
                           : 'bg-gray-100 text-gray-800'
                       }`}>
-                        {conv.status === 'open' ? '未対応' : '対応済み'}
+                        {(conv.status === 'new' || conv.status === 'active') ? '未対応' : '対応済み'}
                       </span>
                       <span className="text-xs text-gray-500">
                         {conv.channel === 'web' ? 'Web' : 'LINE'}

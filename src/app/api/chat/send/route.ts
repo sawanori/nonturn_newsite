@@ -60,7 +60,7 @@ export async function POST(req: Request) {
         .from('conversations')
         .insert({
           channel: 'web',
-          status: 'open',
+          status: 'new',
           session_token: sessionToken,
           last_message_at: new Date().toISOString(),
         })

@@ -34,7 +34,7 @@ export async function GET() {
       .from('conversations')
       .select('id')
       .eq('session_token', sessionToken)
-      .eq('status', 'open')
+      .in('status', ['new', 'active'])
       .single();
     
     if (!conversation) {

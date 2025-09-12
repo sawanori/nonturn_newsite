@@ -46,7 +46,7 @@ export async function POST() {
       .from('conversations')
       .select('id')
       .eq('session_token', sessionToken)
-      .eq('status', 'open')
+      .in('status', ['new', 'active'])
       .single();
     
     if (existing) {
@@ -58,7 +58,7 @@ export async function POST() {
       .from('conversations')
       .insert({
         channel: 'web',
-        status: 'open',
+        status: 'new',
         session_token: sessionToken,
         last_message_at: new Date().toISOString(),
       })

@@ -1,5 +1,5 @@
 export type Channel = 'web' | 'line';
-export type ConvStatus = 'open' | 'closed';
+export type ConvStatus = 'new' | 'active' | 'snoozed' | 'closed';
 export type MsgRole = 'user' | 'agent' | 'system';
 
 export interface Conversation {

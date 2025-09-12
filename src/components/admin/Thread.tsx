@@ -134,7 +134,8 @@ export function Thread({ conversationId }: ThreadProps) {
   async function toggleStatus() {
     if (!conversation) return;
 
-    const newStatus = conversation.status === 'open' ? 'closed' : 'open';
+    const isActive = conversation.status === 'new' || conversation.status === 'active';
+    const newStatus = isActive ? 'closed' : 'active';
     
     try {
       const { error } = await supabase
@@ -216,17 +217,17 @@ export function Thread({ conversationId }: ThreadProps) {
           </div>
           <div className="flex items-center gap-2">
             <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
-              conversation?.status === 'open'
+              conversation?.status === 'new' || conversation?.status === 'active'
                 ? 'bg-green-100 text-green-800'
                 : 'bg-gray-100 text-gray-800'
             }`}>
-              {conversation?.status === 'open' ? '未対応' : '対応済み'}
+              {(conversation?.status === 'new' || conversation?.status === 'active') ? '未対応' : '対応済み'}
             </span>
             <button
               onClick={toggleStatus}
               className="px-3 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
             >
-              {conversation?.status === 'open' ? 'クローズ' : '再開'}
+              {(conversation?.status === 'new' || conversation?.status === 'active') ? 'クローズ' : '再開'}
             </button>
           </div>
         </div>
@@ -300,7 +301,7 @@ export function Thread({ conversationId }: ThreadProps) {
       </div>
 
       {/* Reply Box */}
-      {conversation?.status === 'open' && (
+      {(conversation?.status === 'new' || conversation?.status === 'active') && (
         <ReplyBox 
           conversationId={conversationId}
           onMessageSent={scrollToBottom}

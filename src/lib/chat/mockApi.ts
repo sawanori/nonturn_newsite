@@ -30,7 +30,7 @@ export const MockChatApi: ChatAPI = {
     const conversation: Conversation = {
       id: conversationId,
       channel: 'web',
-      status: 'open',
+      status: 'new',
       last_message_at: nowISO(),
       contact_name: null,
       contact_email: null,
@@ -200,7 +200,7 @@ export function seedMockData() {
   const activeConv1: Conversation = {
     id: activeConv1Id,
     channel: 'web',
-    status: 'open',
+    status: 'new',
     contact_name: '鈴木花子',
     contact_email: 'suzuki@restaurant.com',
     last_message_at: new Date(Date.now() - 300000).toISOString(), // 5 minutes ago
@@ -256,7 +256,7 @@ export function seedMockData() {
   const activeConv2: Conversation = {
     id: activeConv2Id,
     channel: 'web',
-    status: 'open',
+    status: 'new',
     contact_name: null,
     contact_email: null,
     last_message_at: new Date(Date.now() - 1800000).toISOString(), // 30 minutes ago
@@ -304,7 +304,7 @@ export function seedMockData() {
   const activeConv3: Conversation = {
     id: activeConv3Id,
     channel: 'web',
-    status: 'open',
+    status: 'new',
     contact_name: '田中一郎',
     contact_email: 'tanaka@cafe.jp',
     last_message_at: new Date(Date.now() - 3600000).toISOString(), // 1 hour ago
