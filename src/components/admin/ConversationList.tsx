@@ -74,6 +74,8 @@ export function ConversationList({ onSelect, activeId }: ConversationListProps) 
       const response = await fetch(`/api/admin/conversations?filter=${filter}&limit=50`);
       
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error('API response error:', { status: response.status, error: errorText });
         throw new Error(`API error: ${response.status}`);
       }
 
@@ -82,7 +84,8 @@ export function ConversationList({ onSelect, activeId }: ConversationListProps) 
       console.log('Fetching conversations from API:', { 
         conversations, 
         count: conversations?.length,
-        filter 
+        filter,
+        useMock: process.env.NEXT_PUBLIC_USE_MOCK
       });
 
       if (conversations) {
