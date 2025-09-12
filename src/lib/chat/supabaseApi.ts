@@ -21,7 +21,6 @@ class SupabaseChatApiImpl implements ChatAPI {
         throw error;
       }
 
-      console.log('Created conversation:', data);
       return { conversationId: data.id };
     } catch (error) {
       console.error('Failed to start chat:', error);
@@ -65,7 +64,6 @@ class SupabaseChatApiImpl implements ChatAPI {
         await this.sendAutoReply(params.conversationId);
       }, 1000);
 
-      console.log('Sent message:', userMessage);
       // Return void instead of the message
     } catch (error) {
       console.error('Failed to send message:', error);
@@ -110,12 +108,10 @@ class SupabaseChatApiImpl implements ChatAPI {
         throw error;
       }
 
-      console.log('Fetched messages from Supabase:', data);
       
       // Return the data directly - it already matches the Message type
       const messages = data || [];
       
-      console.log('Returning messages:', messages);
       return messages;
     } catch (error) {
       console.error('Failed to get messages:', error);
@@ -129,9 +125,6 @@ class SupabaseChatApiImpl implements ChatAPI {
     email?: string;
   }): Promise<void> {
     try {
-      console.log('Attempting to update contact for conversation:', params.conversationId);
-      console.log('Contact data:', { name: params.name, email: params.email });
-      
       // First check if the conversation exists
       const { data: conversation, error: fetchError } = await supabase
         .from('conversations')
@@ -140,34 +133,21 @@ class SupabaseChatApiImpl implements ChatAPI {
         .single();
       
       if (fetchError) {
-        console.error('Error fetching conversation:', fetchError);
         throw new Error(`Conversation not found: ${fetchError.message}`);
       }
       
-      console.log('Found conversation:', conversation);
-      
-      // Update the conversation (remove updated_at as it doesn't exist in the table)
-      const { data: updateData, error: updateError } = await supabase
+      // Update the conversation
+      const { error: updateError } = await supabase
         .from('conversations')
         .update({
           contact_name: params.name || null,
           contact_email: params.email || null
         })
-        .eq('id', params.conversationId)
-        .select();
+        .eq('id', params.conversationId);
 
       if (updateError) {
-        console.error('Error updating contact:', updateError);
-        console.error('Update error details:', {
-          code: updateError.code,
-          message: updateError.message,
-          details: updateError.details,
-          hint: updateError.hint
-        });
         throw updateError;
       }
-
-      console.log('Successfully updated contact info:', updateData);
     } catch (error) {
       console.error('Failed to update contact:', error);
       throw error;
@@ -220,7 +200,6 @@ class SupabaseChatApiImpl implements ChatAPI {
         throw error;
       }
 
-      console.log('Closed conversation');
     } catch (error) {
       console.error('Failed to close conversation:', error);
       throw error;

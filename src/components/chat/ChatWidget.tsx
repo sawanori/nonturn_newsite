@@ -76,14 +76,12 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
       pollingIntervalRef.current = setInterval(async () => {
         try {
           const latestMessages = await api.getMessages(conversationId);
-          console.log('Polling: Got messages:', latestMessages?.length, 'Last count:', lastMessageCountRef.current);
           
           // Only update if there are new messages
           if (latestMessages && latestMessages.length !== lastMessageCountRef.current) {
             lastMessageCountRef.current = latestMessages.length;
             setMessages([...(latestMessages || [])]);
             setForceUpdate(prev => prev + 1);
-            console.log('New messages detected, updating UI');
           }
         } catch (error) {
           console.error('Failed to poll messages:', error);
@@ -121,9 +119,6 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
 
   // Auto-scroll to bottom when messages update
   useEffect(() => {
-    console.log('Messages state updated:', messages);
-    console.log('Messages length:', messages.length);
-    console.log('Messages type:', typeof messages, Array.isArray(messages));
     scrollToBottom();
   }, [messages]);
   
@@ -142,19 +137,15 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
 
   const initializeChat = async () => {
     try {
-      console.log('Initializing chat...');
       setIsLoading(true);
       
       // Check if we already have a conversationId stored in session
       const storedConversationId = sessionStorage.getItem('chat_conversation_id');
       
       if (storedConversationId) {
-        console.log('Found existing conversation ID:', storedConversationId);
         setConversationId(storedConversationId);
         // Get existing messages
         const msgs = await api.getMessages(storedConversationId);
-        console.log('Got existing messages:', msgs);
-        console.log('Type of messages:', typeof msgs, Array.isArray(msgs));
         // Force a new array reference to ensure React detects the change
         setMessages([...(msgs || [])]);
         lastMessageCountRef.current = msgs?.length || 0;
@@ -162,11 +153,9 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
       } else {
         // Create new conversation only if none exists
         const { conversationId } = await api.start();
-        console.log('Created new conversation ID:', conversationId);
         setConversationId(conversationId);
         sessionStorage.setItem('chat_conversation_id', conversationId);
         const msgs = await api.getMessages(conversationId);
-        console.log('Got messages for new conversation:', msgs);
         // Force a new array reference to ensure React detects the change
         setMessages([...(msgs || [])]);
         lastMessageCountRef.current = msgs?.length || 0;
@@ -191,7 +180,6 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
     try {
       await api.sendMessage({ conversationId, text: messageText });
       const updatedMessages = await api.getMessages(conversationId);
-      console.log('Setting messages in state:', updatedMessages);
       // Force a new array reference to ensure React detects the change
       setMessages([...(updatedMessages || [])]);
       lastMessageCountRef.current = updatedMessages?.length || 0;
@@ -201,7 +189,6 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
       setTimeout(async () => {
         try {
           const messagesWithReply = await api.getMessages(conversationId);
-          console.log('Got messages with auto-reply:', messagesWithReply);
           setMessages([...(messagesWithReply || [])]);
           lastMessageCountRef.current = messagesWithReply?.length || 0;
           setForceUpdate(prev => prev + 1); // Force re-render
@@ -248,7 +235,6 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
       return;
     }
     
-    console.log('Updating contact info:', { conversationId, ...contactInfo });
     
     try {
       await api.updateContact({
@@ -317,18 +303,6 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
             <div className="flex flex-col flex-1">
               {/* Messages Area */}
               <div className="flex-1 overflow-y-auto p-4 space-y-3" style={{ height: '400px' }} role="log" aria-live="polite" key={forceUpdate}>
-                {(() => {
-                  console.log('Rendering messages area (forceUpdate:', forceUpdate, '):');
-                  console.log('- isLoading:', isLoading);
-                  console.log('- messages:', messages);
-                  console.log('- messages.length:', messages.length);
-                  console.log('- typeof messages:', typeof messages);
-                  console.log('- Array.isArray(messages):', Array.isArray(messages));
-                  if (messages.length > 0) {
-                    console.log('- First message:', messages[0]);
-                  }
-                  return null;
-                })()}
                 
                 {isLoading && messages.length === 0 ? (
                   <div className="flex justify-center items-center h-full">
