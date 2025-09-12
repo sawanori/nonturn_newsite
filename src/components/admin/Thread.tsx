@@ -35,10 +35,26 @@ export function Thread({ conversationId }: ThreadProps) {
   const [messageCount, setMessageCount] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     fetchConversation();
     fetchMessages();
+    
+    // Start polling for new messages
+    if (pollingIntervalRef.current) {
+      clearInterval(pollingIntervalRef.current);
+    }
+    
+    pollingIntervalRef.current = setInterval(() => {
+      fetchMessages();
+    }, 3000); // Poll every 3 seconds
+    
+    return () => {
+      if (pollingIntervalRef.current) {
+        clearInterval(pollingIntervalRef.current);
+      }
+    };
 
     // Set up realtime subscription for messages
     const channel = supabase
@@ -61,6 +77,9 @@ export function Thread({ conversationId }: ThreadProps) {
 
     return () => {
       supabase.removeChannel(channel);
+      if (pollingIntervalRef.current) {
+        clearInterval(pollingIntervalRef.current);
+      }
     };
   }, [conversationId]);
 
