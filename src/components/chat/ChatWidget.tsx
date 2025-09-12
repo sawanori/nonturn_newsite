@@ -230,13 +230,31 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
   };
 
   const updateContactInfo = async () => {
-    if (!conversationId) return;
+    if (!conversationId) {
+      console.error('No conversation ID available');
+      toast.error('チャットセッションが開始されていません', 'contact-error');
+      return;
+    }
+    
+    // Validate at least one field is filled
+    if (!contactInfo.name?.trim() && !contactInfo.email?.trim()) {
+      toast.error('名前またはメールアドレスを入力してください', 'contact-validation');
+      return;
+    }
+    
+    // Validate email format if provided
+    if (contactInfo.email && !contactInfo.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      toast.error('正しいメールアドレスを入力してください', 'email-validation');
+      return;
+    }
+    
+    console.log('Updating contact info:', { conversationId, ...contactInfo });
     
     try {
       await api.updateContact({
         conversationId,
-        name: contactInfo.name,
-        email: contactInfo.email,
+        name: contactInfo.name?.trim() || '',
+        email: contactInfo.email?.trim() || '',
       });
       
       // Save contact info to sessionStorage
@@ -249,7 +267,7 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
       toast.success('連絡先を登録しました');
     } catch (error) {
       console.error('Failed to update contact info:', error);
-      toast.error('連絡先の登録に失敗しました', 'contact-error');
+      toast.error('連絡先の登録に失敗しました。もう一度お試しください。', 'contact-error');
     }
   };
 

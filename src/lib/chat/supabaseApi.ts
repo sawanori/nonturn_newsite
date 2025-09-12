@@ -129,21 +129,46 @@ class SupabaseChatApiImpl implements ChatAPI {
     email?: string;
   }): Promise<void> {
     try {
-      const { error } = await supabase
+      console.log('Attempting to update contact for conversation:', params.conversationId);
+      console.log('Contact data:', { name: params.name, email: params.email });
+      
+      // First check if the conversation exists
+      const { data: conversation, error: fetchError } = await supabase
+        .from('conversations')
+        .select('id, contact_name, contact_email')
+        .eq('id', params.conversationId)
+        .single();
+      
+      if (fetchError) {
+        console.error('Error fetching conversation:', fetchError);
+        throw new Error(`Conversation not found: ${fetchError.message}`);
+      }
+      
+      console.log('Found conversation:', conversation);
+      
+      // Update the conversation
+      const { data: updateData, error: updateError } = await supabase
         .from('conversations')
         .update({
-          contact_name: params.name,
-          contact_email: params.email,
+          contact_name: params.name || null,
+          contact_email: params.email || null,
           updated_at: new Date().toISOString()
         })
-        .eq('id', params.conversationId);
+        .eq('id', params.conversationId)
+        .select();
 
-      if (error) {
-        console.error('Error updating contact:', error);
-        throw error;
+      if (updateError) {
+        console.error('Error updating contact:', updateError);
+        console.error('Update error details:', {
+          code: updateError.code,
+          message: updateError.message,
+          details: updateError.details,
+          hint: updateError.hint
+        });
+        throw updateError;
       }
 
-      console.log('Updated contact info');
+      console.log('Successfully updated contact info:', updateData);
     } catch (error) {
       console.error('Failed to update contact:', error);
       throw error;
