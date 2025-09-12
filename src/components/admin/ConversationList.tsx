@@ -70,34 +70,26 @@ export function ConversationList({ onSelect, activeId }: ConversationListProps) 
 
   async function fetchConversations() {
     try {
-      // Try Supabase first
-      let query = supabase
-        .from('conversations')
-        .select('*')
-        .order('last_message_at', { ascending: false })
-        .limit(50);
-
-      if (filter === 'active') {
-        query = query.in('status', ['new', 'active']);
-      } else if (filter === 'closed') {
-        query = query.eq('status', 'closed');
+      // Use admin API endpoint to fetch conversations with service role key
+      const response = await fetch(`/api/admin/conversations?filter=${filter}&limit=50`);
+      
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
       }
 
-      const { data, error } = await query;
+      const { conversations } = await response.json();
 
-      console.log('Fetching conversations from Supabase:', { 
-        data, 
-        error, 
-        dataLength: data?.length,
+      console.log('Fetching conversations from API:', { 
+        conversations, 
+        count: conversations?.length,
         filter 
       });
 
-      if (!error && data) {
-        // Use Supabase data even if empty (don't fall back to mock for empty data)
-        setConversations(sortConversations(filterBySearch(data)));
-      } else if (error) {
-        console.error('Supabase error, falling back to mock:', error);
-        // Only fall back to mock data if there's an actual error
+      if (conversations) {
+        setConversations(sortConversations(filterBySearch(conversations)));
+      } else {
+        // Only fall back to mock data if API fails
+        console.error('API failed, falling back to mock');
         const mockConversations = await MockChatApi.listConversations({
           status: filter === 'all' ? undefined : (filter === 'active' ? 'new' : 'closed') as any,
           limit: 50
