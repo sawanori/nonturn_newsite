@@ -459,20 +459,6 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
               </div>
             </div>
             </motion.div>
-            
-            {/* Floating Close Button (always visible) */}
-            <motion.button
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0 }}
-              onClick={handleClose}
-              className="fixed top-4 right-4 md:hidden z-50 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
-              aria-label="チャットを閉じる"
-            >
-              <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </motion.button>
           </>
         )}
       </AnimatePresence>
