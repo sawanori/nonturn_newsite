@@ -5,7 +5,6 @@ import { supabase } from '@/lib/supabase';
 import { ReplyBox } from './ReplyBox';
 import type { Message, Conversation } from '@/types/chat';
 import { RealtimePostgresChangesPayload } from '@supabase/supabase-js';
-import { MockChatApi } from '@/lib/chat/mockApi';
 import { useToast } from '@/lib/ui/toast';
 
 interface ThreadProps {
@@ -80,21 +79,12 @@ export function Thread({ conversationId }: ThreadProps) {
       if (!error && data) {
         setConversation(data);
       } else {
-        // Fall back to mock data
-        const mockConversations = await MockChatApi.listConversations();
-        const mockConv = mockConversations.find(c => c.id === conversationId);
-        if (mockConv) {
-          setConversation(mockConv);
-        }
+        console.error('Conversation not found:', conversationId);
+        setConversation(null);
       }
     } catch (error) {
       console.error('Error fetching conversation:', error);
-      // Fall back to mock data
-      const mockConversations = await MockChatApi.listConversations();
-      const mockConv = mockConversations.find(c => c.id === conversationId);
-      if (mockConv) {
-        setConversation(mockConv);
-      }
+      setConversation(null);
     }
   }
 
@@ -106,20 +96,18 @@ export function Thread({ conversationId }: ThreadProps) {
         .eq('conversation_id', conversationId)
         .order('created_at', { ascending: true });
 
-      if (!error && data && data.length > 0) {
+      if (!error && data) {
         setMessages(data);
         setMessageCount(data.length);
       } else {
-        // Fall back to mock data
-        const mockMessages = await MockChatApi.getMessages(conversationId);
-        setMessages(mockMessages);
-        setMessageCount(mockMessages.length);
+        console.log('No messages found for conversation:', conversationId);
+        setMessages([]);
+        setMessageCount(0);
       }
     } catch (error) {
       console.error('Error fetching messages:', error);
-      // Fall back to mock data
-      const mockMessages = await MockChatApi.getMessages(conversationId);
-      setMessages(mockMessages);
+      setMessages([]);
+      setMessageCount(0);
     } finally {
       setIsLoading(false);
     }

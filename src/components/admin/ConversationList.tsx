@@ -5,7 +5,6 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import type { Conversation } from '@/types/chat';
 import { RealtimePostgresChangesPayload } from '@supabase/supabase-js';
-import { MockChatApi, seedMockData } from '@/lib/chat/mockApi';
 
 interface ConversationListProps {
   onSelect: (id: string) => void;
@@ -91,22 +90,14 @@ export function ConversationList({ onSelect, activeId }: ConversationListProps) 
       if (conversations) {
         setConversations(sortConversations(filterBySearch(conversations)));
       } else {
-        // Only fall back to mock data if API fails
-        console.error('API failed, falling back to mock');
-        const mockConversations = await MockChatApi.listConversations({
-          status: filter === 'all' ? undefined : (filter === 'active' ? 'new' : 'closed') as any,
-          limit: 50
-        });
-        setConversations(sortConversations(filterBySearch(mockConversations)));
+        // No conversations found
+        console.log('No conversations found in database');
+        setConversations([]);
       }
     } catch (error) {
       console.error('Error fetching conversations:', error);
-      // Use mock data as fallback
-      const mockConversations = await MockChatApi.listConversations({
-        status: filter === 'all' ? undefined : (filter === 'active' ? 'new' : 'closed') as any,
-        limit: 50
-      });
-      setConversations(sortConversations(filterBySearch(mockConversations)));
+      // Don't use mock data - show empty state or error
+      setConversations([]);
     } finally {
       setIsLoading(false);
     }
