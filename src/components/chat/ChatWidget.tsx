@@ -202,16 +202,15 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
             </div>
 
             {/* Chat Content Container */}
-            <div className="flex flex-col flex-1 min-h-0">
+            <div className="flex flex-col flex-1" style={{ minHeight: 0 }}>
               {/* Messages Area */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0" role="log" aria-live="polite">
+              <div className="flex-1 overflow-y-auto p-4 space-y-3" style={{ minHeight: 0, maxHeight: '400px' }} role="log" aria-live="polite">
                 {isLoading && messages.length === 0 ? (
                   <div className="flex justify-center items-center h-full">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
                   </div>
                 ) : (
                   <>
-                    {console.log('Rendering messages:', messages)}
                     {messages.map((message) => (
                       <motion.div
                         key={message.id}
