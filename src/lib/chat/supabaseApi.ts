@@ -146,13 +146,12 @@ class SupabaseChatApiImpl implements ChatAPI {
       
       console.log('Found conversation:', conversation);
       
-      // Update the conversation
+      // Update the conversation (remove updated_at as it doesn't exist in the table)
       const { data: updateData, error: updateError } = await supabase
         .from('conversations')
         .update({
           contact_name: params.name || null,
-          contact_email: params.email || null,
-          updated_at: new Date().toISOString()
+          contact_email: params.email || null
         })
         .eq('id', params.conversationId)
         .select();
@@ -212,8 +211,7 @@ class SupabaseChatApiImpl implements ChatAPI {
       const { error } = await supabase
         .from('conversations')
         .update({
-          status: 'closed',
-          updated_at: new Date().toISOString()
+          status: 'closed'
         })
         .eq('id', conversationId);
 
