@@ -110,8 +110,22 @@ class SupabaseChatApiImpl implements ChatAPI {
         throw error;
       }
 
-      console.log('Fetched messages:', data);
-      return data || [];
+      console.log('Fetched messages from Supabase:', data);
+      
+      // Map database fields to Message type if needed
+      const messages = (data || []).map(msg => ({
+        id: msg.id,
+        conversation_id: msg.conversation_id,
+        role: msg.role,
+        source: msg.source,
+        content: msg.content,
+        content_type: msg.content_type || 'text/plain',
+        created_at: msg.created_at,
+        created_by: msg.created_by
+      }));
+      
+      console.log('Returning messages:', messages);
+      return messages;
     } catch (error) {
       console.error('Failed to get messages:', error);
       throw error;
