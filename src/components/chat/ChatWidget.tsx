@@ -31,8 +31,10 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
   const [contactInfo, setContactInfo] = useState({ name: '', email: '' });
   const [showContactForm, setShowContactForm] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [forceUpdate, setForceUpdate] = useState(0); // Force re-render counter
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null);
   
   // Use controlled state if provided, otherwise use internal state
   const isOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen;
@@ -50,7 +52,13 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
     if (isOpen && !conversationId) {
       initializeChat();
     }
-  }, [isOpen]);
+    
+    // Cleanup polling when widget closes
+    if (!isOpen && pollingIntervalRef.current) {
+      clearInterval(pollingIntervalRef.current);
+      pollingIntervalRef.current = null;
+    }
+  }, [isOpen, conversationId]);
 
   // Set up global chat opener
   useEffect(() => {
@@ -75,8 +83,20 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
 
   // Auto-scroll to bottom when messages update
   useEffect(() => {
+    console.log('Messages state updated:', messages);
+    console.log('Messages length:', messages.length);
+    console.log('Messages type:', typeof messages, Array.isArray(messages));
     scrollToBottom();
   }, [messages]);
+  
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (pollingIntervalRef.current) {
+        clearInterval(pollingIntervalRef.current);
+      }
+    };
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -97,7 +117,9 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
         const msgs = await api.getMessages(storedConversationId);
         console.log('Got existing messages:', msgs);
         console.log('Type of messages:', typeof msgs, Array.isArray(msgs));
-        setMessages(msgs || []);
+        // Force a new array reference to ensure React detects the change
+        setMessages([...(msgs || [])]);
+        setForceUpdate(prev => prev + 1); // Force re-render
       } else {
         // Create new conversation only if none exists
         const { conversationId } = await api.start();
@@ -106,7 +128,9 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
         sessionStorage.setItem('chat_conversation_id', conversationId);
         const msgs = await api.getMessages(conversationId);
         console.log('Got messages for new conversation:', msgs);
-        setMessages(msgs);
+        // Force a new array reference to ensure React detects the change
+        setMessages([...(msgs || [])]);
+        setForceUpdate(prev => prev + 1); // Force re-render
       }
     } catch (error) {
       console.error('Failed to initialize chat:', error);
@@ -128,7 +152,21 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
       await api.sendMessage({ conversationId, text: messageText });
       const updatedMessages = await api.getMessages(conversationId);
       console.log('Setting messages in state:', updatedMessages);
-      setMessages(updatedMessages);
+      // Force a new array reference to ensure React detects the change
+      setMessages([...(updatedMessages || [])]);
+      setForceUpdate(prev => prev + 1); // Force re-render
+      
+      // Wait for auto-reply and fetch messages again after 2 seconds
+      setTimeout(async () => {
+        try {
+          const messagesWithReply = await api.getMessages(conversationId);
+          console.log('Got messages with auto-reply:', messagesWithReply);
+          setMessages([...(messagesWithReply || [])]);
+          setForceUpdate(prev => prev + 1); // Force re-render
+        } catch (error) {
+          console.error('Failed to fetch messages with reply:', error);
+        }
+      }, 2000); // Wait 2 seconds for auto-reply (1 second delay + buffer)
     } catch (error) {
       console.error('Failed to send message:', error);
       setInputText(messageText); // Restore input on error
@@ -220,27 +258,19 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
             {/* Chat Content Container */}
             <div className="flex flex-col flex-1">
               {/* Messages Area */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-3" style={{ height: '400px' }} role="log" aria-live="polite">
-                {/* Debug info */}
-                <div className="text-xs text-gray-500 mb-2 border-b pb-2">
-                  <div className="flex justify-between items-center">
-                    <span>Messages: {messages.length} | Loading: {isLoading ? 'Yes' : 'No'}</span>
-                    <button 
-                      onClick={() => {
-                        sessionStorage.removeItem('chat_conversation_id');
-                        setConversationId(null);
-                        setMessages([]);
-                        initializeChat();
-                      }}
-                      className="text-blue-500 hover:text-blue-700 underline"
-                    >
-                      新しい会話
-                    </button>
-                  </div>
-                  <div className="text-xs mt-1">
-                    ID: {conversationId ? conversationId.slice(0, 8) + '...' : 'None'}
-                  </div>
-                </div>
+              <div className="flex-1 overflow-y-auto p-4 space-y-3" style={{ height: '400px' }} role="log" aria-live="polite" key={forceUpdate}>
+                {(() => {
+                  console.log('Rendering messages area (forceUpdate:', forceUpdate, '):');
+                  console.log('- isLoading:', isLoading);
+                  console.log('- messages:', messages);
+                  console.log('- messages.length:', messages.length);
+                  console.log('- typeof messages:', typeof messages);
+                  console.log('- Array.isArray(messages):', Array.isArray(messages));
+                  if (messages.length > 0) {
+                    console.log('- First message:', messages[0]);
+                  }
+                  return null;
+                })()}
                 
                 {isLoading && messages.length === 0 ? (
                   <div className="flex justify-center items-center h-full">
