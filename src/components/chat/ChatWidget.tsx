@@ -52,6 +52,17 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
   useEffect(() => {
     if (isOpen && !conversationId) {
       initializeChat();
+      
+      // Load saved contact info from sessionStorage
+      const savedContactInfo = sessionStorage.getItem('chat_contact_info');
+      if (savedContactInfo) {
+        try {
+          const info = JSON.parse(savedContactInfo);
+          setContactInfo(info);
+        } catch (error) {
+          console.error('Failed to parse saved contact info:', error);
+        }
+      }
     }
     
     // Start polling for new messages when chat is open and has conversationId
@@ -227,6 +238,13 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
         name: contactInfo.name,
         email: contactInfo.email,
       });
+      
+      // Save contact info to sessionStorage
+      sessionStorage.setItem('chat_contact_info', JSON.stringify({
+        name: contactInfo.name,
+        email: contactInfo.email
+      }));
+      
       setShowContactForm(false);
       toast.success('連絡先を登録しました');
     } catch (error) {
@@ -262,7 +280,7 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
               aria-modal="true"
             >
             {/* Header */}
-            <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white p-4 flex items-center justify-between flex-shrink-0">
+            <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white p-4 flex-shrink-0">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -275,15 +293,6 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
                   <p className="text-xs opacity-90">お気軽にご相談ください</p>
                 </div>
               </div>
-              <button
-                onClick={handleClose}
-                className="p-2 hover:bg-white/20 rounded-lg transition-colors bg-white/10"
-                aria-label="チャットを閉じる"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
             </div>
 
             {/* Chat Content Container */}
@@ -366,13 +375,13 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
               )}
 
               {/* Contact Info Button */}
-              {conversationId && !contactInfo.email && !showContactForm && (
+              {conversationId && !showContactForm && (
                 <div className="px-4 py-2 border-t bg-white flex-shrink-0">
                   <button
                     onClick={() => setShowContactForm(true)}
                     className="text-xs text-blue-600 hover:underline"
                   >
-                    連絡先を登録する（任意）
+                    {contactInfo.email ? '連絡先を更新する' : '連絡先を登録する（任意）'}
                   </button>
                 </div>
               )}

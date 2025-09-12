@@ -311,7 +311,10 @@ export function Thread({ conversationId }: ThreadProps) {
       {(conversation?.status === 'new' || conversation?.status === 'active') && (
         <ReplyBox 
           conversationId={conversationId}
-          onMessageSent={scrollToBottom}
+          onMessageSent={() => {
+            fetchMessages();
+            scrollToBottom();
+          }}
         />
       )}
     </div>
