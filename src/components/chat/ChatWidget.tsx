@@ -84,10 +84,13 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
 
   const initializeChat = async () => {
     try {
+      console.log('Initializing chat...');
       setIsLoading(true);
       const { conversationId } = await api.start();
+      console.log('Got conversation ID:', conversationId);
       setConversationId(conversationId);
       const msgs = await api.getMessages(conversationId);
+      console.log('Got messages:', msgs);
       setMessages(msgs);
     } catch (error) {
       console.error('Failed to initialize chat:', error);
@@ -316,6 +319,12 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
 
               {/* Input Area */}
               <div className="p-3 border-t bg-white flex-shrink-0">
+                {/* Debug info */}
+                {process.env.NODE_ENV === 'development' && (
+                  <div className="text-xs text-gray-500 mb-2">
+                    Debug: conversationId={conversationId || 'null'}, isLoading={isLoading.toString()}
+                  </div>
+                )}
                 <div className="flex gap-2">
                   <input
                     ref={inputRef}

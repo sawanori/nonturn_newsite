@@ -1,0 +1,77 @@
+# Supabase RLS ポリシー設定手順
+
+## 1. conversationsテーブルのポリシー追加
+
+### ステップ1-1: INSERT用ポリシーの作成
+1. conversationsテーブルを選択
+2. 「Create policy」ボタンをクリック
+3. 以下を入力：
+   - **Policy Name**: `conversations_insert_anon`
+   - **Policy Command**: `INSERT`を選択
+   - **Target Roles**: `anon`にチェック
+   - **WITH CHECK expression**: `true`
+4. 「Review」→「Save policy」
+
+### ステップ1-2: SELECT用ポリシーの作成
+1. 「Create policy」ボタンをクリック
+2. 以下を入力：
+   - **Policy Name**: `conversations_select_anon`
+   - **Policy Command**: `SELECT`を選択
+   - **Target Roles**: `anon`にチェック
+   - **USING expression**: `true`
+3. 「Review」→「Save policy」
+
+### ステップ1-3: UPDATE用ポリシーの作成
+1. 「Create policy」ボタンをクリック
+2. 以下を入力：
+   - **Policy Name**: `conversations_update_anon`
+   - **Policy Command**: `UPDATE`を選択
+   - **Target Roles**: `anon`にチェック
+   - **USING expression**: `true`
+   - **WITH CHECK expression**: `true`
+3. 「Review」→「Save policy」
+
+---
+
+## 2. messagesテーブルのポリシー追加（完了済み）
+
+### ステップ2-1: INSERT用ポリシーの作成（✓完了）
+- **Policy Name**: `messages_insert_anon`
+- **Policy Command**: `INSERT`
+- **Target Roles**: `anon`
+- **WITH CHECK expression**: `true`
+
+### ステップ2-2: SELECT用ポリシーの作成（✓完了）
+- **Policy Name**: `messages_select_anon`
+- **Policy Command**: `SELECT`
+- **Target Roles**: `anon`
+- **USING expression**: `true`
+
+---
+
+## 3. 最終確認
+
+### conversationsテーブルに必要なポリシー：
+- [ ] conversations_insert（authenticated用）- 既存
+- [ ] conversations_select（authenticated用）- 既存
+- [ ] conversations_update（authenticated用）- 既存
+- [ ] **conversations_insert_anon（anon用）- 新規追加**
+- [ ] **conversations_select_anon（anon用）- 新規追加**
+- [ ] **conversations_update_anon（anon用）- 新規追加**
+
+### messagesテーブルに必要なポリシー：
+- [x] messages_insert（authenticated用）- 既存
+- [x] messages_select（authenticated用）- 既存
+- [x] **messages_insert_anon（anon用）- 追加済み✓**
+- [x] **messages_select_anon（anon用）- 追加済み✓**
+
+---
+
+## 重要な注意点
+
+1. **Target Roles**は必ず「anon」を選択すること
+2. **expression**欄には「true」と入力（すべて許可）
+3. conversationsテーブルには**3つ**の新規ポリシーが必要（INSERT, SELECT, UPDATE）
+4. messagesテーブルは**完了済み**
+
+これですべての設定が完了し、匿名ユーザーでもチャット機能が使えるようになります。
