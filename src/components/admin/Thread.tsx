@@ -6,15 +6,34 @@ import { ReplyBox } from './ReplyBox';
 import type { Message, Conversation } from '@/types/chat';
 import { RealtimePostgresChangesPayload } from '@supabase/supabase-js';
 import { MockChatApi } from '@/lib/chat/mockApi';
+import { useToast } from '@/lib/ui/toast';
 
 interface ThreadProps {
   conversationId: string;
 }
 
+// Loading skeleton component
+function MessageSkeleton() {
+  return (
+    <div className="space-y-4 max-w-3xl mx-auto animate-pulse">
+      {[1, 2, 3].map((i) => (
+        <div key={i} className={`flex ${i % 2 === 0 ? 'justify-end' : 'justify-start'}`}>
+          <div className="max-w-[70%]">
+            <div className={`h-16 rounded-2xl bg-gray-300 ${i % 2 === 0 ? 'bg-blue-200' : ''}`} />
+            <div className="mt-1 h-3 w-24 bg-gray-200 rounded" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function Thread({ conversationId }: ThreadProps) {
+  const toast = useToast();
   const [messages, setMessages] = useState<Message[]>([]);
   const [conversation, setConversation] = useState<Conversation | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [messageCount, setMessageCount] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -89,10 +108,12 @@ export function Thread({ conversationId }: ThreadProps) {
 
       if (!error && data && data.length > 0) {
         setMessages(data);
+        setMessageCount(data.length);
       } else {
         // Fall back to mock data
         const mockMessages = await MockChatApi.getMessages(conversationId);
         setMessages(mockMessages);
+        setMessageCount(mockMessages.length);
       }
     } catch (error) {
       console.error('Error fetching messages:', error);
@@ -123,12 +144,15 @@ export function Thread({ conversationId }: ThreadProps) {
 
       if (error) {
         console.error('Failed to update status:', error);
+        toast.error('ステータスの更新に失敗しました', 'status-error');
         return;
       }
 
       setConversation({ ...conversation, status: newStatus });
+      toast.success(newStatus === 'closed' ? '会話をクローズしました' : '会話を再開しました');
     } catch (error) {
       console.error('Error updating status:', error);
+      toast.error('ステータスの更新に失敗しました', 'status-error');
     }
   }
 
@@ -144,8 +168,24 @@ export function Thread({ conversationId }: ThreadProps) {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-full">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+      <div className="flex flex-col h-full">
+        {/* Skeleton Header */}
+        <div className="px-4 py-3 border-b bg-white">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="h-5 w-32 bg-gray-300 rounded animate-pulse mb-2" />
+              <div className="h-4 w-48 bg-gray-200 rounded animate-pulse" />
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="h-6 w-20 bg-gray-300 rounded-full animate-pulse" />
+              <div className="h-8 w-24 bg-gray-200 rounded animate-pulse" />
+            </div>
+          </div>
+        </div>
+        {/* Skeleton Messages */}
+        <div className="flex-1 overflow-y-auto p-4 bg-gray-50">
+          <MessageSkeleton />
+        </div>
       </div>
     );
   }
@@ -155,13 +195,24 @@ export function Thread({ conversationId }: ThreadProps) {
       {/* Header */}
       <div className="px-4 py-3 border-b bg-white">
         <div className="flex items-center justify-between">
-          <div>
-            <h3 className="font-semibold text-gray-900">
-              {conversation?.contact_name || '（名前未設定）'}
-            </h3>
+          <div className="flex-1">
+            <div className="flex items-center gap-3">
+              <h3 className="font-semibold text-gray-900">
+                {conversation?.contact_name || '（名前未設定）'}
+              </h3>
+              {messageCount > 0 && (
+                <span className="text-xs text-gray-500">
+                  {messageCount}件のメッセージ
+                </span>
+              )}
+            </div>
             {conversation?.contact_email && (
               <p className="text-sm text-gray-500">{conversation.contact_email}</p>
             )}
+            <div className="flex items-center gap-4 mt-1 text-xs text-gray-500">
+              <span>チャンネル: {conversation?.channel === 'web' ? 'Web' : 'LINE'}</span>
+              <span>最終更新: {formatTime(conversation?.last_message_at || '')}</span>
+            </div>
           </div>
           <div className="flex items-center gap-2">
             <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
@@ -187,8 +238,22 @@ export function Thread({ conversationId }: ThreadProps) {
         className="flex-1 overflow-y-auto p-4 bg-gray-50"
       >
         {messages.length === 0 ? (
-          <div className="text-center text-gray-500 py-8">
-            <p>メッセージがありません</p>
+          <div className="flex flex-col items-center justify-center py-16">
+            <svg
+              className="w-16 h-16 text-gray-300 mb-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+              />
+            </svg>
+            <p className="text-gray-500 text-lg mb-2">まだメッセージがありません</p>
+            <p className="text-gray-400 text-sm">お客様からのメッセージをお待ちください</p>
           </div>
         ) : (
           <div className="space-y-4 max-w-3xl mx-auto">

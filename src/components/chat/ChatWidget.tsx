@@ -1,17 +1,28 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { getChatApi } from '@/lib/chat';
 import type { Message } from '@/types/chat';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useFocusTrap } from '@/hooks/useFocusTrap';
+import { useToast } from '@/lib/ui/toast';
 
 interface ChatWidgetProps {
   isOpen?: boolean;
   onClose?: () => void;
 }
 
+// Quick reply suggestions
+const QUICK_REPLIES = [
+  '料金について教えてください',
+  '撮影の流れを知りたい',
+  '納期はどのくらいですか？',
+  '見積もりをお願いします'
+];
+
 export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWidgetProps = {}) {
   const api = getChatApi();
+  const toast = useToast();
   const [internalIsOpen, setInternalIsOpen] = useState(false);
   const [conversationId, setConversationId] = useState<string>('');
   const [messages, setMessages] = useState<Message[]>([]);
@@ -19,12 +30,20 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
   const [isLoading, setIsLoading] = useState(false);
   const [contactInfo, setContactInfo] = useState({ name: '', email: '' });
   const [showContactForm, setShowContactForm] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   
   // Use controlled state if provided, otherwise use internal state
   const isOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen;
-  const handleClose = onClose || (() => setInternalIsOpen(false));
+  const focusTrapRef = useFocusTrap(isOpen);
+  const handleClose = useCallback(() => {
+    if (onClose) {
+      onClose();
+    } else {
+      setInternalIsOpen(false);
+    }
+  }, [onClose]);
 
   // Initialize conversation when widget opens
   useEffect(() => {
@@ -32,6 +51,27 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
       initializeChat();
     }
   }, [isOpen]);
+
+  // Set up global chat opener
+  useEffect(() => {
+    const handleOpenChat = () => {
+      if (controlledIsOpen === undefined) {
+        setInternalIsOpen(true);
+      }
+    };
+
+    // Listen for clicks on elements with data-chat-open attribute
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.closest('[data-chat-open]')) {
+        e.preventDefault();
+        handleOpenChat();
+      }
+    };
+
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, [controlledIsOpen]);
 
   // Auto-scroll to bottom when messages update
   useEffect(() => {
@@ -51,28 +91,35 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
       setMessages(msgs);
     } catch (error) {
       console.error('Failed to initialize chat:', error);
+      toast.error('チャットの初期化に失敗しました。ページを更新してください。', 'chat-init-error');
     } finally {
       setIsLoading(false);
     }
   };
 
-  const sendMessage = async () => {
-    const text = inputText.trim();
-    if (!text || !conversationId || isLoading) return;
+  const sendMessage = async (text?: string) => {
+    const messageText = text || inputText.trim();
+    if (!messageText || !conversationId || isLoading) return;
 
     setInputText('');
     setIsLoading(true);
+    setHasInteracted(true);
 
     try {
-      await api.sendMessage({ conversationId, text });
+      await api.sendMessage({ conversationId, text: messageText });
       const updatedMessages = await api.getMessages(conversationId);
       setMessages(updatedMessages);
     } catch (error) {
       console.error('Failed to send message:', error);
-      setInputText(text); // Restore input on error
+      setInputText(messageText); // Restore input on error
+      toast.error('メッセージの送信に失敗しました。もう一度お試しください。', 'send-error');
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleQuickReply = (reply: string) => {
+    sendMessage(reply);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -92,8 +139,10 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
         email: contactInfo.email,
       });
       setShowContactForm(false);
+      toast.success('連絡先を登録しました');
     } catch (error) {
       console.error('Failed to update contact info:', error);
+      toast.error('連絡先の登録に失敗しました', 'contact-error');
     }
   };
 
@@ -114,10 +163,14 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
             
             {/* Chat Window */}
             <motion.div
+              ref={focusTrapRef}
               initial={{ opacity: 0, y: 20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.95 }}
               className="fixed bottom-0 right-0 md:bottom-6 md:right-6 z-50 w-full md:w-96 md:max-w-[calc(100vw-3rem)] bg-white md:rounded-2xl shadow-2xl overflow-hidden h-screen md:h-[600px] max-h-screen md:max-h-[calc(100vh-6rem)] flex flex-col"
+              role="dialog"
+              aria-label="チャットウィンドウ"
+              aria-modal="true"
             >
             {/* Header */}
             <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white p-4 flex items-center justify-between flex-shrink-0">
@@ -147,7 +200,7 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
             {/* Chat Content Container */}
             <div className="flex flex-col flex-1 min-h-0">
               {/* Messages Area */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0">
+              <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0" role="log" aria-live="polite">
                 {isLoading && messages.length === 0 ? (
                   <div className="flex justify-center items-center h-full">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
@@ -186,6 +239,25 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
                   </>
                 )}
               </div>
+
+              {/* Quick Replies - Show only at the start */}
+              {!hasInteracted && messages.length <= 1 && (
+                <div className="px-4 py-3 border-t bg-gray-50 flex-shrink-0">
+                  <p className="text-xs text-gray-600 mb-2">よくあるご質問：</p>
+                  <div className="flex flex-wrap gap-2">
+                    {QUICK_REPLIES.map((reply) => (
+                      <button
+                        key={reply}
+                        onClick={() => handleQuickReply(reply)}
+                        className="px-3 py-1.5 text-xs bg-white border border-gray-300 rounded-full hover:bg-orange-50 hover:border-orange-300 transition-colors"
+                        disabled={isLoading}
+                      >
+                        {reply}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Contact Info Button */}
               {conversationId && !contactInfo.email && !showContactForm && (
@@ -254,11 +326,13 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
                     placeholder="メッセージを入力..."
                     disabled={isLoading || !conversationId}
                     className="flex-1 px-3 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:bg-gray-100"
+                    aria-label="メッセージ入力"
                   />
                   <button
-                    onClick={sendMessage}
+                    onClick={() => sendMessage()}
                     disabled={isLoading || !inputText.trim() || !conversationId}
                     className="px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-xl hover:shadow-lg transition-shadow disabled:opacity-50 disabled:cursor-not-allowed"
+                    aria-label="送信"
                   >
                     {isLoading ? (
                       <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>

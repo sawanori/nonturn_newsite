@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Noto_Serif_JP } from "next/font/google";
 import Script from "next/script";
 import { headers } from "next/headers";
 import { GoogleTagManager, GoogleTagManagerNoscript } from "@/components/GoogleTagManager";
+import { ClientProviders } from "@/components/ClientProviders";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -254,7 +255,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         ) : (
           <GoogleTagManagerNoscript />
         )}
-        {children}
+        <ClientProviders>
+          {children}
+        </ClientProviders>
       </body>
     </html>
   );

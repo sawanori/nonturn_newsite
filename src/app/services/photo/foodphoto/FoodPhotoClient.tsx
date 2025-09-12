@@ -45,7 +45,7 @@ const SectionFallback = memo(() => (
 SectionFallback.displayName = 'SectionFallback'
 
 // Optimized atomic components with React.memo
-const Button = memo(({ variant = 'primary', children, onClick, className = '' }: any) => {
+const Button = memo(({ variant = 'primary', children, onClick, className = '', ...props }: any) => {
   const baseClass = 'px-4 md:px-6 lg:px-8 py-2 md:py-3 lg:py-4 font-bold text-sm md:text-base lg:text-lg rounded-2xl transition-all duration-300'
   const variants: Record<string, string> = {
     primary: 'bg-gradient-to-r from-orange-400 to-red-500 text-white hover:from-red-500 hover:to-pink-500',
@@ -58,6 +58,7 @@ const Button = memo(({ variant = 'primary', children, onClick, className = '' }:
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
+      {...props}
     >
       {children}
     </motion.button>
@@ -258,6 +259,7 @@ const Header = memo(({ onOpenChat }: { onOpenChat: () => void }) => {
             className="text-xs lg:text-sm xl:text-base px-3 lg:px-4 py-2" 
             id="cta-header-contact"
             onClick={onOpenChat}
+            data-chat-open
           >
             問い合わせる
           </Button>
@@ -1658,7 +1660,7 @@ const BottomCTA = memo(({ onOpenChat }: { onOpenChat: () => void }) => (
             <Link href="/services/photo/foodphoto/form">
               <Button variant="primary" id="cta-faq-apply">今すぐ申し込む</Button>
             </Link>
-            <Button variant="secondary" onClick={onOpenChat}>まずは問い合わせる</Button>
+            <Button variant="secondary" onClick={onOpenChat} data-chat-open>まずは問い合わせる</Button>
           </div>
         </motion.div>
       </Suspense>
@@ -1714,6 +1716,7 @@ const Footer = memo(({ onOpenChat }: { onOpenChat: () => void }) => (
               <button 
                 onClick={onOpenChat}
                 className="text-gray-400 hover:text-white transition-colors text-left"
+                data-chat-open
               >
                 お問い合わせ
               </button>
