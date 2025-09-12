@@ -90,7 +90,7 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
       console.log('Got conversation ID:', conversationId);
       setConversationId(conversationId);
       const msgs = await api.getMessages(conversationId);
-      console.log('Got messages:', msgs);
+      console.log('Got messages during initialization:', msgs);
       setMessages(msgs);
     } catch (error) {
       console.error('Failed to initialize chat:', error);
@@ -111,6 +111,7 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
     try {
       await api.sendMessage({ conversationId, text: messageText });
       const updatedMessages = await api.getMessages(conversationId);
+      console.log('Setting messages in state:', updatedMessages);
       setMessages(updatedMessages);
     } catch (error) {
       console.error('Failed to send message:', error);
@@ -210,6 +211,7 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
                   </div>
                 ) : (
                   <>
+                    {console.log('Rendering messages:', messages)}
                     {messages.map((message) => (
                       <motion.div
                         key={message.id}
