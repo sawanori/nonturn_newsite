@@ -51,7 +51,11 @@ const items: Item[] = [
   }
 ];
 
-export default function PainPointsSection() {
+interface PainPointsSectionProps {
+  onOpenChat?: () => void;
+}
+
+export default function PainPointsSection({ onOpenChat }: PainPointsSectionProps = {}) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
@@ -244,15 +248,15 @@ export default function PainPointsSection() {
               申し込み
             </motion.a>
             
-            <motion.a
+            <motion.button
               id="cta-painpoints-inquiry"
-              href="https://foodphoto-pro.com/form"
+              onClick={onOpenChat}
               className="px-8 py-4 bg-white border-2 border-gray-300 text-gray-800 rounded-2xl font-bold text-lg hover:bg-gray-50 hover:border-gray-400 transition-all duration-300"
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.98 }}
             >
               問い合わせる
-            </motion.a>
+            </motion.button>
           </div>
         </motion.div>
       </div>

@@ -26,6 +26,8 @@ import './accessibility.css'
 const SpecialOfferModal = lazy(() => import('@/components/modals/SpecialOfferModal'))
 // Lazy load PWA Installer component
 const PWAInstaller = lazy(() => import('@/components/PWAInstaller'))
+// Lazy load Chat Widget component
+const ChatWidget = lazy(() => import('@/components/chat/ChatWidget'))
 
 // Fallback components for Suspense
 const ComponentFallback = memo(() => (
@@ -158,7 +160,7 @@ const CaseCard = memo(({ title, company, role, name, comment }: any) => (
 CaseCard.displayName = 'CaseCard'
 
 // Optimized Header component with useCallback for scroll handler
-const Header = memo(() => {
+const Header = memo(({ onOpenChat }: { onOpenChat: () => void }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   
   const handleSmoothScroll = useCallback((e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
@@ -251,11 +253,14 @@ const Header = memo(() => {
         </nav>
         
         <div className="hidden lg:flex items-center">
-          <Link href="/contact">
-            <Button variant="primary" className="text-xs lg:text-sm xl:text-base px-3 lg:px-4 py-2" id="cta-header-contact">
-              問い合わせる
-            </Button>
-          </Link>
+          <Button 
+            variant="primary" 
+            className="text-xs lg:text-sm xl:text-base px-3 lg:px-4 py-2" 
+            id="cta-header-contact"
+            onClick={onOpenChat}
+          >
+            問い合わせる
+          </Button>
         </div>
       </div>
       
@@ -317,11 +322,15 @@ const Header = memo(() => {
                     申し込む
                   </button>
                 </Link>
-                <Link href="/contact" className="block">
-                  <button className="w-full bg-orange-100 border-2 border-orange-400 text-orange-600 py-3 px-4 rounded-lg font-bold hover:bg-orange-400 hover:text-white transition-colors">
-                    問い合わせる
-                  </button>
-                </Link>
+                <button 
+                  className="w-full bg-orange-100 border-2 border-orange-400 text-orange-600 py-3 px-4 rounded-lg font-bold hover:bg-orange-400 hover:text-white transition-colors"
+                  onClick={() => {
+                    setMobileMenuOpen(false)
+                    onOpenChat()
+                  }}
+                >
+                  問い合わせる
+                </button>
               </div>
             </nav>
           </motion.div>
@@ -1628,7 +1637,7 @@ const CasesSection = memo(() => {
 })
 CasesSection.displayName = 'CasesSection'
 
-const BottomCTA = memo(() => (
+const BottomCTA = memo(({ onOpenChat }: { onOpenChat: () => void }) => (
   <section className="hidden md:block py-16" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
     <div className="max-w-5xl mx-auto px-4">
       <Suspense fallback={<SectionFallback />}>
@@ -1649,9 +1658,7 @@ const BottomCTA = memo(() => (
             <Link href="/services/photo/foodphoto/form">
               <Button variant="primary" id="cta-faq-apply">今すぐ申し込む</Button>
             </Link>
-            <Link href="/contact">
-              <Button variant="secondary">まずは問い合わせる</Button>
-            </Link>
+            <Button variant="secondary" onClick={onOpenChat}>まずは問い合わせる</Button>
           </div>
         </motion.div>
       </Suspense>
@@ -1660,7 +1667,7 @@ const BottomCTA = memo(() => (
 ))
 BottomCTA.displayName = 'BottomCTA'
 
-const Footer = memo(() => (
+const Footer = memo(({ onOpenChat }: { onOpenChat: () => void }) => (
   <footer className="bg-gray-900 text-white py-12 pb-24 md:pb-12">
     <div className="max-w-5xl mx-auto px-4">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
@@ -1704,9 +1711,12 @@ const Footer = memo(() => (
               </Link>
             </li>
             <li>
-              <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">
+              <button 
+                onClick={onOpenChat}
+                className="text-gray-400 hover:text-white transition-colors text-left"
+              >
                 お問い合わせ
-              </Link>
+              </button>
             </li>
           </ul>
         </div>
@@ -1750,6 +1760,7 @@ export default function FoodPhotoClient() {
   const [isLoading, setIsLoading] = useState(true)
   const [showOfferModal, setShowOfferModal] = useState(false)
   const [hasShownModal, setHasShownModal] = useState(false)
+  const [isChatOpen, setIsChatOpen] = useState(false)
 
   // Initialize Core Web Vitals monitoring and optimizations
   useEffect(() => {
@@ -1836,6 +1847,14 @@ export default function FoodPhotoClient() {
     setShowOfferModal(true)
   }, [])
 
+  const handleOpenChat = useCallback(() => {
+    setIsChatOpen(true)
+  }, [])
+
+  const handleCloseChat = useCallback(() => {
+    setIsChatOpen(false)
+  }, [])
+
   return (
     <>
       {/* Structured Data */}
@@ -1877,10 +1896,10 @@ export default function FoodPhotoClient() {
               { label: '飲食店撮影PhotoStudio' }
             ]}
           />
-          <Header />
+          <Header onOpenChat={handleOpenChat} />
           <IntroSection />
           <NewsSection />
-          <PainPointsSection />
+          <PainPointsSection onOpenChat={handleOpenChat} />
           <FeaturesSection />
           <PricingSection onOpenModal={handleOpenModal} />
           <ParallaxSection />
@@ -1889,8 +1908,8 @@ export default function FoodPhotoClient() {
           <FlowSection />
           <CasesSection />
           <FAQSection />
-          <BottomCTA />
-          <Footer />
+          <BottomCTA onOpenChat={handleOpenChat} />
+          <Footer onOpenChat={handleOpenChat} />
           
           {/* Special Offer Modal */}
           <Suspense fallback={null}>
@@ -1915,6 +1934,11 @@ export default function FoodPhotoClient() {
       {/* PWA Installer */}
       <Suspense fallback={null}>
         <PWAInstaller />
+      </Suspense>
+
+      {/* Chat Widget */}
+      <Suspense fallback={null}>
+        <ChatWidget isOpen={isChatOpen} onClose={handleCloseChat} />
       </Suspense>
     </>
   )

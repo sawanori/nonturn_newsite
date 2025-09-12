@@ -1,0 +1,276 @@
+{
+"version": "1.0",
+"project": "foodphoto-pro.com | 問い合わせチャット（Web）＋管理画面（v1）",
+"tech_stack": {
+"frontend": "Next.js (App Router) + React + Tailwind CSS",
+"backend": "Next.js API Routes on Vercel",
+"db_realtime_auth": "Supabase (Postgres / RLS / Realtime / Auth)",
+"optional_future": "LINE Messaging API（後付け）"
+},
+"01_purpose_and_overview": {
+"goal": "サイト訪問者がページ遷移なしで即チャット相談でき、管理画面でスレッド単位に確実に対応・返信できる“問い合わせチャット”のv1を最短で完成させる。",
+"principles": [
+"摩擦最小：ユーザーは認証なし（ゲスト）で即開始。Cookieの匿名セッションで追跡。",
+"識別強化：任意で氏名・メール入力、後日LINE連携（後付け）。",
+"厳密分離：会話ID単位でスレッド分離。管理はSupabase Authで保護。",
+"安全実装：SupabaseのService Role KeyはAPIサーバのみ。フロントから直参照しない。",
+"拡張容易：LINE・自動応答・検索・SLAなどはフェーズ追加で無停止拡張。"
+],
+"ui_overview": {
+"user_entry": "全ページ右下のフローティング・ランチャー（PCはモーダル、SPは下ドロワー）",
+"admin": "2ペイン型インボックス（左：会話一覧／右：スレッド＋返信）＋SP単体ビュー"
+},
+"deliverables": [
+"DBスキーマ（conversations / messages / profiles 他）+ RLS",
+"Next.js API：/api/chat/start / send / history（v1）",
+"ChatWidget（フローティング）",
+"管理画面：/admin/inbox（一覧＋スレッド＋返信）",
+"モックAPI（MSW不要の簡易実装）→ UI先行完成 → 実API差替え"
+]
+},
+"02_instructions_types_api_then_frontend_mock": {
+"order": [
+"types_and_api_contract",
+"database_schema_and_rls",
+"api_routes_implementation",
+"frontend_mock_implementation",
+"admin_ui_implementation",
+"switch_from_mock_to_real_api",
+"observability_and_rate_limit",
+"future_line_flag_placeholder"
+],
+"env_vars": [
+"SUPABASE_URL",
+"SUPABASE_ANON_KEY",
+"SUPABASE_SERVICE_ROLE_KEY",
+"NEXT_PUBLIC_BASE_URL",
+"NEXT_PUBLIC_USE_MOCK=true|false",
+"NEXT_PUBLIC_FEATURE_LINE=true|false"
+],
+"types_and_api_contract": {
+"files": [
+{
+"path": "types/chat.ts",
+"language": "ts",
+"content": "export type Channel = 'web' | 'line';\nexport type ConvStatus = 'open' | 'closed';\nexport type MsgRole = 'user' | 'agent' | 'system';\n\nexport interface Conversation {\n id: string;\n channel: Channel; // v1 は 'web' 固定でOK\n status: ConvStatus; // 'open' | 'closed'\n contact_name?: string | null;\n contact_email?: string | null;\n last_message_at: string; // ISO8601\n}\n\nexport interface Message {\n id: string;\n conversation_id: string;\n role: MsgRole; // 'user' | 'agent' | 'system'\n source: 'web' | 'admin' | 'line';\n content: string;\n content_type?: string; // 'text/plain' 等（拡張用）\n created_at: string; // ISO8601\n}\n\nexport interface ChatAPI {\n start(): Promise<{ conversationId: string }>; // ゲスト開始（CookieはAPI側で発行）\n listConversations(params?: { status?: ConvStatus; q?: string; limit?: number; }): Promise<Conversation[]>; // 管理用\n getMessages(conversationId: string): Promise<Message[]>;\n sendMessage(params: { conversationId: string; text: string }): Promise<void>;\n}\n"
+}
+],
+"notes": [
+"会話の並び順は last_message_at desc、メッセージは created_at asc で統一。",
+"フロントは ChatAPI のみを参照。実装（モック/実API）は差し替え可能にしておく。"
+]
+},
+"database_schema_and_rls": {
+"sql_schema": "create extension if not exists pgcrypto;\n\ncreate table if not exists public.conversations (\n id uuid primary key default gen_random_uuid(),\n channel text not null check (channel in ('web','line')), -- v1 は 'web' 固定想定\n status text not null default 'open' check (status in ('open','closed')),\n contact_name text,\n contact_email text,\n line_user_id text, -- 将来LINE連携用（NULL許容）\n session_token text, -- Webゲスト用（HttpOnly Cookie）\n assigned_to uuid, -- auth.users.id（担当者）\n created_at timestamptz default now(),\n last_message_at timestamptz\n);\n\ncreate index if not exists conversations_status_last_idx on public.conversations (status, last_message_at desc);\ncreate index if not exists conversations_session_idx on public.conversations (session_token);\ncreate index if not exists conversations_line_idx on public.conversations (line_user_id);\n\ncreate table if not exists public.messages (\n id uuid primary key default gen_random_uuid(),\n conversation_id uuid not null references public.conversations(id) on delete cascade,\n role text not null check (role in ('user','agent','system')),\n source text not null check (source in ('web','admin','line')),\n content text not null,\n content_type text default 'text/plain',\n attachment_url text,\n created_by uuid, -- staff（auth.users.id）\n created_at timestamptz default now(),\n delivered_to_line boolean default false\n);\n\ncreate index if not exists messages_conv_created_idx on public.messages (conversation_id, created_at);\n\ncreate table if not exists public.profiles (\n user_id uuid primary key references auth.users(id) on delete cascade,\n role text not null default 'staff' check (role in ('admin','staff')),\n created_at timestamptz default now()\n);\n\n-- 任意：メール再開用（マジックリンク）\ncreate table if not exists public.conversation_links (\n id uuid primary key default gen_random_uuid(),\n conversation_id uuid references public.conversations(id) on delete cascade,\n token_hash text not null,\n expires_at timestamptz not null,\n created_at timestamptz default now()\n);\ncreate index if not exists conversation_links_conv_idx on public.conversation_links (conversation_id);\ncreate index if not exists conversation_links_exp_idx on public.conversation_links (expires_at);\n",
+"sql_rls": "alter table public.conversations enable row level security;\nalter table public.messages enable row level security;\nalter table public.profiles enable row level security;\n\ncreate or replace function public.is_admin() returns boolean language sql stable as 
+\n
+𝑠
+𝑒
+𝑙
+𝑒
+𝑐
+𝑡
+𝑒
+𝑥
+𝑖
+𝑠
+𝑡
+𝑠
+(
+\n
+𝑠
+𝑒
+𝑙
+𝑒
+𝑐
+𝑡
+1
+𝑓
+𝑟
+𝑜
+𝑚
+𝑝
+𝑢
+𝑏
+𝑙
+𝑖
+𝑐
+.
+𝑝
+𝑟
+𝑜
+𝑓
+𝑖
+𝑙
+𝑒
+𝑠
+𝑝
+𝑤
+ℎ
+𝑒
+𝑟
+𝑒
+𝑝
+.
+𝑢
+𝑠
+𝑒
+𝑟
+𝑖
+𝑑
+=
+𝑎
+𝑢
+𝑡
+ℎ
+.
+𝑢
+𝑖
+𝑑
+(
+)
+𝑎
+𝑛
+𝑑
+𝑝
+.
+𝑟
+𝑜
+𝑙
+𝑒
+=
+′
+𝑎
+𝑑
+𝑚
+𝑖
+𝑛
+′
+\n
+)
+\n
+\nselectexists(\nselect1frompublic.profilespwherep.user
+i
+	​
+
+d=auth.uid()andp.role=
+′
+admin
+′
+\n)\n;\n\n-- 会話：authenticated は一覧・詳細を読める（管理UI用）。更新は担当者or管理者のみ。\ncreate policy if not exists conversations_select on public.conversations\nfor select to authenticated using (true);\n\ncreate policy if not exists conversations_update on public.conversations\nfor update to authenticated using (\n public.is_admin() or assigned_to = auth.uid()\n);\n\n-- メッセージ：authenticated は読める。書き込む際は created_by = 自分。\ncreate policy if not exists messages_select on public.messages\nfor select to authenticated using (true);\n\ncreate policy if not exists messages_insert on public.messages\nfor insert to authenticated with check (created_by = auth.uid());\n",
+"notes": [
+"ゲストはRLSで直接アクセスさせない。ゲスト操作はNext.js API（Service Role Key使用）経由のみ。",
+"将来LINE用のカラム（line_user_id）はNULL許容で入れておき、後付け可能にする。",
+"全文検索は後続フェーズ。必要に応じて pg_trgm を追加。"
+]
+},
+"api_routes_implementation": {
+"files": [
+{
+"path": "app/api/chat/start/route.ts",
+"language": "ts",
+"content": "import { cookies } from 'next/headers';\nimport { NextResponse } from 'next/server';\nimport { randomUUID } from 'crypto';\nimport { createClient } from '@supabase/supabase-js';\n\nconst supabase = new createClient(\n process.env.SUPABASE_URL!,\n process.env.SUPABASE_SERVICE_ROLE_KEY!\n);\n\nexport async function POST() {\n const jar = await cookies();\n let sid = jar.get('chat_session')?.value;\n if (!sid) {\n sid = randomUUID();\n jar.set({ name: 'chat_session', value: sid, httpOnly: true, secure: true, sameSite: 'Lax', path: '/', maxAge: 60602430 });\n }\n\n // 既存会話が無ければ作成（lazy）\n const { data: existing } = await supabase\n .from('conversations')\n .select('id')\n .eq('session_token', sid)\n .single();\n\n if (!existing) {\n const { data: created } = await supabase\n .from('conversations')\n .insert({ channel: 'web', status: 'open', session_token: sid, last_message_at: new Date().toISOString() })\n .select('id')\n .single();\n return NextResponse.json({ conversationId: created!.id });\n }\n\n return NextResponse.json({ conversationId: existing.id });\n}\n"
+},
+{
+"path": "app/api/chat/send/route.ts",
+"language": "ts",
+"content": "import { cookies } from 'next/headers';\nimport { NextResponse } from 'next/server';\nimport { createClient } from '@supabase/supabase-js';\n\nconst supabase = new createClient(\n process.env.SUPABASE_URL!,\n process.env.SUPABASE_SERVICE_ROLE_KEY!\n);\n\nexport async function POST(req: Request) {\n const { content } = await req.json();\n const sid = (await cookies()).get('chat_session')?.value;\n if (!sid || !content?.trim()) return NextResponse.json({ error: 'bad request' }, { status: 400 });\n\n let { data: conv } = await supabase\n .from('conversations')\n .select('')\n .eq('session_token', sid)\n .single();\n\n if (!conv) {\n const { data: created } = await supabase\n .from('conversations')\n .insert({ channel: 'web', status: 'open', session_token: sid, last_message_at: new Date().toISOString() })\n .select()\n .single();\n conv = created!;\n }\n\n await supabase.from('messages').insert({\n conversation_id: conv.id,\n role: 'user',\n source: 'web',\n content: content.trim()\n });\n\n await supabase\n .from('conversations')\n .update({ last_message_at: new Date().toISOString() })\n .eq('id', conv.id);\n\n return NextResponse.json({ ok: true, conversationId: conv.id });\n}\n"
+},
+{
+"path": "app/api/chat/history/route.ts",
+"language": "ts",
+"content": "import { cookies } from 'next/headers';\nimport { NextResponse } from 'next/server';\nimport { createClient } from '@supabase/supabase-js';\n\nconst supabase = new createClient(\n process.env.SUPABASE_URL!,\n process.env.SUPABASE_SERVICE_ROLE_KEY!\n);\n\nexport async function GET() {\n const sid = (await cookies()).get('chat_session')?.value;\n if (!sid) return NextResponse.json({ items: [] });\n\n const { data: conv } = await supabase\n .from('conversations')\n .select('id')\n .eq('session_token', sid)\n .single();\n if (!conv) return NextResponse.json({ items: [] });\n\n const { data: messages } = await supabase\n .from('messages')\n .select('id, conversation_id, role, source, content, created_at')\n .eq('conversation_id', conv.id)\n .order('created_at', { ascending: true });\n\n return NextResponse.json({ items: messages ?? [], conversationId: conv.id });\n}\n"
+},
+{
+"path": "app/api/admin/reply/route.ts",
+"language": "ts",
+"content": "import { NextResponse } from 'next/server';\nimport { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';\nimport { cookies } from 'next/headers';\n\nexport async function POST(req: Request) {\n const supabase = createRouteHandlerClient({ cookies });\n const { conversationId, content } = await req.json();\n const { data: { user } } = await supabase.auth.getUser();\n if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });\n if (!conversationId || !content?.trim()) return NextResponse.json({ error: 'bad request' }, { status: 400 });\n\n const { error } = await supabase.from('messages').insert({\n conversation_id: conversationId,\n role: 'agent',\n source: 'admin',\n content: content.trim(),\n created_by: user.id\n });\n if (error) return NextResponse.json({ error: error.message }, { status: 400 });\n\n await supabase.from('conversations').update({ last_message_at: new Date().toISOString(), assigned_to: user.id }).eq('id', conversationId);\n\n return NextResponse.json({ ok: true });\n}\n"
+}
+],
+"notes": [
+"admin/reply は Supabase Auth が前提。@supabase/auth-helpers-nextjs を使用。",
+"ゲストAPIは Service Role Key で動作し、フロントからは直接Supabaseを触らない。"
+]
+},
+"frontend_mock_implementation": {
+"files": [
+{
+"path": "lib/chat/mockApi.ts",
+"language": "ts",
+"content": "import type { ChatAPI, Conversation, Message } from '@/types/chat';\n\nconst convs: Conversation[] = [];\nconst msgs: Message[] = [];\nconst nowISO = () => new Date().toISOString();\nconst uuid = () => (typeof crypto !== 'undefined' && (crypto as any).randomUUID ? (crypto as any).randomUUID() : Math.random().toString(36).slice(2));\n\nexport const MockChatApi: ChatAPI = {\n async start() {\n const id = uuid();\n const c: Conversation = { id, channel: 'web', status: 'open', last_message_at: nowISO() };\n convs.unshift(c);\n return { conversationId: id };\n },\n async listConversations() {\n return convs.sort((a,b) => b.last_message_at.localeCompare(a.last_message_at));\n },\n async getMessages(conversationId) {\n return msgs.filter(m => m.conversation_id === conversationId).sort((a,b) => a.created_at.localeCompare(b.created_at));\n },\n async sendMessage({ conversationId, text }) {\n const m: Message = { id: uuid(), conversation_id: conversationId, role: 'user', source: 'web', content: text, created_at: nowISO() };\n msgs.push(m);\n const c = convs.find(x => x.id === conversationId);\n if (c) c.last_message_at = m.created_at;\n }\n};\n"
+},
+{
+"path": "lib/chat/index.ts",
+"language": "ts",
+"content": "import type { ChatAPI } from '@/types/chat';\nimport { MockChatApi } from './mockApi';\n\n// 実API版は後で差し替え\n// import { RealChatApi } from './realApi';\n\nexport function getChatApi(): ChatAPI {\n return process.env.NEXT_PUBLIC_USE_MOCK === 'true' ? MockChatApi : MockChatApi; // 最初はモックで固定\n}\n"
+},
+{
+"path": "components/ChatWidget.tsx",
+"language": "tsx",
+"content": "'use client';\nimport { useEffect, useRef, useState } from 'react';\nimport { getChatApi } from '@/lib/chat';\nimport type { Message } from '@/types/chat';\n\nexport default function ChatWidget() {\n const api = getChatApi();\n const [conversationId, setConversationId] = useState<string>('');\n const [messages, setMessages] = useState<Message[]>([]);\n const inputRef = useRef<HTMLInputElement>(null);\n\n useEffect(() => {\n (async () => {\n const { conversationId } = await api.start();\n setConversationId(conversationId);\n })();\n }, []);\n\n async function send() {\n const text = inputRef.current?.value?.trim();\n if (!text || !conversationId) return;\n inputRef.current!.value = '';\n await api.sendMessage({ conversationId, text });\n const list = await api.getMessages(conversationId);\n setMessages(list);\n }\n\n return (\n <div className='fixed bottom-4 right-4 w-80 rounded-2xl shadow-lg border bg-white text-sm'>\n <div className='p-3 font-semibold border-b'>ご相談チャット</div>\n <div className='h-64 overflow-y-auto p-3 space-y-2'>\n {messages.map(m => (\n <div key={m.id} className={m.role==='user' ? 'text-right' : 'text-left'}>\n <span className={inline-block px-3 py-2 rounded-2xl ${m.role==='user'?'bg-blue-100':'bg-gray-100'}}>{m.content}</span>\n </div>\n ))}\n </div>\n <div className='p-2 flex gap-2'>\n <input ref={inputRef} className='flex-1 border rounded-xl px-3 py-2' placeholder='メッセージを入力' />\n <button onClick={send} className='px-3 py-2 rounded-xl bg-blue-600 text-white'>送信</button>\n </div>\n </div>\n );\n}\n"
+}
+],
+"instructions": [
+"NEXT_PUBLIC_USE_MOCK='true' で起動。ChatWidget を layout.tsx か各ページに常駐レンダリング。",
+"UIレビュー後、実APIへ差し替え。Realtime（購読）は v1.1 で追加してOK。"
+]
+},
+"admin_ui_implementation": {
+"files": [
+{
+"path": "app/admin/inbox/page.tsx",
+"language": "tsx",
+"content": "'use client';\nimport { useState } from 'react';\nimport { ConversationList } from '@/components/admin/ConversationList';\nimport { Thread } from '@/components/admin/Thread';\n\nexport default function InboxPage() {\n const [activeId, setActiveId] = useState<string>('');\n return (\n <div className='grid grid-cols-12 h-[calc(100vh-80px)]'>\n <aside className='col-span-4 border-r overflow-y-auto'>\n <ConversationList onSelect={setActiveId} />\n </aside>\n <main className='col-span-8'>\n {activeId ? <Thread conversationId={activeId} /> : <div className='p-6 text-gray-500'>会話を選択してください</div>}\n </main>\n </div>\n );\n}\n"
+},
+{
+"path": "components/admin/ConversationList.tsx",
+"language": "tsx",
+"content": "'use client';\nimport { useEffect, useState } from 'react';\nimport { createClientComponentClient } from '@supabase/auth-helpers-nextjs';\n\nexport function ConversationList({ onSelect }: { onSelect: (id: string) => void }) {\n const supabase = createClientComponentClient();\n const [items, setItems] = useState<any[]>([]);\n\n useEffect(() => {\n let mounted = true;\n (async () => {\n const { data } = await supabase\n .from('conversations')\n .select('id, contact_name, contact_email, channel, status, last_message_at')\n .order('status', { ascending: true })\n .order('last_message_at', { ascending: false })\n .limit(50);\n if (mounted) setItems(data ?? []);\n })();\n\n const ch = supabase\n .channel('conversations-updates')\n .on('postgres_changes', { event: '', schema: 'public', table: 'conversations' }, payload => {\n setItems(prev => {\n const next = [...prev];\n const row: any = payload.new;\n const i = next.findIndex(x => x.id === row.id);\n if (i >= 0) next[i] = row; else next.unshift(row);\n next.sort((a,b) => new Date(b.last_message_at).getTime() - new Date(a.last_message_at).getTime());\n return next;\n });\n })\n .subscribe();\n\n return () => { mounted = false; supabase.removeChannel(ch); };\n }, [supabase]);\n\n return (\n <ul className='divide-y'>\n {items.map(it => (\n <li key={it.id} className='p-3 hover:bg-gray-50 cursor-pointer' onClick={() => onSelect(it.id)}>\n <div className='flex items-center justify-between'>\n <div className='font-medium'>{it.contact_name ?? '（未入力）'}</div>\n <div className='text-xs text-gray-500'>{it.channel}</div>\n </div>\n <div className='text-xs text-gray-500'>{new Date(it.last_message_at).toLocaleString()}</div>\n </li>\n ))}\n </ul>\n );\n}\n"
+},
+{
+"path": "components/admin/Thread.tsx",
+"language": "tsx",
+"content": "'use client';\nimport { useEffect, useRef, useState } from 'react';\nimport { createClientComponentClient } from '@supabase/auth-helpers-nextjs';\nimport { ReplyBox } from './ReplyBox';\n\nexport function Thread({ conversationId }: { conversationId: string }) {\n const supabase = createClientComponentClient();\n const [msgs, setMsgs] = useState<any[]>([]);\n const scRef = useRef<HTMLDivElement>(null);\n\n useEffect(() => {\n let mounted = true;\n (async () => {\n const { data } = await supabase\n .from('messages')\n .select('')\n .eq('conversation_id', conversationId)\n .order('created_at', { ascending: true });\n if (mounted) setMsgs(data ?? []);\n setTimeout(() => scRef.current?.scrollTo(0, scRef.current.scrollHeight), 0);\n })();\n\n const ch = supabase\n .channel(thread-${conversationId})\n .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: conversation_id=eq.${conversationId} }, payload => {\n setMsgs(prev => [...prev, payload.new as any]);\n setTimeout(() => scRef.current?.scrollTo(0, scRef.current.scrollHeight), 0);\n })\n .subscribe();\n\n return () => { mounted = false; supabase.removeChannel(ch); };\n }, [supabase, conversationId]);\n\n return (\n <div className='flex flex-col h-full'>\n <div ref={scRef} className='flex-1 overflow-y-auto p-4 space-y-2'>\n {msgs.map(m => (\n <div key={m.id} className={m.role==='agent' ? 'text-right' : 'text-left'}>\n <span className={inline-block px-3 py-2 rounded-2xl ${m.role==='agent'?'bg-blue-100':'bg-gray-100'}}>{m.content}</span>\n </div>\n ))}\n </div>\n <ReplyBox conversationId={conversationId} />\n </div>\n );\n}\n"
+},
+{
+"path": "components/admin/ReplyBox.tsx",
+"language": "tsx",
+"content": "'use client';\nimport { useState } from 'react';\n\nexport function ReplyBox({ conversationId }: { conversationId: string }) {\n const [text, setText] = useState('');\n\n async function send() {\n if (!text.trim()) return;\n const res = await fetch('/api/admin/reply', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ conversationId, content: text }) });\n if (!res.ok) {\n const e = await res.json().catch(() => ({}));\n alert(e.error || '送信に失敗しました');\n return;\n }\n setText('');\n }\n\n return (\n <div className='border-t p-2 flex gap-2'>\n <input className='flex-1 border rounded-xl px-3 py-2' value={text} onChange={e=>setText(e.target.value)} placeholder='返信を入力' />\n <button onClick={send} className='px-4 py-2 rounded-xl bg-blue-600 text-white'>送信</button>\n </div>\n );\n}\n"
+}
+],
+"notes": [
+"管理画面は Supabase Auth の保護が前提。/admin 配下に middleware を仕込む場合は別途実装。",
+"v1 はフィルタ・テンプレ・タグは省略可。返信・アサイン・クローズは順次追加。"
+]
+},
+"switch_from_mock_to_real_api": {
+"steps": [
+"Vercel 環境変数に SUPABASE_URL / SUPABASE_ANON_KEY / SUPABASE_SERVICE_ROLE_KEY / NEXT_PUBLIC_BASE_URL を設定。",
+"Supabase に schema と RLS を適用。自分のユーザーに profiles.role='admin' を付与。",
+"ChatWidget 側はモックのままでも動くが、必要なら /api/chat/history を使うように差し替え。",
+"管理画面はそのままRealtime購読で実データが流れる（auth ログイン必須）。",
+"NEXT_PUBLIC_USE_MOCK=false に変更して、本番導線でE2Eを実施。"
+]
+},
+"observability_and_rate_limit": {
+"rate_limit": "Upstash（Vercel KV）等で /api/chat/send にIP/セッション単位で 1min N件 の制限を推奨。",
+"captcha": "hCaptcha or reCAPTCHA v3 を /api/chat/send に導入（必須ではないがスパム抑止）。",
+"metrics": "GA4：start_chat / message_sent / admin_open_inbox / admin_send_reply をイベント送信。",
+"errors": "Sentry をフロント/サーバ双方に導入。APIエラーは JSON で返却し、UIは graceful degrade。"
+},
+"future_line_flag_placeholder": {
+"feature_flag": "NEXT_PUBLIC_FEATURE_LINE=false の間はUI非表示。trueでLIFF連携・プッシュを有効化（後日）。",
+"api_stub": "app/api/line-webhook/route.ts を 401 固定で置いておくと後日すぐ接続可能。"
+}
+},
+"final_checklist": [
+"① Supabase: schema/RLS 適用、profiles に自分を admin 追加",
+"② Vercel env 設定（Service Role Key は API でのみ使用）",
+"③ /api/chat/* 3本（start/send/history）をデプロイ",
+"④ ChatWidget を layout.tsx に常駐、UIレビュー",
+"⑤ /admin/inbox でRealtime動作確認（ログイン必須）",
+"⑥ NEXT_PUBLIC_USE_MOCK=false に切替 → E2E テスト",
+"⑦ レート制限・Sentry・GA4 を有効化",
+"⑧ ドキュメント：運用フロー（未対応→対応中→クローズ）を社内共有"
+]
+}

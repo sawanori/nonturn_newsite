@@ -1,0 +1,241 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
+import type { Conversation } from '@/types/chat';
+import { RealtimePostgresChangesPayload } from '@supabase/supabase-js';
+import { MockChatApi, seedMockData } from '@/lib/chat/mockApi';
+
+interface ConversationListProps {
+  onSelect: (id: string) => void;
+  activeId?: string;
+}
+
+export function ConversationList({ onSelect, activeId }: ConversationListProps) {
+  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [filter, setFilter] = useState<'all' | 'open' | 'closed'>('open');
+
+  // Initialize mock data once on component mount
+  useEffect(() => {
+    seedMockData();
+  }, []);
+
+  useEffect(() => {
+    fetchConversations();
+    
+    // Set up realtime subscription
+    const channel = supabase
+      .channel('conversations-changes')
+      .on(
+        'postgres_changes',
+        { 
+          event: '*', 
+          schema: 'public', 
+          table: 'conversations' 
+        },
+        (payload: RealtimePostgresChangesPayload<any>) => {
+          handleRealtimeUpdate(payload);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [filter]);
+
+  async function fetchConversations() {
+    try {
+      // Try Supabase first
+      let query = supabase
+        .from('conversations')
+        .select('*')
+        .order('last_message_at', { ascending: false })
+        .limit(50);
+
+      if (filter !== 'all') {
+        query = query.eq('status', filter);
+      }
+
+      const { data, error } = await query;
+
+      if (!error && data && data.length > 0) {
+        setConversations(data);
+      } else {
+        // Fall back to mock data
+        const mockConversations = await MockChatApi.listConversations({
+          status: filter === 'all' ? undefined : filter as 'open' | 'closed',
+          limit: 50
+        });
+        setConversations(mockConversations);
+      }
+    } catch (error) {
+      console.error('Error fetching conversations:', error);
+      // Use mock data as fallback
+      const mockConversations = await MockChatApi.listConversations({
+        status: filter === 'all' ? undefined : filter as 'open' | 'closed',
+        limit: 50
+      });
+      setConversations(mockConversations);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  function handleRealtimeUpdate(payload: RealtimePostgresChangesPayload<any>) {
+    if (payload.eventType === 'INSERT') {
+      const newConv = payload.new as Conversation;
+      setConversations((prev) => [newConv, ...prev]);
+    } else if (payload.eventType === 'UPDATE') {
+      const updatedConv = payload.new as Conversation;
+      setConversations((prev) => {
+        const updated = prev.map((c) => 
+          c.id === updatedConv.id ? updatedConv : c
+        );
+        // Re-sort by last_message_at
+        return updated.sort((a, b) => 
+          new Date(b.last_message_at).getTime() - new Date(a.last_message_at).getTime()
+        );
+      });
+    } else if (payload.eventType === 'DELETE') {
+      const deletedId = payload.old.id;
+      setConversations((prev) => prev.filter((c) => c.id !== deletedId));
+    }
+  }
+
+  function formatTime(dateString: string) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diff = now.getTime() - date.getTime();
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    
+    if (days === 0) {
+      return date.toLocaleTimeString('ja-JP', { 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      });
+    } else if (days === 1) {
+      return '昨日';
+    } else if (days < 7) {
+      return `${days}日前`;
+    } else {
+      return date.toLocaleDateString('ja-JP', { 
+        month: 'short', 
+        day: 'numeric' 
+      });
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-32">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="h-full flex flex-col">
+      {/* Filter Tabs */}
+      <div className="px-4 py-2 border-b bg-gray-50">
+        <div className="flex gap-2">
+          <button
+            onClick={() => setFilter('open')}
+            className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
+              filter === 'open'
+                ? 'bg-orange-500 text-white'
+                : 'bg-white text-gray-700 hover:bg-gray-100'
+            }`}
+          >
+            未対応
+          </button>
+          <button
+            onClick={() => setFilter('closed')}
+            className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
+              filter === 'closed'
+                ? 'bg-orange-500 text-white'
+                : 'bg-white text-gray-700 hover:bg-gray-100'
+            }`}
+          >
+            対応済み
+          </button>
+          <button
+            onClick={() => setFilter('all')}
+            className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
+              filter === 'all'
+                ? 'bg-orange-500 text-white'
+                : 'bg-white text-gray-700 hover:bg-gray-100'
+            }`}
+          >
+            すべて
+          </button>
+        </div>
+      </div>
+
+      {/* Conversation List */}
+      <div className="flex-1 overflow-y-auto">
+        {conversations.length === 0 ? (
+          <div className="p-8 text-center text-gray-500">
+            <svg
+              className="mx-auto h-12 w-12 text-gray-400 mb-3"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+              />
+            </svg>
+            <p>会話がありません</p>
+          </div>
+        ) : (
+          <ul className="divide-y divide-gray-200">
+            {conversations.map((conv) => (
+              <li
+                key={conv.id}
+                onClick={() => onSelect(conv.id)}
+                className={`p-4 hover:bg-gray-50 cursor-pointer transition-colors ${
+                  activeId === conv.id ? 'bg-orange-50' : ''
+                }`}
+              >
+                <div className="flex items-start justify-between">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
+                        conv.status === 'open'
+                          ? 'bg-green-100 text-green-800'
+                          : 'bg-gray-100 text-gray-800'
+                      }`}>
+                        {conv.status === 'open' ? '未対応' : '対応済み'}
+                      </span>
+                      <span className="text-xs text-gray-500">
+                        {conv.channel === 'web' ? 'Web' : 'LINE'}
+                      </span>
+                    </div>
+                    <p className="font-medium text-gray-900 truncate">
+                      {conv.contact_name || '（名前未設定）'}
+                    </p>
+                    {conv.contact_email && (
+                      <p className="text-sm text-gray-500 truncate">
+                        {conv.contact_email}
+                      </p>
+                    )}
+                  </div>
+                  <div className="ml-2 flex-shrink-0">
+                    <p className="text-xs text-gray-500">
+                      {formatTime(conv.last_message_at)}
+                    </p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+}
