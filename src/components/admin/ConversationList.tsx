@@ -27,10 +27,10 @@ export function ConversationList({ onSelect, activeId }: ConversationListProps) 
   );
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
 
-  // Initialize mock data once on component mount
-  useEffect(() => {
-    seedMockData();
-  }, []);
+  // Don't seed mock data automatically - only use when Supabase fails
+  // useEffect(() => {
+  //   seedMockData();
+  // }, []);
 
   // Update URL when filter/sort changes
   const updateUrl = useCallback((newFilter?: string, newSort?: string, newQuery?: string) => {
@@ -85,10 +85,19 @@ export function ConversationList({ onSelect, activeId }: ConversationListProps) 
 
       const { data, error } = await query;
 
-      if (!error && data && data.length > 0) {
+      console.log('Fetching conversations from Supabase:', { 
+        data, 
+        error, 
+        dataLength: data?.length,
+        filter 
+      });
+
+      if (!error && data) {
+        // Use Supabase data even if empty (don't fall back to mock for empty data)
         setConversations(sortConversations(filterBySearch(data)));
-      } else {
-        // Fall back to mock data
+      } else if (error) {
+        console.error('Supabase error, falling back to mock:', error);
+        // Only fall back to mock data if there's an actual error
         const mockConversations = await MockChatApi.listConversations({
           status: filter === 'all' ? undefined : (filter === 'active' ? 'new' : 'closed') as any,
           limit: 50
