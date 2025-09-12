@@ -22,6 +22,10 @@ export function middleware(req: NextRequest) {
   if (!LP.has(host)) {
     const res = NextResponse.next();
     res.headers.set("x-mw", "pass:"+host);
+    // Add CORS headers for foodphoto-pro.com
+    res.headers.set("Access-Control-Allow-Origin", "https://foodphoto-pro.com");
+    res.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
     return res;
   }
 
@@ -29,6 +33,10 @@ export function middleware(req: NextRequest) {
   if (url.pathname.startsWith("/api/")) {
     const res = NextResponse.next();
     res.headers.set("x-mw", "api-pass");
+    // Add CORS headers for API routes
+    res.headers.set("Access-Control-Allow-Origin", "*");
+    res.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
     return res;
   }
   
@@ -148,6 +156,14 @@ export function middleware(req: NextRequest) {
     url.pathname = newPath;
     const res = NextResponse.rewrite(url);
     res.headers.set("x-mw", `rewrite:${url.pathname} -> ${newPath}`);
+    return res;
+  }
+
+  // Handle /services/photo/foodphoto/* paths for foodphoto-pro.com
+  if (url.pathname.startsWith("/services/photo/foodphoto")) {
+    // These paths are already correct, just pass through
+    const res = NextResponse.next();
+    res.headers.set("x-mw", "pass:foodphoto-path");
     return res;
   }
 
