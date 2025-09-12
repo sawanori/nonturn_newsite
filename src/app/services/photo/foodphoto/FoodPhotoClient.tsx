@@ -26,8 +26,6 @@ import './accessibility.css'
 const SpecialOfferModal = lazy(() => import('@/components/modals/SpecialOfferModal'))
 // Lazy load PWA Installer component
 const PWAInstaller = lazy(() => import('@/components/PWAInstaller'))
-// Lazy load Chat Widget component
-const ChatWidget = lazy(() => import('@/components/chat/ChatWidget'))
 
 // Fallback components for Suspense
 const ComponentFallback = memo(() => (
@@ -1763,7 +1761,6 @@ export default function FoodPhotoClient() {
   const [isLoading, setIsLoading] = useState(true)
   const [showOfferModal, setShowOfferModal] = useState(false)
   const [hasShownModal, setHasShownModal] = useState(false)
-  const [isChatOpen, setIsChatOpen] = useState(false)
 
   // Initialize Core Web Vitals monitoring and optimizations
   useEffect(() => {
@@ -1851,11 +1848,17 @@ export default function FoodPhotoClient() {
   }, [])
 
   const handleOpenChat = useCallback(() => {
-    setIsChatOpen(true)
-  }, [])
-
-  const handleCloseChat = useCallback(() => {
-    setIsChatOpen(false)
+    // 新しいウィンドウでチャットを開く
+    const width = 400;
+    const height = 600;
+    const left = window.screen.width - width - 50;
+    const top = 50;
+    
+    window.open(
+      '/chat',
+      'chat-window',
+      `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`
+    );
   }, [])
 
   return (
@@ -1939,10 +1942,7 @@ export default function FoodPhotoClient() {
         <PWAInstaller />
       </Suspense>
 
-      {/* Chat Widget */}
-      <Suspense fallback={null}>
-        <ChatWidget isOpen={isChatOpen} onClose={handleCloseChat} />
-      </Suspense>
+      {/* Chat Widget is now opened in a new window */}
     </>
   )
 }

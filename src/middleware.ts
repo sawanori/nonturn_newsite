@@ -8,6 +8,12 @@ export function middleware(req: NextRequest) {
   // Host を正規化（小文字＋ポート除去）
   const rawHost = req.headers.get("host") || "";
   const host = rawHost.toLowerCase().split(":")[0];
+  
+  // 開発環境でNEXT_PUBLIC_SITE_DOMAINが設定されている場合はそれを使用
+  const isDevelopment = process.env.NODE_ENV === 'development';
+  const effectiveHost = isDevelopment && process.env.NEXT_PUBLIC_SITE_DOMAIN === 'foodphoto-pro.com' 
+    ? 'foodphoto-pro.com' 
+    : host;
 
   const url = req.nextUrl.clone();
   // デバッグパラメータ ?mwtest=1 なら、ミドルウェア生存確認レスポンスを返す
@@ -19,9 +25,9 @@ export function middleware(req: NextRequest) {
   }
 
   // LP 以外は素通し（ヘッダだけ付与）
-  if (!LP.has(host)) {
+  if (!LP.has(effectiveHost)) {
     const res = NextResponse.next();
-    res.headers.set("x-mw", "pass:"+host);
+    res.headers.set("x-mw", "pass:"+effectiveHost);
     // Add CORS headers for foodphoto-pro.com
     res.headers.set("Access-Control-Allow-Origin", "https://foodphoto-pro.com");
     res.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
@@ -43,7 +49,7 @@ export function middleware(req: NextRequest) {
   // Google Search Console verification files - ONLY for foodphoto-pro.com
   if (url.pathname === "/google26fa748b2feb7d00.html") {
     // foodphoto-pro.comドメインのみ許可
-    if (LP.has(host)) {
+    if (LP.has(effectiveHost)) {
       const res = NextResponse.next();
       res.headers.set("x-mw", "pass:google-verification-foodphoto");
       return res;
@@ -54,14 +60,14 @@ export function middleware(req: NextRequest) {
   }
   
   // Other Google verification files for non-turn.com (if any)
-  if (!LP.has(host) && url.pathname.startsWith("/google") && url.pathname.endsWith(".html")) {
+  if (!LP.has(effectiveHost) && url.pathname.startsWith("/google") && url.pathname.endsWith(".html")) {
     const res = NextResponse.next();
     res.headers.set("x-mw", "pass:google-verification-nonturn");
     return res;
   }
   
   // robots.txt for foodphoto-pro.com
-  if (LP.has(host) && url.pathname === "/robots.txt") {
+  if (LP.has(effectiveHost) && url.pathname === "/robots.txt") {
     url.pathname = "/foodphoto-robots.txt";
     const res = NextResponse.rewrite(url);
     res.headers.set("x-mw", "rewrite:/robots.txt -> /foodphoto-robots.txt");
@@ -69,7 +75,7 @@ export function middleware(req: NextRequest) {
   }
   
   // sitemap.xml for foodphoto-pro.com
-  if (LP.has(host) && url.pathname === "/sitemap.xml") {
+  if (LP.has(effectiveHost) && url.pathname === "/sitemap.xml") {
     url.pathname = "/foodphoto-sitemap.xml";
     const res = NextResponse.rewrite(url);
     res.headers.set("x-mw", "rewrite:/sitemap.xml -> /foodphoto-sitemap.xml");
