@@ -24,7 +24,7 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
   const api = getChatApi();
   const toast = useToast();
   const [internalIsOpen, setInternalIsOpen] = useState(false);
-  const [conversationId, setConversationId] = useState<string>('');
+  const [conversationId, setConversationId] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -86,12 +86,28 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
     try {
       console.log('Initializing chat...');
       setIsLoading(true);
-      const { conversationId } = await api.start();
-      console.log('Got conversation ID:', conversationId);
-      setConversationId(conversationId);
-      const msgs = await api.getMessages(conversationId);
-      console.log('Got messages during initialization:', msgs);
-      setMessages(msgs);
+      
+      // Check if we already have a conversationId stored in session
+      const storedConversationId = sessionStorage.getItem('chat_conversation_id');
+      
+      if (storedConversationId) {
+        console.log('Found existing conversation ID:', storedConversationId);
+        setConversationId(storedConversationId);
+        // Get existing messages
+        const msgs = await api.getMessages(storedConversationId);
+        console.log('Got existing messages:', msgs);
+        console.log('Type of messages:', typeof msgs, Array.isArray(msgs));
+        setMessages(msgs || []);
+      } else {
+        // Create new conversation only if none exists
+        const { conversationId } = await api.start();
+        console.log('Created new conversation ID:', conversationId);
+        setConversationId(conversationId);
+        sessionStorage.setItem('chat_conversation_id', conversationId);
+        const msgs = await api.getMessages(conversationId);
+        console.log('Got messages for new conversation:', msgs);
+        setMessages(msgs);
+      }
     } catch (error) {
       console.error('Failed to initialize chat:', error);
       toast.error('チャットの初期化に失敗しました。ページを更新してください。', 'chat-init-error');
@@ -202,12 +218,37 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
             </div>
 
             {/* Chat Content Container */}
-            <div className="flex flex-col flex-1" style={{ minHeight: 0 }}>
+            <div className="flex flex-col flex-1">
               {/* Messages Area */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-3" style={{ minHeight: 0, maxHeight: '400px' }} role="log" aria-live="polite">
+              <div className="flex-1 overflow-y-auto p-4 space-y-3" style={{ height: '400px' }} role="log" aria-live="polite">
+                {/* Debug info */}
+                <div className="text-xs text-gray-500 mb-2 border-b pb-2">
+                  <div className="flex justify-between items-center">
+                    <span>Messages: {messages.length} | Loading: {isLoading ? 'Yes' : 'No'}</span>
+                    <button 
+                      onClick={() => {
+                        sessionStorage.removeItem('chat_conversation_id');
+                        setConversationId(null);
+                        setMessages([]);
+                        initializeChat();
+                      }}
+                      className="text-blue-500 hover:text-blue-700 underline"
+                    >
+                      新しい会話
+                    </button>
+                  </div>
+                  <div className="text-xs mt-1">
+                    ID: {conversationId ? conversationId.slice(0, 8) + '...' : 'None'}
+                  </div>
+                </div>
+                
                 {isLoading && messages.length === 0 ? (
                   <div className="flex justify-center items-center h-full">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+                  </div>
+                ) : messages.length === 0 ? (
+                  <div className="text-center text-gray-500 py-8">
+                    メッセージがありません。何かお話しください。
                   </div>
                 ) : (
                   <>
