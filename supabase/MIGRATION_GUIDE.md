@@ -80,8 +80,8 @@ on conflict (user_id) do update set role = 'admin';
 ```env
 # Supabase Configuration
 NEXT_PUBLIC_SUPABASE_URL=https://saeakxyazamxgmwpriqo.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=[あなたのSupabase Anon Key]
+SUPABASE_SERVICE_ROLE_KEY=[あなたのSupabase Service Role Key]
 
 # Chat Configuration
 NEXT_PUBLIC_CHAT_ENABLED=true
