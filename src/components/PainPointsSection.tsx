@@ -241,7 +241,7 @@ export default function PainPointsSection({ onOpenChat }: PainPointsSectionProps
             <motion.a
               id="cta-painpoints-apply"
               href="https://foodphoto-pro.com/form"
-              className="px-8 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-2xl font-bold text-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+              className="px-8 py-4 bg-gradient-to-r from-orange-400 to-red-500 text-white rounded-2xl font-bold text-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 hover:from-red-500 hover:to-pink-500"
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.98 }}
             >

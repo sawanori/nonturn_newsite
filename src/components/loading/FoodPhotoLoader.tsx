@@ -13,7 +13,7 @@ export default function FoodPhotoLoader({ onComplete }: { onComplete: () => void
     window.addEventListener('load', handleLoad)
     const timeout = setTimeout(() => {
       onComplete()
-    }, 1500) // 1.5秒後に必ず消す
+    }, 800) // 0.8秒後に必ず消す
 
     return () => {
       window.removeEventListener('load', handleLoad)
@@ -33,7 +33,7 @@ export default function FoodPhotoLoader({ onComplete }: { onComplete: () => void
         background: 'rgba(0, 0, 0, 0.25)', // 半透明、ヒーロー画像が透けて見える
         display: 'grid',
         placeItems: 'center',
-        animation: 'fadeout 0.4s ease 1.0s forwards' // 1秒後にフェードアウト開始
+        animation: 'fadeout 0.3s ease 0.5s forwards' // 0.5秒後にフェードアウト開始
       }}
     >
       <style jsx>{`

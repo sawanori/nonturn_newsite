@@ -41,12 +41,12 @@ SectionFallback.displayName = 'SectionFallback'
 
 // Optimized atomic components with React.memo
 const Button = memo(({ variant = 'primary', children, onClick, className = '', ...props }: any) => {
-  const baseClass = 'px-4 md:px-6 lg:px-8 py-2 md:py-3 lg:py-4 font-bold text-sm md:text-base lg:text-lg rounded-2xl transition-all duration-300'
+  const baseClass = 'px-6 md:px-8 lg:px-10 py-3 md:py-4 lg:py-4 font-bold text-sm md:text-base lg:text-lg rounded-2xl transition-all duration-300 min-w-[160px] md:min-w-[180px] lg:min-w-[200px]'
   const variants: Record<string, string> = {
     primary: 'bg-gradient-to-r from-orange-400 to-red-500 text-white hover:from-red-500 hover:to-pink-500',
     secondary: 'bg-orange-100 border-2 border-orange-400 text-orange-600 hover:bg-orange-400 hover:text-white'
   }
-  
+
   return (
     <motion.button
       className={`${baseClass} ${variants[variant]} ${className}`}
@@ -1659,10 +1659,10 @@ const BottomCTA = memo(({ onOpenChat }: { onOpenChat: () => void }) => (
             飲食店撮影PhotoStudioで、料理の新しい表現を発見してください。
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/services/photo/foodphoto/form">
-              <Button variant="primary" id="cta-faq-apply">今すぐ申し込む</Button>
+            <Link href="/services/photo/foodphoto/form" className="w-full sm:w-auto">
+              <Button variant="primary" id="cta-faq-apply" className="w-full">今すぐ申し込む</Button>
             </Link>
-            <Button variant="secondary" onClick={onOpenChat} data-chat-open>まずは問い合わせる</Button>
+            <Button variant="secondary" onClick={onOpenChat} data-chat-open className="w-full sm:w-auto">まずは問い合わせる</Button>
           </div>
         </motion.div>
       </Suspense>
