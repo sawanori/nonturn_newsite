@@ -18,6 +18,22 @@ export default function FoodPhotoPage() {
       <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       <link rel="preconnect" href="https://www.googletagmanager.com" />
       
+      {/* Preload critical hero images for faster LCP */}
+      <link 
+        rel="preload" 
+        as="image" 
+        href="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%209.jpg"
+        imageSrcSet="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%209.jpg 640w, https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%209.jpg 1024w"
+        media="(max-width: 1023px)"
+      />
+      <link 
+        rel="preload" 
+        as="image" 
+        href="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg"
+        imageSrcSet="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg 1920w"
+        media="(min-width: 1024px)"
+      />
+      
       <Script
         id="foodphoto-structured-data"
         type="application/ld+json"

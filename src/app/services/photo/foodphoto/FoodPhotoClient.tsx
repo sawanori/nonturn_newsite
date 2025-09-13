@@ -5,16 +5,14 @@ import { LocalBusinessSchema, FAQSchema, HowToSchema } from '@/components/Struct
 import AccessibilityEnhancer from '@/components/AccessibilityEnhancer'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import Image from 'next/image'
 import FoodPhotoLoader from '@/components/loading/FoodPhotoLoader'
 import OptimizedImage from '@/components/ui/OptimizedImage'
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import { optimizeAltText, getOptimizedSizes, shouldPreloadImage, generateFoodPhotoMetadata } from '@/utils/image-optimization'
+import { optimizeAltText } from '@/utils/image-optimization'
 import { initWebVitals, preloadCriticalResources, preventLayoutShifts } from './web-vitals'
-import { throttle, debounce, addPassiveEventListener } from './performance-utils'
 import { initImageOptimizations } from './image-optimization'
 import { initFontOptimizations } from './font-optimization'
-import { initAccessibility, FocusManager, LiveRegionAnnouncer, enhanceFormAccessibility } from './accessibility'
+import { initAccessibility } from './accessibility'
 import { getLatestPosts } from '@/lib/mock'
 import PostCard from '@/components/PostCard'
 import PainPointsSection from '@/components/PainPointsSection'
@@ -184,7 +182,7 @@ const Header = memo(({ onOpenChat }: { onOpenChat: () => void }) => {
     <header className="sticky top-0 z-50 shadow-sm" style={{ backgroundColor: 'rgb(36, 35, 35)' }}>
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <Image
+          <OptimizedImage
             src="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/cameralogo.svg"
             alt="飲食店撮影PhotoStudio - プロカメラマンによる料理撮影サービス"
             width={40}
@@ -509,7 +507,7 @@ const IntroSection = memo(() => {
                 transition={{ delay: 0.4 }}
               >
                 <div className="flex items-center justify-center gap-4 md:gap-6 mb-4">
-                  <Image
+                  <OptimizedImage
                     src="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/cameralogo.svg"
                     alt="飲食店撮影PhotoStudioロゴ - プロの料理撮影サービス"
                     width={80}
