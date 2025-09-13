@@ -122,19 +122,34 @@ export async function POST(req: Request) {
     const shouldCheckNotification = !lastMessage || lastMessage.role !== 'user';
     
     if (shouldCheckNotification) {
-      // Use the cooldown function to check if we can notify
-      const cooldownMinutes = Number(process.env.ADMIN_NOTIFY_COOLDOWN_MINUTES || '5');
-      const { data: canNotify, error: rpcError } = await supabase.rpc('try_admin_notify', {
-        p_conversation_id: conversation.id,
-        p_window_minutes: cooldownMinutes
-      });
+      // TESTING: Cooldown temporarily disabled - always notify
+      const skipCooldown = true; // TODO: Remove this after testing
       
-      if (rpcError) {
-        console.error('try_admin_notify RPC error:', rpcError.message);
+      let canNotify = skipCooldown;
+      
+      if (!skipCooldown) {
+        // Use the cooldown function to check if we can notify
+        const cooldownMinutes = Number(process.env.ADMIN_NOTIFY_COOLDOWN_MINUTES || '5');
+        const { data: canNotifyData, error: rpcError } = await supabase.rpc('try_admin_notify', {
+          p_conversation_id: conversation.id,
+          p_window_minutes: cooldownMinutes
+        });
+        
+        if (rpcError) {
+          console.error('try_admin_notify RPC error:', rpcError.message);
+        }
+        
+        canNotify = !rpcError && canNotifyData === true;
+      } else {
+        // Update admin_notified_at without cooldown check for testing
+        await supabase
+          .from('conversations')
+          .update({ admin_notified_at: new Date().toISOString() })
+          .eq('id', conversation.id);
       }
       
-      // Send notification if allowed by cooldown
-      if (!rpcError && canNotify === true) {
+      // Send notification if allowed
+      if (canNotify) {
         const trimmedContent = content.trim();
         const preview = trimmedContent.length > 60 ? trimmedContent.slice(0, 57) + '…' : trimmedContent;
         const adminUrl = process.env.ADMIN_INBOX_URL || 'https://foodphoto-pro.com/admin/inbox';
