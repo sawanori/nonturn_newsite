@@ -1,9 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
-import { MockAuthApi, MOCK_ADMIN_CREDENTIALS } from '@/lib/chat/mockApi';
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState('');
@@ -18,38 +16,24 @@ export default function AdminLoginPage() {
     setIsLoading(true);
 
     try {
-      // First try Supabase authentication
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+      const response = await fetch('/api/admin/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
       });
 
-      if (!error && data.user) {
-        router.push('/admin/inbox');
-        return;
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'ログインに失敗しました');
       }
 
-      // If Supabase fails, try mock authentication
-      const mockResult = await MockAuthApi.signIn(email, password);
-      
-      if (mockResult.success && mockResult.session) {
-        // Store mock session in localStorage for demo purposes
-        localStorage.setItem('mockAdminSession', mockResult.session);
-        router.push('/admin/inbox');
-      } else {
-        setError('ログインに失敗しました。メールアドレスとパスワードを確認してください。');
-      }
+      // Redirect to admin inbox
+      router.push('/admin/inbox');
     } catch (err) {
-      console.error('Login error:', err);
-      // Try mock authentication as fallback
-      const mockResult = await MockAuthApi.signIn(email, password);
-      
-      if (mockResult.success && mockResult.session) {
-        localStorage.setItem('mockAdminSession', mockResult.session);
-        router.push('/admin/inbox');
-      } else {
-        setError('予期しないエラーが発生しました。');
-      }
+      setError(err instanceof Error ? err.message : 'ログインに失敗しました。メールアドレスとパスワードを確認してください。');
     } finally {
       setIsLoading(false);
     }
@@ -65,14 +49,6 @@ export default function AdminLoginPage() {
           <p className="mt-2 text-center text-sm text-gray-600">
             飲食店撮影PhotoStudio チャット管理
           </p>
-          {/* Mock credentials hint for demo */}
-          <div className="mt-4 p-3 bg-blue-50 rounded-md">
-            <p className="text-xs text-blue-700">
-              <strong>デモ用ログイン情報:</strong><br />
-              メール: {MOCK_ADMIN_CREDENTIALS.email}<br />
-              パスワード: {MOCK_ADMIN_CREDENTIALS.password}
-            </p>
-          </div>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleLogin}>
           {error && (

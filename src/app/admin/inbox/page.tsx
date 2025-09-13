@@ -3,9 +3,7 @@
 import { useState, useEffect } from 'react';
 import { ConversationList } from '@/components/admin/ConversationList';
 import { Thread } from '@/components/admin/Thread';
-import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
-import { MockAuthApi } from '@/lib/chat/mockApi';
 
 export default function InboxPage() {
   const [activeId, setActiveId] = useState<string>('');
@@ -18,34 +16,21 @@ export default function InboxPage() {
   }, []);
 
   async function checkAuth() {
-    // TEMPORARY: Skip authentication for demo purposes
-    setIsAuthenticated(true);
-    setIsLoading(false);
-    
-    // Original auth check code (commented out for demo)
-    /*
     try {
-      // First check for Supabase auth
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
+      const response = await fetch('/api/admin/auth/verify');
+      const data = await response.json();
+      
+      if (data.authenticated) {
         setIsAuthenticated(true);
-        setIsLoading(false);
-        return;
+      } else {
+        router.push('/admin/login');
       }
     } catch (error) {
-      console.error('Supabase auth check failed:', error);
-    }
-    
-    // Check for mock session
-    const mockSession = localStorage.getItem('mockAdminSession');
-    if (mockSession) {
-      setIsAuthenticated(true);
-    } else {
+      console.error('Auth check failed:', error);
       router.push('/admin/login');
+    } finally {
+      setIsLoading(false);
     }
-    
-    setIsLoading(false);
-    */
   }
 
   if (isLoading) {
@@ -71,15 +56,11 @@ export default function InboxPage() {
             </h1>
             <button
               onClick={async () => {
-                // Try Supabase signOut first
                 try {
-                  await supabase.auth.signOut();
+                  await fetch('/api/admin/auth/logout', { method: 'POST' });
                 } catch (error) {
-                  console.error('Supabase signOut error:', error);
+                  console.error('Logout error:', error);
                 }
-                // Clear mock session
-                localStorage.removeItem('mockAdminSession');
-                await MockAuthApi.signOut();
                 router.push('/admin/login');
               }}
               className="text-sm text-gray-500 hover:text-gray-700"
