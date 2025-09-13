@@ -442,6 +442,7 @@ const IntroSection = memo(() => {
               height={1080}
               className="absolute inset-0 w-full h-full object-cover hero-image-mobile"
               priority={index === 0}
+              fetchPriority={index === 0 ? 'high' : 'auto'}
               sizes="100vw"
               quality={index === 0 ? 95 : 75}
             />
@@ -466,6 +467,7 @@ const IntroSection = memo(() => {
                 height={1080}
                 className="absolute inset-0 w-full h-full object-cover hero-image-mobile"
                 priority
+                fetchPriority="high"
                 sizes="100vw"
                 quality={95}
               />

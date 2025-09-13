@@ -15,6 +15,7 @@ interface OptimizedImageProps {
   placeholder?: 'blur' | 'empty'
   blurDataURL?: string
   onLoad?: () => void
+  fetchPriority?: 'high' | 'low' | 'auto'
 }
 
 export default function OptimizedImage({
@@ -29,6 +30,7 @@ export default function OptimizedImage({
   placeholder = 'empty',
   blurDataURL,
   onLoad,
+  fetchPriority = 'auto',
 }: OptimizedImageProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
@@ -75,6 +77,8 @@ export default function OptimizedImage({
         placeholder={placeholder}
         blurDataURL={blurDataURL}
         loading={priority ? 'eager' : 'lazy'}
+        fetchPriority={priority ? 'high' : fetchPriority}
+        decoding="async"
         onLoad={() => {
           setIsLoading(false)
           onLoad?.()
