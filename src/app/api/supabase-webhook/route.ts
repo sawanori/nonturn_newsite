@@ -4,21 +4,29 @@ import { notifyAdminViaLine } from '@/lib/line/adminNotify';
 
 export const runtime = 'nodejs';
 
-// Supabase Webhook用のシークレット（環境変数で設定）
-const WEBHOOK_SECRET = process.env.SUPABASE_WEBHOOK_SECRET;
-
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+// Supabase接続を関数内で初期化
+function getSupabaseAdmin() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  
+  if (!supabaseUrl || !supabaseServiceKey) {
+    throw new Error('Missing Supabase environment variables');
+  }
+  
+  return createClient(supabaseUrl, supabaseServiceKey);
+}
 
 export async function POST(req: Request) {
   try {
     // Webhookの認証（オプション）
+    const WEBHOOK_SECRET = process.env.SUPABASE_WEBHOOK_SECRET;
     const authHeader = req.headers.get('x-webhook-secret');
     if (WEBHOOK_SECRET && authHeader !== WEBHOOK_SECRET) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+    
+    // Supabaseクライアントを初期化
+    const supabase = getSupabaseAdmin();
 
     const payload = await req.json();
     console.log('[Webhook] Received:', payload);
