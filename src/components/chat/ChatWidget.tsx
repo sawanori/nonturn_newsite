@@ -150,17 +150,8 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
         setMessages([...(msgs || [])]);
         lastMessageCountRef.current = msgs?.length || 0;
         setForceUpdate(prev => prev + 1); // Force re-render
-      } else {
-        // Create new conversation only if none exists
-        const { conversationId } = await api.start();
-        setConversationId(conversationId);
-        sessionStorage.setItem('chat_conversation_id', conversationId);
-        const msgs = await api.getMessages(conversationId);
-        // Force a new array reference to ensure React detects the change
-        setMessages([...(msgs || [])]);
-        lastMessageCountRef.current = msgs?.length || 0;
-        setForceUpdate(prev => prev + 1); // Force re-render
       }
+      // Don't create conversation here - wait for first message
     } catch (error) {
       console.error('Failed to initialize chat:', error);
       toast.error('チャットの初期化に失敗しました。ページを更新してください。', 'chat-init-error');
@@ -171,15 +162,24 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
 
   const sendMessage = async (text?: string) => {
     const messageText = text || inputText.trim();
-    if (!messageText || !conversationId || isLoading) return;
+    if (!messageText || isLoading) return;
 
     setInputText('');
     setIsLoading(true);
     setHasInteracted(true);
 
     try {
-      await api.sendMessage({ conversationId, text: messageText });
-      const updatedMessages = await api.getMessages(conversationId);
+      // Create conversation if it doesn't exist yet
+      let currentConversationId = conversationId;
+      if (!currentConversationId) {
+        const { conversationId: newConversationId } = await api.start();
+        setConversationId(newConversationId);
+        sessionStorage.setItem('chat_conversation_id', newConversationId);
+        currentConversationId = newConversationId;
+      }
+
+      await api.sendMessage({ conversationId: currentConversationId, text: messageText });
+      const updatedMessages = await api.getMessages(currentConversationId);
       // Force a new array reference to ensure React detects the change
       setMessages([...(updatedMessages || [])]);
       lastMessageCountRef.current = updatedMessages?.length || 0;
@@ -188,7 +188,7 @@ export default function ChatWidget({ isOpen: controlledIsOpen, onClose }: ChatWi
       // Wait for auto-reply and fetch messages again after 2 seconds
       setTimeout(async () => {
         try {
-          const messagesWithReply = await api.getMessages(conversationId);
+          const messagesWithReply = await api.getMessages(currentConversationId);
           setMessages([...(messagesWithReply || [])]);
           lastMessageCountRef.current = messagesWithReply?.length || 0;
           setForceUpdate(prev => prev + 1); // Force re-render
