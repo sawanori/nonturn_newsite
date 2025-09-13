@@ -167,11 +167,11 @@ export async function POST(req: Request) {
         const adminUrl = process.env.ADMIN_INBOX_URL || 'https://foodphoto-pro.com/admin/inbox';
         const url = `${adminUrl}?c=${encodeURIComponent(conversation.id)}`;
         
-        console.log('[DEBUG] Sending notification with:', { title: 'ユーザーから新着メッセージ', preview, url });
+        console.log('[DEBUG] Sending notification with:', { title: '飲食店撮影お問い合わせ', preview, url });
         
         // Send notification asynchronously (don't wait for it)
         notifyAdminViaLine({ 
-          title: 'ユーザーから新着メッセージ', 
+          title: '飲食店撮影お問い合わせ', 
           preview, 
           url 
         }).catch(e => console.error('LINE admin notify error:', e));

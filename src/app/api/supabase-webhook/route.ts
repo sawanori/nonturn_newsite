@@ -68,7 +68,7 @@ export async function POST(req: Request) {
         const url = `${adminUrl}?c=${encodeURIComponent(conversation.id)}`;
 
         await notifyAdminViaLine({
-          title: 'ユーザーから新着メッセージ',
+          title: '飲食店撮影お問い合わせ',
           preview,
           url
         });
