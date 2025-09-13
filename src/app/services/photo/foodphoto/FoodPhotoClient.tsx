@@ -764,8 +764,8 @@ const FeaturesSection = memo(() => {
                     width={800}
                     height={500}
                     className="absolute inset-0 w-full h-full object-cover rounded-t-2xl"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    quality={90}
+                    sizes="(max-width: 768px) 100vw, 800px"
+                    quality={75}
                   />
                   <button
                     onClick={() => setSelectedFeature(null)}
@@ -1274,11 +1274,11 @@ const SamplesSection = memo(() => {
                   <OptimizedImage
                     src={`${selectedImage.src}?v=${selectedImage.src.includes('LP_room_%205') || selectedImage.src.includes('LP_room_%206') ? '20250109' : '3'}`}
                     alt={optimizeAltText(selectedImage.alt, '飲食店撮影の拡大表示')}
-                    width={1920}
-                    height={1280}
+                    width={1200}
+                    height={800}
                     className="w-full h-full object-contain"
-                    sizes="100vw"
-                    quality={95}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
+                    quality={80}
                     priority
                   />
                 </div>
