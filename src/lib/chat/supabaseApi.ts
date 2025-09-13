@@ -33,6 +33,21 @@ class SupabaseChatApiImpl implements ChatAPI {
     text: string;
   }): Promise<void> {
     try {
+      // Check if this is the first message in the conversation
+      const { data: existingMessages, error: checkError } = await supabase
+        .from('messages')
+        .select('id')
+        .eq('conversation_id', params.conversationId)
+        .eq('role', 'user')
+        .limit(1);
+
+      if (checkError) {
+        console.error('Error checking existing messages:', checkError);
+        throw checkError;
+      }
+
+      const isFirstUserMessage = !existingMessages || existingMessages.length === 0;
+
       // Insert the user message
       const { data: userMessage, error: userError } = await supabase
         .from('messages')
@@ -59,10 +74,12 @@ class SupabaseChatApiImpl implements ChatAPI {
         })
         .eq('id', params.conversationId);
 
-      // Auto-reply (for now, until admin panel is active)
-      setTimeout(async () => {
-        await this.sendAutoReply(params.conversationId);
-      }, 1000);
+      // Auto-reply only for the first user message
+      if (isFirstUserMessage) {
+        setTimeout(async () => {
+          await this.sendAutoReply(params.conversationId);
+        }, 1000);
+      }
 
       // Return void instead of the message
     } catch (error) {
