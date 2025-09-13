@@ -165,10 +165,11 @@ export function middleware(req: NextRequest) {
     return res;
   }
 
-  // チャットページ - foodphoto-pro.comでも利用可能にする
-  if (url.pathname === "/chat") {
+  // チャットページ - foodphoto-pro.comでも利用可能にする（リダイレクトを防ぐ）
+  if (url.pathname === "/chat" || url.pathname.startsWith("/chat")) {
     const res = NextResponse.next();
     res.headers.set("x-mw", "pass:chat");
+    res.headers.set("x-host", effectiveHost);  // ホスト情報を保持
     return res;
   }
 
