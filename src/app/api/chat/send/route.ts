@@ -1,6 +1,9 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { notifyAdminViaLine } from '@/lib/line/adminNotify';
+
+export const runtime = 'nodejs';
 
 function getSupabaseAdmin() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -104,6 +107,48 @@ export async function POST(req: Request) {
       .from('conversations')
       .update({ last_message_at: new Date().toISOString() })
       .eq('id', conversation.id);
+    
+    // ===== Check if we should notify admin (with cooldown) =====
+    // First, check if this is a new conversation or if the last message was from admin
+    const { data: lastMessage } = await supabase
+      .from('messages')
+      .select('role')
+      .eq('conversation_id', conversation.id)
+      .order('created_at', { ascending: false })
+      .limit(2) // Get last 2 messages (including the one we just inserted)
+      .maybeSingle();
+    
+    // Only notify if this is the first message or if the previous message was from admin
+    const shouldCheckNotification = !lastMessage || lastMessage.role !== 'user';
+    
+    if (shouldCheckNotification) {
+      // Use the cooldown function to check if we can notify
+      const cooldownMinutes = Number(process.env.ADMIN_NOTIFY_COOLDOWN_MINUTES || '5');
+      const { data: canNotify, error: rpcError } = await supabase.rpc('try_admin_notify', {
+        p_conversation_id: conversation.id,
+        p_window_minutes: cooldownMinutes
+      });
+      
+      if (rpcError) {
+        console.error('try_admin_notify RPC error:', rpcError.message);
+      }
+      
+      // Send notification if allowed by cooldown
+      if (!rpcError && canNotify === true) {
+        const trimmedContent = content.trim();
+        const preview = trimmedContent.length > 60 ? trimmedContent.slice(0, 57) + '…' : trimmedContent;
+        const adminUrl = process.env.ADMIN_INBOX_URL || 'https://foodphoto-pro.com/admin/inbox';
+        const url = `${adminUrl}?c=${encodeURIComponent(conversation.id)}`;
+        
+        // Send notification asynchronously (don't wait for it)
+        notifyAdminViaLine({ 
+          title: 'ユーザーから新着メッセージ', 
+          preview, 
+          url 
+        }).catch(e => console.error('LINE admin notify error:', e));
+      }
+    }
+    // ===========================================================
     
     return NextResponse.json({ 
       ok: true, 
