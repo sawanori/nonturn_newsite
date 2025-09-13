@@ -127,8 +127,8 @@ export async function POST(req: Request) {
     console.log('[DEBUG] Should check notification:', shouldCheckNotification);
     
     if (shouldCheckNotification) {
-      // TESTING: Cooldown temporarily disabled - always notify
-      const skipCooldown = true; // TODO: Remove this after testing
+      // Cooldown enabled for production
+      const skipCooldown = false; // 5-minute cooldown is active
       console.log('[DEBUG] Skip cooldown:', skipCooldown);
       
       let canNotify = skipCooldown;
