@@ -165,6 +165,20 @@ export function middleware(req: NextRequest) {
     return res;
   }
 
+  // チャットページ - foodphoto-pro.comでも利用可能にする
+  if (url.pathname === "/chat") {
+    const res = NextResponse.next();
+    res.headers.set("x-mw", "pass:chat");
+    return res;
+  }
+
+  // 管理ページ - foodphoto-pro.comでも利用可能にする
+  if (url.pathname.startsWith("/admin")) {
+    const res = NextResponse.next();
+    res.headers.set("x-mw", "pass:admin");
+    return res;
+  }
+
   // Handle /services/photo/foodphoto/* paths for foodphoto-pro.com
   if (url.pathname.startsWith("/services/photo/foodphoto")) {
     // These paths are already correct, just pass through
