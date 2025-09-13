@@ -752,28 +752,28 @@ const FeaturesSection = memo(() => {
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
-                className="bg-gray-900 rounded-2xl max-w-3xl w-full overflow-y-auto"
+                className="bg-gray-800 rounded-2xl max-w-3xl w-full overflow-hidden"
                 style={{ maxHeight: '95vh' }}
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Modal header image */}
-                <div className="relative h-[400px] md:h-[500px] bg-gray-800">
+                <div className="relative h-[400px] md:h-[500px] bg-gray-700">
+                  <div className="absolute inset-0 bg-gray-700 animate-pulse" />
                   <OptimizedImage
                     src={selectedFeature.image}
                     alt={optimizeAltText(selectedFeature.title, '飲食店撮影の特徴')}
                     width={800}
                     height={500}
-                    className="absolute inset-0 w-full h-full object-cover rounded-t-2xl"
+                    className="absolute inset-0 w-full h-full object-cover"
                     sizes="(max-width: 768px) 100vw, 800px"
                     quality={75}
-                    placeholder="blur"
-                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCwAA8A/9k="
+                    priority
                   />
                   <button
                     onClick={() => setSelectedFeature(null)}
-                    className="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors"
+                    className="absolute top-4 right-4 w-12 h-12 bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/90 transition-all border-2 border-white/30"
                   >
-                    <span className="text-2xl">×</span>
+                    <span className="text-white text-2xl font-bold">×</span>
                   </button>
                 </div>
                 
@@ -1267,23 +1267,22 @@ const SamplesSection = memo(() => {
               >
                 <button
                   onClick={() => setSelectedImage(null)}
-                  className="absolute -top-10 md:-top-12 right-2 md:right-0 text-white hover:text-orange-400 transition-colors z-10 p-2"
+                  className="absolute -top-14 md:-top-16 right-2 md:right-0 z-10 w-12 h-12 bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/90 transition-all border-2 border-white/30"
                   aria-label="画像を閉じる"
                 >
-                  <span className="text-2xl md:text-3xl">✕</span>
+                  <span className="text-white text-2xl md:text-3xl font-bold">✕</span>
                 </button>
-                <div className="relative w-full h-[70vh] md:h-[80vh] flex items-center justify-center bg-gray-900 rounded-lg">
+                <div className="relative w-full h-[70vh] md:h-[80vh] flex items-center justify-center bg-gray-800 rounded-lg overflow-hidden">
+                  <div className="absolute inset-0 bg-gray-700 animate-pulse" />
                   <OptimizedImage
                     src={`${selectedImage.src}?v=${selectedImage.src.includes('LP_room_%205') || selectedImage.src.includes('LP_room_%206') ? '20250109' : '3'}`}
                     alt={optimizeAltText(selectedImage.alt, '飲食店撮影の拡大表示')}
                     width={1200}
                     height={800}
-                    className="w-full h-full object-contain rounded-lg"
+                    className="relative w-full h-full object-contain z-10"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
                     quality={80}
                     priority
-                    placeholder="blur"
-                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCwAA8A/9k="
                   />
                 </div>
               </motion.div>
