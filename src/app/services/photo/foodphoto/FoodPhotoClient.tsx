@@ -752,12 +752,12 @@ const FeaturesSection = memo(() => {
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
-                className="bg-white rounded-2xl max-w-3xl w-full overflow-y-auto"
+                className="bg-gray-900 rounded-2xl max-w-3xl w-full overflow-y-auto"
                 style={{ maxHeight: '95vh' }}
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Modal header image */}
-                <div className="relative h-[400px] md:h-[500px]">
+                <div className="relative h-[400px] md:h-[500px] bg-gray-800">
                   <OptimizedImage
                     src={selectedFeature.image}
                     alt={optimizeAltText(selectedFeature.title, '飲食店撮影の特徴')}
@@ -766,6 +766,8 @@ const FeaturesSection = memo(() => {
                     className="absolute inset-0 w-full h-full object-cover rounded-t-2xl"
                     sizes="(max-width: 768px) 100vw, 800px"
                     quality={75}
+                    placeholder="blur"
+                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCwAA8A/9k="
                   />
                   <button
                     onClick={() => setSelectedFeature(null)}
@@ -776,7 +778,7 @@ const FeaturesSection = memo(() => {
                 </div>
                 
                 {/* Modal content */}
-                <div className="p-8">
+                <div className="p-8 bg-white">
                   <div className="flex items-center gap-4 mb-4">
                     <span className="text-4xl">{selectedFeature.icon}</span>
                     <h2 className="text-3xl font-bold text-gray-800">
@@ -1270,16 +1272,18 @@ const SamplesSection = memo(() => {
                 >
                   <span className="text-2xl md:text-3xl">✕</span>
                 </button>
-                <div className="relative w-full h-[70vh] md:h-[80vh] flex items-center justify-center">
+                <div className="relative w-full h-[70vh] md:h-[80vh] flex items-center justify-center bg-gray-900 rounded-lg">
                   <OptimizedImage
                     src={`${selectedImage.src}?v=${selectedImage.src.includes('LP_room_%205') || selectedImage.src.includes('LP_room_%206') ? '20250109' : '3'}`}
                     alt={optimizeAltText(selectedImage.alt, '飲食店撮影の拡大表示')}
                     width={1200}
                     height={800}
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-contain rounded-lg"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
                     quality={80}
                     priority
+                    placeholder="blur"
+                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCwAA8A/9k="
                   />
                 </div>
               </motion.div>
