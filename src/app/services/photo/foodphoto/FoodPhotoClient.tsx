@@ -1927,18 +1927,19 @@ export default function FoodPhotoClient() {
           </Suspense>
           
           {/* Mobile Fixed Bottom CTA Bar */}
-          <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-gradient-to-r from-orange-500 to-red-500 shadow-lg" role="navigation" aria-label="モバイルCTA">
-            <div className="flex">
+          <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden shadow-lg" role="navigation" aria-label="モバイルCTA">
+            <div className="flex" style={{ background: 'linear-gradient(to right, rgb(249, 115, 22), rgb(239, 68, 68))' }}>
               <button 
                 onClick={handleOpenChat}
-                className="flex-1 text-white py-4 px-4 font-bold text-base flex items-center justify-center gap-2 border-r border-white/20 hover:bg-white/10 transition-colors" 
+                className="flex-1 text-white py-4 px-4 font-bold text-base flex items-center justify-center gap-2 border-r border-white/20 active:opacity-80 transition-opacity" 
                 id="cta-mobile-chat"
+                style={{ backgroundColor: 'transparent' }}
               >
                 <span>💬</span>
                 <span>無料相談</span>
               </button>
               <Link href="/services/photo/foodphoto/form" className="flex-1">
-                <button className="w-full text-white py-4 px-4 font-bold text-base flex items-center justify-center gap-2 hover:bg-white/10 transition-colors" id="cta-mobile-form">
+                <button className="w-full text-white py-4 px-4 font-bold text-base flex items-center justify-center gap-2 active:opacity-80 transition-opacity" id="cta-mobile-form" style={{ backgroundColor: 'transparent' }}>
                   <span>📝</span>
                   <span>お申し込み</span>
                 </button>
