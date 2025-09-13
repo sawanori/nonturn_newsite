@@ -21,13 +21,22 @@ export async function notifyAdminViaLine({ title, preview, url }: {
   preview: string; 
   url: string;
 }) {
-  if (process.env.ADMIN_NOTIFY_ENABLED === 'false') return; // 一時停止スイッチ
+  console.log('[LINE] notifyAdminViaLine called with:', { title, preview, url });
+  
+  if (process.env.ADMIN_NOTIFY_ENABLED === 'false') {
+    console.log('[LINE] Notification disabled by ADMIN_NOTIFY_ENABLED');
+    return;
+  }
 
   const groupId = process.env.LINE_ADMIN_GROUP_ID;
   const userIds = (process.env.LINE_ADMIN_USER_IDS || '')
     .split(',')
     .map(s => s.trim())
     .filter(Boolean);
+  
+  console.log('[LINE] Group ID:', groupId || 'NOT SET');
+  console.log('[LINE] User IDs:', userIds.length > 0 ? userIds : 'NOT SET');
+  console.log('[LINE] Access Token exists:', !!process.env.LINE_CHANNEL_ACCESS_TOKEN);
 
   const message = {
     type: 'template' as const,
@@ -45,15 +54,21 @@ export async function notifyAdminViaLine({ title, preview, url }: {
   };
 
   if (!groupId && userIds.length === 0) {
-    console.warn('No LINE admin target configured (LINE_ADMIN_GROUP_ID / LINE_ADMIN_USER_IDS).');
+    console.warn('[LINE] No LINE admin target configured (LINE_ADMIN_GROUP_ID / LINE_ADMIN_USER_IDS).');
     return;
   }
   
   if (groupId) {
+    console.log('[LINE] Sending to group:', groupId);
     await push({ to: groupId, messages: [message] });
+    console.log('[LINE] Group notification sent');
   }
   
   if (userIds.length) {
+    console.log('[LINE] Sending to users:', userIds);
     await Promise.all(userIds.map(to => push({ to, messages: [message] })));
+    console.log('[LINE] User notifications sent');
   }
+  
+  console.log('[LINE] notifyAdminViaLine completed');
 }

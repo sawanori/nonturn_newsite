@@ -118,12 +118,18 @@ export async function POST(req: Request) {
       .limit(2) // Get last 2 messages (including the one we just inserted)
       .maybeSingle();
     
+    // Debug logging
+    console.log('[DEBUG] Last message:', lastMessage);
+    console.log('[DEBUG] Conversation ID:', conversation.id);
+    
     // Only notify if this is the first message or if the previous message was from admin
     const shouldCheckNotification = !lastMessage || lastMessage.role !== 'user';
+    console.log('[DEBUG] Should check notification:', shouldCheckNotification);
     
     if (shouldCheckNotification) {
       // TESTING: Cooldown temporarily disabled - always notify
       const skipCooldown = true; // TODO: Remove this after testing
+      console.log('[DEBUG] Skip cooldown:', skipCooldown);
       
       let canNotify = skipCooldown;
       
@@ -150,10 +156,18 @@ export async function POST(req: Request) {
       
       // Send notification if allowed
       if (canNotify) {
+        console.log('[DEBUG] Can notify: true');
+        console.log('[DEBUG] Environment variables check:');
+        console.log('[DEBUG] LINE_CHANNEL_ACCESS_TOKEN exists:', !!process.env.LINE_CHANNEL_ACCESS_TOKEN);
+        console.log('[DEBUG] LINE_ADMIN_GROUP_ID:', process.env.LINE_ADMIN_GROUP_ID || 'NOT SET');
+        console.log('[DEBUG] ADMIN_NOTIFY_ENABLED:', process.env.ADMIN_NOTIFY_ENABLED);
+        
         const trimmedContent = content.trim();
         const preview = trimmedContent.length > 60 ? trimmedContent.slice(0, 57) + '…' : trimmedContent;
         const adminUrl = process.env.ADMIN_INBOX_URL || 'https://foodphoto-pro.com/admin/inbox';
         const url = `${adminUrl}?c=${encodeURIComponent(conversation.id)}`;
+        
+        console.log('[DEBUG] Sending notification with:', { title: 'ユーザーから新着メッセージ', preview, url });
         
         // Send notification asynchronously (don't wait for it)
         notifyAdminViaLine({ 
@@ -161,6 +175,8 @@ export async function POST(req: Request) {
           preview, 
           url 
         }).catch(e => console.error('LINE admin notify error:', e));
+      } else {
+        console.log('[DEBUG] Can notify: false');
       }
     }
     // ===========================================================
