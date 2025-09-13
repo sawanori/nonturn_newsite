@@ -23,12 +23,12 @@ Method: POST
 URL: https://foodphoto-pro.com/api/supabase-webhook
 Headers:
   Content-Type: application/json
-  x-webhook-secret: (任意のシークレットキー)
+  x-webhook-secret: 97566b75d188a9f9949dfbb06e527f71900cb876bed14a6204078fe4066fe283
 ```
 
 ### 3. 環境変数の追加（Vercel）
 ```env
-SUPABASE_WEBHOOK_SECRET=（上記で設定したシークレットキー）
+SUPABASE_WEBHOOK_SECRET=97566b75d188a9f9949dfbb06e527f71900cb876bed14a6204078fe4066fe283
 ```
 
 ### 4. デプロイ
