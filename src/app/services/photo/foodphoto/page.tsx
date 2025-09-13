@@ -1,13 +1,24 @@
 import FoodPhotoClient from './FoodPhotoClient'
 import Script from 'next/script'
 import { getAllStructuredData } from './structured-data'
+import fs from 'fs'
+import path from 'path'
 export { metadata, viewport } from './metadata'
+
+// Read critical CSS at build time
+const criticalCSS = fs.readFileSync(
+  path.join(process.cwd(), 'src/app/services/photo/foodphoto/critical.css'),
+  'utf8'
+)
 
 export default function FoodPhotoPage() {
   const structuredData = getAllStructuredData()
 
   return (
     <>
+      {/* Inline Critical CSS for faster first paint */}
+      <style dangerouslySetInnerHTML={{ __html: criticalCSS }} />
+      
       {/* Resource Hints for Performance Optimization */}
       <link rel="dns-prefetch" href="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com" />
       <link rel="preconnect" href="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com" />
@@ -15,6 +26,15 @@ export default function FoodPhotoPage() {
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      
+      {/* Preload critical fonts for faster text rendering */}
+      <link 
+        rel="preload" 
+        as="font" 
+        type="font/woff2" 
+        href="https://fonts.gstatic.com/s/notoserifjp/v28/xn77YHs72GKoTvER4Gn3b5eMZBaPRkgfU8fEwb0.woff2" 
+        crossOrigin="anonymous"
+      />
       <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       <link rel="preconnect" href="https://www.googletagmanager.com" />
       

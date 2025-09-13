@@ -14,16 +14,15 @@ import { initImageOptimizations } from './image-optimization'
 import { initFontOptimizations } from './font-optimization'
 import { initAccessibility } from './accessibility'
 import { getLatestPosts } from '@/lib/mock'
-import PostCard from '@/components/PostCard'
-import PainPointsSection from '@/components/PainPointsSection'
 import './core-web-vitals.css'
 import './hero-mobile.css'
 import './accessibility.css'
 
-// Lazy load heavy modal component
+// Lazy load heavy components for better performance
 const SpecialOfferModal = lazy(() => import('@/components/modals/SpecialOfferModal'))
-// Lazy load PWA Installer component
 const PWAInstaller = lazy(() => import('@/components/PWAInstaller'))
+const PainPointsSection = lazy(() => import('@/components/PainPointsSection'))
+const PostCard = lazy(() => import('@/components/PostCard'))
 
 // Fallback components for Suspense
 const ComponentFallback = memo(() => (
@@ -1323,7 +1322,9 @@ const BlogSection = memo(() => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <PostCard post={post} />
+                <Suspense fallback={<ComponentFallback />}>
+                  <PostCard post={post} />
+                </Suspense>
               </motion.div>
             ))}
           </div>
@@ -1903,7 +1904,9 @@ export default function FoodPhotoClient() {
           <Header onOpenChat={handleOpenChat} />
           <IntroSection />
           <NewsSection />
-          <PainPointsSection onOpenChat={handleOpenChat} />
+          <Suspense fallback={<SectionFallback />}>
+            <PainPointsSection onOpenChat={handleOpenChat} />
+          </Suspense>
           <FeaturesSection />
           <PricingSection onOpenModal={handleOpenModal} />
           <ParallaxSection />
