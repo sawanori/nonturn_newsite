@@ -5,6 +5,10 @@ import fs from 'fs'
 import path from 'path'
 export { metadata, viewport } from './metadata'
 
+// Enable static generation with hourly revalidation
+export const dynamic = 'force-static'
+export const revalidate = 3600
+
 // Read critical CSS at build time
 const criticalCSS = fs.readFileSync(
   path.join(process.cwd(), 'src/app/services/photo/foodphoto/critical.css'),

@@ -18,7 +18,11 @@ const nextConfig = {
       'clsx',
       'tailwind-merge',
       'uuid',
-      'web-vitals'
+      'web-vitals',
+      'lucide-react',
+      '@supabase/supabase-js',
+      'canvas-confetti',
+      'bcryptjs'
     ],
     // Code splitting optimizations
     // Moved to serverExternalPackages as per Next.js 15 requirements
@@ -193,6 +197,10 @@ const nextConfig = {
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable'
+          },
+          {
+            key: 'CDN-Cache-Control',
+            value: 'max-age=31536000'
           }
         ]
       },
@@ -202,6 +210,36 @@ const nextConfig = {
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable'
+          },
+          {
+            key: 'CDN-Cache-Control',
+            value: 'max-age=31536000'
+          }
+        ]
+      },
+      {
+        source: '/_next/static/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
+          },
+          {
+            key: 'CDN-Cache-Control',
+            value: 'max-age=31536000'
+          }
+        ]
+      },
+      {
+        source: '/services/photo/foodphoto',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, s-maxage=3600, stale-while-revalidate=86400'
+          },
+          {
+            key: 'CDN-Cache-Control',
+            value: 'max-age=3600'
           }
         ]
       },
