@@ -759,14 +759,14 @@ const FeaturesSection = memo(() => {
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Modal header image - responsive height */}
-                <div className="relative h-[200px] sm:h-[300px] md:h-[400px] lg:h-[450px] xl:h-[500px] bg-gray-700">
+                <div className="relative flex-shrink-0 h-[200px] sm:h-[300px] md:h-[400px] lg:h-[450px] xl:h-[500px] bg-gray-700">
                   <div className="absolute inset-0 bg-gray-700 animate-pulse" />
                   <OptimizedImage
                     src={selectedFeature.image}
                     alt={optimizeAltText(selectedFeature.title, '飲食店撮影の特徴')}
                     width={800}
                     height={500}
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="w-full h-full object-cover"
                     sizes="(max-width: 768px) 100vw, 800px"
                     quality={75}
                     priority
@@ -781,13 +781,10 @@ const FeaturesSection = memo(() => {
 
                 {/* Modal content - responsive padding and text */}
                 <div
-                  className="p-4 sm:p-6 md:p-8 bg-white overflow-y-auto"
-                  style={{
-                    maxHeight: 'calc(95vh - 250px)'
-                  }}
+                  className="flex-grow p-4 sm:p-6 md:p-8 bg-white overflow-y-auto min-h-0"
                 >
                   <div className="flex items-center gap-3 sm:gap-4 mb-4">
-                    <span className="text-2xl sm:text-3xl md:text-4xl">{selectedFeature.icon}</span>
+                    <span className="text-2xl sm:text-3xl md:text-4xl flex-shrink-0">{selectedFeature.icon}</span>
                     <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">
                       {selectedFeature.title}
                     </h2>
