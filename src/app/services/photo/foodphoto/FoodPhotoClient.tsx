@@ -711,7 +711,7 @@ const FeaturesSection = memo(() => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-12"
+              className="text-center mb-12 relative z-10"
             >
               <SectionTitle>
                 <span className="inline md:hidden">飲食店撮影<br />PhotoStudioの特徴</span>
@@ -719,7 +719,7 @@ const FeaturesSection = memo(() => {
               </SectionTitle>
             </motion.div>
           </Suspense>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto relative z-0">
             {features.map((feature, index) => (
               <Suspense key={index} fallback={<ComponentFallback />}>
                 <motion.div
@@ -754,12 +754,12 @@ const FeaturesSection = memo(() => {
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
-                className="bg-gray-800 rounded-2xl max-w-3xl w-full overflow-hidden"
-                style={{ maxHeight: '95vh' }}
+                className="bg-gray-800 rounded-2xl w-full max-w-sm sm:max-w-lg md:max-w-2xl lg:max-w-3xl overflow-hidden flex flex-col"
+                style={{ maxHeight: '95vh', margin: 'auto' }}
                 onClick={(e) => e.stopPropagation()}
               >
-                {/* Modal header image */}
-                <div className="relative h-[400px] md:h-[500px] bg-gray-700">
+                {/* Modal header image - responsive height */}
+                <div className="relative h-[200px] sm:h-[300px] md:h-[400px] lg:h-[450px] xl:h-[500px] bg-gray-700">
                   <div className="absolute inset-0 bg-gray-700 animate-pulse" />
                   <OptimizedImage
                     src={selectedFeature.image}
@@ -773,21 +773,26 @@ const FeaturesSection = memo(() => {
                   />
                   <button
                     onClick={() => setSelectedFeature(null)}
-                    className="absolute top-4 right-4 w-12 h-12 bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/90 transition-all border-2 border-white/30"
+                    className="absolute top-2 right-2 sm:top-4 sm:right-4 w-10 h-10 sm:w-12 sm:h-12 bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/90 transition-all border-2 border-white/30"
                   >
-                    <span className="text-white text-2xl font-bold">×</span>
+                    <span className="text-white text-xl sm:text-2xl font-bold">×</span>
                   </button>
                 </div>
-                
-                {/* Modal content */}
-                <div className="p-8 bg-white">
-                  <div className="flex items-center gap-4 mb-4">
-                    <span className="text-4xl">{selectedFeature.icon}</span>
-                    <h2 className="text-3xl font-bold text-gray-800">
+
+                {/* Modal content - responsive padding and text */}
+                <div
+                  className="p-4 sm:p-6 md:p-8 bg-white overflow-y-auto"
+                  style={{
+                    maxHeight: 'calc(95vh - 250px)'
+                  }}
+                >
+                  <div className="flex items-center gap-3 sm:gap-4 mb-4">
+                    <span className="text-2xl sm:text-3xl md:text-4xl">{selectedFeature.icon}</span>
+                    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">
                       {selectedFeature.title}
                     </h2>
                   </div>
-                  <p className="text-gray-700 leading-relaxed">
+                  <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
                     {selectedFeature.fullDescription}
                   </p>
                 </div>

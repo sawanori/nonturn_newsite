@@ -13,9 +13,14 @@ The project serves two distinct brands from a single codebase:
 - **foodphoto-pro.com**: Specialized food photography service
 
 Domain routing is handled via:
-1. **Middleware** (`src/middleware.ts`): Rewrites URLs based on host header
+1. **Middleware** (`src/middleware.ts`):
+   - Rewrites URLs based on host header
+   - Maps foodphoto-pro.com paths to `/services/photo/foodphoto/*`
+   - Handles redirects for other paths to non-turn.com
+   - Special handling for robots.txt, sitemap.xml per domain
 2. **Root Layout** (`src/app/layout.tsx`): Conditionally injects GTM for foodphoto-pro.com only
 3. **Host-based conditional rendering**: Components can detect domain and adjust content
+4. **Development**: Set `NEXT_PUBLIC_SITE_DOMAIN=foodphoto-pro.com` to test foodphoto locally
 
 ## Common Development Commands
 
@@ -23,8 +28,12 @@ Domain routing is handled via:
 # Development
 npm run dev          # Start development server on http://localhost:3000
 
+# Development with specific domain
+NEXT_PUBLIC_SITE_DOMAIN=foodphoto-pro.com npm run dev  # Test foodphoto-pro.com locally
+
 # Production Build & Deploy
 npm run build        # Build for production (also generates sitemap via postbuild)
+NEXT_PUBLIC_SITE_DOMAIN=foodphoto-pro.com npm run build  # Build for foodphoto-pro.com
 npm start            # Start production server
 
 # Code Quality
@@ -47,6 +56,8 @@ npm run analyze      # Analyze bundle size with webpack-bundle-analyzer
 - **Validation**: Zod for schema validation
 - **Caching**: LRU-Cache for performance optimization
 - **Sitemap**: next-sitemap for automatic generation
+- **Database**: Supabase for chat and admin features
+- **Notifications**: LINE integration for admin alerts
 
 ### Key Architectural Patterns
 
@@ -58,18 +69,27 @@ npm run analyze      # Analyze bundle size with webpack-bundle-analyzer
    - `src/components/ui/`: Reusable UI components (HeroSection, AnimatedSection, GoogleMap, etc.)
    - `src/components/services/`: Service-specific page components
    - `src/components/portfolio/`: Portfolio showcase components
+   - `src/components/chat/`: Chat interface components (ChatWidget, ChatInterface)
+   - `src/components/admin/`: Admin dashboard components
    - Components use client/server separation with `"use client"` directive
 
-3. **Data Layer**: Static data in `src/data/` files for services, portfolio, and company information.
+3. **Data Layer**:
+   - Static data in `src/data/` files for services, portfolio, and company information
+   - Supabase integration for dynamic data (chat messages, conversations)
+   - LINE integration for real-time notifications
 
 4. **API Routes**: Located in `src/app/api/` handling:
    - `/api/contact`: Contact form submission with SendGrid
-   - `/api/send-email`: General email sending endpoint  
+   - `/api/send-email`: General email sending endpoint
    - `/api/csrf`: CSRF token generation and validation
    - `/api/foodphoto-order`: Food photography order form submission
    - `/api/checkform`: Check form submission endpoint
    - `/api/test-sendgrid`: SendGrid testing endpoint
    - `/api/debug-env`: Environment debugging (dev only)
+   - `/api/chat/*`: Chat API endpoints (start, send, history, update-contact)
+   - `/api/admin/*`: Admin API endpoints (auth, conversations, messages, reply)
+   - `/api/line/webhook`: LINE webhook for chat notifications
+   - `/api/supabase-webhook`: Supabase webhook handler
 
 5. **Type Safety**: Comprehensive TypeScript types in `src/types/` directory and Zod schema validation in `src/lib/validation.ts`.
 
@@ -81,26 +101,33 @@ npm run analyze      # Analyze bundle size with webpack-bundle-analyzer
    - Scene3DFallback for non-WebGL browsers
    - Test performance on mobile devices
 
-2. **Email Integration**: 
+2. **Email Integration**:
    - SendGrid requires `SENDGRID_API_KEY` environment variable
    - Contact forms include CSRF protection via `src/lib/csrf.ts`
    - Rate limiting implemented in `src/lib/rate-limit.ts`
 
-3. **SEO & Sitemap**: 
+3. **Chat System**:
+   - Built on Supabase Realtime for instant messaging
+   - LINE integration for admin notifications
+   - Session-based anonymous chat for visitors
+   - Admin inbox at `/admin/inbox` with authentication
+   - Chat widget available on foodphoto-pro.com pages
+
+4. **SEO & Sitemap**: 
    - Metadata managed per-page using Next.js metadata API
    - Sitemap auto-generated on build via next-sitemap
    - Custom sitemap routes: `/sitemap-videos.xml`, `/sitemap-images.xml`
    - Dual-domain configuration in `next-sitemap.config.js`
    - URL redirects and rewrites for clean URLs
 
-4. **Security Configuration**: 
+5. **Security Configuration**: 
    - CSP headers (currently relaxed for www.non-turn.com compatibility)
    - HSTS with preload enabled
    - XSS protection, frame options, referrer policy
    - CSRF protection on all forms
    - Permissions policy restricting camera/microphone/geolocation
 
-5. **Performance Optimizations**:
+6. **Performance Optimizations**:
    - Image optimization with WebP/AVIF formats
    - Bundle optimization via optimizePackageImports
    - Service Worker support (PWA)
@@ -117,11 +144,24 @@ SENDGRID_API_KEY=                     # SendGrid API key for email functionality
 NEXT_PUBLIC_GTM_ID=                   # Google Tag Manager ID (GTM-KCXJ8G5Q for foodphoto)
 NEXT_PUBLIC_GA_ID=                    # Google Analytics GA4 ID (G-P9TFCN1658)
 
-# Maps  
+# Maps
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=      # Google Maps API key
 
 # Site Configuration
 NEXT_PUBLIC_SITE_DOMAIN=               # Domain setting (non-turn.com or foodphoto-pro.com)
+
+# Database (Required for chat/admin features)
+NEXT_PUBLIC_SUPABASE_URL=              # Supabase project URL
+NEXT_PUBLIC_SUPABASE_ANON_KEY=         # Supabase anonymous key
+SUPABASE_SERVICE_ROLE_KEY=             # Supabase service role key (server-side only)
+
+# LINE Integration (Required for chat notifications)
+LINE_NOTIFY_TOKEN=                     # LINE Notify token for admin notifications
+LINE_CHANNEL_ACCESS_TOKEN=             # LINE Messaging API channel access token
+LINE_CHANNEL_SECRET=                   # LINE Messaging API channel secret
+
+# Admin Authentication
+ADMIN_PASSWORD=                        # Admin password for /admin/inbox access
 
 # Optional/Legacy
 MICROCMS_SERVICE_DOMAIN=               # microCMS service domain (if used)
@@ -183,6 +223,9 @@ Currently no automated testing framework is configured. Manual testing required 
 - Email delivery via SendGrid
 - CSRF token validation
 - Rate limiting functionality
+- Chat functionality (`/chat` page) with Supabase integration
+- Admin inbox (`/admin/inbox`) for managing chat conversations
+- LINE integration for chat notifications
 
 ## Analytics & Tracking
 
