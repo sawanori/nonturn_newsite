@@ -954,9 +954,9 @@ const PricingSection = memo(({ onOpenModal }: { onOpenModal?: () => void }) => {
                     </li>
                   ))}
                 </ul>
-                <Link href="/services/photo/foodphoto/pricing" className="block">
-                  <Button 
-                    variant={plan.isPopular ? "primary" : "secondary"} 
+                <Link href="/services/photo/foodphoto/form" className="block">
+                  <Button
+                    variant={plan.isPopular ? "primary" : "secondary"}
                     className="w-full text-lg py-4"
                     id={plan.isPopular ? 'cta-pricing-popular-apply' : `cta-pricing-${plan.name.replace('プラン', '').toLowerCase()}-select`}
                   >
