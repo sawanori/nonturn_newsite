@@ -1771,24 +1771,42 @@ export default function FoodPhotoClient() {
   // Initialize Core Web Vitals monitoring and optimizations
   useEffect(() => {
     console.log('FoodPhotoClient mounted, isLoading:', true)
-    
+
+    // Clean up body and html styles that might have been set by modal or other pages
+    document.body.style.overflow = ''
+    document.body.style.removeProperty('overflow')
+    document.body.style.backgroundColor = ''
+    document.body.style.removeProperty('background-color')
+    document.documentElement.style.overflow = ''
+    document.documentElement.style.removeProperty('overflow')
+
     // Initialize web vitals tracking
     initWebVitals()
-    
+
     // Preload critical resources for better LCP
     preloadCriticalResources()
-    
+
     // Prevent layout shifts for better CLS
     preventLayoutShifts()
-    
+
     // Initialize advanced image optimizations
     initImageOptimizations()
-    
+
     // Initialize font optimizations for better performance
     initFontOptimizations()
-    
+
     // Initialize accessibility enhancements
     initAccessibility()
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = ''
+      document.body.style.removeProperty('overflow')
+      document.body.style.backgroundColor = ''
+      document.body.style.removeProperty('background-color')
+      document.documentElement.style.overflow = ''
+      document.documentElement.style.removeProperty('overflow')
+    }
   }, [])
 
   // Optimized scroll trigger for modal with useCallback
