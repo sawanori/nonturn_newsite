@@ -118,8 +118,8 @@ export default function SpecialOfferModal({ isOpen, onClose }: SpecialOfferModal
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.2 }}
                     >
-                      <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 leading-tight">
-                        9月撮影特典
+                      <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
+                        10月撮影特典
                       </h2>
                       <div className="flex items-center gap-1 md:gap-2 mt-2">
                         {[...Array(5)].map((_, i) => (
@@ -255,7 +255,7 @@ export default function SpecialOfferModal({ isOpen, onClose }: SpecialOfferModal
                       <ul className="space-y-1 md:space-y-2 text-xs text-gray-300">
                         <li className="flex items-start">
                           <span className="text-orange-400 mr-1 md:mr-2">①</span>
-                          <span>9月中申込→9/30までの撮影限定</span>
+                          <span>10月中申込→10/31までの撮影限定</span>
                         </li>
                         <li className="flex items-start">
                           <span className="text-orange-400 mr-1 md:mr-2">②</span>
@@ -303,7 +303,7 @@ export default function SpecialOfferModal({ isOpen, onClose }: SpecialOfferModal
                       className="text-center"
                     >
                       <p className="text-yellow-400 font-bold text-sm md:text-lg">
-                        ⏰ 9月限定・残りわずか！
+                        ⏰ 10月限定・残りわずか！
                       </p>
                     </motion.div>
                   </div>

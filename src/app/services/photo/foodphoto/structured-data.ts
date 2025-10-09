@@ -272,7 +272,7 @@ export const getStructuredData = () => {
   const specialOfferSchema = {
     '@context': 'https://schema.org',
     '@type': 'Offer',
-    name: '9月撮影特典キャンペーン',
+    name: '10月撮影特典キャンペーン',
     description: '飲食店サイトのTOP画像やサムネイルで使用しやすい編集画像を1枚無料プレゼント',
     url: domain,
     priceCurrency: 'JPY',
