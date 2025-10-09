@@ -346,15 +346,6 @@ export default function CheckFormClient() {
               確認画面へ / Proceed to Confirmation
             </button>
           </form>
-
-          <div className="mt-8 text-center">
-            <Link
-              href="/services/photo/foodphoto"
-              className="text-orange-400 hover:underline"
-            >
-              ← サービスページに戻る / Back to Service Page
-            </Link>
-          </div>
         </motion.div>
       </div>
     </div>
