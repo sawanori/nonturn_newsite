@@ -1,0 +1,170 @@
+{
+    "version": "1.0",
+    "purpose": "Vercel iad1障害回避：実行リージョンを東京(hnd1)等へ寄せ、必要に応じてEdge→Node(Serverless)へ切替える",
+    "assumptions": [
+    "Next.js プロジェクト（App Router/Pages Router いずれも可）",
+    "Vercel へデプロイ済み",
+    "ターミナル/CLI が利用可能（npx vercel コマンド）"
+    ],
+    "placeholders": {
+    "YOUR_DOMAIN": "本番ドメイン例: [www.example.com](http://www.example.com)"
+    },
+    "preparation": {
+    "commands": [
+    "cd /path/to/your-project",
+    "git pull",
+    "git checkout -b hotfix/avoid-iad1"
+    ]
+    },
+    "steps": [
+    {
+    "id": "S1",
+    "title": "現状の実行リージョンを確認",
+    "description": "x-vercel-id ヘッダで実行リージョンを確認し、iad1 かどうかを把握する",
+    "commands": [
+    "curl -I https://YOUR_DOMAIN/"
+    ],
+    "expectations": [
+    "レスポンスヘッダに x-vercel-id が含まれる（例: hnd1::xxxx, sfo1::xxxx, iad1::xxxx）",
+    "iad1 が含まれていれば以降の回避策を適用"
+    ]
+    },
+    {
+    "id": "S2",
+    "title": "簡易ヘルスエンドポイントの追加（任意）",
+    "description": "運用確認用に /health を用意（未導入なら追加）。App Router 例を記載。",
+    "files": [
+    {
+    "path": "app/health/route.ts",
+    "action": "create_if_missing",
+    "content": "export async function GET() { return new Response('ok', { status: 200 }); }"
+    }
+    ],
+    "pagesRouterAlternative": {
+    "path": "pages/api/health.ts",
+    "content": "import type { NextApiRequest, NextApiResponse } from 'next'; export default function handler(_req: NextApiRequest, res: NextApiResponse) { res.status(200).send('ok'); }"
+    }
+    },
+    {
+    "id": "S3",
+    "title": "vercel.json でリージョン固定（iad1を外す）",
+    "description": "プロジェクト直下の vercel.json に regions を設定。最小は hnd1 のみ、冗長化なら hnd1+sfo1 等。",
+    "files": [
+    {
+    "path": "vercel.json",
+    "action": "create_or_merge",
+    "content": "{\n  "$schema": "[https://openapi.vercel.sh/vercel.json",\n](https://openapi.vercel.sh/vercel.json%22,\n)  "regions": ["hnd1", "sfo1"],\n  "build": { "env": {} },\n  "functions": {\n    "api/**.js": { "maxDuration": 30 },\n    "api/**.ts": { "maxDuration": 30 }\n  }\n}"
+    }
+    ],
+    "notes": [
+    "Hobby等では regions は1拠点になることがあるため、その場合は ["hnd1"] のみでOK",
+    "既存の vercel.json がある場合は regions キーを追記/上書き"
+    ]
+    },
+    {
+    "id": "S4",
+    "title": "Edge Runtime を使用しているルートにリージョン明示（使用時のみ）",
+    "description": "Edge で動く Route/Middleware に iad1 を含まない regions を明示する（または hnd1 を preferred）。",
+    "files": [
+    {
+    "path": "app/api/EXAMPLE/route.ts",
+    "action": "patch_example_only",
+    "content": "export const runtime = 'edge';\nexport const preferredRegion = ['hnd1'];\n// もしくは冗長化\n// export const regions = ['hnd1', 'sfo1'];\n\nexport async function GET() { return new Response('ok'); }"
+    },
+    {
+    "path": "middleware.ts",
+    "action": "patch_if_exists",
+    "content": "export const config = {\n  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],\n  runtime: 'edge',\n  regions: ['hnd1', 'sfo1']\n};"
+    }
+    ],
+    "pagesRouterAlternative": {
+    "note": "Pages Router の Edge API Routes でも同様に config で runtime/regions を指定",
+    "example": "export const config = { runtime: 'edge', regions: ['hnd1'] };"
+    }
+    },
+    {
+    "id": "S5",
+    "title": "必要に応じて Edge→Node(Serverless) へ一時切替",
+    "description": "Edge 基盤の不安定影響を避けるため、該当ルートのみ Node(Serverless) 化する。",
+    "conditions": [
+    "Edge 固有機能が不要、または障害影響を強く受けているルートがある場合"
+    ],
+    "files": [
+    {
+    "path": "app/api/EXAMPLE/route.ts",
+    "action": "patch_example_only",
+    "content": "export const runtime = 'nodejs';\nexport async function GET() { /* handler */ return new Response('ok'); }"
+    }
+    ],
+    "pagesRouterAlternative": {
+    "action": "remove_edge_config",
+    "note": "Pages Router API Route で `export const config = { runtime: 'edge' }` を記述している場合は削除（デフォルトでServerless）"
+    }
+    },
+    {
+    "id": "S6",
+    "title": "Vercel 環境変数の同期（必要時）",
+    "description": "実行時失敗を避けるため環境変数をローカルに同期/確認。",
+    "commands": [
+    "npx vercel env pull .env.local"
+    ]
+    },
+    {
+    "id": "S7",
+    "title": "デプロイ（プレビュー→本番）",
+    "description": "挙動確認のためプレビュー→問題なければ本番へ。",
+    "commands": [
+    "npx vercel link",
+    "npx vercel",
+    "npx vercel deploy --prod"
+    ]
+    },
+    {
+    "id": "S8",
+    "title": "反映確認（リージョンと200応答）",
+    "description": "本番で x-vercel-id を再確認し、hnd1/sfo1 等に変わったこと・/health が 200 を返すことを確認。",
+    "commands": [
+    "curl -I https://YOUR_DOMAIN/",
+    "curl -i https://YOUR_DOMAIN/health"
+    ],
+    "expectations": [
+    "x-vercel-id に iad1 が含まれない（例: hnd1::xxxx）",
+    "HTTP/1.1 200 OK と 'ok' レスポンス"
+    ]
+    },
+    {
+    "id": "S9",
+    "title": "Functions ログの確認",
+    "description": "引き続き 500 が出る場合は Vercel ダッシュボード > Monitoring > Functions でスタックを確認し、アプリ側の例外や外部APIタイムアウトを調査。",
+    "actions": [
+    "必要に応じて該当ハンドラに console.error を追加→再デプロイ→ログで原因特定"
+    ]
+    },
+    {
+    "id": "S10",
+    "title": "ロールバック手順（問題発生時）",
+    "description": "直前デプロイへエイリアス戻し、または良好コミットへ戻して再デプロイ。",
+    "commands": [
+    "npx vercel ls  # デプロイ一覧を確認",
+    "npx vercel alias set <DEPLOYMENT_URL> YOUR_DOMAIN",
+    "git reset --hard <GOOD_COMMIT>",
+    "npx vercel deploy --prod"
+    ]
+    }
+    ],
+    "checklist": [
+    "vercel.json に regions が設定されている（iad1 を含めない）",
+    "Edge ルート/Middleware に regions あるいは preferredRegion を明示（iad1 を含めない）",
+    "必要に応じて runtime を 'nodejs' へ切替（Serverless実行）",
+    "本番の x-vercel-id から iad1 が消えている",
+    "/health が 200 を返す",
+    "Functions ログに新規エラーが出ていない"
+    ],
+    "rollbackPolicy": "致命的問題が出たら即 S10 を実施し、前回安定デプロイへ戻す。Gitで差分を精査のうえ段階的に再適用。",
+    "notes": [
+    "CDNキャッシュ影響を避けるには、検証時に curl の Cache-Control ヘッダで no-cache を付与して確認しても良い（例: curl -H 'Cache-Control: no-cache' -I https://YOUR_DOMAIN/）。",
+    "Hobby プラン等で regions が1拠点になる場合は "regions": ["hnd1"] のみ指定で回避可能。",
+    "外部APIのタイムアウトや環境変数未設定があると、障害とは別因で 500 が発生するためログで切り分け必須。"
+    ]
+    }
+    
