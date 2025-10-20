@@ -1,4 +1,11 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "regions": ["hnd1", "sfo1"],
+  "build": { "env": {} },
+  "functions": {
+    "api/**.js": { "maxDuration": 30 },
+    "api/**.ts": { "maxDuration": 30 }
+  },
   "redirects": [
     {
       "source": "/services/photo/foodphoto",

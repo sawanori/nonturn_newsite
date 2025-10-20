@@ -17,5 +17,9 @@ export function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
-// Apply middleware to all paths
-export const config = { matcher: ["/:path*"] };
+// Apply middleware to all paths with Edge Runtime configuration
+export const config = {
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  runtime: "edge",
+  regions: ["hnd1", "sfo1"],
+};
