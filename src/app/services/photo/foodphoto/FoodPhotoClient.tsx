@@ -1800,12 +1800,13 @@ export default function FoodPhotoClient() {
 
     // Cleanup on unmount
     return () => {
+      // Explicitly set background to white to override any computed CSS styles
+      document.body.style.backgroundColor = 'white'
       document.body.style.overflow = ''
       document.body.style.removeProperty('overflow')
-      document.body.style.backgroundColor = ''
-      document.body.style.removeProperty('background-color')
       document.documentElement.style.overflow = ''
       document.documentElement.style.removeProperty('overflow')
+      document.documentElement.style.backgroundColor = ''
     }
   }, [])
 
