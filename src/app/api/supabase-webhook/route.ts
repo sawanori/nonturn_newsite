@@ -64,7 +64,7 @@ export async function POST(req: Request) {
           ? message.content.slice(0, 57) + '…' 
           : message.content;
         
-        const adminUrl = process.env.ADMIN_INBOX_URL || 'https://foodphoto-pro.com/admin/inbox';
+        const adminUrl = process.env.ADMIN_INBOX_URL || 'https://non-turn.com/services/photo/foodphoto/admin/inbox';
         const url = `${adminUrl}?c=${encodeURIComponent(conversation.id)}`;
 
         await notifyAdminViaLine({

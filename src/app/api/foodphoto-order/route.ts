@@ -185,7 +185,7 @@ ${text.replace(/</g, "&lt;").replace(/>/g, "&gt;")}
       "━━━━━━━━━━━━━━━━━━━━━━",
       "飲食店撮影PhotoStudio",
       "NonTurn合同会社",
-      "URL: https://foodphoto-pro.com",
+      "URL: https://non-turn.com/services/photo/foodphoto",
       "お問い合わせ: https://non-turn.com/contact",
       "━━━━━━━━━━━━━━━━━━━━━━",
     ].filter(Boolean).join("\n");

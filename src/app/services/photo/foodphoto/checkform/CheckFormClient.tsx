@@ -111,10 +111,7 @@ export default function CheckFormClient() {
       if (result.ok) {
         setSubmitResult({ success: true, message: 'お申し込みを受け付けました。確認メールをお送りしました。 / Application received. Confirmation email sent.' })
         // Redirect to thank you page
-        const thankYouUrl = window.location.hostname.includes('foodphoto-pro.com') 
-          ? '/checkform/thank-you'
-          : '/services/photo/foodphoto/checkform/thank-you'
-        window.location.href = thankYouUrl
+        window.location.href = '/services/photo/foodphoto/checkform/thank-you'
         return // Don't set isSubmitting to false
       } else {
         setSubmitResult({ success: false, message: result.error || '送信に失敗しました。再度お試しください。 / Failed to send. Please try again.' })

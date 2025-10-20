@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     title: '無料撮影サンプル申し込み｜飲食店撮影PhotoStudio',
     description: '飲食店撮影PhotoStudioの無料撮影サンプル申し込みフォーム',
     type: 'website',
-    url: 'https://foodphoto-pro.com/checkform',
+    url: 'https://non-turn.com/services/photo/foodphoto/checkform',
     siteName: '飲食店撮影PhotoStudio',
   },
   twitter: {

@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
           <p><strong>飲食店撮影PhotoStudio</strong></p>
           <p>運営会社：NonTurn合同会社</p>
           <p>Email: info@non-turn.com</p>
-          <p>URL: https://foodphoto-pro.com</p>
+          <p>URL: https://non-turn.com/services/photo/foodphoto</p>
         </div>
       </div>
     `
@@ -81,7 +81,7 @@ ${body.name} 様
 飲食店撮影PhotoStudio
 運営会社：NonTurn合同会社
 Email: info@non-turn.com
-URL: https://foodphoto-pro.com
+URL: https://non-turn.com/services/photo/foodphoto
 `
 
     // Email to admin

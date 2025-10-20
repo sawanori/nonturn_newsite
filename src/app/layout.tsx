@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Noto_Serif_JP } from "next/font/google";
 import Script from "next/script";
-import { headers } from "next/headers";
 import { GoogleTagManager, GoogleTagManagerNoscript } from "@/components/GoogleTagManager";
 import { ClientProviders } from "@/components/ClientProviders";
 import "./globals.css";
@@ -201,18 +200,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const h = await headers();
-  const host = h.get("host")?.toLowerCase() || "";
-  const isFoodPhoto = host === "foodphoto-pro.com" || host.endsWith(".foodphoto-pro.com");
-  const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
-  const siteUrl = isFoodPhoto ? "https://foodphoto-pro.com" : "https://non-turn.com";
-
   return (
     <html lang="ja">
       <head>
         <meta httpEquiv="content-language" content="ja" />
-        <link rel="alternate" hrefLang="ja" href={siteUrl} />
-        <link rel="alternate" hrefLang="x-default" href={siteUrl} />
+        <link rel="alternate" hrefLang="ja" href="https://non-turn.com" />
+        <link rel="alternate" hrefLang="x-default" href="https://non-turn.com" />
         <Script
           id="structured-data"
           type="application/ld+json"
@@ -224,37 +217,12 @@ export default async function RootLayout({
         <meta name="geo.placename" content="東京,横浜" />
         <meta name="geo.position" content="35.4589;139.6317" />
         <meta name="ICBM" content="35.4589, 139.6317" />
-        {isFoodPhoto && GTM_ID ? (
-          <Script
-            id="gtm-base"
-            strategy="afterInteractive"
-            dangerouslySetInnerHTML={{
-              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','${GTM_ID}');`,
-            }}
-          />
-        ) : (
-          <GoogleTagManager />
-        )}
+        <GoogleTagManager />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${notoSerifJP.variable} antialiased`}
       >
-        {isFoodPhoto && GTM_ID ? (
-          <noscript>
-            <iframe
-              src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-              height="0"
-              width="0"
-              style={{ display: "none", visibility: "hidden" }}
-            />
-          </noscript>
-        ) : (
-          <GoogleTagManagerNoscript />
-        )}
+        <GoogleTagManagerNoscript />
         <ClientProviders>
           {children}
         </ClientProviders>

@@ -136,7 +136,7 @@ export function PhotoGallerySection({ images, categories = [] }: PhotoGallerySec
             className="mb-8 text-center"
           >
             <a
-              href="https://foodphoto-pro.com"
+              href="https://non-turn.com/services/photo/foodphoto"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center bg-gradient-to-r from-orange-400 to-red-500 text-white px-6 py-3 rounded-xl font-bold hover:from-orange-500 hover:to-red-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"

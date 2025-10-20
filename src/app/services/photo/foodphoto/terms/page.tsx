@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "利用規約 | 飲食店撮影 PhotoStudio",
   description:
-    "飲食店撮影 PhotoStudio（https://foodphoto-pro.com）の公式利用規約。NonTurn合同会社が提供する撮影サービスのご利用条件について記載しています。",
+    "飲食店撮影 PhotoStudio（https://non-turn.com/services/photo/foodphoto）の公式利用規約。NonTurn合同会社が提供する撮影サービスのご利用条件について記載しています。",
   alternates: { canonical: "/services/photo/foodphoto/terms" },
   robots: { index: true, follow: true },
 };
@@ -19,12 +19,12 @@ export default function TermsPage() {
             <p className="text-gray-900 leading-relaxed mb-6">
               本規約は、飲食店撮影 PhotoStudio（
               <a
-                href="https://foodphoto-pro.com"
+                href="https://non-turn.com/services/photo/foodphoto"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-orange-500 hover:text-orange-600 underline"
               >
-                https://foodphoto-pro.com
+                https://non-turn.com/services/photo/foodphoto
               </a>
               、以下「本サイト」）において、NonTurn合同会社（以下「当社」といいます）が提供する撮影サービス（以下「本サービス」）の利用条件を定めるものです。
             </p>
@@ -44,7 +44,7 @@ export default function TermsPage() {
                     <td className="border border-gray-300 px-4 py-2 text-gray-900">① 本サイト</td>
                     <td className="border border-gray-300 px-4 py-2 text-gray-900">
                       NonTurn合同会社がインターネット上で運営する「飲食店撮影
-                      PhotoStudio」（https://foodphoto-pro.com）
+                      PhotoStudio」（https://non-turn.com/services/photo/foodphoto）
                     </td>
                   </tr>
                   <tr className="bg-gray-50">

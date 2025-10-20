@@ -24,7 +24,7 @@ export async function GET() {
     await notifyAdminViaLine({
       title: 'システムテスト通知',
       preview: testMessage,
-      url: process.env.ADMIN_INBOX_URL || 'https://foodphoto-pro.com/admin/inbox'
+      url: process.env.ADMIN_INBOX_URL || 'https://non-turn.com/services/photo/foodphoto/admin/inbox'
     });
 
     return NextResponse.json({

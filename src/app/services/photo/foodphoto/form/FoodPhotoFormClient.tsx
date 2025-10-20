@@ -28,7 +28,7 @@ export function FoodPhotoFormClient() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitResult, setSubmitResult] = useState<{ success: boolean; message: string } | null>(null)
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({})
-  const [backHref, setBackHref] = useState('/services/photo/foodphoto')
+  const backHref = '/services/photo/foodphoto'
   const formRef = useRef<HTMLFormElement>(null)
   const announcerRef = useRef<LiveRegionAnnouncer | null>(null)
 
@@ -38,10 +38,6 @@ export function FoodPhotoFormClient() {
     if (formRef.current) {
       enhanceFormAccessibility(formRef.current)
     }
-
-    // Detect domain and set appropriate back link
-    const isFoodPhotoDomain = window.location.hostname.includes('foodphoto-pro.com')
-    setBackHref(isFoodPhotoDomain ? '/' : '/services/photo/foodphoto')
   }, [])
   
   // Announce errors to screen readers
@@ -132,11 +128,7 @@ export function FoodPhotoFormClient() {
         // Don't set isSubmitting to false on success
         // Redirect to thank you page
         setTimeout(() => {
-          // For foodphoto-pro.com domain, use short path (will be rewritten by middleware)
-          const thankYouUrl = window.location.hostname.includes('foodphoto-pro.com') 
-            ? '/form/thank-you'
-            : '/services/photo/foodphoto/form/thank-you'
-          window.location.href = thankYouUrl
+          window.location.href = '/services/photo/foodphoto/form/thank-you'
         }, 1000)
         // Important: Don't set isSubmitting to false here, leave it true
         return

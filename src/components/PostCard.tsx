@@ -26,7 +26,7 @@ export default function PostCard({ post }: { post: Post }) {
       className="h-full"
     >
       <Link
-        href={`https://foodphoto-pro.com/blog/${post.slug}`}
+        href={`https://non-turn.com/services/photo/foodphoto/blog/${post.slug}`}
         className="group block h-full bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:border-gray-300"
         aria-label={post.title}
       >

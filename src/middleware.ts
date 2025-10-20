@@ -1,201 +1,27 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-// LP ドメイン集合
-const LP = new Set(["foodphoto-pro.com", "www.foodphoto-pro.com"]);
-
 export function middleware(req: NextRequest) {
-  // Host を正規化（小文字＋ポート除去）
-  const rawHost = req.headers.get("host") || "";
-  const host = rawHost.toLowerCase().split(":")[0];
-  
-  // 開発環境でNEXT_PUBLIC_SITE_DOMAINが設定されている場合はそれを使用
-  const isDevelopment = process.env.NODE_ENV === 'development';
-  const effectiveHost = isDevelopment && process.env.NEXT_PUBLIC_SITE_DOMAIN === 'foodphoto-pro.com' 
-    ? 'foodphoto-pro.com' 
-    : host;
-
   const url = req.nextUrl.clone();
-  // デバッグパラメータ ?mwtest=1 なら、ミドルウェア生存確認レスポンスを返す
-  if (url.searchParams.get("mwtest") === "1") {
-    return new Response(`MW OK host=${host} path=${url.pathname}`, {
-      status: 200,
-      headers: { "x-mw": "alive" },
-    });
-  }
 
-  // LP 以外は素通し（ヘッダだけ付与）
-  if (!LP.has(effectiveHost)) {
-    const res = NextResponse.next();
-    res.headers.set("x-mw", "pass:"+effectiveHost);
-    // Add CORS headers for foodphoto-pro.com
-    res.headers.set("Access-Control-Allow-Origin", "https://foodphoto-pro.com");
-    res.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    res.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    return res;
-  }
-
-  // API routes should be handled normally (no redirect)
+  // API routes should be handled normally
   if (url.pathname.startsWith("/api/")) {
-    const res = NextResponse.next();
-    res.headers.set("x-mw", "api-pass");
-    // Add CORS headers for API routes
-    res.headers.set("Access-Control-Allow-Origin", "*");
-    res.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    res.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    return res;
-  }
-  
-  // Google Search Console verification files - ONLY for foodphoto-pro.com
-  if (url.pathname === "/google26fa748b2feb7d00.html") {
-    // foodphoto-pro.comドメインのみ許可
-    if (LP.has(effectiveHost)) {
-      const res = NextResponse.next();
-      res.headers.set("x-mw", "pass:google-verification-foodphoto");
-      return res;
-    } else {
-      // non-turn.comからのアクセスは404を返す
-      return new Response('Not Found', { status: 404 });
-    }
-  }
-  
-  // Other Google verification files for non-turn.com (if any)
-  if (!LP.has(effectiveHost) && url.pathname.startsWith("/google") && url.pathname.endsWith(".html")) {
-    const res = NextResponse.next();
-    res.headers.set("x-mw", "pass:google-verification-nonturn");
-    return res;
-  }
-  
-  // robots.txt for foodphoto-pro.com
-  if (LP.has(effectiveHost) && url.pathname === "/robots.txt") {
-    url.pathname = "/foodphoto-robots.txt";
-    const res = NextResponse.rewrite(url);
-    res.headers.set("x-mw", "rewrite:/robots.txt -> /foodphoto-robots.txt");
-    return res;
-  }
-  
-  // sitemap.xml for foodphoto-pro.com
-  if (LP.has(effectiveHost) && url.pathname === "/sitemap.xml") {
-    url.pathname = "/foodphoto-sitemap.xml";
-    const res = NextResponse.rewrite(url);
-    res.headers.set("x-mw", "rewrite:/sitemap.xml -> /foodphoto-sitemap.xml");
-    return res;
+    return NextResponse.next();
   }
 
-  // LP ドメイン: "/" と "/form" と "/form/thank-you" と "/terms" と "/checkform" と "/checkform/thank-you" は実体へ rewrite
-  if (url.pathname === "/") {
-    url.pathname = "/services/photo/foodphoto";
-    const res = NextResponse.rewrite(url);
-    res.headers.set("x-mw", "rewrite:/ -> /services/photo/foodphoto");
-    return res;
+  // Google verification files for non-turn.com
+  if (url.pathname.startsWith("/google") && url.pathname.endsWith(".html")) {
+    return NextResponse.next();
   }
 
-  if (url.pathname === "/form") {
-    url.pathname = "/services/photo/foodphoto/form";
-    const res = NextResponse.rewrite(url);
-    res.headers.set("x-mw", "rewrite:/form -> /services/photo/foodphoto/form");
-    return res;
+  // Chat and admin routes are handled normally
+  if (url.pathname === "/chat" || url.pathname.startsWith("/chat/") || url.pathname.startsWith("/admin")) {
+    return NextResponse.next();
   }
 
-  if (url.pathname === "/form/thank-you") {
-    url.pathname = "/services/photo/foodphoto/form/thank-you";
-    const res = NextResponse.rewrite(url);
-    res.headers.set("x-mw", "rewrite:/form/thank-you -> /services/photo/foodphoto/form/thank-you");
-    return res;
-  }
-
-  if (url.pathname === "/checkform") {
-    url.pathname = "/services/photo/foodphoto/checkform";
-    const res = NextResponse.rewrite(url);
-    res.headers.set("x-mw", "rewrite:/checkform -> /services/photo/foodphoto/checkform");
-    return res;
-  }
-
-  if (url.pathname === "/checkform/thank-you") {
-    url.pathname = "/services/photo/foodphoto/checkform/thank-you";
-    const res = NextResponse.rewrite(url);
-    res.headers.set("x-mw", "rewrite:/checkform/thank-you -> /services/photo/foodphoto/checkform/thank-you");
-    return res;
-  }
-
-  if (url.pathname === "/terms") {
-    url.pathname = "/services/photo/foodphoto/terms";
-    const res = NextResponse.rewrite(url);
-    res.headers.set("x-mw", "rewrite:/terms -> /services/photo/foodphoto/terms");
-    return res;
-  }
-
-  if (url.pathname === "/sitemap") {
-    url.pathname = "/services/photo/foodphoto/sitemap";
-    const res = NextResponse.rewrite(url);
-    res.headers.set("x-mw", "rewrite:/sitemap -> /services/photo/foodphoto/sitemap");
-    return res;
-  }
-
-  if (url.pathname === "/pricing") {
-    url.pathname = "/services/photo/foodphoto/pricing";
-    const res = NextResponse.rewrite(url);
-    res.headers.set("x-mw", "rewrite:/pricing -> /services/photo/foodphoto/pricing");
-    return res;
-  }
-
-  // エリアページのルーティング
-  if (url.pathname.startsWith("/area/")) {
-    const newPath = url.pathname.replace("/area/", "/services/photo/foodphoto/area/");
-    url.pathname = newPath;
-    const res = NextResponse.rewrite(url);
-    res.headers.set("x-mw", `rewrite:${url.pathname} -> ${newPath}`);
-    return res;
-  }
-
-  // ブログページのルーティング
-  if (url.pathname === "/blog") {
-    url.pathname = "/services/photo/foodphoto/blog";
-    const res = NextResponse.rewrite(url);
-    res.headers.set("x-mw", "rewrite:/blog -> /services/photo/foodphoto/blog");
-    return res;
-  }
-
-  // ブログ記事詳細ページのルーティング
-  if (url.pathname.startsWith("/blog/")) {
-    const newPath = url.pathname.replace("/blog/", "/services/photo/foodphoto/blog/");
-    url.pathname = newPath;
-    const res = NextResponse.rewrite(url);
-    res.headers.set("x-mw", `rewrite:${url.pathname} -> ${newPath}`);
-    return res;
-  }
-
-  // チャットページ - foodphoto-pro.comでも利用可能にする（リダイレクトを防ぐ）
-  if (url.pathname === "/chat" || url.pathname.startsWith("/chat")) {
-    const res = NextResponse.next();
-    res.headers.set("x-mw", "pass:chat");
-    res.headers.set("x-host", effectiveHost);  // ホスト情報を保持
-    return res;
-  }
-
-  // 管理ページ - foodphoto-pro.comでも利用可能にする
-  if (url.pathname.startsWith("/admin")) {
-    const res = NextResponse.next();
-    res.headers.set("x-mw", "pass:admin");
-    return res;
-  }
-
-  // Handle /services/photo/foodphoto/* paths for foodphoto-pro.com
-  if (url.pathname.startsWith("/services/photo/foodphoto")) {
-    // These paths are already correct, just pass through
-    const res = NextResponse.next();
-    res.headers.set("x-mw", "pass:foodphoto-path");
-    return res;
-  }
-
-  // その他は 301 で non-turn.com へ
-  const res = NextResponse.redirect(
-    `https://non-turn.com${url.pathname}${url.search}`,
-    301
-  );
-  res.headers.set("x-mw", "redirect:"+url.pathname);
-  return res;
+  // All other routes pass through
+  return NextResponse.next();
 }
 
-// まずは全パスにマッチさせて確実に効かせる
+// Apply middleware to all paths
 export const config = { matcher: ["/:path*"] };

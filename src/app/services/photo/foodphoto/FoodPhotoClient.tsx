@@ -1342,7 +1342,7 @@ const BlogSection = memo(() => {
             viewport={{ once: true }}
             className="text-center"
           >
-            <Link href="https://foodphoto-pro.com/blog">
+            <Link href="https://non-turn.com/services/photo/foodphoto/blog">
               <motion.button
                 className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-full font-bold text-lg hover:shadow-xl transform transition-all duration-300"
                 whileHover={{ scale: 1.05, y: -2 }}

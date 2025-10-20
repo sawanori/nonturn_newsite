@@ -5,16 +5,16 @@ export const metadata: Metadata = {
   description: "飲食店専門の撮影サービス。料理写真、店舗内観・外観撮影まで対応。東京・横浜・千葉エリア出張無料。日本フードフォトグラファー協会認定カメラマン。撮影実績500店舗以上。月額費用なし、撮影料金33,000円〜",
   keywords: "飲食店撮影,料理撮影,メニュー撮影,店舗撮影,フードフォト,レストラン撮影,飲食店写真,料理写真,出張撮影,東京,横浜,千葉,飲食店撮影 料金 相場,レストラン 写真撮影 費用,料理撮影 カメラマン 料金,メニュー撮影 値段 東京,飲食店 プロカメラマン 撮影料金,飲食店撮影 東京 出張,インスタ映え 料理撮影,SNS用 飲食店撮影,プロカメラマン 飲食店撮影,フードフォトグラファー 認定,飲食店撮影 即日,緊急 料理撮影",
   openGraph: {
-    title: "飲食店撮影PhotoStudio | プロによる料理・店舗撮影サービス",
-    description: "飲食店専門の撮影サービス。料理写真から店舗撮影まで、集客に繋がる写真を提供。東京・横浜・千葉エリア出張無料。",
-    url: "https://foodphoto-pro.com/",
-    siteName: "飲食店撮影PhotoStudio",
+    title: "NonTurn.LLC | 東京・横浜の企業向け動画制作",
+    description: "東京・横浜エリアで企業向け動画制作・映像制作を提供。",
+    url: "https://non-turn.com/services/photo/foodphoto",
+    siteName: "NonTurn.LLC",
     images: [
       {
         url: "https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg",
         width: 1200,
         height: 630,
-        alt: "飲食店撮影PhotoStudioのサービスイメージ",
+        alt: "NonTurn.LLC サービスイメージ",
       },
     ],
     locale: "ja_JP",
@@ -22,14 +22,14 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "飲食店撮影PhotoStudio | プロによる料理・店舗撮影",
-    description: "飲食店専門の撮影サービス。東京・横浜・千葉エリア出張無料。撮影料金33,000円〜",
+    title: "NonTurn.LLC | 企業向け動画制作",
+    description: "東京・横浜エリアで企業向け動画制作・映像制作を提供。",
     images: ["https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/LP_food_%2024.jpg"],
   },
   alternates: {
-    canonical: "https://foodphoto-pro.com/",
+    canonical: "https://non-turn.com/services/photo/foodphoto",
     types: {
-      "application/rss+xml": "https://foodphoto-pro.com/rss",
+      "application/rss+xml": "https://non-turn.com/rss",
     },
   },
   robots: {

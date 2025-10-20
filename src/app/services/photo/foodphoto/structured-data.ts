@@ -1,11 +1,11 @@
-// Structured Data for foodphoto-pro.com
+// Structured Data for NonTurn.LLC
 // Schema.org JSON-LD implementation for SEO
 
 import { generateVoiceSearchSchema, generateSpeakableSchema } from './voice-search-faq'
 import { generateReviewSchema, generateIndividualReviewSchema } from '@/data/foodphoto-reviews'
 
 export const getStructuredData = () => {
-  const domain = 'https://foodphoto-pro.com'
+  const domain = 'https://non-turn.com/services/photo/foodphoto'
   
   // 1. LocalBusiness Schema
   const localBusinessSchema = {

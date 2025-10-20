@@ -69,7 +69,7 @@ export default function Breadcrumb({ items, className = '' }: BreadcrumbProps) {
 }
 
 // パンくずデータを生成するユーティリティ関数
-export function generateBreadcrumbStructuredData(items: BreadcrumbItem[], baseUrl: string = 'https://foodphoto-pro.com') {
+export function generateBreadcrumbStructuredData(items: BreadcrumbItem[], baseUrl: string = 'https://non-turn.com/services/photo/foodphoto') {
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',

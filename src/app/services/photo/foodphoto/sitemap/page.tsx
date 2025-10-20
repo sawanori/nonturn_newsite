@@ -4,7 +4,7 @@ import { getAllPosts } from '@/lib/mock'
 
 export const metadata: Metadata = {
   title: 'サイトマップ | 飲食店撮影PhotoStudio',
-  description: 'foodphoto-pro.comの全ページ一覧。飲食店撮影サービスの各ページへのリンク集です。',
+  description: 'NonTurn.LLCの飲食店撮影サービスの全ページ一覧。各ページへのリンク集です。',
   robots: {
     index: true,
     follow: true,

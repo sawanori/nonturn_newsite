@@ -18,7 +18,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await Promise.resolve(params)
   const post = getPostBySlug(resolvedParams.slug)
-  const base = 'https://foodphoto-pro.com'
+  const base = 'https://non-turn.com/services/photo/foodphoto'
   const url = `${base}/blog/${resolvedParams.slug}`
   
   if (!post) {
@@ -80,7 +80,7 @@ function articleJsonLd(post: any, url: string) {
       name: "飲食店撮影PhotoStudio",
       logo: {
         "@type": "ImageObject",
-        url: "https://foodphoto-pro.com/logo.png"
+        url: "https://non-turn.com/services/photo/foodphoto/logo.png"
       }
     }
   }
@@ -126,7 +126,7 @@ function breadcrumbJsonLd(post: any, url: string, base: string) {
 export default async function BlogDetail({ params }: Props) {
   const resolvedParams = await Promise.resolve(params)
   const post = getPostBySlug(resolvedParams.slug)
-  const base = 'https://foodphoto-pro.com'
+  const base = 'https://non-turn.com/services/photo/foodphoto'
   const url = `${base}/blog/${resolvedParams.slug}`
   
   if (!post) {
@@ -172,11 +172,11 @@ export default async function BlogDetail({ params }: Props) {
       <div className="bg-gradient-to-r from-orange-500 to-red-600 text-white py-8">
         <div className="mx-auto max-w-7xl px-4">
           <div className="flex items-center text-sm mb-4 opacity-90">
-            <Link href="https://foodphoto-pro.com" className="hover:underline">
+            <Link href="https://non-turn.com/services/photo/foodphoto" className="hover:underline">
               飲食店撮影PhotoStudio
             </Link>
             <span className="mx-2">/</span>
-            <Link href="https://foodphoto-pro.com/blog" className="hover:underline">
+            <Link href="https://non-turn.com/services/photo/foodphoto/blog" className="hover:underline">
               ブログ
             </Link>
             <span className="mx-2">/</span>
@@ -205,7 +205,7 @@ export default async function BlogDetail({ params }: Props) {
               <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500">
                 {post.category && (
                   <Link 
-                    href={`https://foodphoto-pro.com/blog/category/${post.category.slug}`}
+                    href={`https://non-turn.com/services/photo/foodphoto/blog/category/${post.category.slug}`}
                     className="rounded-full bg-gray-100 px-3 py-1 text-gray-700 hover:bg-gray-200 transition-colors"
                   >
                     {post.category.name}
@@ -248,13 +248,13 @@ export default async function BlogDetail({ params }: Props) {
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link 
                   id="cta-blogsidebar-apply"
-                  href="https://foodphoto-pro.com/form"
+                  href="https://non-turn.com/services/photo/foodphoto/form"
                   className="inline-block px-5 py-2.5 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-xl font-medium hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 text-center text-sm"
                 >
                   無料相談を申し込む
                 </Link>
                 <Link 
-                  href="https://foodphoto-pro.com#pricing"
+                  href="https://non-turn.com/services/photo/foodphoto#pricing"
                   className="inline-block px-5 py-2.5 bg-white border border-orange-500 text-orange-600 rounded-xl font-medium hover:bg-orange-50 transition-colors text-center text-sm"
                 >
                   料金プランを見る
@@ -271,7 +271,7 @@ export default async function BlogDetail({ params }: Props) {
                 <aside className="my-10 p-6 border border-gray-200 rounded-2xl bg-gray-50">
                   <div className="text-xs text-gray-500 mb-2 font-medium">あわせて読みたい</div>
                   <Link 
-                    href={`https://foodphoto-pro.com/blog/${sameCategoryPost.slug}`}
+                    href={`https://non-turn.com/services/photo/foodphoto/blog/${sameCategoryPost.slug}`}
                     className="block group"
                   >
                     <h4 className="font-medium text-gray-900 group-hover:text-orange-600 transition-colors mb-2">
@@ -319,7 +319,7 @@ export default async function BlogDetail({ params }: Props) {
               <p className="text-sm text-gray-600 mb-3 font-medium">この記事をシェア</p>
               <div className="flex gap-3">
                 <a
-                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`https://foodphoto-pro.com/blog/${post.slug}`)}`}
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`https://non-turn.com/services/photo/foodphoto/blog/${post.slug}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
@@ -327,7 +327,7 @@ export default async function BlogDetail({ params }: Props) {
                   X (Twitter)
                 </a>
                 <a
-                  href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://foodphoto-pro.com/blog/${post.slug}`)}`}
+                  href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://non-turn.com/services/photo/foodphoto/blog/${post.slug}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
@@ -335,7 +335,7 @@ export default async function BlogDetail({ params }: Props) {
                   Facebook
                 </a>
                 <a
-                  href={`https://line.me/R/msg/text/?${encodeURIComponent(post.title + ' https://foodphoto-pro.com/blog/' + post.slug)}`}
+                  href={`https://line.me/R/msg/text/?${encodeURIComponent(post.title + ' https://non-turn.com/services/photo/foodphoto/blog/' + post.slug)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors text-sm font-medium"
@@ -357,13 +357,13 @@ export default async function BlogDetail({ params }: Props) {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   id="cta-blogbottom-apply"
-                  href="https://foodphoto-pro.com/form"
+                  href="https://non-turn.com/services/photo/foodphoto/form"
                   className="inline-block px-8 py-4 bg-white text-orange-600 rounded-xl font-bold hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 text-center"
                 >
                   無料相談を申し込む
                 </Link>
                 <Link
-                  href="https://foodphoto-pro.com#pricing"
+                  href="https://non-turn.com/services/photo/foodphoto#pricing"
                   className="inline-block px-8 py-4 bg-transparent border-2 border-white text-white rounded-xl font-bold hover:bg-white hover:text-orange-600 transition-all duration-200 text-center"
                 >
                   料金プランを確認する
@@ -383,7 +383,7 @@ export default async function BlogDetail({ params }: Props) {
                 {post.category && (
                   <div className="text-center">
                     <Link
-                      href={`https://foodphoto-pro.com/blog/category/${post.category.slug}`}
+                      href={`https://non-turn.com/services/photo/foodphoto/blog/category/${post.category.slug}`}
                       className="inline-flex items-center text-orange-600 hover:text-orange-700 font-medium"
                     >
                       {post.category.name}の記事をもっと見る

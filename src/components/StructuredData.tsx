@@ -28,7 +28,7 @@ interface LocalBusinessProps {
 export function LocalBusinessSchema({
   name = '飲食店撮影PhotoStudio',
   description = '東京・横浜の飲食店専門撮影サービス。プロカメラマンが料理・店舗の魅力を最大限に引き出します。',
-  url = 'https://foodphoto-pro.com',
+  url = 'https://non-turn.com/services/photo/foodphoto',
   telephone = '',
   address = {
     addressLocality: '渋谷区',
@@ -140,7 +140,7 @@ export function ProductSchema({
       priceCurrency,
       availability: offers.availability,
       priceValidUntil: offers.priceValidUntil,
-      url: 'https://foodphoto-pro.com/pricing'
+      url: 'https://non-turn.com/services/photo/foodphoto/pricing'
     }
   }
 

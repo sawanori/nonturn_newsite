@@ -2,7 +2,7 @@ import type { ChatAPI, Conversation, Message } from '@/types/chat';
 
 // Mock admin credentials for testing
 export const MOCK_ADMIN_CREDENTIALS = {
-  email: 'admin@foodphoto-pro.com',
+  email: 'admin@non-turn.com',
   password: 'demo1234'
 };
 

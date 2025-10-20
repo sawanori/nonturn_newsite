@@ -178,8 +178,8 @@ export default function PricingClient() {
       {
         '@type': 'BreadcrumbList',
         'itemListElement': [
-          { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': 'https://foodphoto-pro.com/' },
-          { '@type': 'ListItem', 'position': 2, 'name': '料金・プラン', 'item': 'https://foodphoto-pro.com/pricing' }
+          { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': 'https://non-turn.com/services/photo/foodphoto/' },
+          { '@type': 'ListItem', 'position': 2, 'name': '料金・プラン', 'item': 'https://non-turn.com/services/photo/foodphoto/pricing' }
         ]
       },
       {

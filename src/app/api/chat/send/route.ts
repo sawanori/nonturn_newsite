@@ -164,7 +164,7 @@ export async function POST(req: Request) {
         
         const trimmedContent = content.trim();
         const preview = trimmedContent.length > 60 ? trimmedContent.slice(0, 57) + '…' : trimmedContent;
-        const adminUrl = process.env.ADMIN_INBOX_URL || 'https://foodphoto-pro.com/admin/inbox';
+        const adminUrl = process.env.ADMIN_INBOX_URL || 'https://non-turn.com/services/photo/foodphoto/admin/inbox';
         const url = `${adminUrl}?c=${encodeURIComponent(conversation.id)}`;
         
         console.log('[DEBUG] Sending notification with:', { title: '飲食店撮影お問い合わせ', preview, url });

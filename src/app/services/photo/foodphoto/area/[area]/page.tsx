@@ -27,7 +27,7 @@ export async function generateMetadata({
     }
   }
 
-  const canonicalUrl = `https://foodphoto-pro.com/area/${areaData.id}`
+  const canonicalUrl = `https://non-turn.com/services/photo/foodphoto/area/${areaData.id}`
 
   return {
     title: `${areaData.title} | 飲食店撮影PhotoStudio`,
@@ -76,13 +76,13 @@ function generateStructuredData(areaData: any) {
     '@graph': [
       {
         '@type': 'Service',
-        '@id': `https://foodphoto-pro.com/area/${areaData.id}#service`,
+        '@id': `https://non-turn.com/services/photo/foodphoto/area/${areaData.id}#service`,
         name: areaData.title,
         description: areaData.description,
         provider: {
           '@type': 'Organization',
           name: '飲食店撮影PhotoStudio',
-          url: 'https://foodphoto-pro.com',
+          url: 'https://non-turn.com/services/photo/foodphoto',
         },
         areaServed: {
           '@type': 'GeoCircle',
@@ -97,7 +97,7 @@ function generateStructuredData(areaData: any) {
       },
       {
         '@type': 'LocalBusiness',
-        '@id': `https://foodphoto-pro.com/services/photo/foodphoto/area/${areaData.id}#localbusiness`,
+        '@id': `https://non-turn.com/services/photo/foodphoto/services/photo/foodphoto/area/${areaData.id}#localbusiness`,
         name: `飲食店撮影PhotoStudio ${areaData.name}`,
         description: areaData.description,
         address: {
@@ -111,7 +111,7 @@ function generateStructuredData(areaData: any) {
           latitude: areaData.coordinates.latitude,
           longitude: areaData.coordinates.longitude,
         },
-        url: `https://foodphoto-pro.com/area/${areaData.id}`,
+        url: `https://non-turn.com/services/photo/foodphoto/area/${areaData.id}`,
       },
       {
         '@type': 'FAQPage',
@@ -131,19 +131,19 @@ function generateStructuredData(areaData: any) {
             '@type': 'ListItem',
             position: 1,
             name: 'ホーム',
-            item: 'https://foodphoto-pro.com',
+            item: 'https://non-turn.com/services/photo/foodphoto',
           },
           {
             '@type': 'ListItem',
             position: 2,
             name: '飲食店撮影サービス',
-            item: 'https://foodphoto-pro.com/services/photo/foodphoto',
+            item: 'https://non-turn.com/services/photo/foodphoto/services/photo/foodphoto',
           },
           {
             '@type': 'ListItem',
             position: 3,
             name: `${areaData.name}エリア`,
-            item: `https://foodphoto-pro.com/services/photo/foodphoto/area/${areaData.id}`,
+            item: `https://non-turn.com/services/photo/foodphoto/services/photo/foodphoto/area/${areaData.id}`,
           },
         ],
       },
