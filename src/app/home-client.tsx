@@ -459,10 +459,10 @@ export default function HomeClient() {
         
         const thumbnailUrl = getThumbnailUrl(item.url)
         
-        // 革新的サイズシステム - 100点を目指すレベル
+        // 革新的サイズシステム - Pinterest風ブロックデザイン対応
         const sizeStyles = {
           compact: {
-            height: 'h-56 md:h-64',
+            height: 'h-80 sm:h-72 md:h-64',
             playButton: 'w-14 h-14',
             playIcon: 'text-xl',
             titleSize: 'text-lg font-semibold',
@@ -472,7 +472,7 @@ export default function HomeClient() {
             hoverLift: -6
           },
           premium: {
-            height: 'h-72 md:h-80 lg:h-88',
+            height: 'h-96 sm:h-80 md:h-80 lg:h-88',
             playButton: 'w-18 h-18',
             playIcon: 'text-2xl',
             titleSize: 'text-xl md:text-2xl font-semibold',
@@ -482,7 +482,7 @@ export default function HomeClient() {
             hoverLift: -10
           },
           signature: {
-            height: 'h-80 md:h-96 lg:h-[26rem]',
+            height: 'h-[26rem] sm:h-96 md:h-96 lg:h-[26rem]',
             playButton: 'w-20 h-20',
             playIcon: 'text-3xl',
             titleSize: 'text-2xl md:text-3xl font-semibold',
@@ -492,7 +492,7 @@ export default function HomeClient() {
             hoverLift: -12
           },
           legendary: {
-            height: 'h-96 md:h-[30rem] lg:h-[36rem]',
+            height: 'h-[30rem] sm:h-[28rem] md:h-[30rem] lg:h-[36rem]',
             playButton: 'w-24 h-24',
             playIcon: 'text-4xl',
             titleSize: 'text-3xl md:text-4xl lg:text-5xl font-bold',
