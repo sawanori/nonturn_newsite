@@ -263,16 +263,15 @@ export default function AboutClient() {
                 >
                   <p className="text-gray-300 leading-relaxed">
                     飲食業界においては、料理撮影のスキルが高く評価されており、
-                    <span className="text-yellow-400 font-semibold">「FPA PROFESSIONAL FOOD PHOTOGRAPHY AWARDS 2024」</span>
-                    プロフェッショナル部門にて<span className="text-yellow-400 font-semibold">Honorable Mention</span>を受賞。
+                    <span className="text-yellow-400 font-semibold">「FPA PROFESSIONAL FOOD PHOTOGRAPHY AWARDS 2025」</span>
+                    にて<span className="text-yellow-400 font-semibold">SILVER WINNER</span>を2部門受賞。
                     視覚的インパクトとブランド表現力を両立したクリエイティブが強みです。
                   </p>
                 </motion.div>
 
                 <p className="text-gray-300 leading-relaxed">
-                  また、Web・アプリ開発では <span className="text-blue-400 font-mono">Next.js</span>／
-                  <span className="text-blue-400 font-mono">Tailwind CSS</span>／
-                  <span className="text-blue-400 font-mono">WordPress</span> を活用したUI/UX設計に加え、
+                  また、Web・アプリ開発ではfrontend: <span className="text-blue-400 font-mono">Next.js</span>、
+                  backend: <span className="text-blue-400 font-mono">FastAPI</span> or <span className="text-blue-400 font-mono">Nest.js</span>での開発をメインとしたAI駆動開発を活用した企業様の課題解決のためのUI/UX設計に加え、
                   飲食店支援ツールの企画・開発・運用も行うなど、
                 </p>
               </div>
@@ -300,7 +299,7 @@ export default function AboutClient() {
               {/* 実績 */}
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { icon: '🏆', text: 'FPA AWARDS 2024 受賞', color: 'from-yellow-400/20 to-orange-400/20' },
+                  { icon: '🏆', text: 'FPA AWARDS 2025 SILVER受賞', color: 'from-yellow-400/20 to-orange-400/20' },
                   { icon: '🎬', text: `${companyInfo.achievements.projectsCompleted}社以上の映像制作`, color: 'from-blue-400/20 to-purple-400/20' },
                 ].map((item, index) => (
                   <motion.div 

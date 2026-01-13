@@ -20,8 +20,8 @@ export function Footer() {
    <div className="absolute inset-0 opacity-10">
     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-yellow-400 to-transparent animate-pulse"></div>
     {Array.from({ length: 10 }, (_, i) => {
-     const leftPos = ((Math.sin(i * 1.5) + 1) / 2) * 100
-     const topPos = ((Math.cos(i * 2.1) + 1) / 2) * 100
+     const leftPos = Math.round(((Math.sin(i * 1.5) + 1) / 2) * 100)
+     const topPos = Math.round(((Math.cos(i * 2.1) + 1) / 2) * 100)
      return (
       <motion.div
        key={i}
