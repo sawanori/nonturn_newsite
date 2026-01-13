@@ -480,7 +480,8 @@ export default function HomeClient() {
         // 革新的サイズシステム - モバイル1カラム縦長対応
         const sizeStyles = {
           compact: {
-            height: 'h-80 sm:h-56 md:h-64',
+            mobileHeight: 480,
+            height: 'sm:h-56 md:h-64',
             playButton: 'w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14',
             playIcon: 'text-base sm:text-lg md:text-xl',
             titleSize: 'text-xl sm:text-xl md:text-2xl font-bold',
@@ -490,7 +491,8 @@ export default function HomeClient() {
             hoverLift: -6
           },
           premium: {
-            height: 'h-96 sm:h-64 md:h-80 lg:h-88',
+            mobileHeight: 520,
+            height: 'sm:h-64 md:h-80 lg:h-88',
             playButton: 'w-12 h-12 sm:w-14 sm:h-14 md:w-18 md:h-18',
             playIcon: 'text-lg sm:text-xl md:text-2xl',
             titleSize: 'text-xl sm:text-xl md:text-2xl lg:text-3xl font-bold',
@@ -500,7 +502,8 @@ export default function HomeClient() {
             hoverLift: -10
           },
           signature: {
-            height: 'h-[26rem] sm:h-72 md:h-96 lg:h-[26rem]',
+            mobileHeight: 560,
+            height: 'sm:h-72 md:h-96 lg:h-[26rem]',
             playButton: 'w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20',
             playIcon: 'text-xl sm:text-2xl md:text-3xl',
             titleSize: 'text-2xl sm:text-2xl md:text-3xl lg:text-4xl font-bold',
@@ -510,7 +513,8 @@ export default function HomeClient() {
             hoverLift: -12
           },
           legendary: {
-            height: 'h-[28rem] sm:h-64 md:h-[30rem] lg:h-[36rem]',
+            mobileHeight: 600,
+            height: 'sm:h-64 md:h-[30rem] lg:h-[36rem]',
             playButton: 'w-16 h-16 sm:w-18 sm:h-18 md:w-24 md:h-24',
             playIcon: 'text-2xl sm:text-3xl md:text-4xl',
             titleSize: 'text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold',
@@ -585,11 +589,12 @@ export default function HomeClient() {
             }
           }}
          >
-          <div className={`
-            relative ${currentStyle.height} 
-            bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-black/95 
+          <div
+            className={`
+            relative ${currentStyle.height}
+            bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-black/95
             backdrop-blur-xl ${currentStyle.borderRadius} overflow-hidden
-            border-2 border-gray-700/40 
+            border-2 border-gray-700/40
             group-hover:border-transparent
             transition-all duration-700 ease-out
             ${currentStyle.shadowIntensity}
@@ -598,7 +603,8 @@ export default function HomeClient() {
               item.size === 'signature' ? 'ring-1 ring-blue-500/20 group-hover:ring-blue-400/40' :
               item.size === 'premium' ? 'ring-1 ring-purple-500/20 group-hover:ring-purple-400/40' :
               'ring-1 ring-gray-500/20 group-hover:ring-gray-400/40'}
-          `}>
+          `}
+            style={isMobile ? { height: `${currentStyle.mobileHeight}px` } : undefined}>
            
            {/* Video Thumbnail Background */}
            {thumbnailUrl && (
