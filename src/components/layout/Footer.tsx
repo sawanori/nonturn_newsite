@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
 
 const services = [
   { name: '映像制作', href: '/services/movie' },
@@ -14,12 +15,19 @@ const socialLinks = [
 ]
 
 export function Footer() {
+ // Delay rendering animated dots until after hydration to prevent mismatch
+ const [isMounted, setIsMounted] = useState(false)
+
+ useEffect(() => {
+  setIsMounted(true)
+ }, [])
+
  return (
   <footer className="py-16 bg-black relative overflow-hidden">
-   {/* Footer Background Animation */}
+   {/* Footer Background Animation - Only render after hydration */}
    <div className="absolute inset-0 opacity-10">
     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-yellow-400 to-transparent animate-pulse"></div>
-    {Array.from({ length: 10 }, (_, i) => {
+    {isMounted && Array.from({ length: 10 }, (_, i) => {
      const leftPos = Math.round(((Math.sin(i * 1.5) + 1) / 2) * 100)
      const topPos = Math.round(((Math.cos(i * 2.1) + 1) / 2) * 100)
      return (

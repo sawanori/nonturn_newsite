@@ -20,6 +20,23 @@ function useIsSafari() {
   return isSafari
 }
 
+// モバイル検出フック (640px未満 = Tailwind sm breakpoint)
+// Returns null during SSR/initial render to avoid hydration mismatch
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  return isMobile
+}
+
 // Video Thumbnail Component with error handling
 function VideoThumbnail({ src, alt, fallbackGradient }: { src: string; alt: string; fallbackGradient: string }) {
   const [imageState, setImageState] = useState<'loading' | 'loaded' | 'error'>('loading')
@@ -48,6 +65,7 @@ function VideoThumbnail({ src, alt, fallbackGradient }: { src: string; alt: stri
 
 export default function HomeClient() {
  const isSafari = useIsSafari()
+ const isMobile = useIsMobile()
  const { scrollYProgress } = useScroll()
  const heroRef = useRef<HTMLDivElement>(null)
 
@@ -358,7 +376,7 @@ export default function HomeClient() {
         </div>
       )}
 
-      <div className="columns-2 md:columns-2 lg:columns-3 gap-3 sm:gap-4 md:gap-8 mb-16 relative z-10">
+      <div className="columns-1 md:columns-2 lg:columns-3 gap-4 md:gap-8 mb-16 relative z-10">
        {[
         { 
           title: 'ArtLand', 
@@ -465,7 +483,7 @@ export default function HomeClient() {
             height: 'h-48 sm:h-56 md:h-64',
             playButton: 'w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14',
             playIcon: 'text-base sm:text-lg md:text-xl',
-            titleSize: 'text-sm sm:text-base md:text-lg font-semibold',
+            titleSize: 'text-xl sm:text-xl md:text-2xl font-bold',
             padding: 'p-3 sm:p-4 md:p-5',
             borderRadius: 'rounded-xl sm:rounded-2xl',
             shadowIntensity: 'group-hover:shadow-lg',
@@ -475,7 +493,7 @@ export default function HomeClient() {
             height: 'h-56 sm:h-64 md:h-80 lg:h-88',
             playButton: 'w-12 h-12 sm:w-14 sm:h-14 md:w-18 md:h-18',
             playIcon: 'text-lg sm:text-xl md:text-2xl',
-            titleSize: 'text-base sm:text-lg md:text-xl lg:text-2xl font-semibold',
+            titleSize: 'text-xl sm:text-xl md:text-2xl lg:text-3xl font-bold',
             padding: 'p-3 sm:p-4 md:p-6',
             borderRadius: 'rounded-xl sm:rounded-2xl md:rounded-3xl',
             shadowIntensity: 'group-hover:shadow-xl',
@@ -485,7 +503,7 @@ export default function HomeClient() {
             height: 'h-64 sm:h-72 md:h-96 lg:h-[26rem]',
             playButton: 'w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20',
             playIcon: 'text-xl sm:text-2xl md:text-3xl',
-            titleSize: 'text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold',
+            titleSize: 'text-2xl sm:text-2xl md:text-3xl lg:text-4xl font-bold',
             padding: 'p-4 sm:p-5 md:p-7',
             borderRadius: 'rounded-2xl sm:rounded-2xl md:rounded-3xl',
             shadowIntensity: 'group-hover:shadow-2xl',
@@ -495,7 +513,7 @@ export default function HomeClient() {
             height: 'h-56 sm:h-64 md:h-[30rem] lg:h-[36rem]',
             playButton: 'w-16 h-16 sm:w-18 sm:h-18 md:w-24 md:h-24',
             playIcon: 'text-2xl sm:text-3xl md:text-4xl',
-            titleSize: 'text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold',
+            titleSize: 'text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold',
             padding: 'p-4 sm:p-5 md:p-8',
             borderRadius: 'rounded-2xl sm:rounded-2xl md:rounded-[2rem]',
             shadowIntensity: 'group-hover:shadow-[0_0_50px_rgba(0,0,0,0.3)]',
@@ -667,7 +685,7 @@ export default function HomeClient() {
            {/* Premium Content Layer with Advanced Typography */}
            <div className={`absolute inset-0 ${currentStyle.padding} flex flex-col justify-end z-30`}>
             {/* Year Badge */}
-            <motion.div 
+            <motion.div
               className="absolute top-4 right-4 px-3 py-1 bg-white/10 border border-white/20 rounded-full text-white/80 text-sm font-medium backdrop-blur-sm"
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -676,6 +694,19 @@ export default function HomeClient() {
               {item.year}
             </motion.div>
 
+            {/* Mobile Category Badge - Bottom Right */}
+            {isMobile && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 + index * 0.1 }}
+                className={`absolute bottom-3 right-3 inline-flex items-center gap-1.5 px-2 py-1 rounded-full backdrop-blur-xl text-[10px] font-semibold whitespace-nowrap ${item.size === 'legendary' ? 'bg-amber-500/30 border border-amber-400/40 text-amber-200' : item.size === 'signature' ? 'bg-blue-500/30 border border-blue-400/40 text-blue-200' : item.size === 'premium' ? 'bg-purple-500/30 border border-purple-400/40 text-purple-200' : 'bg-emerald-500/30 border border-emerald-400/40 text-emerald-200'}`}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-current opacity-60 flex-shrink-0"></span>
+                <span>{item.category}</span>
+              </motion.div>
+            )}
+
             {/* Main Content */}
             <motion.div
              initial={{ y: 30, opacity: 0 }}
@@ -683,25 +714,15 @@ export default function HomeClient() {
              transition={{ delay: 0.2 + index * 0.1, duration: 0.6 }}
              className="space-y-3"
             >
-             {/* Category with Client */}
-             <div className="flex items-center justify-between">
-              <div className={`
-                inline-flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-xl text-sm font-semibold
-                ${item.size === 'legendary' ? 'bg-amber-500/20 border border-amber-400/30 text-amber-200' :
-                  item.size === 'signature' ? 'bg-blue-500/20 border border-blue-400/30 text-blue-200' :
-                  item.size === 'premium' ? 'bg-purple-500/20 border border-purple-400/30 text-purple-200' :
-                  'bg-emerald-500/20 border border-emerald-400/30 text-emerald-200'}
-              `}>
-                <span className="w-2 h-2 rounded-full bg-current opacity-60"></span>
-                {item.category}
-              </div>
-              
-              {item.client && (
-                <div className="text-white/60 text-sm font-medium">
-                  {item.client}
+             {/* Category Badge - Desktop only */}
+             {!isMobile && (
+               <div className="flex items-center justify-between gap-1">
+                <div className={`inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full backdrop-blur-xl text-xs md:text-sm font-semibold whitespace-nowrap ${item.size === 'legendary' ? 'bg-amber-500/20 border border-amber-400/30 text-amber-200' : item.size === 'signature' ? 'bg-blue-500/20 border border-blue-400/30 text-blue-200' : item.size === 'premium' ? 'bg-purple-500/20 border border-purple-400/30 text-purple-200' : 'bg-emerald-500/20 border border-emerald-400/30 text-emerald-200'}`}>
+                  <span className="w-2 h-2 rounded-full bg-current opacity-60 flex-shrink-0"></span>
+                  <span>{item.category}</span>
                 </div>
-              )}
-             </div>
+               </div>
+             )}
              
              {/* Title with Sophisticated Typography */}
              <motion.h3 
@@ -726,9 +747,9 @@ export default function HomeClient() {
              >
                <p className={`
                  text-gray-300 leading-relaxed
-                 ${item.size === 'legendary' ? 'text-base md:text-lg' :
-                   item.size === 'signature' ? 'text-sm md:text-base' :
-                   'text-sm'}
+                 ${item.size === 'legendary' ? 'text-lg md:text-xl' :
+                   item.size === 'signature' ? 'text-base md:text-lg' :
+                   'text-base md:text-base'}
                `}>
                  {item.description}
                </p>
