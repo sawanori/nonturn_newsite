@@ -67,7 +67,7 @@ export function HeroSection({
       </motion.div>
       
       {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-8 sm:py-12 md:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-8 sm:py-12 md:py-16 pb-24 sm:pb-32 md:pb-40">
         <motion.div
           style={{ y: headerY }}
           initial="hidden"

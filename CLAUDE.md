@@ -35,7 +35,7 @@ npm start            # Production server
 ## Architecture Overview
 
 ### Technology Stack
-- **Framework**: Next.js 15.3.4 with App Router
+- **Framework**: Next.js 15.3.6 with App Router
 - **Language**: TypeScript (strict mode, ES2017 target, `@/*` path alias → `./src/*`)
 - **Styling**: Tailwind CSS v4 with PostCSS
 - **3D Graphics**: Three.js + React Three Fiber + React Three Drei
@@ -131,14 +131,22 @@ NEXT_PUBLIC_SITE_DOMAIN=              # non-turn.com or foodphoto-pro.com
 - **Output**: Standalone deployment mode
 - **Regions**: hnd1 (Tokyo), sfo1 (San Francisco) - configured in vercel.json and middleware
 - **Image formats**: WebP, AVIF
+- **Allowed remote image domains**: non-turn.com, images.unsplash.com, rpk6snz1bj3dcdnk.public.blob.vercel-storage.com, img.youtube.com, vumbnail.com
 - **URL Rewrites**:
   - `/video-production` → `/services/movie`
   - `/photography` → `/services/photo`
   - `/web-development` → `/services/web`
+  - `/corporate-video` → `/services/movie?category=corporate`
+  - `/product-video` → `/services/movie?category=product`
+  - `/event-video` → `/services/movie?category=event`
+- **Redirects** (301 permanent):
+  - `/home`, `/index`, `/index.html` → `/`
+  - `/works` → `/portfolio`
+  - `/company` → `/about`
 
 ## Testing
 
-No automated testing configured. Manual testing required for:
+Playwright is installed (`@playwright/test`) but no test files exist yet. Manual testing required for:
 - Form submissions and email delivery
 - 3D animations across browsers
 - Chat functionality with Supabase
