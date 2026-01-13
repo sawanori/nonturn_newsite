@@ -7,17 +7,20 @@ import { DynamicOptimizedScene3D } from '@/components/3d/DynamicOptimizedScene3D
 import { VisuallyHidden } from '@/components/accessibility/AccessibilityEnhancements'
 import Image from 'next/image'
 
-// Safari検出フック
+// Safari検出フック - サーバーとクライアントで同じ初期値を使用
 function useIsSafari() {
   const [isSafari, setIsSafari] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
     const userAgent = window.navigator.userAgent.toLowerCase()
     const safari = /^((?!chrome|android).)*safari/i.test(userAgent)
     setIsSafari(safari)
   }, [])
 
-  return isSafari
+  // mounted前は常にfalseを返してHydration不一致を防ぐ
+  return mounted ? isSafari : false
 }
 
 // モバイル検出フック (640px未満 = Tailwind sm breakpoint)
@@ -68,10 +71,18 @@ export default function HomeClient() {
  const isMobile = useIsMobile()
  const { scrollYProgress } = useScroll()
  const heroRef = useRef<HTMLDivElement>(null)
+ const [isMounted, setIsMounted] = useState(false)
 
- // Parallax transforms - Safariでは無効化
- const yText = useTransform(scrollYProgress, [0, 1], isSafari ? ['0%', '0%'] : ['0%', '200%'])
- const opacity = useTransform(scrollYProgress, [0, 0.3], isSafari ? [1, 1] : [1, 0])
+ // Hydration完了後にマウント状態を更新
+ useEffect(() => {
+  setIsMounted(true)
+ }, [])
+
+ // Parallax transforms - サーバー/クライアント初期レンダリングでは固定値を使用
+ // マウント後にSafari検出結果に基づいて更新
+ const shouldDisableParallax = isMounted ? isSafari : false
+ const yText = useTransform(scrollYProgress, [0, 1], shouldDisableParallax ? ['0%', '0%'] : ['0%', '200%'])
+ const opacity = useTransform(scrollYProgress, [0, 0.3], shouldDisableParallax ? [1, 1] : [1, 0])
  
  useEffect(() => {
   // Only run on client after hydration
@@ -110,19 +121,21 @@ export default function HomeClient() {
     role="banner"
    >
     {/* 3D WebGL Background - Safariでは静的グラデーションに置換 */}
-    {isSafari ? (
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-purple-900/20 to-pink-900/20" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-900 via-gray-900 to-black opacity-80" />
-      </div>
-    ) : (
+    {/* Safari用静的背景 - マウント後かつSafariの場合のみ表示 */}
+    <div className={`absolute inset-0 z-0 ${isMounted && isSafari ? 'block' : 'hidden'}`}>
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-purple-900/20 to-pink-900/20" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-900 via-gray-900 to-black opacity-80" />
+    </div>
+    {/* 3Dシーン - 初期状態では常に表示、マウント後Safariの場合は非表示 */}
+    <div className={`${isMounted && isSafari ? 'hidden' : 'block'}`}>
       <DynamicOptimizedScene3D />
-    )}
+    </div>
     
     {/* Hero Content */}
-    <motion.div 
+    <motion.div
      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10"
      style={{ y: yText, opacity }}
+     suppressHydrationWarning
     >
      <motion.div 
       initial={{ opacity: 0, x: -100 }}
@@ -541,9 +554,9 @@ export default function HomeClient() {
         }
 
         return (
-         <motion.article
+         <article
           key={index}
-          className="group cursor-pointer perspective-1000 break-inside-avoid mb-4 md:mb-8"
+          className="group cursor-pointer perspective-1000 break-inside-avoid mb-3 md:mb-8"
           onClick={handleCardClick}
           role="button"
           tabIndex={0}
@@ -555,278 +568,108 @@ export default function HomeClient() {
               handleCardClick()
             }
           }}
-          initial={isSafari ? { opacity: 0, y: 30 } : {
-            opacity: 0,
-            y: 100,
-            scale: 0.8,
-            rotateX: 45
-          }}
-          whileInView={isSafari ? { opacity: 1, y: 0 } : {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            rotateX: 0
-          }}
-          transition={isSafari ? {
-            duration: 0.4,
-            delay: index * 0.05
-          } : {
-            duration: 0.8,
-            delay: index * 0.15,
-            type: "spring",
-            stiffness: 120,
-            damping: 15
-          }}
-          viewport={{ once: true, margin: "-10%" }}
-          whileHover={isSafari ? undefined : {
-            y: currentStyle.hoverLift,
-            scale: item.size === 'legendary' ? 1.02 : 1.01,
-            rotateX: 2,
-            transition: {
-              duration: 0.3,
-              type: "spring",
-              stiffness: 300
-            }
-          }}
          >
-          <div
-            className={`
-            relative ${currentStyle.height}
-            bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-black/95
-            backdrop-blur-xl ${currentStyle.borderRadius} overflow-hidden
-            border-2 border-gray-700/40
-            group-hover:border-transparent
-            transition-all duration-700 ease-out
-            ${currentStyle.shadowIntensity}
-            transform-gpu
-            ${item.size === 'legendary' ? 'ring-1 ring-amber-500/20 group-hover:ring-amber-400/40 group-hover:ring-2' :
-              item.size === 'signature' ? 'ring-1 ring-blue-500/20 group-hover:ring-blue-400/40' :
-              item.size === 'premium' ? 'ring-1 ring-purple-500/20 group-hover:ring-purple-400/40' :
-              'ring-1 ring-gray-500/20 group-hover:ring-gray-400/40'}
-          `}
-            style={isMobile ? { height: `${currentStyle.mobileHeight}px` } : undefined}>
-           
-           {/* Video Thumbnail Background */}
-           {thumbnailUrl && (
-             <div className="absolute inset-0 z-0">
-               <VideoThumbnail 
-                 src={thumbnailUrl}
-                 alt={`${item.title}のサムネイル`}
-                 fallbackGradient={item.bgGradient}
-               />
-               {/* Overlay gradients for better text readability */}
-               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30"></div>
-               <div className={`absolute inset-0 bg-gradient-to-br ${item.bgGradient} opacity-40 group-hover:opacity-60 transition-opacity duration-700`}></div>
-             </div>
-           )}
-           
-           {/* Ultra Premium Video Area with Cinematic Effects */}
-           <div className="absolute inset-0 overflow-hidden">
-            {/* Dynamic Background with Mesh Gradients */}
-            <div className="absolute inset-0 opacity-80 group-hover:opacity-100 transition-opacity duration-700">
-             <div className={`absolute inset-0 bg-gradient-to-br ${item.bgGradient} ${item.hoverGradient} transition-all duration-700`}></div>
-             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/5"></div>
-             
-             {/* Cinematic Noise Overlay */}
-             <div className="absolute inset-0 opacity-[0.03] bg-gradient-to-br from-white via-transparent to-white mix-blend-overlay"></div>
-            </div>
-
-            {/* Revolutionary Play Button System */}
-            <div className="absolute inset-0 flex items-center justify-center z-20">
-             <motion.button 
-              onClick={(e) => {
-                e.stopPropagation() // イベントバブリングを防ぐ
-                handleCardClick()
-              }}
-              className={`
-                ${currentStyle.playButton} 
-                bg-black/20 backdrop-blur-xl rounded-full 
-                flex items-center justify-center
-                border border-white/10 shadow-2xl
-                relative overflow-hidden group/play
-                transition-all duration-500
-                ${item.size === 'legendary' ? 'bg-gradient-to-br from-amber-500/10 to-orange-500/10' :
-                  item.size === 'signature' ? 'bg-gradient-to-br from-blue-500/10 to-indigo-500/10' :
-                  item.size === 'premium' ? 'bg-gradient-to-br from-purple-500/10 to-violet-500/10' :
-                  'bg-gradient-to-br from-gray-500/10 to-slate-500/10'}
-                group-hover:scale-110 group-hover:bg-white/20
-                group-hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]
-              `}
-              whileHover={isSafari ? undefined : {
-                scale: item.size === 'legendary' ? 1.4 : 1.3,
-                rotate: item.size === 'legendary' ? [0, 5, -5, 0] : 0,
-                transition: { duration: 0.3, type: "spring", stiffness: 300 }
-              }}
-              whileTap={isSafari ? undefined : { scale: 0.85 }}
-             >
-              {/* Play Icon with Premium Typography */}
-              <motion.div
-                className={`${currentStyle.playIcon} text-white ml-1 font-light`}
-                whileHover={isSafari ? undefined : { x: 2 }}
-                transition={{ duration: 0.2 }}
-              >
-                ▶
-              </motion.div>
-              
-              {/* Ripple Effect - Safariでは無効化 */}
-              {!isSafari && (
-                <motion.div
-                  className="absolute inset-0 rounded-full border border-white/20"
-                  initial={{ scale: 1, opacity: 0 }}
-                  animate={{
-                    scale: [1, 1.5, 2],
-                    opacity: [0, 0.5, 0]
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeOut"
-                  }}
+          {/* Unified Responsive Card Layout */}
+          <div className={`
+            flex flex-col sm:relative
+            bg-gradient-to-br from-gray-900 via-gray-800 to-black
+            sm:from-gray-900/95 sm:via-gray-800/95 sm:to-black/95
+            sm:backdrop-blur-xl
+            ${currentStyle.borderRadius}
+            overflow-hidden
+            border border-gray-700/50 sm:border-2 sm:border-gray-700/40
+            sm:group-hover:border-transparent
+            transition-all duration-300 sm:duration-700 sm:ease-out
+            shadow-lg ${currentStyle.shadowIntensity}
+            sm:transform-gpu
+            sm:${currentStyle.height}
+            ${item.size === 'legendary' ? 'ring-1 ring-amber-500/30 sm:ring-amber-500/20 sm:group-hover:ring-amber-400/40 sm:group-hover:ring-2' :
+              item.size === 'signature' ? 'ring-1 ring-blue-500/30 sm:ring-blue-500/20 sm:group-hover:ring-blue-400/40' :
+              item.size === 'premium' ? 'ring-1 ring-purple-500/30 sm:ring-purple-500/20 sm:group-hover:ring-purple-400/40' :
+              'ring-1 ring-gray-500/30 sm:ring-gray-500/20 sm:group-hover:ring-gray-400/40'}
+          `}>
+            {/* Image/Video Section - Mobile: h-48 fixed, Desktop: full overlay */}
+            <div className="relative h-48 sm:absolute sm:inset-0 sm:h-auto overflow-hidden">
+              {thumbnailUrl && (
+                <VideoThumbnail
+                  src={thumbnailUrl}
+                  alt={`${item.title}のサムネイル`}
+                  fallbackGradient={item.bgGradient}
                 />
               )}
-             </motion.button>
+              <div className={`absolute inset-0 bg-gradient-to-br ${item.bgGradient} opacity-30 sm:opacity-40 sm:group-hover:opacity-60 sm:transition-opacity sm:duration-700`}></div>
+              <div className="hidden sm:block absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30"></div>
+
+              {/* Play Button */}
+              <div className="absolute inset-0 flex items-center justify-center sm:z-20">
+                <motion.button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleCardClick()
+                  }}
+                  className={`
+                    w-12 h-12 sm:${currentStyle.playButton}
+                    bg-black/40 sm:bg-black/20 backdrop-blur-sm sm:backdrop-blur-xl rounded-full
+                    flex items-center justify-center
+                    border border-white/20 sm:border-white/10
+                    sm:shadow-2xl sm:relative sm:overflow-hidden
+                    sm:transition-all sm:duration-500
+                    sm:group-hover:scale-110 sm:group-hover:bg-white/20
+                    sm:group-hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]
+                  `}
+                  whileTap={{ scale: 0.9 }}
+                  whileHover={isSafari ? undefined : {
+                    scale: item.size === 'legendary' ? 1.4 : 1.3,
+                    transition: { duration: 0.3, type: "spring", stiffness: 300 }
+                  }}
+                >
+                  <span className="text-white text-lg ml-0.5">▶</span>
+                </motion.button>
+              </div>
+
+              {/* Year Badge - positioned in image area */}
+              <div className="absolute top-3 right-3 px-2 py-0.5 sm:px-3 sm:py-1 bg-black/50 sm:bg-white/10 sm:border sm:border-white/20 backdrop-blur-sm rounded-full text-white/90 sm:text-white/80 text-xs sm:text-sm font-medium">
+                {item.year}
+              </div>
             </div>
-           </div>
 
-           {/* Premium Content Layer with Advanced Typography */}
-           <div className={`absolute inset-0 ${currentStyle.padding} flex flex-col justify-end z-30`}>
-            {/* Year Badge */}
-            <motion.div
-              className="absolute top-4 right-4 px-3 py-1 bg-white/10 border border-white/20 rounded-full text-white/80 text-sm font-medium backdrop-blur-sm"
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3 + index * 0.1 }}
-            >
-              {item.year}
-            </motion.div>
-
-            {/* Mobile Category Badge - Bottom Right */}
-            {isMobile && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2 + index * 0.1 }}
-                className={`absolute bottom-3 right-3 inline-flex items-center gap-1.5 px-2 py-1 rounded-full backdrop-blur-xl text-[10px] font-semibold whitespace-nowrap ${item.size === 'legendary' ? 'bg-amber-500/30 border border-amber-400/40 text-amber-200' : item.size === 'signature' ? 'bg-blue-500/30 border border-blue-400/40 text-blue-200' : item.size === 'premium' ? 'bg-purple-500/30 border border-purple-400/40 text-purple-200' : 'bg-emerald-500/30 border border-emerald-400/40 text-emerald-200'}`}
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-current opacity-60 flex-shrink-0"></span>
+            {/* Text Content Section - Mobile: regular flow, Desktop: absolute bottom */}
+            <div className="p-4 flex flex-col gap-2 sm:absolute sm:inset-x-0 sm:bottom-0 sm:z-30 sm:p-6 lg:p-8">
+              {/* Category Badge */}
+              <div className={`inline-flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 rounded-full text-xs sm:text-sm font-semibold w-fit backdrop-blur-sm sm:backdrop-blur-xl ${
+                item.size === 'legendary' ? 'bg-amber-500/20 text-amber-300 sm:border sm:border-amber-400/30 sm:text-amber-200' :
+                item.size === 'signature' ? 'bg-blue-500/20 text-blue-300 sm:border sm:border-blue-400/30 sm:text-blue-200' :
+                item.size === 'premium' ? 'bg-purple-500/20 text-purple-300 sm:border sm:border-purple-400/30 sm:text-purple-200' :
+                'bg-emerald-500/20 text-emerald-300 sm:border sm:border-emerald-400/30 sm:text-emerald-200'
+              }`}>
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-current opacity-70 sm:opacity-60 flex-shrink-0"></span>
                 <span>{item.category}</span>
-              </motion.div>
-            )}
+              </div>
 
-            {/* Main Content */}
-            <motion.div
-             initial={{ y: 30, opacity: 0 }}
-             whileInView={{ y: 0, opacity: 1 }}
-             transition={{ delay: 0.2 + index * 0.1, duration: 0.6 }}
-             className="space-y-3"
-            >
-             {/* Category Badge - Desktop only */}
-             {!isMobile && (
-               <div className="flex items-center justify-between gap-1">
-                <div className={`inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full backdrop-blur-xl text-xs md:text-sm font-semibold whitespace-nowrap ${item.size === 'legendary' ? 'bg-amber-500/20 border border-amber-400/30 text-amber-200' : item.size === 'signature' ? 'bg-blue-500/20 border border-blue-400/30 text-blue-200' : item.size === 'premium' ? 'bg-purple-500/20 border border-purple-400/30 text-purple-200' : 'bg-emerald-500/20 border border-emerald-400/30 text-emerald-200'}`}>
-                  <span className="w-2 h-2 rounded-full bg-current opacity-60 flex-shrink-0"></span>
-                  <span>{item.category}</span>
-                </div>
-               </div>
-             )}
-             
-             {/* Title with Sophisticated Typography */}
-             <motion.h3 
-               className={`
-                 ${currentStyle.titleSize} text-white mb-2
-                 bg-gradient-to-r from-white via-white to-gray-300 bg-clip-text text-transparent
-                 tracking-tight leading-tight
-                 group-hover:from-white group-hover:to-white transition-all duration-500
-               `}
-               whileHover={{ scale: 1.02 }}
-               transition={{ duration: 0.2 }}
-             >
-               {item.title}
-             </motion.h3>
-             
-             {/* Enhanced Description */}
-             <motion.div
-               initial={{ height: 0, opacity: 0 }}
-               whileHover={{ height: "auto", opacity: 1 }}
-               transition={{ duration: 0.4, ease: "easeOut" }}
-               className="overflow-hidden"
-             >
-               <p className={`
-                 text-gray-300 leading-relaxed
-                 ${item.size === 'legendary' ? 'text-lg md:text-xl' :
-                   item.size === 'signature' ? 'text-base md:text-lg' :
-                   'text-base md:text-base'}
-               `}>
-                 {item.description}
-               </p>
-             </motion.div>
+              {/* Title */}
+              <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white leading-tight">
+                {item.title}
+              </h3>
 
-             {/* View Project Button */}
-             <motion.div
-               initial={{ opacity: 0, y: 10 }}
-               whileHover={{ opacity: 1, y: 0 }}
-               transition={{ duration: 0.3, delay: 0.1 }}
-               className="pt-2"
-             >
-               <button 
-                 onClick={(e) => {
-                   e.stopPropagation() // イベントバブリングを防ぐ
-                   handleCardClick()
-                 }}
-                 className="inline-flex items-center gap-2 text-white/80 hover:text-white text-sm font-medium transition-colors duration-200 bg-transparent border-none cursor-pointer p-0"
-               >
-                 <span>プロジェクトを見る</span>
-                 <motion.span
-                   whileHover={{ x: 3 }}
-                   transition={{ duration: 0.2 }}
-                 >
-                   →
-                 </motion.span>
-               </button>
-             </motion.div>
-            </motion.div>
-           </div>
+              {/* Description */}
+              <p className="text-sm sm:text-base text-gray-400 sm:text-gray-300/80 leading-relaxed line-clamp-2">
+                {item.description}
+              </p>
 
-           {/* Legendary Card Special Effects */}
-           {item.size === 'legendary' && (
-             <>
-               {/* Floating Orbs - Safariでは無効化 */}
-               {!isSafari && (
-                 <>
-                   <motion.div
-                     className="absolute top-8 right-8 w-3 h-3 bg-gradient-to-r from-amber-400 to-orange-400 rounded-full opacity-60"
-                     animate={{
-                       y: [0, -10, 0],
-                       opacity: [0.6, 1, 0.6]
-                     }}
-                     transition={{
-                       duration: 3,
-                       repeat: Infinity,
-                       ease: "easeInOut"
-                     }}
-                   />
-                   <motion.div
-                     className="absolute bottom-8 left-8 w-2 h-2 bg-gradient-to-r from-orange-400 to-red-400 rounded-full opacity-40"
-                     animate={{
-                       y: [0, 8, 0],
-                       opacity: [0.4, 0.8, 0.4]
-                     }}
-                     transition={{
-                       duration: 4,
-                       repeat: Infinity,
-                       ease: "easeInOut",
-                       delay: 1
-                     }}
-                   />
-                 </>
-               )}
-
-               {/* Premium Glow Effect */}
-               <div className="absolute inset-0 bg-gradient-to-r from-amber-500/5 via-transparent to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-             </>
-           )}
+              {/* View Button */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  handleCardClick()
+                }}
+                className="inline-flex items-center gap-1.5 text-white/70 sm:text-white/60 text-sm font-medium mt-1 sm:group-hover:text-white sm:transition-colors"
+              >
+                <span>プロジェクトを見る</span>
+                <span>→</span>
+              </button>
+            </div>
           </div>
-         </motion.article>
+         </article>
         )
       })}
       </div>
