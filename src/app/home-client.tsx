@@ -477,10 +477,10 @@ export default function HomeClient() {
         
         const thumbnailUrl = getThumbnailUrl(item.url)
         
-        // 革新的サイズシステム - Pinterest風2カラムブロックデザイン対応
+        // 革新的サイズシステム - モバイル1カラム縦長対応
         const sizeStyles = {
           compact: {
-            height: 'h-48 sm:h-56 md:h-64',
+            height: 'h-80 sm:h-56 md:h-64',
             playButton: 'w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14',
             playIcon: 'text-base sm:text-lg md:text-xl',
             titleSize: 'text-xl sm:text-xl md:text-2xl font-bold',
@@ -490,7 +490,7 @@ export default function HomeClient() {
             hoverLift: -6
           },
           premium: {
-            height: 'h-56 sm:h-64 md:h-80 lg:h-88',
+            height: 'h-96 sm:h-64 md:h-80 lg:h-88',
             playButton: 'w-12 h-12 sm:w-14 sm:h-14 md:w-18 md:h-18',
             playIcon: 'text-lg sm:text-xl md:text-2xl',
             titleSize: 'text-xl sm:text-xl md:text-2xl lg:text-3xl font-bold',
@@ -500,7 +500,7 @@ export default function HomeClient() {
             hoverLift: -10
           },
           signature: {
-            height: 'h-64 sm:h-72 md:h-96 lg:h-[26rem]',
+            height: 'h-[26rem] sm:h-72 md:h-96 lg:h-[26rem]',
             playButton: 'w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20',
             playIcon: 'text-xl sm:text-2xl md:text-3xl',
             titleSize: 'text-2xl sm:text-2xl md:text-3xl lg:text-4xl font-bold',
@@ -510,7 +510,7 @@ export default function HomeClient() {
             hoverLift: -12
           },
           legendary: {
-            height: 'h-56 sm:h-64 md:h-[30rem] lg:h-[36rem]',
+            height: 'h-[28rem] sm:h-64 md:h-[30rem] lg:h-[36rem]',
             playButton: 'w-16 h-16 sm:w-18 sm:h-18 md:w-24 md:h-24',
             playIcon: 'text-2xl sm:text-3xl md:text-4xl',
             titleSize: 'text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold',
