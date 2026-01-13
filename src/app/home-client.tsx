@@ -7,6 +7,19 @@ import { DynamicOptimizedScene3D } from '@/components/3d/DynamicOptimizedScene3D
 import { VisuallyHidden } from '@/components/accessibility/AccessibilityEnhancements'
 import Image from 'next/image'
 
+// Safari検出フック
+function useIsSafari() {
+  const [isSafari, setIsSafari] = useState(false)
+
+  useEffect(() => {
+    const userAgent = window.navigator.userAgent.toLowerCase()
+    const safari = /^((?!chrome|android).)*safari/i.test(userAgent)
+    setIsSafari(safari)
+  }, [])
+
+  return isSafari
+}
+
 // Video Thumbnail Component with error handling
 function VideoThumbnail({ src, alt, fallbackGradient }: { src: string; alt: string; fallbackGradient: string }) {
   const [imageState, setImageState] = useState<'loading' | 'loaded' | 'error'>('loading')
@@ -34,12 +47,13 @@ function VideoThumbnail({ src, alt, fallbackGradient }: { src: string; alt: stri
 }
 
 export default function HomeClient() {
+ const isSafari = useIsSafari()
  const { scrollYProgress } = useScroll()
  const heroRef = useRef<HTMLDivElement>(null)
- 
- // Parallax transforms
- const yText = useTransform(scrollYProgress, [0, 1], ['0%', '200%'])
- const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0])
+
+ // Parallax transforms - Safariでは無効化
+ const yText = useTransform(scrollYProgress, [0, 1], isSafari ? ['0%', '0%'] : ['0%', '200%'])
+ const opacity = useTransform(scrollYProgress, [0, 0.3], isSafari ? [1, 1] : [1, 0])
  
  useEffect(() => {
   // Only run on client after hydration
@@ -77,8 +91,15 @@ export default function HomeClient() {
     aria-labelledby="hero-heading"
     role="banner"
    >
-    {/* 3D WebGL Background */}
-    <DynamicOptimizedScene3D />
+    {/* 3D WebGL Background - Safariでは静的グラデーションに置換 */}
+    {isSafari ? (
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-purple-900/20 to-pink-900/20" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-900 via-gray-900 to-black opacity-80" />
+      </div>
+    ) : (
+      <DynamicOptimizedScene3D />
+    )}
     
     {/* Hero Content */}
     <motion.div 
@@ -304,36 +325,38 @@ export default function HomeClient() {
 
      {/* Revolutionary Masonry Layout - Pure Excellence */}
      <div className="relative">
-      {/* Floating Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-       <motion.div 
-        className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-blue-400/5 to-purple-400/5 rounded-full blur-3xl"
-        animate={{ 
-          x: [0, 100, 0], 
-          y: [0, -50, 0],
-          scale: [1, 1.2, 1] 
-        }}
-        transition={{ 
-          duration: 20, 
-          repeat: Infinity,
-          ease: "easeInOut" 
-        }}
-       />
-       <motion.div 
-        className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-400/5 to-pink-400/5 rounded-full blur-3xl"
-        animate={{ 
-          x: [0, -80, 0], 
-          y: [0, 60, 0],
-          scale: [1, 0.8, 1] 
-        }}
-        transition={{ 
-          duration: 25, 
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 5 
-        }}
-       />
-      </div>
+      {/* Floating Background Elements - Safariでは無効化 */}
+      {!isSafari && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+         <motion.div
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-blue-400/5 to-purple-400/5 rounded-full blur-3xl"
+          animate={{
+            x: [0, 100, 0],
+            y: [0, -50, 0],
+            scale: [1, 1.2, 1]
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+         />
+         <motion.div
+          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-400/5 to-pink-400/5 rounded-full blur-3xl"
+          animate={{
+            x: [0, -80, 0],
+            y: [0, 60, 0],
+            scale: [1, 0.8, 1]
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 5
+          }}
+         />
+        </div>
+      )}
 
       <div className="columns-1 md:columns-2 lg:columns-3 gap-8 mb-16 relative z-10">
        {[
@@ -510,34 +533,37 @@ export default function HomeClient() {
               handleCardClick()
             }
           }}
-          initial={{ 
-            opacity: 0, 
-            y: 100, 
+          initial={isSafari ? { opacity: 0, y: 30 } : {
+            opacity: 0,
+            y: 100,
             scale: 0.8,
-            rotateX: 45 
+            rotateX: 45
           }}
-          whileInView={{ 
-            opacity: 1, 
-            y: 0, 
+          whileInView={isSafari ? { opacity: 1, y: 0 } : {
+            opacity: 1,
+            y: 0,
             scale: 1,
-            rotateX: 0 
+            rotateX: 0
           }}
-          transition={{ 
-            duration: 0.8, 
+          transition={isSafari ? {
+            duration: 0.4,
+            delay: index * 0.05
+          } : {
+            duration: 0.8,
             delay: index * 0.15,
             type: "spring",
             stiffness: 120,
             damping: 15
           }}
           viewport={{ once: true, margin: "-10%" }}
-          whileHover={{ 
+          whileHover={isSafari ? undefined : {
             y: currentStyle.hoverLift,
             scale: item.size === 'legendary' ? 1.02 : 1.01,
             rotateX: 2,
-            transition: { 
+            transition: {
               duration: 0.3,
               type: "spring",
-              stiffness: 300 
+              stiffness: 300
             }
           }}
          >
@@ -602,36 +628,38 @@ export default function HomeClient() {
                 group-hover:scale-110 group-hover:bg-white/20
                 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]
               `}
-              whileHover={{ 
+              whileHover={isSafari ? undefined : {
                 scale: item.size === 'legendary' ? 1.4 : 1.3,
                 rotate: item.size === 'legendary' ? [0, 5, -5, 0] : 0,
                 transition: { duration: 0.3, type: "spring", stiffness: 300 }
               }}
-              whileTap={{ scale: 0.85 }}
+              whileTap={isSafari ? undefined : { scale: 0.85 }}
              >
               {/* Play Icon with Premium Typography */}
-              <motion.div 
+              <motion.div
                 className={`${currentStyle.playIcon} text-white ml-1 font-light`}
-                whileHover={{ x: 2 }}
+                whileHover={isSafari ? undefined : { x: 2 }}
                 transition={{ duration: 0.2 }}
               >
                 ▶
               </motion.div>
               
-              {/* Ripple Effect */}
-              <motion.div 
-                className="absolute inset-0 rounded-full border border-white/20"
-                initial={{ scale: 1, opacity: 0 }}
-                animate={{ 
-                  scale: [1, 1.5, 2],
-                  opacity: [0, 0.5, 0]
-                }}
-                transition={{ 
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeOut"
-                }}
-              />
+              {/* Ripple Effect - Safariでは無効化 */}
+              {!isSafari && (
+                <motion.div
+                  className="absolute inset-0 rounded-full border border-white/20"
+                  initial={{ scale: 1, opacity: 0 }}
+                  animate={{
+                    scale: [1, 1.5, 2],
+                    opacity: [0, 0.5, 0]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeOut"
+                  }}
+                />
+              )}
              </motion.button>
             </div>
            </div>
@@ -735,33 +763,37 @@ export default function HomeClient() {
            {/* Legendary Card Special Effects */}
            {item.size === 'legendary' && (
              <>
-               {/* Floating Orbs */}
-               <motion.div 
-                 className="absolute top-8 right-8 w-3 h-3 bg-gradient-to-r from-amber-400 to-orange-400 rounded-full opacity-60"
-                 animate={{ 
-                   y: [0, -10, 0],
-                   opacity: [0.6, 1, 0.6] 
-                 }}
-                 transition={{ 
-                   duration: 3, 
-                   repeat: Infinity,
-                   ease: "easeInOut" 
-                 }}
-               />
-               <motion.div 
-                 className="absolute bottom-8 left-8 w-2 h-2 bg-gradient-to-r from-orange-400 to-red-400 rounded-full opacity-40"
-                 animate={{ 
-                   y: [0, 8, 0],
-                   opacity: [0.4, 0.8, 0.4] 
-                 }}
-                 transition={{ 
-                   duration: 4, 
-                   repeat: Infinity,
-                   ease: "easeInOut",
-                   delay: 1 
-                 }}
-               />
-               
+               {/* Floating Orbs - Safariでは無効化 */}
+               {!isSafari && (
+                 <>
+                   <motion.div
+                     className="absolute top-8 right-8 w-3 h-3 bg-gradient-to-r from-amber-400 to-orange-400 rounded-full opacity-60"
+                     animate={{
+                       y: [0, -10, 0],
+                       opacity: [0.6, 1, 0.6]
+                     }}
+                     transition={{
+                       duration: 3,
+                       repeat: Infinity,
+                       ease: "easeInOut"
+                     }}
+                   />
+                   <motion.div
+                     className="absolute bottom-8 left-8 w-2 h-2 bg-gradient-to-r from-orange-400 to-red-400 rounded-full opacity-40"
+                     animate={{
+                       y: [0, 8, 0],
+                       opacity: [0.4, 0.8, 0.4]
+                     }}
+                     transition={{
+                       duration: 4,
+                       repeat: Infinity,
+                       ease: "easeInOut",
+                       delay: 1
+                     }}
+                   />
+                 </>
+               )}
+
                {/* Premium Glow Effect */}
                <div className="absolute inset-0 bg-gradient-to-r from-amber-500/5 via-transparent to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
              </>
