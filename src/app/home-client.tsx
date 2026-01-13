@@ -376,7 +376,7 @@ export default function HomeClient() {
         </div>
       )}
 
-      <div className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 mb-16 relative z-10">
+      <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 md:gap-8 mb-16 relative z-10 [column-fill:balance]">
        {[
         { 
           title: 'ArtLand', 
@@ -543,7 +543,7 @@ export default function HomeClient() {
         return (
          <motion.article
           key={index}
-          className={`group cursor-pointer perspective-1000 ${item.size === 'legendary' ? 'md:col-span-2 lg:col-span-3' : ''}`}
+          className="group cursor-pointer perspective-1000 break-inside-avoid mb-4 md:mb-8"
           onClick={handleCardClick}
           role="button"
           tabIndex={0}
