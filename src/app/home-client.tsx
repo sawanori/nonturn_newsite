@@ -386,7 +386,8 @@ export default function HomeClient() {
         <p className="text-gray-300 mb-6 leading-relaxed">
          Sony FX6/FX3による本格撮影、RED KOMODOでのRAW収録でシネマライクな映像を実現。DaVinci Resolveでのカラーグレーディング、After EffectsでのVFXで仕上げる妥協のない品質
         </p>
-        <div className="text-yellow-400 font-semibold mb-4">¥220,000〜</div>
+        <div className="text-yellow-400 font-semibold mb-1 text-sm">参考予算</div>
+        <div className="text-gray-400 text-xs mb-4 leading-relaxed">企業VP：80万円〜 ／ 採用動画：50万円〜 ／ SNS縦型：15万円〜</div>
         <a href="/services/movie" className="inline-flex items-center text-yellow-400 hover:text-yellow-300 transition-colors">
          詳細を見る
          <span className="ml-2">→</span>
@@ -410,7 +411,8 @@ export default function HomeClient() {
         <p className="text-gray-300 mb-6 leading-relaxed">
          Capture Oneでその場で最終品質を確認しながら撮影。商品・イベント・宣材、あらゆるシーンに対応
         </p>
-        <div className="text-blue-400 font-semibold mb-4">¥20,000〜</div>
+        <div className="text-blue-400 font-semibold mb-1 text-sm">参考予算</div>
+        <div className="text-gray-400 text-xs mb-4 leading-relaxed">商品撮影：15万円〜 ／ イベント：10万円〜 ／ 宣材写真：5万円〜</div>
         <a href="/services/photo" className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors">
          詳細を見る
          <span className="ml-2">→</span>
@@ -434,7 +436,8 @@ export default function HomeClient() {
         <p className="text-gray-300 mb-6 leading-relaxed">
          企画・制作・運営まで、包括的なWebサイト制作サービス
         </p>
-        <div className="text-purple-400 font-semibold mb-4">要相談</div>
+        <div className="text-purple-400 font-semibold mb-1 text-sm">参考予算</div>
+        <div className="text-gray-400 text-xs mb-4 leading-relaxed">コーポレートLP：50万円〜 ／ ECサイト：80万円〜 ／ 映像×Web連携：要相談</div>
         <a href="/services/web" className="inline-flex items-center text-purple-400 hover:text-purple-300 transition-colors">
          詳細を見る
          <span className="ml-2">→</span>
