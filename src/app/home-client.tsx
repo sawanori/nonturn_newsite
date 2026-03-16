@@ -384,7 +384,7 @@ export default function HomeClient() {
         </div>
         <h3 className="text-2xl font-bold text-white mb-4">映像制作</h3>
         <p className="text-gray-300 mb-6 leading-relaxed">
-         Sony FX6/FX3による本格撮影、RED KOMODOでのRAW収録×カラーグレーディングでシネマライクな映像を実現。After Effectsで仕上げる妥協のない品質
+         Sony FX6/FX3による本格撮影、RED KOMODOでのRAW収録でシネマライクな映像を実現。DaVinci Resolveでのカラーグレーディング、After EffectsでのVFXで仕上げる妥協のない品質
         </p>
         <div className="text-yellow-400 font-semibold mb-4">¥220,000〜</div>
         <a href="/services/movie" className="inline-flex items-center text-yellow-400 hover:text-yellow-300 transition-colors">
