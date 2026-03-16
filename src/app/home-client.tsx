@@ -156,13 +156,13 @@ export default function HomeClient() {
       </motion.h1>
 
       <motion.p
-       className="font-bold mb-6 md:mb-8 leading-tight tracking-wider"
+       className="font-bold mb-6 md:mb-8 leading-tight tracking-tight"
        initial={{ opacity: 0 }}
        animate={{ opacity: 1 }}
        transition={{ delay: 1.2, duration: 1 }}
       >
        <motion.span
-        className="block text-white whitespace-nowrap text-[clamp(1.5rem,5.5vw,3.75rem)]"
+        className="block text-white whitespace-nowrap text-[clamp(1.1rem,5vw,2rem)] lg:text-[clamp(1.5rem,2.4vw,2.25rem)]"
         initial={{ x: -50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ delay: 1.4, duration: 0.8 }}
@@ -170,7 +170,7 @@ export default function HomeClient() {
         映像も、Webも、写真も。
        </motion.span>
        <motion.span
-        className="block bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent whitespace-nowrap text-[clamp(1.5rem,5.5vw,3.75rem)]"
+        className="block bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent whitespace-nowrap text-[clamp(1.1rem,5vw,2rem)] lg:text-[clamp(1.5rem,2.4vw,2.25rem)]"
         initial={{ x: -50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ delay: 1.6, duration: 0.8 }}
