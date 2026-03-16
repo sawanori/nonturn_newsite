@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { ConsultationModal } from './ConsultationModal'
 
 interface ConsultationButtonProps {
@@ -13,8 +14,10 @@ interface ConsultationButtonProps {
 export function ConsultationButton({ variant = 'primary', className = '', id, children }: ConsultationButtonProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
     setIsMobile(window.innerWidth < 768)
     const handleResize = () => setIsMobile(window.innerWidth < 768)
     window.addEventListener('resize', handleResize)
@@ -25,16 +28,13 @@ export function ConsultationButton({ variant = 'primary', className = '', id, ch
 
   const handleClick = () => {
     if (!calendlyUrl) {
-      // Fallback to contact page if Calendly URL not configured
       window.location.href = '/contact'
       return
     }
 
     if (isMobile) {
-      // Mobile: open in new tab
       window.open(calendlyUrl, '_blank', 'noopener,noreferrer')
     } else {
-      // Desktop: open modal
       setIsOpen(true)
     }
   }
@@ -54,13 +54,13 @@ export function ConsultationButton({ variant = 'primary', className = '', id, ch
       >
         {children || '無料相談を予約する'}
       </button>
-
-      {calendlyUrl && !isMobile && (
+      {mounted && calendlyUrl && !isMobile && createPortal(
         <ConsultationModal
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
           calendlyUrl={calendlyUrl}
-        />
+        />,
+        document.body
       )}
     </>
   )
