@@ -6,7 +6,7 @@ import { MainLayout } from '@/components/layout/MainLayout'
 import { DynamicOptimizedScene3D } from '@/components/3d/DynamicOptimizedScene3D'
 import { VisuallyHidden } from '@/components/accessibility/AccessibilityEnhancements'
 import Image from 'next/image'
-import { Camera, Cpu, Award, MapPin } from 'lucide-react'
+import { TrendingUp, Layers, Award, Cpu, Users } from 'lucide-react'
 import { LeadMagnetSection } from '@/components/lead-magnet/LeadMagnetSection'
 
 // Safari検出フック - サーバーとクライアントで同じ初期値を使用
@@ -167,7 +167,7 @@ export default function HomeClient() {
         animate={{ x: 0, opacity: 1 }}
         transition={{ delay: 1.4, duration: 0.8 }}
        >
-        企業の魅力を、
+        映像も、Webも、写真も。
        </motion.span>
        <motion.span
         className="block bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent"
@@ -175,7 +175,7 @@ export default function HomeClient() {
         animate={{ x: 0, opacity: 1 }}
         transition={{ delay: 1.6, duration: 0.8 }}
        >
-        結果に変える
+        ひとつの窓口で、成果を出す。
        </motion.span>
       </motion.p>
 
@@ -185,8 +185,8 @@ export default function HomeClient() {
        animate={{ opacity: 1, y: 0 }}
        transition={{ delay: 2, duration: 0.8 }}
       >
-       プロの撮影技術と最新テクノロジーで、<br />
-       集客につながるクリエイティブをお届けします。
+       採用応募30%増、リード獲得40%向上。<br />
+       案件ごとに最適なプロチームを編成し、限られた予算で最大の成果を引き出します。
       </motion.p>
 
       <motion.div
@@ -201,10 +201,10 @@ export default function HomeClient() {
         className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-8 py-4 font-medium text-lg uppercase tracking-wider hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300 relative overflow-hidden group inline-block text-center"
         whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(251, 191, 36, 0.3)" }}
         whileTap={{ scale: 0.95 }}
-        aria-label="無料相談を予約する"
+        aria-label="まずは無料で相談する"
        >
-        <span className="relative z-10">無料相談を予約する</span>
-        <VisuallyHidden>無料相談の予約ページに移動します</VisuallyHidden>
+        <span className="relative z-10">まずは無料で相談する</span>
+        <VisuallyHidden>無料相談のページに移動します</VisuallyHidden>
         <div className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
        </motion.a>
        <motion.a
@@ -213,10 +213,10 @@ export default function HomeClient() {
         className="border-2 border-yellow-400 text-yellow-400 px-8 py-4 font-medium text-lg uppercase tracking-wider hover:bg-yellow-400 hover:text-black transition-all duration-300 relative overflow-hidden group inline-block text-center"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        aria-label="撮影事例ページへ移動"
+        aria-label="成果事例ページへ移動"
        >
-        <span className="relative z-10">撮影事例を見る</span>
-        <VisuallyHidden>撮影事例ページに移動します</VisuallyHidden>
+        <span className="relative z-10">成果事例を見る</span>
+        <VisuallyHidden>成果事例ページに移動します</VisuallyHidden>
         <div className="absolute inset-0 bg-yellow-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
        </motion.a>
       </motion.div>
@@ -251,10 +251,10 @@ export default function HomeClient() {
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
       {[
-        { icon: Camera, label: 'プロフェッショナル撮影', description: '映像・写真のプロが対応' },
-        { icon: Cpu, label: 'AI・最新技術活用', description: '最先端ツールで高品質に' },
-        { icon: Award, label: '累計多数の制作実績', description: '幅広い業界で実績あり' },
-        { icon: MapPin, label: '東京・横浜拠点', description: '関東エリアで即対応' },
+        { icon: TrendingUp, label: 'リード獲得 最大40%向上', description: '映像×Web連携の成果' },
+        { icon: Layers, label: '企画から制作・Web実装まで', description: '一気通貫の対応力' },
+        { icon: Award, label: '500+プロジェクト', description: '飲食・不動産・人材 他' },
+        { icon: Cpu, label: 'AI × VFXで制作効率化', description: 'コストと納期を最適化' },
       ].map((badge, index) => (
        <motion.div
         key={badge.label}
@@ -275,6 +275,82 @@ export default function HomeClient() {
     </div>
    </section>
 
+   {/* USP Section */}
+   <section className="py-24 bg-gradient-to-b from-gray-900 to-gray-900 relative">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <motion.div
+      className="text-center mb-16"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
+     >
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">
+       なぜ、一つの窓口にまとめると
+       <span className="block bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
+        成果が出るのか
+       </span>
+      </h2>
+     </motion.div>
+
+     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <motion.div
+       className="group"
+       initial={{ opacity: 0, y: 40 }}
+       whileInView={{ opacity: 1, y: 0 }}
+       transition={{ duration: 0.6, delay: 0.1 }}
+       viewport={{ once: true }}
+      >
+       <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 h-full hover:border-yellow-400/30 transition-all duration-300">
+        <div className="w-14 h-14 rounded-full bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center mb-5">
+         <Layers className="w-7 h-7 text-yellow-400" />
+        </div>
+        <h3 className="text-xl font-bold text-white mb-3">窓口は、ひとつ</h3>
+        <p className="text-gray-400 leading-relaxed">
+         映像・写真・Web・AI活用。すべてのクリエイティブを一つの窓口で。複数業者との面倒なやり取りが不要になり、ブランドの一貫性も保てます。
+        </p>
+       </div>
+      </motion.div>
+
+      <motion.div
+       className="group"
+       initial={{ opacity: 0, y: 40 }}
+       whileInView={{ opacity: 1, y: 0 }}
+       transition={{ duration: 0.6, delay: 0.2 }}
+       viewport={{ once: true }}
+      >
+       <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 h-full hover:border-yellow-400/30 transition-all duration-300">
+        <div className="w-14 h-14 rounded-full bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center mb-5">
+         <Users className="w-7 h-7 text-yellow-400" />
+        </div>
+        <h3 className="text-xl font-bold text-white mb-3">案件ごとに最適なチーム</h3>
+        <p className="text-gray-400 leading-relaxed">
+         固定費や中間マージンのかからない体制で、社内外のプロを柔軟にアサイン。必要な技術だけを組み合わせるから、品質とコストパフォーマンスを両立します。
+        </p>
+       </div>
+      </motion.div>
+
+      <motion.div
+       className="group"
+       initial={{ opacity: 0, y: 40 }}
+       whileInView={{ opacity: 1, y: 0 }}
+       transition={{ duration: 0.6, delay: 0.3 }}
+       viewport={{ once: true }}
+      >
+       <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 h-full hover:border-yellow-400/30 transition-all duration-300">
+        <div className="w-14 h-14 rounded-full bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center mb-5">
+         <TrendingUp className="w-7 h-7 text-yellow-400" />
+        </div>
+        <h3 className="text-xl font-bold text-white mb-3">作って終わりにしない</h3>
+        <p className="text-gray-400 leading-relaxed">
+         映像をWebに組み込み、AIで導線を最適化。点ではなく「面」の戦略だから、リード獲得40%向上のような明確な成果につながります。
+        </p>
+       </div>
+      </motion.div>
+     </div>
+    </div>
+   </section>
+
    {/* Services Overview Section */}
    <section className="py-32 bg-gradient-to-b from-gray-900 via-gray-900 to-black relative">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -289,7 +365,7 @@ export default function HomeClient() {
        SERVICES
       </h2>
       <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-       映像制作から撮影、Web制作まで、ワンストップでクリエイティブソリューションを提供
+       ひとつの窓口で、映像・写真・Web制作まで。必要なクリエイティブをすべてカバーします
       </p>
      </motion.div>
 
@@ -383,7 +459,7 @@ export default function HomeClient() {
        PORTFOLIO
       </h2>
       <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-       これまでに制作した映像作品をご紹介
+       採用応募30%増、予約数25%増。クリエイティブが生んだビジネスインパクト
       </p>
      </motion.div>
 
@@ -758,14 +834,13 @@ export default function HomeClient() {
        viewport={{ once: true }}
       >
        <h2 className="text-4xl md:text-5xl font-semibold mb-6 text-white">
-        クリエイティブで
+        成果から逆算する
         <span className="block bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
-         課題解決に挑む
+         クリエイティブチーム
         </span>
        </h2>
        <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-        NonTurn.LLCは、映像制作を通じた問題解決を通じて、
-        企業のビジネス課題解決をサポートします。
+        映像、写真、Webは「納品物」ではなく、貴社の課題を解決するための手段です。複数業者を束ねる手間をなくし、一つの窓口で戦略から実装まで一貫。作って終わりではなく、数字で語れる成果を追い続けます。
        </p>
        <div className="space-y-4 mb-8">
         <div className="flex items-start gap-3">
@@ -773,8 +848,8 @@ export default function HomeClient() {
           <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
          </div>
          <div>
-          <h4 className="text-white font-semibold mb-1">問題の本質を見定める</h4>
-          <p className="text-gray-400 text-sm">企業の課題を明確にし、それらを解消するためのクリエイティブを考える</p>
+          <h4 className="text-white font-semibold mb-1">何が必要かを一緒に整理する</h4>
+          <p className="text-gray-400 text-sm">企業の課題を明確にし、最適なクリエイティブの方向性を一緒に考える</p>
          </div>
         </div>
         <div className="flex items-start gap-3">
@@ -782,8 +857,8 @@ export default function HomeClient() {
           <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
          </div>
          <div>
-          <h4 className="text-white font-semibold mb-1">最新技術との融合</h4>
-          <p className="text-gray-400 text-sm">4K映像、ドローン撮影、モーショングラフィックスで革新的な表現を実現</p>
+          <h4 className="text-white font-semibold mb-1">映像 × Web × AIで成果を設計</h4>
+          <p className="text-gray-400 text-sm">複数メディアを横断した戦略で、集客・採用・ブランディングの成果を最大化</p>
          </div>
         </div>
         <div className="flex items-start gap-3">
@@ -791,8 +866,8 @@ export default function HomeClient() {
           <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
          </div>
          <div>
-          <h4 className="text-white font-semibold mb-1">一貫したサポート体制</h4>
-          <p className="text-gray-400 text-sm">企画から納品まで、すべてのプロセスを一貫してサポート</p>
+          <h4 className="text-white font-semibold mb-1">企画から運用まで伴走する</h4>
+          <p className="text-gray-400 text-sm">納品して終わりではなく、運用・改善まで一貫してサポート</p>
          </div>
         </div>
        </div>
@@ -850,32 +925,35 @@ export default function HomeClient() {
       viewport={{ once: true }}
      >
       <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-       まずは無料で
+       「動画？Web？何から始めれば？」
        <span className="block bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
-        ご相談ください
+        そのモヤモヤごと、ご相談ください
        </span>
       </h2>
       <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
-       映像制作・撮影・Web制作のプロが、貴社のビジネス課題に最適なソリューションをご提案します。
+       何が必要か、まだわからなくても大丈夫。最適な手段を一緒に考えるところから始めます。
       </p>
 
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
-       <motion.a
-        href="/contact"
-        id="cta-footer-consultation"
-        className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-8 py-4 font-medium text-lg rounded-lg hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300 shadow-lg hover:shadow-yellow-400/50"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-       >
-        無料相談を予約する
-       </motion.a>
+       <div className="flex flex-col items-center">
+        <motion.a
+         href="/contact"
+         id="cta-footer-consultation"
+         className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-8 py-4 font-medium text-lg rounded-lg hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300 shadow-lg hover:shadow-yellow-400/50"
+         whileHover={{ scale: 1.05 }}
+         whileTap={{ scale: 0.95 }}
+        >
+         まずは無料で相談する
+        </motion.a>
+        <p className="text-sm text-gray-500 mt-2">※無理な営業は一切行いません</p>
+       </div>
        <motion.a
         href="/portfolio"
         className="border-2 border-gray-400 text-gray-400 px-8 py-4 font-medium text-lg rounded-lg hover:border-white hover:text-white transition-all duration-300"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
        >
-        撮影事例を見る
+        成果事例を見る
        </motion.a>
       </div>
 
