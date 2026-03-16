@@ -6,6 +6,8 @@ import { MainLayout } from '@/components/layout/MainLayout'
 import { DynamicOptimizedScene3D } from '@/components/3d/DynamicOptimizedScene3D'
 import { VisuallyHidden } from '@/components/accessibility/AccessibilityEnhancements'
 import Image from 'next/image'
+import { Camera, Cpu, Award, MapPin } from 'lucide-react'
+import { LeadMagnetSection } from '@/components/lead-magnet/LeadMagnetSection'
 
 // Safari検出フック - サーバーとクライアントで同じ初期値を使用
 function useIsSafari() {
@@ -143,51 +145,51 @@ export default function HomeClient() {
       transition={{ delay: 0.5, duration: 1 }}
       className="fade-in"
      >
-      <motion.h1 
+      <motion.h1
        id="hero-heading"
-       className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold mb-6 md:mb-8 leading-tight tracking-wider"
+       className="text-lg sm:text-xl md:text-xl lg:text-2xl font-medium mb-4 text-gray-300 tracking-wider"
        initial={{ opacity: 0 }}
        animate={{ opacity: 1 }}
        transition={{ delay: 1, duration: 1 }}
       >
-       <motion.span 
+       東京・横浜の映像・写真・Web制作
+      </motion.h1>
+
+      <motion.p
+       className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 md:mb-8 leading-tight tracking-wider"
+       initial={{ opacity: 0 }}
+       animate={{ opacity: 1 }}
+       transition={{ delay: 1.2, duration: 1 }}
+      >
+       <motion.span
         className="block text-white"
-        initial={{ x: -50, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
-       >
-        東京・横浜の企業向け
-       </motion.span>
-       <motion.span 
-        className="block bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent"
         initial={{ x: -50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ delay: 1.4, duration: 0.8 }}
        >
-        高品質な動画制作
+        企業の魅力を、
        </motion.span>
-       <motion.span 
-        className="block text-gray-400 text-xl sm:text-2xl md:text-2xl lg:text-3xl xl:text-3xl"
+       <motion.span
+        className="block bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent"
         initial={{ x: -50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ delay: 1.6, duration: 0.8 }}
        >
-        縦型動画・プロモーション映像
+        結果に変える
        </motion.span>
-      </motion.h1>
-      
-      <motion.p 
+      </motion.p>
+
+      <motion.p
        className="text-base sm:text-lg md:text-lg lg:text-xl text-gray-300 mb-8 md:mb-12 max-w-lg leading-relaxed"
        initial={{ opacity: 0, y: 30 }}
        animate={{ opacity: 1, y: 0 }}
        transition={{ delay: 2, duration: 0.8 }}
       >
-       東京・横浜エリアで企業向け動画制作を提供。<br />
-       縦型動画、プロモーション映像、企業<span className="eng-only">PR</span>動画まで<br />
-       プロフェッショナルが対応いたします。
+       プロの撮影技術と最新テクノロジーで、<br />
+       集客につながるクリエイティブをお届けします。
       </motion.p>
-      
-      <motion.div 
+
+      <motion.div
        className="flex flex-col sm:flex-row gap-4"
        initial={{ opacity: 0, y: 30 }}
        animate={{ opacity: 1, y: 0 }}
@@ -195,18 +197,20 @@ export default function HomeClient() {
       >
        <motion.a
         href="/contact"
-        className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-8 py-4 font-medium text-lg uppercase tracking-wider hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300 relative overflow-hidden group inline-block"
+        id="cta-hero-consultation"
+        className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-8 py-4 font-medium text-lg uppercase tracking-wider hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300 relative overflow-hidden group inline-block text-center"
         whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(251, 191, 36, 0.3)" }}
         whileTap={{ scale: 0.95 }}
-        aria-label="お問い合わせページへ移動"
+        aria-label="無料相談を予約する"
        >
-        <span className="relative z-10">お問い合わせ</span>
-        <VisuallyHidden>問い合わせフォームに移動します</VisuallyHidden>
+        <span className="relative z-10">無料相談を予約する</span>
+        <VisuallyHidden>無料相談の予約ページに移動します</VisuallyHidden>
         <div className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
        </motion.a>
        <motion.a
         href="/portfolio"
-        className="border-2 border-yellow-400 text-yellow-400 px-8 py-4 font-medium text-lg uppercase tracking-wider hover:bg-yellow-400 hover:text-black transition-all duration-300 relative overflow-hidden group inline-block"
+        id="cta-hero-portfolio"
+        className="border-2 border-yellow-400 text-yellow-400 px-8 py-4 font-medium text-lg uppercase tracking-wider hover:bg-yellow-400 hover:text-black transition-all duration-300 relative overflow-hidden group inline-block text-center"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         aria-label="撮影事例ページへ移動"
@@ -242,8 +246,37 @@ export default function HomeClient() {
     </motion.div>
    </section>
 
+   {/* Trust Badges Section */}
+   <section className="py-16 bg-gradient-to-b from-black to-gray-900 relative">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+      {[
+        { icon: Camera, label: 'プロフェッショナル撮影', description: '映像・写真のプロが対応' },
+        { icon: Cpu, label: 'AI・最新技術活用', description: '最先端ツールで高品質に' },
+        { icon: Award, label: '累計多数の制作実績', description: '幅広い業界で実績あり' },
+        { icon: MapPin, label: '東京・横浜拠点', description: '関東エリアで即対応' },
+      ].map((badge, index) => (
+       <motion.div
+        key={badge.label}
+        className="flex flex-col items-center text-center"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: index * 0.1 }}
+       >
+        <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center mb-3">
+         <badge.icon className="w-7 h-7 md:w-8 md:h-8 text-yellow-400" />
+        </div>
+        <h3 className="text-sm md:text-base font-semibold text-white mb-1">{badge.label}</h3>
+        <p className="text-xs md:text-sm text-gray-400">{badge.description}</p>
+       </motion.div>
+      ))}
+     </div>
+    </div>
+   </section>
+
    {/* Services Overview Section */}
-   <section className="py-32 bg-gradient-to-b from-black via-gray-900 to-black relative">
+   <section className="py-32 bg-gradient-to-b from-gray-900 via-gray-900 to-black relative">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
      <motion.div 
       className="text-center mb-20 fade-in"
@@ -391,9 +424,10 @@ export default function HomeClient() {
 
       <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 md:gap-8 mb-16 relative z-10 [column-fill:balance]">
        {[
-        { 
-          title: 'ArtLand', 
-          url: 'https://www.youtube.com/watch?v=xuyEFOxLCmk', 
+        {
+          title: 'ArtLand',
+          id: 'artland-brand',
+          url: 'https://www.youtube.com/watch?v=xuyEFOxLCmk',
           category: '製造業',
           size: 'legendary', // 伝説級サイズ
           year: '2023',
@@ -402,9 +436,10 @@ export default function HomeClient() {
           bgGradient: 'from-blue-500/16 via-indigo-500/16 to-purple-500/16',
           hoverGradient: 'group-hover:from-blue-500/26 group-hover:via-indigo-500/26 group-hover:to-purple-500/26'
         },
-        { 
-          title: '株式会社一', 
-          url: 'https://vimeo.com/manage/videos/628806211', 
+        {
+          title: '株式会社一',
+          id: 'hajime-recruit',
+          url: 'https://vimeo.com/manage/videos/628806211',
           category: '採用動画',
           size: 'compact', // コンパクトサイズ
           year: '2023',
@@ -413,9 +448,10 @@ export default function HomeClient() {
           bgGradient: 'from-emerald-500/15 via-teal-500/15 to-cyan-500/15',
           hoverGradient: 'group-hover:from-emerald-500/25 group-hover:via-teal-500/25 group-hover:to-cyan-500/25'
         },
-        { 
-          title: 'パンフォーユー', 
-          url: 'https://vimeo.com/manage/videos/688687980', 
+        {
+          title: 'パンフォーユー',
+          id: 'pan-for-you',
+          url: 'https://vimeo.com/manage/videos/688687980',
           category: 'ブランディング',
           size: 'premium', // プレミアムサイズ
           year: '2024',
@@ -424,9 +460,10 @@ export default function HomeClient() {
           bgGradient: 'from-violet-500/18 via-purple-500/18 to-fuchsia-500/18',
           hoverGradient: 'group-hover:from-violet-500/28 group-hover:via-purple-500/28 group-hover:to-fuchsia-500/28'
         },
-        { 
-          title: 'フロンティアハウス', 
-          url: 'https://www.youtube.com/watch?v=doCZ0piJClw', 
+        {
+          title: 'フロンティアハウス',
+          id: 'frontier-house',
+          url: 'https://www.youtube.com/watch?v=doCZ0piJClw',
           category: '企業VP',
           size: 'signature', // シグネチャーサイズ
           year: '2024',
@@ -435,9 +472,10 @@ export default function HomeClient() {
           bgGradient: 'from-amber-500/20 via-orange-500/20 to-red-500/20',
           hoverGradient: 'group-hover:from-amber-500/30 group-hover:via-orange-500/30 group-hover:to-red-500/30'
         },
-        { 
-          title: '真砂茶寮', 
-          url: 'https://www.youtube.com/watch?v=oAb-cI93XlE', 
+        {
+          title: '真砂茶寮',
+          id: 'masago-saryo',
+          url: 'https://www.youtube.com/watch?v=oAb-cI93XlE',
           category: '飲食店',
           size: 'compact', // コンパクトサイズ
           year: '2024',
@@ -448,6 +486,7 @@ export default function HomeClient() {
         },
         {
           title: '渋谷アクシュ（SHIBUYA AXSH）',
+          id: 'shibuya-axsh',
           url: 'https://vimeo.com/972761987',
           category: '企業プロモーション',
           size: 'premium', // プレミアムサイズ
@@ -459,6 +498,7 @@ export default function HomeClient() {
         },
         {
           title: 'スペインポーク',
+          id: 'spain-pork',
           url: 'https://www.youtube.com/watch?v=tMVuKqw_uY4',
           category: '食品プロモーション',
           size: 'premium',
@@ -540,10 +580,11 @@ export default function HomeClient() {
         
         const currentStyle = sizeStyles[item.size as keyof typeof sizeStyles] || sizeStyles.premium
         
-        // クリック関数を定義
+        // クリック関数を定義 — ケーススタディページがあればそちらへ
         const handleCardClick = () => {
-          if (item.url && item.url !== '#') {
-            // 外部リンクかどうかを判定
+          if (item.id) {
+            window.location.href = `/portfolio/${item.id}`
+          } else if (item.url && item.url !== '#') {
             const isExternal = item.url.startsWith('http') || item.url.startsWith('https')
             if (isExternal) {
               window.open(item.url, '_blank', 'noopener,noreferrer')
@@ -702,6 +743,9 @@ export default function HomeClient() {
     </div>
    </section>
 
+   {/* Lead Magnet Section */}
+   <LeadMagnetSection />
+
    {/* About Preview Section */}
    <section className="py-32 bg-gradient-to-b from-black via-gray-900 to-black">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -796,7 +840,7 @@ export default function HomeClient() {
    </section>
 
    {/* Contact CTA Section */}
-   <section className="py-32 bg-gradient-to-b from-black via-gray-900 to-black">
+   <section className="py-24 bg-gradient-to-b from-black via-gray-900 to-black">
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
      <motion.div
       className="fade-in"
@@ -806,32 +850,32 @@ export default function HomeClient() {
       viewport={{ once: true }}
      >
       <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-       プロジェクトを
+       まずは無料で
        <span className="block bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
-        始めませんか？
+        ご相談ください
        </span>
       </h2>
       <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
-       映像制作、撮影、Web制作のご相談はお気軽にお問い合わせください。
-       お客様のビジネスに最適なソリューションをご提案します。
+       映像制作・撮影・Web制作のプロが、貴社のビジネス課題に最適なソリューションをご提案します。
       </p>
-      
+
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
        <motion.a
         href="/contact"
-        className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-8 py-4 font-medium text-lg rounded-lg hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-yellow-400/50"
+        id="cta-footer-consultation"
+        className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-8 py-4 font-medium text-lg rounded-lg hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300 shadow-lg hover:shadow-yellow-400/50"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
        >
-        お問い合わせ
+        無料相談を予約する
        </motion.a>
        <motion.a
-        href="/pricing"
-        className="border-2 border-gray-400 text-gray-400 px-8 py-4 font-medium text-lg rounded-lg hover:border-white hover:text-white transition-all duration-300 transform hover:scale-105"
+        href="/portfolio"
+        className="border-2 border-gray-400 text-gray-400 px-8 py-4 font-medium text-lg rounded-lg hover:border-white hover:text-white transition-all duration-300"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
        >
-        料金を見る
+        撮影事例を見る
        </motion.a>
       </div>
 

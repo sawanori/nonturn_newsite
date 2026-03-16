@@ -244,6 +244,63 @@ export const services = {
   }
 }
 
+export const packages = [
+  {
+    id: 'starter',
+    name: 'スタータープラン',
+    description: '初めての動画制作やお試しに最適',
+    price: 220000,
+    priceLabel: '¥220,000〜',
+    period: '単発',
+    features: [
+      '企画・構成',
+      '撮影（半日）',
+      '基本編集',
+      'BGM・テロップ',
+      '1回修正対応',
+    ],
+    recommended: false,
+  },
+  {
+    id: 'standard',
+    name: 'スタンダードプラン',
+    description: '継続的なコンテンツ制作に',
+    price: 180000,
+    priceLabel: '¥180,000〜/月',
+    period: '月額（3ヶ月〜）',
+    features: [
+      '月1本の動画制作',
+      '企画・構成',
+      '撮影（1日）',
+      '編集・カラーグレーディング',
+      'BGM・効果音・テロップ',
+      '2回修正対応',
+      'SNS用ショート版制作',
+    ],
+    recommended: true,
+  },
+  {
+    id: 'premium',
+    name: 'プレミアムプラン',
+    description: 'フルサポートで本格的な映像戦略を',
+    price: 350000,
+    priceLabel: '¥350,000〜/月',
+    period: '月額（6ヶ月〜）',
+    features: [
+      '月2本の動画制作',
+      '映像戦略コンサルティング',
+      '企画・構成・絵コンテ',
+      '撮影（2日）',
+      'ハイエンド編集',
+      'モーショングラフィックス',
+      '修正無制限',
+      'SNS用複数フォーマット',
+      '月次レポート',
+    ],
+    recommended: false,
+  },
+]
+
 export const serviceOverview = {
   title: 'Our Services',
   subtitle: '企画から完成まで、一貫したクオリティでお客様のビジョンを実現',

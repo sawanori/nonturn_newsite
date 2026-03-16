@@ -303,6 +303,106 @@ export const trackEvent = {
     }
   },
 
+  leadMagnetDownload: (resourceId: string) => {
+    if (typeof window !== 'undefined') {
+      if ('gtag' in window) {
+        // @ts-expect-error - Global gtag type
+        window.gtag('event', 'generate_lead', {
+          event_category: 'conversion',
+          event_label: resourceId,
+          value: 5,
+          currency: 'JPY',
+        })
+      }
+      if ('dataLayer' in window) {
+        const windowAny = window as { dataLayer?: unknown[] }
+        windowAny.dataLayer = windowAny.dataLayer || []
+        if (Array.isArray(windowAny.dataLayer)) {
+          windowAny.dataLayer.push({
+            event: 'generate_lead',
+            resource_id: resourceId,
+            lead_type: 'lead_magnet',
+          })
+        }
+      }
+    }
+  },
+
+  consultationBooking: (source: string) => {
+    if (typeof window !== 'undefined') {
+      if ('gtag' in window) {
+        // @ts-expect-error - Global gtag type
+        window.gtag('event', 'schedule_consultation', {
+          event_category: 'conversion',
+          event_label: source,
+          value: 20,
+          currency: 'JPY',
+        })
+      }
+      if ('dataLayer' in window) {
+        const windowAny = window as { dataLayer?: unknown[] }
+        windowAny.dataLayer = windowAny.dataLayer || []
+        if (Array.isArray(windowAny.dataLayer)) {
+          windowAny.dataLayer.push({
+            event: 'schedule_consultation',
+            source,
+          })
+        }
+      }
+    }
+  },
+
+  contactFormComplete: (service: string, budget: string) => {
+    if (typeof window !== 'undefined') {
+      if ('gtag' in window) {
+        // @ts-expect-error - Global gtag type
+        window.gtag('event', 'conversion', {
+          event_category: 'conversion',
+          event_label: 'contact_form',
+          service_type: service,
+          budget_range: budget,
+          value: 15,
+          currency: 'JPY',
+        })
+      }
+      if ('dataLayer' in window) {
+        const windowAny = window as { dataLayer?: unknown[] }
+        windowAny.dataLayer = windowAny.dataLayer || []
+        if (Array.isArray(windowAny.dataLayer)) {
+          windowAny.dataLayer.push({
+            event: 'contact_form_complete',
+            service_type: service,
+            budget_range: budget,
+          })
+        }
+      }
+    }
+  },
+
+  ctaClick: (ctaId: string, section: string) => {
+    if (typeof window !== 'undefined') {
+      if ('gtag' in window) {
+        // @ts-expect-error - Global gtag type
+        window.gtag('event', 'cta_click', {
+          event_category: 'engagement',
+          event_label: ctaId,
+          cta_section: section,
+        })
+      }
+      if ('dataLayer' in window) {
+        const windowAny = window as { dataLayer?: unknown[] }
+        windowAny.dataLayer = windowAny.dataLayer || []
+        if (Array.isArray(windowAny.dataLayer)) {
+          windowAny.dataLayer.push({
+            event: 'cta_click',
+            cta_id: ctaId,
+            cta_section: section,
+          })
+        }
+      }
+    }
+  },
+
   searchConsoleEvent: (query: string, position: number, clicks: number) => {
     if (typeof window !== 'undefined') {
       if ('gtag' in window) {

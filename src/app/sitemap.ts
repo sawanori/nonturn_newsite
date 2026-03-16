@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { getAreaList } from '@/data/area-data'
+import { portfolioProjects } from '@/data/portfolio'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://non-turn.com'
@@ -146,11 +146,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   ]
 
+  // Individual portfolio case study pages
+  const caseStudyPages = portfolioProjects
+    .filter(p => p.category === 'movie' && p.caseStudy)
+    .map(p => ({
+      url: `${baseUrl}/portfolio/${p.id}`,
+      lastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    }))
+
   // Combine all pages
   return [
     ...staticPages,
     ...categoryPages,
     ...portfolioCategories,
+    ...caseStudyPages,
     ...locationPages,
     ...specializedServices
   ]

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { MainLayout } from '@/components/layout/MainLayout'
-import { services } from '@/data/services'
+import { services, packages } from '@/data/services'
 import { HeroSection } from '@/components/ui/HeroSection'
 import { GradientButton } from '@/components/ui/GradientButton'
 import { PricingCalculator } from '@/components/pricing/PricingCalculator'
@@ -402,6 +402,73 @@ export default function PricingPage() {
                 )}
               </motion.div>
             </AnimatePresence>
+          </div>
+        </section>
+
+        {/* Package Plans */}
+        <section className="py-20 bg-gradient-to-b from-gray-900 to-black relative">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-16"
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+                継続型<span className="bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">パッケージプラン</span>
+              </h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                継続的なコンテンツ制作で、より効果的なマーケティングを実現
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {packages.map((pkg, index) => (
+                <motion.div
+                  key={pkg.id}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.15 }}
+                  className={`relative bg-gradient-to-br from-gray-800/80 to-black/80 backdrop-blur-xl border rounded-3xl p-8 ${
+                    pkg.recommended
+                      ? 'border-yellow-400/50 ring-2 ring-yellow-400/20'
+                      : 'border-gray-700/50'
+                  }`}
+                >
+                  {pkg.recommended && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black text-sm font-bold rounded-full">
+                      おすすめ
+                    </div>
+                  )}
+                  <div className="text-center mb-8">
+                    <h3 className="text-xl font-bold text-white mb-2">{pkg.name}</h3>
+                    <p className="text-sm text-gray-400 mb-4">{pkg.description}</p>
+                    <div className="text-3xl font-bold text-emerald-400 mb-1">{pkg.priceLabel}</div>
+                    <p className="text-xs text-gray-500">{pkg.period}</p>
+                  </div>
+                  <ul className="space-y-3 mb-8">
+                    {pkg.features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-2 text-gray-300 text-sm">
+                        <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full mt-1.5 flex-shrink-0" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    href="/contact"
+                    className={`block text-center py-3 rounded-lg font-medium transition-all duration-300 ${
+                      pkg.recommended
+                        ? 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-black hover:from-yellow-500 hover:to-yellow-600'
+                        : 'border border-gray-600 text-gray-300 hover:border-yellow-400 hover:text-yellow-400'
+                    }`}
+                  >
+                    まず無料相談する
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </section>
 

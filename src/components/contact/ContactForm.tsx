@@ -95,20 +95,10 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
       const data = await response.json()
 
       if (response.ok) {
-        setSubmitStatus({
-          type: 'success',
-          message: 'お問い合わせありがとうございます。24時間以内にご連絡差し上げます。'
-        })
-        // フォームをリセット
-        setFormData({
-          name: '',
-          company: '',
-          email: '',
-          service: '',
-          budget: '',
-          message: ''
-        })
         onSuccess?.()
+        // Redirect to thanks page for CV tracking
+        window.location.href = '/contact/thanks'
+        return
       } else {
         // If CSRF token is invalid, try to refresh it
         if (response.status === 403 && data.error?.includes('セキュリティトークン')) {
@@ -262,12 +252,12 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
           <textarea
             id="message"
             name="message"
-            rows={6}
+            rows={8}
             required
             value={formData.message}
             onChange={handleInputChange}
             className={`w-full px-4 py-3 bg-black/50 border ${fieldErrors.message ? 'border-red-400' : 'border-yellow-400/30'} focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 text-white placeholder-gray-400 transition-all duration-300 resize-none rounded`}
-            placeholder="プロジェクトの詳細、ご予算、スケジュールなどをお聞かせください"
+            placeholder="プロジェクトの詳細やご要望をお聞かせください。&#10;例：企業紹介動画を制作したい、商品撮影を依頼したい、など"
           />
           {fieldErrors.message && (
             <p className="text-red-400 text-sm mt-1">

@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     default: "NonTurn.LLC | 東京・横浜の企業向け動画制作 | 縦型動画・プロモーション映像制作",
     template: "%s | NonTurn.LLC | 東京・横浜の企業向け動画制作"
   },
-  description: "東京・横浜エリアで企業向け動画制作・映像制作を提供。縦型動画、プロモーション映像、商品紹介動画など幅広く対応。法人様向けのプロフェッショナルな動画制作なら NonTurn.LLC にお任せください。",
+  description: "東京・横浜エリアで企業向け映像制作・写真撮影・Web制作を提供。プロの撮影技術と最新テクノロジーで、集客につながるクリエイティブをお届けします。まずは無料相談から。",
   keywords: "動画制作,映像制作,企業,東京,横浜,縦型動画,プロモーション,法人,商品紹介,会社紹介,イベント撮影,Web制作,みなとみらい,高品質,プロフェッショナル",
   authors: [{ name: "NonTurn.LLC", url: "https://non-turn.com" }],
   creator: "NonTurn.LLC",
@@ -172,6 +172,53 @@ const structuredData = {
           name: "神奈川県",
         },
       ],
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://non-turn.com/#professionalservice",
+      name: "NonTurn合同会社",
+      description: "東京・横浜エリアで企業向け映像制作・写真撮影・Web制作を提供するクリエイティブプロダクション",
+      url: "https://non-turn.com",
+      telephone: "+81-45-900-8652",
+      email: "info@non-turn.com",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "みなとみらい3-7-1 オーシャンゲートみなとみらい8F",
+        addressLocality: "横浜市西区",
+        addressRegion: "神奈川県",
+        postalCode: "220-0012",
+        addressCountry: "JP",
+      },
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "映像・写真・Web制作サービス",
+        itemListElement: [
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "映像制作",
+              description: "企業VP・採用動画・プロモーション映像制作",
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "写真撮影",
+              description: "商品撮影・イベント撮影・フード撮影",
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Web制作",
+              description: "コーポレートサイト・LP・ECサイト制作",
+            },
+          },
+        ],
+      },
     },
     {
       "@type": "WebSite",

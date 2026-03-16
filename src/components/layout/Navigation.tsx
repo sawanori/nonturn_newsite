@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { TypingAnimation } from '@/components/ui/TypingAnimation'
+import { ConsultationButton } from '@/components/consultation/ConsultationButton'
 
 const navigation = [
  {
@@ -125,6 +126,11 @@ export function Navigation() {
        </div>
       ))}
 
+      {/* Consultation CTA */}
+      <ConsultationButton variant="compact" id="cta-nav-consultation">
+        無料相談
+      </ConsultationButton>
+
       {/* Contact Button */}
       <motion.div
        whileHover={{ scale: 1.05 }}
@@ -132,7 +138,7 @@ export function Navigation() {
       >
        <Link
         href="/contact"
-        className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-8 py-2 font-medium text-sm uppercase tracking-wider hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300 relative overflow-hidden group"
+        className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-6 py-2 font-medium text-sm uppercase tracking-wider hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300 relative overflow-hidden group"
        >
         <span className="relative z-10">お問い合わせ</span>
         <div className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
@@ -277,6 +283,22 @@ export function Navigation() {
          )}
         </div>
        ))}
+       <div className="pt-4 border-t border-yellow-400/20 space-y-3">
+        <ConsultationButton
+          variant="primary"
+          id="cta-mobile-consultation"
+          className="w-full text-center rounded"
+        >
+          無料相談を予約する
+        </ConsultationButton>
+        <Link
+          href="/contact"
+          className="block w-full text-center border border-yellow-400/30 text-yellow-400 py-3 font-medium rounded hover:bg-yellow-400/10 transition-colors"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          お問い合わせ
+        </Link>
+       </div>
       </div>
      </motion.div>
     )}

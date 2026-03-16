@@ -169,7 +169,7 @@ export function Footer() {
      transition={{ duration: 0.8, delay: 0.6 }}
     >
      <p className="">
-      &copy; 2025 
+      &copy; {new Date().getFullYear()}
       <span className="text-yellow-400 font-semibold eng-only"> NonTurn.LLC</span>
       . <span lang="en" className="eng-only">All rights reserved.</span>
      </p>
