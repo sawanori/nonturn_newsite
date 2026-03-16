@@ -286,11 +286,14 @@ export default function HomeClient() {
       viewport={{ once: true }}
      >
       <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">
-       なぜ、一つの窓口にまとめると
+       AI時代だからこそ、
        <span className="block bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
-        成果が出るのか
+        一つの窓口が成果を生む
        </span>
       </h2>
+      <p className="text-gray-400 max-w-2xl mx-auto leading-relaxed">
+       AIで誰でもコンテンツが作れる時代。差がつくのは「何を作るか」ではなく「どう繋げるか」。映像・Web・AIを一気通貫で設計するから、バラバラに発注するより圧倒的に成果が出ます。
+      </p>
      </motion.div>
 
      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -307,7 +310,7 @@ export default function HomeClient() {
         </div>
         <h3 className="text-xl font-bold text-white mb-3">窓口は、ひとつ</h3>
         <p className="text-gray-400 leading-relaxed">
-         映像・写真・Web・AI活用。すべてのクリエイティブを一つの窓口で。複数業者との面倒なやり取りが不要になり、ブランドの一貫性も保てます。
+         映像・写真・Web・AI。すべてを一つの窓口に集約。業者間の伝言ゲームがなくなり、ブランドメッセージがブレません。
         </p>
        </div>
       </motion.div>
@@ -323,9 +326,9 @@ export default function HomeClient() {
         <div className="w-14 h-14 rounded-full bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center mb-5">
          <Users className="w-7 h-7 text-yellow-400" />
         </div>
-        <h3 className="text-xl font-bold text-white mb-3">案件ごとに最適なチーム</h3>
+        <h3 className="text-xl font-bold text-white mb-3">AIを使いこなすプロチーム</h3>
         <p className="text-gray-400 leading-relaxed">
-         固定費や中間マージンのかからない体制で、社内外のプロを柔軟にアサイン。必要な技術だけを組み合わせるから、品質とコストパフォーマンスを両立します。
+         生成AIによる効率化で、従来の半分の工数でも品質は妥協しない。浮いたコストを企画や演出に再投資できるから、費用対効果が根本から変わります。
         </p>
        </div>
       </motion.div>
@@ -343,7 +346,7 @@ export default function HomeClient() {
         </div>
         <h3 className="text-xl font-bold text-white mb-3">作って終わりにしない</h3>
         <p className="text-gray-400 leading-relaxed">
-         映像をWebに組み込み、AIで導線を最適化。点ではなく「面」の戦略だから、リード獲得40%向上のような明確な成果につながります。
+         映像をWebに組み込み、AIで導線を最適化。点ではなく「面」で設計するから、リード獲得40%向上のような明確な成果につながります。
         </p>
        </div>
       </motion.div>
