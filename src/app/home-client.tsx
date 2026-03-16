@@ -254,7 +254,7 @@ export default function HomeClient() {
         { icon: TrendingUp, label: 'リード獲得 最大40%向上', description: '映像×Web連携の成果' },
         { icon: Layers, label: '企画から制作・Web実装まで', description: '一気通貫の対応力' },
         { icon: Award, label: '500+プロジェクト', description: '飲食・不動産・人材 他' },
-        { icon: Cpu, label: 'AI × VFXで制作効率化', description: 'コストと納期を最適化' },
+        { icon: Cpu, label: 'シネマ撮影 × AI編集', description: '品質と効率を両立' },
       ].map((badge, index) => (
        <motion.div
         key={badge.label}
@@ -384,7 +384,7 @@ export default function HomeClient() {
         </div>
         <h3 className="text-2xl font-bold text-white mb-4">映像制作</h3>
         <p className="text-gray-300 mb-6 leading-relaxed">
-         企業VP、採用動画、ブランディング映像など、目的に応じた高品質な映像を制作
+         Sony FX6/FX3による本格撮影、RED KOMODOでのRAW収録×カラーグレーディングでシネマライクな映像を実現。After Effectsで仕上げる妥協のない品質
         </p>
         <div className="text-yellow-400 font-semibold mb-4">¥220,000〜</div>
         <a href="/services/movie" className="inline-flex items-center text-yellow-400 hover:text-yellow-300 transition-colors">
@@ -408,7 +408,7 @@ export default function HomeClient() {
         </div>
         <h3 className="text-2xl font-bold text-white mb-4">撮影サービス</h3>
         <p className="text-gray-300 mb-6 leading-relaxed">
-         イベント撮影、商品撮影など、プロフェッショナルな撮影サービス
+         Capture Oneでその場で最終品質を確認しながら撮影。商品・イベント・宣材、あらゆるシーンに対応
         </p>
         <div className="text-blue-400 font-semibold mb-4">¥20,000〜</div>
         <a href="/services/photo" className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors">
@@ -858,7 +858,7 @@ export default function HomeClient() {
          </div>
          <div>
           <h4 className="text-white font-semibold mb-1">映像 × Web × AIで成果を設計</h4>
-          <p className="text-gray-400 text-sm">複数メディアを横断した戦略で、集客・採用・ブランディングの成果を最大化</p>
+          <p className="text-gray-400 text-sm">シネマRAW撮影からテザー現像、VFX、生成AIまで。目的に応じた最適な技術で成果を最大化</p>
          </div>
         </div>
         <div className="flex items-start gap-3">
