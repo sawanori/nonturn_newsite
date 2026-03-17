@@ -136,13 +136,13 @@ export default function HomeClient() {
        className="text-[clamp(1rem,3vw,1.75rem)] font-medium text-gray-400 tracking-[0.2em] uppercase mb-4 md:mb-6 overflow-hidden"
        initial={{ opacity: 0 }}
        animate={{ opacity: 1 }}
-       transition={{ delay: 0.6, duration: 0.6 }}
+       transition={{ delay: 0.3, duration: 0.6 }}
       >
        <motion.span
         className="block"
         initial={{ y: '100%' }}
         animate={{ y: 0 }}
-        transition={{ delay: 0.8, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ delay: 0.4, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
        >
         映像も、Webも、写真も。
        </motion.span>
