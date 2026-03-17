@@ -118,7 +118,7 @@ export default function HomeClient() {
    {/* Hero Section */}
    <section 
     ref={heroRef} 
-    className="relative min-h-screen flex items-center overflow-hidden py-12 sm:py-8 md:py-0"
+    className="relative h-svh flex items-center justify-center overflow-hidden"
     aria-labelledby="hero-heading"
     role="banner"
    >
@@ -133,72 +133,236 @@ export default function HomeClient() {
       <DynamicOptimizedScene3D />
     </div>
     
-    {/* Hero Content */}
+    {/* Hero Content - Centered Full Screen */}
     <motion.div
-     className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10"
+     className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 flex flex-col justify-center relative z-10 h-full"
      style={{ y: yText, opacity }}
      suppressHydrationWarning
     >
-     <motion.div 
-      initial={{ opacity: 0, x: -100 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: 0.5, duration: 1 }}
-      className="fade-in"
-     >
-      <motion.h1
-       id="hero-heading"
-       className="text-lg sm:text-xl md:text-xl lg:text-2xl font-medium mb-4 text-gray-300 tracking-wider"
+     <div className="flex flex-col items-start">
+      <motion.p
+       className="text-[clamp(1rem,3vw,1.75rem)] font-medium text-gray-400 tracking-[0.2em] uppercase mb-4 md:mb-6 overflow-hidden"
        initial={{ opacity: 0 }}
        animate={{ opacity: 1 }}
-       transition={{ delay: 1, duration: 1 }}
+       transition={{ delay: 0.6, duration: 0.6 }}
       >
-       東京・横浜の映像・写真・Web制作
-      </motion.h1>
-
-      <motion.div
-       className="mb-6 md:mb-8 tracking-tight"
-       initial={{ opacity: 0 }}
-       animate={{ opacity: 1 }}
-       transition={{ delay: 1.2, duration: 1 }}
-      >
-       <motion.p
-        className="text-gray-400 font-medium whitespace-nowrap text-[clamp(0.85rem,3.5vw,1.1rem)] lg:text-[clamp(0.95rem,1.2vw,1.15rem)] mb-2"
-        initial={{ x: -30, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ delay: 1.4, duration: 0.8 }}
+       <motion.span
+        className="block"
+        initial={{ y: '100%' }}
+        animate={{ y: 0 }}
+        transition={{ delay: 0.8, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
        >
         映像も、Webも、写真も。
-       </motion.p>
-       <motion.p
-        className="font-bold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent whitespace-nowrap text-[clamp(1.4rem,6vw,2.25rem)] lg:text-[clamp(1.75rem,3.2vw,2.75rem)] leading-tight"
-        initial={{ x: -50, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ delay: 1.6, duration: 0.8 }}
-       >
-        ひとつの窓口で、成果を出す。
-       </motion.p>
-      </motion.div>
-
-      <motion.p
-       className="text-base sm:text-lg md:text-lg lg:text-xl text-gray-300 mb-8 md:mb-12 max-w-lg leading-relaxed"
-       initial={{ opacity: 0, y: 30 }}
-       animate={{ opacity: 1, y: 0 }}
-       transition={{ delay: 2, duration: 0.8 }}
-      >
-       採用応募30%増、リード獲得40%向上。<br />
-       案件ごとに最適なプロチームを編成し、限られた予算で最大の成果を引き出します。
+       </motion.span>
       </motion.p>
+
+      {/* Glitch CSS Keyframes */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes glitch-before {
+          0% { clip-path: polygon(0 85%, 100% 85%, 100% 95%, 0 95%); transform: translate(4px, -2px); }
+          5% { clip-path: polygon(0 65%, 100% 65%, 100% 72%, 0 72%); transform: translate(-6px, 1px); }
+          10% { clip-path: polygon(0 15%, 100% 15%, 100% 22%, 0 22%); transform: translate(3px, -1px); }
+          15% { clip-path: polygon(0 45%, 100% 45%, 100% 55%, 0 55%); transform: translate(-4px, 2px); }
+          20% { clip-path: polygon(0 75%, 100% 75%, 100% 82%, 0 82%); transform: translate(5px, 0px); }
+          25% { clip-path: polygon(0 30%, 100% 30%, 100% 38%, 0 38%); transform: translate(-3px, -1px); }
+          30%, 100% { clip-path: none; transform: none; }
+        }
+        @keyframes glitch-after {
+          0% { clip-path: polygon(0 20%, 100% 20%, 100% 30%, 0 30%); transform: translate(-5px, 1px); }
+          5% { clip-path: polygon(0 50%, 100% 50%, 100% 58%, 0 58%); transform: translate(6px, -2px); }
+          10% { clip-path: polygon(0 80%, 100% 80%, 100% 88%, 0 88%); transform: translate(-4px, 0px); }
+          15% { clip-path: polygon(0 5%, 100% 5%, 100% 15%, 0 15%); transform: translate(3px, 2px); }
+          20% { clip-path: polygon(0 40%, 100% 40%, 100% 50%, 0 50%); transform: translate(-6px, -1px); }
+          25% { clip-path: polygon(0 70%, 100% 70%, 100% 78%, 0 78%); transform: translate(4px, 1px); }
+          30%, 100% { clip-path: none; transform: none; }
+        }
+        @keyframes rgb-shift-r {
+          0% { transform: translate(2px, 1px); } 5% { transform: translate(-1px, -1px); }
+          10% { transform: translate(3px, 0px); } 15% { transform: translate(-2px, 1px); }
+          20% { transform: translate(1px, -1px); } 25% { transform: translate(-3px, 0px); }
+          30%, 100% { transform: none; }
+        }
+        @keyframes rgb-shift-b {
+          0% { transform: translate(-2px, -1px); } 5% { transform: translate(1px, 1px); }
+          10% { transform: translate(-3px, 0px); } 15% { transform: translate(2px, -1px); }
+          20% { transform: translate(-1px, 1px); } 25% { transform: translate(3px, 0px); }
+          30%, 100% { transform: none; }
+        }
+        .hero-glitch {
+          position: relative;
+        }
+        .hero-glitch-layer {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          overflow: hidden;
+        }
+        .hero-glitch-before {
+          animation: glitch-before 3s infinite steps(1);
+          color: rgba(255, 80, 80, 0.7);
+        }
+        .hero-glitch-after {
+          animation: glitch-after 3s infinite steps(1);
+          animation-delay: 0.1s;
+          color: rgba(80, 80, 255, 0.7);
+        }
+        .hero-rgb-r {
+          animation: rgb-shift-r 2.5s infinite steps(1);
+          color: rgba(255, 50, 50, 0.4);
+          mix-blend-mode: screen;
+        }
+        .hero-rgb-b {
+          animation: rgb-shift-b 2.5s infinite steps(1);
+          animation-delay: 0.05s;
+          color: rgba(50, 50, 255, 0.4);
+          mix-blend-mode: screen;
+        }
+        @keyframes glow-pulse {
+          0%, 100% { text-shadow: 0 0 20px rgba(250, 204, 21, 0.3), 0 0 40px rgba(250, 204, 21, 0.1); }
+          50% { text-shadow: 0 0 30px rgba(250, 204, 21, 0.5), 0 0 60px rgba(250, 204, 21, 0.2), 0 0 80px rgba(250, 204, 21, 0.1); }
+        }
+        .hero-glow {
+          animation: glow-pulse 3s ease-in-out infinite;
+        }
+        .hero-catchcopy-size {
+          font-size: clamp(2.2rem, 11vw, 3.5rem) !important;
+          white-space: nowrap;
+        }
+        @media (min-width: 768px) {
+          .hero-catchcopy-size {
+            font-size: clamp(3.5rem, 9vw, 7rem) !important;
+          }
+        }
+        @media (min-width: 1024px) {
+          .hero-catchcopy-size {
+            font-size: clamp(5rem, 10vw, 10rem) !important;
+          }
+        }
+      `}} />
+
+      <motion.h1
+       id="hero-heading"
+       className="hero-glitch font-bold tracking-tight mb-6 md:mb-8 hero-catchcopy-size leading-[1.05] -rotate-3"
+      >
+       {/* Main visible text */}
+       <span className="block overflow-hidden relative z-10">
+        <motion.span
+         className="block hero-glow"
+         initial={{ y: '120%', filter: 'blur(12px)', scale: 0.8 }}
+         animate={{ y: 0, filter: 'blur(0px)', scale: 1 }}
+         transition={{ delay: 0.9, duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
+        >
+         <span className="bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
+          ひとつの窓口で
+         </span>
+        </motion.span>
+       </span>
+       <span className="block overflow-hidden relative z-10">
+        <motion.span
+         className="block"
+         initial={{ y: '120%', filter: 'blur(12px)', scale: 0.8 }}
+         animate={{ y: 0, filter: 'blur(0px)', scale: 1 }}
+         transition={{ delay: 1.2, duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
+        >
+         <span className="text-white">成果を出す</span>
+        </motion.span>
+       </span>
+
+       {/* Glitch layer: before (red) */}
+       <motion.div
+        className="hero-glitch-layer"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.2, duration: 0.3 }}
+        aria-hidden="true"
+       >
+        <div className="hero-glitch-before font-bold tracking-tight hero-catchcopy-size leading-[1.05]">
+         <span className="block">ひとつの窓口で</span>
+         <span className="block">成果を出す</span>
+        </div>
+       </motion.div>
+
+       {/* Glitch layer: after (blue) */}
+       <motion.div
+        className="hero-glitch-layer"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.2, duration: 0.3 }}
+        aria-hidden="true"
+       >
+        <div className="hero-glitch-after font-bold tracking-tight hero-catchcopy-size leading-[1.05]">
+         <span className="block">ひとつの窓口で</span>
+         <span className="block">成果を出す</span>
+        </div>
+       </motion.div>
+
+       {/* RGB chromatic aberration layers */}
+       <motion.div
+        className="hero-glitch-layer"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.2, duration: 0.3 }}
+        aria-hidden="true"
+       >
+        <div className="hero-rgb-r font-bold tracking-tight hero-catchcopy-size leading-[1.05]">
+         <span className="block">ひとつの窓口で</span>
+         <span className="block">成果を出す</span>
+        </div>
+       </motion.div>
+       <motion.div
+        className="hero-glitch-layer"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.2, duration: 0.3 }}
+        aria-hidden="true"
+       >
+        <div className="hero-rgb-b font-bold tracking-tight hero-catchcopy-size leading-[1.05]">
+         <span className="block">ひとつの窓口で</span>
+         <span className="block">成果を出す</span>
+        </div>
+       </motion.div>
+
+       {/* Light sweep after entrance */}
+       <motion.div
+        className="absolute inset-0 pointer-events-none z-20"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 1, 0] }}
+        transition={{ delay: 2.0, duration: 0.6, ease: 'easeOut' }}
+       >
+        <motion.div
+         className="absolute inset-y-0 w-[40%] bg-gradient-to-r from-transparent via-yellow-400/40 to-transparent"
+         initial={{ left: '-40%' }}
+         animate={{ left: '140%' }}
+         transition={{ delay: 2.0, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        />
+       </motion.div>
+      </motion.h1>
+
+      <div className="mt-4 md:mt-6 mb-10 md:mb-14 font-bold italic text-[clamp(0.95rem,3.3vw,2rem)] leading-[1.3] tracking-wide relative z-20">
+       {['採用応募30%増', 'リード獲得40%向上', '限られた予算で最大の成果を'].map((text, i) => (
+        <div key={text} className="overflow-hidden">
+         <motion.p
+          className="text-yellow-500/80"
+          initial={{ x: '-100%', opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 2.4 + i * 0.15, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+         >
+          {text}
+         </motion.p>
+        </div>
+       ))}
+      </div>
 
       <motion.div
        className="flex flex-col sm:flex-row gap-4"
-       initial={{ opacity: 0, y: 30 }}
+       initial={{ opacity: 0, y: 20 }}
        animate={{ opacity: 1, y: 0 }}
-       transition={{ delay: 2.2, duration: 0.8 }}
+       transition={{ delay: 2.9, duration: 0.8 }}
       >
        <motion.a
         href="/contact"
         id="cta-hero-consultation"
-        className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-8 py-4 font-medium text-lg uppercase tracking-wider hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300 relative overflow-hidden group inline-block text-center"
+        className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-8 py-4 font-medium text-lg tracking-wider hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300 relative overflow-hidden group inline-block text-center"
         whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(251, 191, 36, 0.3)" }}
         whileTap={{ scale: 0.95 }}
         aria-label="まずは無料で相談する"
@@ -210,7 +374,7 @@ export default function HomeClient() {
        <motion.a
         href="/portfolio"
         id="cta-hero-portfolio"
-        className="border-2 border-yellow-400 text-yellow-400 px-8 py-4 font-medium text-lg uppercase tracking-wider hover:bg-yellow-400 hover:text-black transition-all duration-300 relative overflow-hidden group inline-block text-center"
+        className="border-2 border-yellow-400 text-yellow-400 px-8 py-4 font-medium text-lg tracking-wider hover:bg-yellow-400 hover:text-black transition-all duration-300 relative overflow-hidden group inline-block text-center"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         aria-label="成果事例ページへ移動"
@@ -220,29 +384,22 @@ export default function HomeClient() {
         <div className="absolute inset-0 bg-yellow-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
        </motion.a>
       </motion.div>
-     </motion.div>
-     
-     <motion.div 
-      className="scale-in relative"
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 2.4, duration: 0.8 }}
-     >
-      <div className="relative">
-       <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-purple-500/20 rounded-full blur-3xl"></div>
-       <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-        <Image
-          src="https://rpk6snz1bj3dcdnk.public.blob.vercel-storage.com/topimage-qUv6EKPGnmPtZiyFyz8eVU9yperlGM.png"
-          alt="NonTurn.LLCのクリエイティブビジョン"
-          width={500}
-          height={500}
-          className="w-full h-full object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-       </div>
-      </div>
-     </motion.div>
+     </div>
+    </motion.div>
+
+    {/* Scroll Down Indicator */}
+    <motion.div
+     className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
+     initial={{ opacity: 0 }}
+     animate={{ opacity: 1 }}
+     transition={{ delay: 3, duration: 1 }}
+    >
+     <span className="text-xs text-gray-500 tracking-[0.3em] uppercase">Scroll Down</span>
+     <motion.div
+      className="w-px h-8 bg-gradient-to-b from-gray-500 to-transparent"
+      animate={{ scaleY: [1, 0.5, 1], opacity: [0.5, 1, 0.5] }}
+      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+     />
     </motion.div>
    </section>
 
