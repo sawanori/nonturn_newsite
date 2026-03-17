@@ -245,24 +245,24 @@ export default function HomeClient() {
        className="hero-glitch font-bold tracking-tight mb-6 md:mb-8 hero-catchcopy-size leading-[1.05] -rotate-3"
       >
        {/* Main visible text */}
-       <span className="block overflow-hidden relative z-10">
+       <span className="block relative z-10">
         <motion.span
          className="block hero-glow"
-         initial={{ y: '120%', filter: 'blur(12px)', scale: 0.8 }}
-         animate={{ y: 0, filter: 'blur(0px)', scale: 1 }}
-         transition={{ delay: 0.9, duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
+         initial={{ opacity: 0 }}
+         animate={{ opacity: 1 }}
+         transition={{ delay: 0.6, duration: 1.2, ease: 'easeOut' }}
         >
          <span className="bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
           ひとつの窓口で
          </span>
         </motion.span>
        </span>
-       <span className="block overflow-hidden relative z-10">
+       <span className="block relative z-10">
         <motion.span
          className="block"
-         initial={{ y: '120%', filter: 'blur(12px)', scale: 0.8 }}
-         animate={{ y: 0, filter: 'blur(0px)', scale: 1 }}
-         transition={{ delay: 1.2, duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
+         initial={{ opacity: 0 }}
+         animate={{ opacity: 1 }}
+         transition={{ delay: 0.9, duration: 1.2, ease: 'easeOut' }}
         >
          <span className="text-white">成果を出す</span>
         </motion.span>
@@ -273,7 +273,7 @@ export default function HomeClient() {
         className="hero-glitch-layer"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.2, duration: 0.3 }}
+        transition={{ delay: 1.8, duration: 0.3 }}
         aria-hidden="true"
        >
         <div className="hero-glitch-before font-bold tracking-tight hero-catchcopy-size leading-[1.05]">
@@ -287,7 +287,7 @@ export default function HomeClient() {
         className="hero-glitch-layer"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.2, duration: 0.3 }}
+        transition={{ delay: 1.8, duration: 0.3 }}
         aria-hidden="true"
        >
         <div className="hero-glitch-after font-bold tracking-tight hero-catchcopy-size leading-[1.05]">
@@ -301,7 +301,7 @@ export default function HomeClient() {
         className="hero-glitch-layer"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.2, duration: 0.3 }}
+        transition={{ delay: 1.8, duration: 0.3 }}
         aria-hidden="true"
        >
         <div className="hero-rgb-r font-bold tracking-tight hero-catchcopy-size leading-[1.05]">
@@ -313,7 +313,7 @@ export default function HomeClient() {
         className="hero-glitch-layer"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.2, duration: 0.3 }}
+        transition={{ delay: 1.8, duration: 0.3 }}
         aria-hidden="true"
        >
         <div className="hero-rgb-b font-bold tracking-tight hero-catchcopy-size leading-[1.05]">
@@ -327,13 +327,13 @@ export default function HomeClient() {
         className="absolute inset-0 pointer-events-none z-20"
         initial={{ opacity: 0 }}
         animate={{ opacity: [0, 1, 0] }}
-        transition={{ delay: 2.0, duration: 0.6, ease: 'easeOut' }}
+        transition={{ delay: 1.6, duration: 0.6, ease: 'easeOut' }}
        >
         <motion.div
          className="absolute inset-y-0 w-[40%] bg-gradient-to-r from-transparent via-yellow-400/40 to-transparent"
          initial={{ left: '-40%' }}
          animate={{ left: '140%' }}
-         transition={{ delay: 2.0, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+         transition={{ delay: 1.6, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         />
        </motion.div>
       </motion.h1>
@@ -345,7 +345,7 @@ export default function HomeClient() {
           className="text-yellow-500/80"
           initial={{ x: '-100%', opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 2.4 + i * 0.15, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ delay: 1.8 + i * 0.15, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
          >
           {text}
          </motion.p>
@@ -357,7 +357,7 @@ export default function HomeClient() {
        className="flex flex-col sm:flex-row gap-4"
        initial={{ opacity: 0, y: 20 }}
        animate={{ opacity: 1, y: 0 }}
-       transition={{ delay: 2.9, duration: 0.8 }}
+       transition={{ delay: 2.2, duration: 0.8 }}
       >
        <motion.a
         href="/contact"
