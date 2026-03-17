@@ -4,6 +4,7 @@ import { Canvas } from '@react-three/fiber'
 import { FloatingCubes } from './FloatingCubes'
 import { ParticleField } from './ParticleField'
 import { AnimatedSphere } from './AnimatedSphere'
+import { DataStream } from './DataStream'
 
 interface Scene3DProps {
   className?: string
@@ -23,6 +24,7 @@ export function Scene3D({ className = "absolute inset-0 z-0" }: Scene3DProps) {
         <FloatingCubes />
         <ParticleField />
         <AnimatedSphere />
+        <DataStream count={150} opacity={0.045} />
       </Canvas>
     </div>
   )

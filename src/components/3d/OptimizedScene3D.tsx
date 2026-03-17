@@ -5,6 +5,7 @@ import { Suspense, useEffect, useState } from 'react'
 import { OptimizedFloatingCubes } from './OptimizedFloatingCubes'
 import { OptimizedParticleField } from './OptimizedParticleField'
 import { OptimizedAnimatedSphere } from './OptimizedAnimatedSphere'
+import { DataStream } from './DataStream'
 import { PerformanceMonitor, AdaptiveDpr, AdaptiveEvents } from '@react-three/drei'
 
 interface OptimizedScene3DProps {
@@ -64,6 +65,7 @@ export function OptimizedScene3D({ className = "absolute inset-0 z-0" }: Optimiz
             <OptimizedFloatingCubes simplified={isSafari} />
             <OptimizedParticleField count={isSafari ? 100 : 200} />
             <OptimizedAnimatedSphere simplified={isSafari} />
+            <DataStream count={isSafari ? 60 : 120} opacity={0.045} />
           </Suspense>
         </PerformanceMonitor>
       </Canvas>
