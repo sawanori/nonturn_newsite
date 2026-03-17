@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { MainLayout } from '@/components/layout/MainLayout'
 import { DynamicOptimizedScene3D } from '@/components/3d/DynamicOptimizedScene3D'
 import { VisuallyHidden } from '@/components/accessibility/AccessibilityEnhancements'
@@ -71,7 +71,6 @@ function VideoThumbnail({ src, alt, fallbackGradient }: { src: string; alt: stri
 export default function HomeClient() {
  const isSafari = useIsSafari()
  const isMobile = useIsMobile()
- const { scrollYProgress } = useScroll()
  const heroRef = useRef<HTMLDivElement>(null)
  const [isMounted, setIsMounted] = useState(false)
 
@@ -79,12 +78,6 @@ export default function HomeClient() {
  useEffect(() => {
   setIsMounted(true)
  }, [])
-
- // Parallax transforms - サーバー/クライアント初期レンダリングでは固定値を使用
- // マウント後にSafari検出結果に基づいて更新
- const shouldDisableParallax = isMounted ? isSafari : false
- const yText = useTransform(scrollYProgress, [0, 1], shouldDisableParallax ? ['0%', '0%'] : ['0%', '200%'])
- const opacity = useTransform(scrollYProgress, [0, 0.3], shouldDisableParallax ? [1, 1] : [1, 0])
  
  useEffect(() => {
   // Only run on client after hydration
@@ -136,7 +129,6 @@ export default function HomeClient() {
     {/* Hero Content - Centered Full Screen */}
     <motion.div
      className="w-full mx-auto px-4 sm:px-10 lg:px-16 lg:max-w-7xl flex flex-col justify-center items-center lg:items-start relative z-10 h-full"
-     style={{ y: yText, opacity }}
      suppressHydrationWarning
     >
      <div className="flex flex-col items-center lg:items-start">
