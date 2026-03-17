@@ -135,11 +135,11 @@ export default function HomeClient() {
     
     {/* Hero Content - Centered Full Screen */}
     <motion.div
-     className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 flex flex-col justify-center relative z-10 h-full"
+     className="w-full mx-auto px-4 sm:px-10 lg:px-16 lg:max-w-7xl flex flex-col justify-center items-center lg:items-start relative z-10 h-full"
      style={{ y: yText, opacity }}
      suppressHydrationWarning
     >
-     <div className="flex flex-col items-start">
+     <div className="flex flex-col items-center lg:items-start">
       <motion.p
        className="text-[clamp(1rem,3vw,1.75rem)] font-medium text-gray-400 tracking-[0.2em] uppercase mb-4 md:mb-6 overflow-hidden"
        initial={{ opacity: 0 }}
@@ -225,12 +225,12 @@ export default function HomeClient() {
           animation: glow-pulse 3s ease-in-out infinite;
         }
         .hero-catchcopy-size {
-          font-size: clamp(2.2rem, 11vw, 3.5rem) !important;
+          font-size: clamp(3rem, 13vw, 4.5rem) !important;
           white-space: nowrap;
         }
         @media (min-width: 768px) {
           .hero-catchcopy-size {
-            font-size: clamp(3.5rem, 9vw, 7rem) !important;
+            font-size: clamp(4rem, 9vw, 7rem) !important;
           }
         }
         @media (min-width: 1024px) {
