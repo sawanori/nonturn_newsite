@@ -115,15 +115,19 @@ export default function HomeClient() {
     aria-labelledby="hero-heading"
     role="banner"
    >
-    {/* 3D WebGL Background - Safariでは静的グラデーションに置換 */}
-    {/* Safari用静的背景 - マウント後かつSafariの場合のみ表示 */}
-    <div className={`absolute inset-0 z-0 ${isMounted && isSafari ? 'block' : 'hidden'}`}>
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-purple-900/20 to-pink-900/20" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-900 via-gray-900 to-black opacity-80" />
-    </div>
-    {/* 3Dシーン - 初期状態では常に表示、マウント後Safariの場合は非表示 */}
-    <div className={`${isMounted && isSafari ? 'hidden' : 'block'}`}>
-      <DynamicOptimizedScene3D />
+    {/* Video Background */}
+    <div className="absolute inset-0 z-0">
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src="/videos/hero.mp4" type="video/mp4" />
+      </video>
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 bg-black/70" />
     </div>
     
     {/* Hero Content - Centered Full Screen */}
