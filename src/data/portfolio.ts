@@ -160,6 +160,38 @@ export const portfolioProjects = [
     }
   },
   {
+    id: 'spain-pork',
+    title: 'FOOD PROMOTION',
+    subtitle: 'スペインポーク',
+    category: 'movie',
+    industry: '食品',
+    year: '2024',
+    client: 'INTERPORC / ICEX',
+    description: 'スペインポークの品質と伝統を魅力的に表現するプロモーション映像',
+    detailedDescription: 'スペイン貿易投資庁（ICEX）とスペイン白豚生産加工者協会（INTERPORC）によるプロモーション映像。スペインポークの品質と伝統、生産から流通までの一貫した管理体制を魅力的に表現しました。',
+    tags: ['FOOD', 'PROMOTION', 'INTERNATIONAL'],
+    videoUrl: 'https://www.youtube.com/watch?v=tMVuKqw_uY4',
+    thumbnailUrl: '/images/portfolio/spain-pork-thumb.jpg',
+    gradient: 'from-red-400 to-orange-500',
+    technologies: ['シネマティック撮影', 'カラーグレーディング', 'ナレーション収録', 'フードフォトグラフィー'],
+    duration: '3分00秒',
+    deliverables: ['メイン動画', 'SNS用ショート版', 'イベント上映版'],
+    results: {
+      brandAwareness: '大幅向上',
+      importVolume: '増加',
+      eventEngagement: '高評価'
+    },
+    testimonial: {
+      text: 'スペインポークの魅力を日本市場に効果的に訴求する素晴らしい映像を制作していただきました。',
+      author: 'INTERPORC 日本担当者様'
+    },
+    caseStudy: {
+      challenge: '日本市場においてスペインポークの認知度を高め、品質の高さと生産管理体制の信頼性を効果的に訴求する必要がありました。',
+      approach: 'スペインの生産現場から流通までの一貫したプロセスをシネマティックに撮影。フードフォトグラフィーの技法を活用し、スペインポークの美味しさと品質を視覚的に表現しました。',
+      result: 'プロモーション映像の公開後、スペインポークのブランド認知度が大幅に向上。日本国内での輸入量増加にも貢献し、業界イベントでも高い評価を獲得しました。'
+    }
+  },
+  {
     id: 'masago-saryo',
     title: 'RESTAURANT PROMO',
     subtitle: '真砂茶寮',
