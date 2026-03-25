@@ -724,11 +724,11 @@ export default function HomeClient() {
           title: '渋谷アクシュ（SHIBUYA AXSH）',
           id: 'shibuya-axsh',
           url: 'https://vimeo.com/972761987',
-          category: '企業プロモーション',
+          category: '施設紹介',
           size: 'premium', // プレミアムサイズ
           year: '2024',
           client: '渋谷アクシュ',
-          description: '企業の魅力を表現する高品質なコーポレート動画。革新的なビジョンと高い専門性を持つ同社の魅力を、洗練された映像表現で訴求。',
+          description: 'デベロッパー向けに施設の魅力を訴求する紹介動画。立地の優位性や施設スペックの特長を、洗練された映像表現で訴求。',
           bgGradient: 'from-slate-500/12 via-gray-500/12 to-zinc-500/12',
           hoverGradient: 'group-hover:from-slate-500/22 group-hover:via-gray-500/22 group-hover:to-zinc-500/22'
         },

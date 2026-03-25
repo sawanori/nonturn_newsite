@@ -2,33 +2,33 @@ export const portfolioProjects = [
   {
     id: 'shibuya-axsh',
     title: '渋谷アクシュ（SHIBUYA AXSH）',
-    subtitle: 'コーポレート動画',
+    subtitle: 'デベロッパー向け施設紹介動画',
     category: 'movie',
-    industry: '企業',
+    industry: '不動産',
     year: '2024',
     client: '渋谷アクシュ',
-    description: '企業の魅力を表現する高品質なコーポレート動画制作',
-    detailedDescription: '渋谷アクシュ様の企業価値と魅力を表現するコーポレート動画を制作。革新的なビジョンと高い専門性を持つ同社の魅力を、洗練された映像表現で訴求しました。',
-    tags: ['CORPORATE', 'BRANDING', 'PROMOTION'],
+    description: 'デベロッパー向けに施設の魅力を訴求する紹介動画制作',
+    detailedDescription: '渋谷アクシュの施設としての魅力をデベロッパー向けに訴求する紹介動画を制作。テナント誘致を目的に、立地の優位性や施設スペックの特長を洗練された映像表現で伝えました。',
+    tags: ['FACILITY', 'DEVELOPER', 'PROMOTION'],
     videoUrl: 'https://vimeo.com/972761987',
     thumbnailUrl: '/images/portfolio/shibuya-axsh-thumb.jpg',
     gradient: 'from-blue-500 to-purple-600',
-    technologies: ['4K撮影', 'シネマティック撮影', 'カラーグレーディング', 'モーショングラフィックス'],
+    technologies: ['4K撮影', 'シネマティック撮影', 'カラーグレーディング'],
     duration: '5分00秒',
     deliverables: ['メイン動画', '短縮版', 'プレゼンテーション版'],
     results: {
       brandValue: '向上',
-      stakeholderEngagement: '大幅向上',
-      corporateImage: '強化'
+      tenantInterest: '大幅向上',
+      facilityImage: '強化'
     },
     testimonial: {
-      text: '企業の本質を見事に映像化していただき、ステークホルダーからの評価も非常に高いです。',
+      text: '施設の魅力を的確に映像化していただき、デベロッパーからの評価も非常に高いです。',
       author: '渋谷アクシュ 担当者様'
     },
     caseStudy: {
-      challenge: 'ステークホルダーに向けた企業の革新性と専門性の訴求が課題でした。既存の紙媒体やWebだけでは伝えきれない同社の魅力をどう伝えるかが求められました。',
-      approach: 'シネマティックな4K撮影技術を活用し、オフィス空間の先進性とスタッフの情熱を映像で表現。モーショングラフィックスで事業の全体像を分かりやすく可視化しました。',
-      result: 'ステークホルダーからの評価が大幅に向上。コーポレートサイトやIR資料への動画活用により、企業ブランドイメージの強化に成功しました。'
+      challenge: 'デベロッパーに向けて施設の立地優位性やスペックの魅力を効果的に訴求する必要がありました。紙媒体やWebだけでは伝えきれない施設の空間的な魅力をどう伝えるかが課題でした。',
+      approach: 'シネマティックな4K撮影技術を活用し、施設の空間デザインや立地環境の魅力を映像で表現。テナント誘致に必要な情報を分かりやすく構成しました。',
+      result: 'デベロッパーからの関心が大幅に向上。施設紹介やテナント誘致の場面で活用され、施設ブランドイメージの強化に成功しました。'
     }
   },
   {
